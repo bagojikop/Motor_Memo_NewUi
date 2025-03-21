@@ -1,0 +1,90 @@
+<button class="btn btn-sm btn-outline-secondary ms-2" [disabled]="disabledd" type="button" (click)="showModal()">
+    <i class="bi bi-upload"></i>  </button>
+
+<div class="modal fade" id="uploadDOC" style="z-index: 1060;" aria-hidden="true" data-bs-keyboard="false"
+    data-bs-backdrop="static" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-md">
+        <div class="modal-content">
+            <div class="modal-header divcard">
+                <i class="fas fa-folder-open"></i>
+                <h5 class="modal-title ms-2">Documents</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form #docForm='ngForm'>
+                    <div class="card mb-1">
+                        <div cass="card-body">
+                            <div class="row m-0 justify-content-center">
+                                <div class="col-12 text-center" style="height: 7em;">
+                                    <i class="bi bi-camera-fill bg-danger text-white  p-1 px-3 mt-1"
+                                        style="font-size: 50px;" (click)="fileUpload.click()"></i>
+                                    <input type="file" #fileUpload
+                                        (change)="handleFileInput($event);onFileChange($event)" capture="camera"
+                                        class="border-2" accept="application/msword, application/vnd.ms-excel,application/xls,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-powerpoint,
+                                    text/plain, application/pdf, image/*" resize-max-height="800"
+                                        resize-max-width="800" [(ngModel)]="docAttach.image" resize-quality="0.7"
+                                        resize-type="image/jpg" ng-image-compress name="cameraInputb"
+                                        progress="progress4" hidden="true" />
+                                    <br>
+                                    <p>Upload Here (PNG/JPEG/PDF) Only</p>
+                                </div>
+                                <div class="d-flex flex-column">
+                                    <dss-input label="Doc Name" name="docname" [(ngModel)]="docAttach.filepath"
+                                        placeholder="File Name" [required]="true" />
+
+                                    <dss-input name="docdesc" label="Description" [(ngModel)]="docAttach.descr"
+                                        [required]="true" />
+
+                                    <dss-input label="Upload Date" name="dt" type="date"
+                                        [(ngModel)]="docAttach.uploadedDt" />
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer" style="background-color: #dadada;">
+                <button type="button" class="btn btn-success" [disabled]="!docForm.valid"
+                    (click)="upload()">Upload</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" style="z-index: 1060;" id="PreviewImg" data-bs-backdrop="static" tabindex="-1"
+    aria-labelledby="priview" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-md">
+        <div class="modal-content">
+            <div class="modal-header divcard">
+                <i class="fas fa-folder-open"></i>
+                <h5 class="modal-title ms-2">Image</h5>
+                <button type="button" class="btn-close" aria-label="Close" (click)="closeDocPreview()"></button>
+            </div>
+            <div class="modal-body">
+                <div class="card mb-1">
+                    <div cass="card-body d-flex align-items-center justify-content-center">
+                        <img [src]="url" style="height:100%;width:100%">
+                    </div>
+                    <br>
+                    <h6 class="d-flex text-dark">Compressed Image Size :<b> {{imgformatedsize}}</b></h6>
+                </div>
+            </div>
+            <div class="modal-footer" *ngIf="editImag==false" style="background-color: #dadada;">
+                <button type="button" class="btn btn-success" (click)="editImag=true">Edit</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+            </div>
+            <div class="modal-footer d-flex justify-content-around" *ngIf="editImag==true">
+                <button type="button" class="btn btn-success" (click)="SaveImgResize()">OK</button>
+
+                <input type="range" id="rangeInput" name="rangeInput" class="w-75" min="0" max="100" value="0" step="1"
+                    data-show-value="true" (change)="changeIMGQuality(entity.range)" [(ngModel)]="entity.range">
+
+                <button type="button" class="btn-close" aria-label="Close" (click)="editImag=false"></button>
+            </div>
+        </div>
+    </div>
+</div>

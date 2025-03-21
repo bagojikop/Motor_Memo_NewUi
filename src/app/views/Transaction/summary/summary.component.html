@@ -1,0 +1,69 @@
+<div class="d-flex justify-content-between m-0 p-2">
+    <div class=" ">
+        <span style="font-size:20px;">Sundry</span>
+    </div>
+    <div class=" ">
+        <button type="submit" class="btn btn-outline-success btn-sm" (click)="addNew()"><svg
+                xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                class="bi bi-plus-square-fill" viewBox="0 0 16 16">
+                <path
+                    d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm6.5 4.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3a.5.5 0 0 1 1 0" />
+            </svg></button>
+    </div>
+</div>
+<hr class="mt-0 pt-0" />
+
+<dss-grid [columns]="columns" url="Sundry/getList" [gridOptions]="gridOption.gridOptions" class="heightMasterPage"
+    [defaultColDef]="defaultColDef" (gridApi)="onGridReady($event)" [pageSize]="25"></dss-grid>
+
+
+
+<div class="modal fade" style="z-index: 1060;" id="district" tabindex="-1" aria-labelledby="exampleModalLabel"
+    aria-hidden="true" data-bs-keyboard="false" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-lg">
+        <div class="modal-content shadow">
+            <div class="modal-header p-2 divcard" style="border-radius: 2px;">
+                <span class="mb-0" style="font-size: 1.2rem;">Sundry</span>
+                <button type="button" class="btn-close me-1" tabindex="-1" (click)="close()"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <fieldset autocomplete="off">
+                    <form #f="ngForm">
+
+                        <div class="row">
+                            <div class="col col-12 col-sm-10">
+                                <div class="form-group">
+                                    <dss-input label="Sundry Name" [maxlength]="20" name="district" #district="ngModel"
+                                        [(ngModel)]="entity.sundryName" [required]="true" [styleCase]="'c'" />
+                                </div>
+                                <div>
+                                    <label for="">Account</label>
+                                    <app-ngselect apiUrl="Account/getsupplier" name="Account Name" class="p-0"
+                                        bindLabel="accName" bindValue="accCode" [(ngModel)]="entity.accCode"
+                                        [defaultProperty]="entity.accCodeNavigation" 
+                                        [apiParams]="apiParams()" #AccountName="ngModel"></app-ngselect>
+                                </div>
+                                <div>
+                                    <div class="select-dropdown mt-2">
+                                        <label for="">operation</label>
+                                        <select class="form-select select-wrapper" name="operation" [(ngModel)]="entity.operation"
+                                            style="width: 30%;" aria-label="Default select example">
+                                            <option value="1">Add</option>
+                                            <option value="0">Deduct</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </fieldset>
+            </div>
+            <div class="modal-footer p-1" style="background-color: rgb(214, 214, 214);">
+                <button type="button" class="btn btn-sm btn-danger" tabindex="-1" (click)="close()">Close</button>
+                <button type="button" class="btn btn-sm btn-primary" (click)="save()"
+                    [disabled]="!f.valid">Save</button>
+            </div>
+        </div>
+    </div>

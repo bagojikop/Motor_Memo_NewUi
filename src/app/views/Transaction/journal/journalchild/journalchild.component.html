@@ -1,0 +1,179 @@
+<div [hidden]="rptMode">
+    <form #vi="ngForm" class="needs-validation" novalidate>
+        <div class="from-body">
+            <div class=""> 
+                    <app-navactions [title]="'Journal'" (myfn)="navbar($event)"></app-navactions>
+                <div>
+                    <fieldset [disabled]="navactions.fieldset" class="mt-3">
+                        <div class="d-flex d-flex-column container">
+                            <div class="d-flex-width">
+                                <div>
+                                    <dss-input label="Vouchar" name="vchno" [(ngModel)]="entity.vchNo"
+                                        autocomplete="off" placeholder="Auto No" [disabled]="true" />
+                                </div>
+                                <div>
+                                    <dss-input label="Challan No" name="challonno" [(ngModel)]="entity.challanNo"
+                                        [disabled]="true" />
+                                </div>
+                                <div>
+                                    <label class="mb-0">Date</label>
+                                    <input class="form-control" name="vchDate" type="date" [(ngModel)]="entity.vchDate"
+                                         #vchDate="ngModel" [min]="finyear.fdt" [max]="finyear.tdt" DTpicker
+                                        [ngClass]="{'is-invalid':vchDate.errors?.['required']}" required>
+                                </div>
+                            </div>
+                            <div class="d-flex flex-column gapInputFields">
+                                <div>
+                                    <label>Account</label> 
+                                    <app-ngselect apiUrl="Account/getAcclist" class="form-control-sm p-0"
+                                        bindLabel="accName" bindValue="accCode" name="journalaccount"
+                                        [(ngModel)]="entity.accCode" 
+                                        [defaultProperty]="entity.accCodeNavigation"
+                                        [disabled]="navactions.fieldset"></app-ngselect>
+                            
+                                </div>
+                                <div>
+                                    <label>Transaction Type</label>
+                                    <select class="form-select" aria-label="Default select example"
+                                        name="transactiontype" [(ngModel)]="entity.transType" (change)="type(entity.transType)">
+
+                                        <option value="1">Debit</option>
+                                        <option value="0">Credit</option>
+
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="gapInputFields ">
+                                <div>
+                                    <dss-input label="Narration" id="w3review" inputType="textarea" name="narration"
+                                        [rows]="3" [(ngModel)]="entity.nar" [maxlength]="100" [cols]="50"
+                                        [styleCase]="'c'" />
+                                </div>
+                                <div>
+                                    <label class="mb-0 mt-2">Amount</label>
+                                    <input class="form-control text-end" name="amount"
+                                        [(ngModel)]="entity.amount" CurrencyMask currency="INR" symbol fraction="2"
+                                        autocomplete="off"readonly>
+                                </div>
+                            </div>
+                        </div>
+                        <hr />
+                        <div *ngIf="viewing1==1" class="container mt-2">
+
+                            <h5>Credited To</h5>
+
+                        </div>
+                        <div *ngIf="viewing1==0" class="container mt-2">
+
+                            <h5>Debited To</h5>
+
+                        </div>
+                        <div class="container">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th class="text-left p-1 " scope="col" style="width:35%">
+                                            Account</th>
+                                        <th class="text-end p-1 " scope="col" style="width:20%">
+                                            Amount</th>
+                                        <th class="text-center p-1 " scope="col" style="width:35%">
+                                            Nar</th>
+                                        <th class="text-center p-1" scope="col" style="width:10%">
+                                            Action
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th class="p-1 " scope="col" style="width:35%">
+                                            <app-ngselect apiUrl="Account/getAcclist" bindLabel="accName"
+                                                bindValue="accCode" name="jrnItemsaccount"
+                                                [(ngModel)]="rec.jrnItems.accCode" (change)="getAccountDetl($event)" 
+                                                [defaultProperty]="rec.jrnItems.accCodeNavigation"
+                                                [disabled]="navactions.fieldset" [applyMargins]="false"></app-ngselect>
+
+
+
+                                        </th>
+                                        <th class="text-center p-1 " scope="col" style="width:20%">
+                                            <input type="text" class="form-control text-end" autocomplete="off"
+                                                name="jrnItemsamount" [(ngModel)]="rec.jrnItems.amount" CurrencyMask
+                                                currency="INR" fraction="2">
+                                        </th>
+                                        <th class="text-center p-1" scope="col" style="width:35%">
+                                            <dss-input name="jrnItemsnar" [(ngModel)]="rec.jrnItems.nar"
+                                                [applyMargins]="false" />
+                                        </th>
+                                        <th class="text-center p-1" scope="col" style="width:10%">
+                                            <button class="btn btn-light btn-sm" type="button" (click)="AddDebited()"
+                                                [disabled]="!rec.jrnItems.amount">
+                                                <i class="fas fa-plus"></i></button>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody class="actionTableHeight"> 
+                                    <div *ngIf="!entity?.acc00501s || entity.acc00501s.length === 0" class="noDataImg">
+                                        <img src="../../../../../../assets/IMG/noData.png" width="50">
+                                        <p>Record is empty</p>
+                                    </div>
+                                    <tr *ngFor="let v of entity.acc00501s;let i=index;">
+                                        <td style="width:35%" class="p-1">{{v.accCodeNavigation.accName}}</td>
+                                        <td style="width:20%" class="p-1 text-end">{{v.amount | number:'1.2-2'}}</td>
+                                        <td style="width:35%" class="p-1">{{v.nar}}</td>
+                                        <td style="width:10%" class="p-1 text-right">
+                                            <div class="text-center">
+
+                                                <button class="btn btn-primary btn-sm-custom-table me-1" type="button"
+                                                    (click)="journalEdit(v)">
+                                                    <i class="fas fa-edit"></i></button>
+                                                <button class="btn btn-danger btn-sm-custom-table" type="button"
+                                                    (click)="journalDelete(v)">
+                                                    <i class="fas fa-trash"></i></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td class="p-1 text-end" scope="col" style="width:35%"><b>Total</b></td>
+                                        <td class="p-1 text-end" scope="col" style="width:20%">
+                                            <b> ₹ {{entity.amount | number:'1.2-2'}}</b>
+                                        </td>
+                                        <td class="p-1" scope="col" style="width:35%"></td>
+                                        <td class="p-1" scope="col" style="width:10%"></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                        <hr />
+                  
+                        <div class="container">
+                            <h5 class="mt-2">Audit</h5>
+                            <div class="mt-3 d-flex justify-content-between">
+                                <div>
+                                    <label class="mb-0">Created User</label>
+                                    <p>{{entity.acc00500?.createdUser}}</p>
+                                </div>
+    
+                                <div>
+                                    <label class="mb-0">Created Date</label>
+                                    <p>{{entity.acc00500?.createdDt | date:'dd-MM-yyyy'}}</p>
+                                </div>
+    
+                                <div>
+                                    <label class="mb-0">Modified User</label>
+                                    <p>{{entity.acc00500?.modifiedUser}}</p>
+                                </div> 
+    
+                                <div>
+                                    <label class="mb-0">Modified Date</label>
+                                    <p>{{entity.acc00500?.modifiedDt | date:'dd-MM-yyyy'}}</p>
+                                </div>
+    
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+ 

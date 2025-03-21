@@ -1,0 +1,94 @@
+<!-- <div class="d-flex justify-content-center align-items-center" style="height: 100vh;">
+    <div class="row d-flex bg-light border border-3">
+        <div>
+            <a href="https://www.dsserp.com/">
+                <img src="../../../../../assets/IMG/DSSlogo.png" style="height: 35px; width: 50px;"
+                    class="ms-3 mt-4" alt="">
+            </a>
+            <div class="form-container container mt-3">
+                <h1 class="mb-4"
+                    style="font-size: 20px; font-family:Arial, Helvetica, sans-serif; font-weight: 600;">Select Your
+                    Organization</h1>
+                <form #SelectFirm="ngForm" class="form-content" (ngSubmit)="Submit()">
+
+                    <div class="form-group">
+                        <label for="firm">Organization</label>
+                        <ng-select style="border: 0;" id="firm" bindLabel="firmName" bindValue="firmCode"
+                            name="firmnm" [loading]="loading" [virtualScroll]="true" (change)="firm($event)"
+                            [items]="Firms" (clear)="onClear('firm')" [(ngModel)]="entity.firmCode"
+                            placeholder="Select Firm">
+                        </ng-select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="year">Financial Year</label>
+                        <ng-select style="border: 0;" id="year" bindLabel="divId" bindValue="divId" name="finyear"
+                            [loading]="loading" [virtualScroll]="true" [items]="FinYears" [(ngModel)]="entity.divId"
+                            (open)="branch(entity)" (clear)="onClear('year')" placeholder="Select Year">
+                        </ng-select>
+                    </div>
+                    <div class="text-center mt-4">
+                        <button type="submit" class="btn btn-dark rounded-pill w-100">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+ 
+    </div>
+</div> -->
+
+<div id="main-wrapper" class="">
+    <section class="login-container d-flex align-items-center justify-content-center">
+        <div class="login-card row w-100">
+            <!-- Left Section -->
+            <div class="col-lg-6">
+                <a href="https://www.dsserp.com/">
+                    <img src="../../../../../assets/IMG/DSSlogo.png" style="height: 35px; width: 50px;"
+                        class="ms-3 mt-4" alt="">
+                </a>
+                <div style="margin-left: 50px; margin-right: 50px;">
+                    <div class="mt-3">
+                        <h1 class="display-3"
+                            style="font-size: 20px; font-family:Arial, Helvetica, sans-serif; font-weight: 600;">Select
+                            Your
+                            Organization</h1>
+                    </div>
+                    <form #loginform="ngForm" class="mt-4 px-3" (ngSubmit)="Submit()">
+                        <div class="form-group">
+                            <!-- <label for="username">Username</label> -->
+                            <div style="width: 100%;">
+                                <ng-select style="border: 0;" id="firm" bindLabel="firmName" bindValue="firmCode"
+                                    name="firmnm" [loading]="loading" [virtualScroll]="true" (change)="firm($event)"
+                                    [items]="Firms" (clear)="onClear('firm')" [(ngModel)]="entity.firmCode"
+                                    placeholder="Select Firm">
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="form-group mt-4">
+                            <!-- <label for="password">Password</label> -->
+                            <div style="width: 100%;" class="d-flex">
+                                <div style="width: 100%;">
+                                    <ng-select style="border: 0;" id="year" bindLabel="divId" bindValue="divId"
+                                        name="finyear" [loading]="loading" [virtualScroll]="true" [items]="FinYears"
+                                        [(ngModel)]="entity.divId" (open)="branch(entity)" (clear)="onClear('year')"
+                                        placeholder="Select Year">
+                                    </ng-select>
+                                </div>
+  
+                            </div>
+                        </div>
+                     
+                        <div class="text-center mt-4">
+                            <button type="submit" class="btn btn-dark rounded-pill mb-5 w-100">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Right Section -->
+            <div class="col-lg-6 d-flex align-items-center justify-content-center b-right ">
+                <img src="../../../../../assets/IMG/retaildeskloginMan.png" alt="Desk" class="logo">
+            </div>
+        </div>
+    </section>
+</div>

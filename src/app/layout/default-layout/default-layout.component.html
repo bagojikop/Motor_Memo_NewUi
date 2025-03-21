@@ -1,0 +1,40 @@
+<!--sidebar-->
+<c-sidebar #sidebar1="cSidebar" class="d-print-none sidebar sidebar-fixed border-end" colorScheme="dark" id="sidebar1"
+  visible>
+  <c-sidebar-header class="border-bottom">
+    <c-sidebar-brand [routerLink]="[]">
+      <div class="d-flex justify-content-center align-items-center">
+        <img src="../../../assets/IMG/DSSlogo.png" alt="Company Logo" class="sidebar-brand-full" height="32">
+        <p class="sidebar-brand-full p-0 m-0 ms-3" style="font-size:20px;">DSS Software</p>
+      </div>
+      <img src="../../../assets/IMG/DSSlogo.png" alt="Company Signet" class="sidebar-brand-narrow" height="32">
+
+    </c-sidebar-brand>
+  </c-sidebar-header>
+
+  <ng-scrollbar #scrollbar="ngScrollbar" (updated)="onScrollbarUpdate(scrollbar.state)" class="overflow"
+    pointerEventsMethod="scrollbar" visibility="hover">
+    <c-sidebar-nav #overflow [navItems]="navItems" dropdownMode="none" compact />
+  </ng-scrollbar>
+  @if (!sidebar1.narrow) {
+  <c-sidebar-footer cSidebarToggle="sidebar1" class="border-top d-none d-lg-flex" toggle="unfoldable"
+    style="cursor: pointer;">
+    <button cSidebarToggler aria-label="Toggle sidebar fold"></button>
+  </c-sidebar-footer>
+  }
+</c-sidebar>
+
+<!--main-->
+<div class="wrapper d-flex flex-column min-vh-100">
+  <!--app-header-->
+  <app-default-header [cShadowOnScroll]="'sm'" class="d-print-none header header-sticky p-0 shadow-sm" position="sticky"
+    sidebarId="sidebar1" />
+  <!--app-body-->
+  <div class="body flex-grow-1">
+    <div class="container-fluid" class="h-auto ">
+      <router-outlet />
+    </div>
+  </div>
+  <!--app footer-->
+  <app-default-footer class="p-0 m-0" />
+</div>

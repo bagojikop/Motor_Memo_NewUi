@@ -1,0 +1,127 @@
+<div>
+    <app-navactions [title]="'Declaration'" (myfn)="navbar($event)"></app-navactions>
+    <form #vi="ngForm" class="needs-validation" novalidate>
+        <fieldset [disabled]="navactions.fieldset">
+            <div class="container mt-4">
+                <div class="d-flex">
+                    <div class="d-flex flex-column col-12 col-md-6 col-lg-3">
+                        <div>
+                            <label for="">Declaration No</label>
+                            <input class="form-control" name="DeclarationNo" [(ngModel)]="entity.declrId" numberOnly
+                                disabled [maxlength]="5">
+                        </div>
+                        <div class="mt-2">
+                            <label for="">From Date</label>
+                            <input type="date" class="form-control" name="fromdt" DTpicker [(ngModel)]="entity.fromDt" > 
+                        </div>
+                        <div>
+                            <app-ngselect label="Account" apiUrl="Account/getAcclist" class="p-0" bindLabel="accName"
+                                bindValue="accCode" name="ObalAccName" [defaultProperty]="entity.accCodeNavigation"
+                                [(ngModel)]="entity.accCode" #ObalAccName="ngModel" [disabled]="navactions.fieldset"
+                                [ngClass]="{'is-invalid': ObalAccName.errors?.['required']}" (change)="getpandetails($event)"
+                                [required]="true"></app-ngselect>
+                        </div>
+                        <div>
+                            <label for="">Number of Vehicles</label>
+                           <input [(ngModel)]="entity.noOfVehicles" name="numofVehicle" class="form-control"
+                                type="text" disabled readonly />
+                        </div>
+
+                        <div class="mt-2">
+                            <dss-input label="PAN No" name="panno" [(ngModel)]="entity.panNo" [maxlength]="10"
+                                [styleCase]="'u'" [whiteSpace]="false" #panInput="ngModel"
+                                (ngModelChange)="validatePan(entity.panNo)">
+                            </dss-input>
+                            <div *ngIf="isInvalidPan" class="error">
+                                <p style="color: red; font-size: 10px;">A valid PAN must be in the format
+                                    `AAAAA9999A`.</p>
+                            </div>
+                        </div>
+                        <div>
+                            <label for="HUB">
+                                <input type="checkbox" id="huf" name="huf" [(ngModel)]="entity.ishuf">
+                                HUF
+                            </label>
+                        </div>
+
+                    </div>
+                    <div class="d-flex justify-content-center w-100">
+                        <div class="col-12 col-md-6 col-lg-6">
+
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 10%;">#</th>
+                                        <th class="text-center" scope="col">
+                                            Vehicle No</th>
+                                        <th class="text-center" scope="col">
+                                            Action
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th></th>
+                                        <th>
+                                            <dss-input name="vehicleNo" [(ngModel)]="reference.vehicleNo"
+                                                [styleCase]="'u'" [maxlength]="10" [whiteSpace]="false"></dss-input>
+                                        </th>
+
+                                        <th>
+                                            <button class="btn btn-light btn-sm" type="button" (click)="AddVehicle()">
+                                                <i class="fas fa-plus"></i></button>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody class="">
+
+                                    <tr *ngFor="let v of entity.mst10301s; let i=index;">
+                                        <td style="width: 10%;">{{ i + 1 }}</td>
+
+                                        <td>{{v.vehicleNo}}</td>
+
+                                        <td class="text-right">
+                                            <div class="ms-4">
+                                                <button class="btn btn-sm-custom-table" type="button"
+                                                    (click)="vehicledelete(v)">
+                                                    <i class="fas fa-trash"></i></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <hr>
+            <div class="container mt-3">
+                <div class="bg-light mb-2">
+                    <h5 class="m-0 p-2">Audit</h5>
+                </div>
+                <div class="mt-3 d-flex justify-content-between">
+                    <div>
+                        <label class="mb-0">Created User</label>
+                        <p>{{entity.createdUser}}</p>
+                    </div>
+
+                    <div>
+                        <label class="mb-0">Created Date</label>
+                        <p>{{entity.createdDt | date:'dd-MM-yyyy'}}</p>
+                    </div>
+
+                    <div>
+                        <label class="mb-0">Modified User</label>
+                        <p>{{entity.modifiedUser}}</p>
+                    </div>
+
+                    <div>
+                        <label class="mb-0">Modified Date</label>
+                        <p>{{entity.modifiedDt | date:'dd-MM-yyyy'}}</p>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+
+</div>

@@ -1,0 +1,33 @@
+ 
+
+  <main class="bg-primary py-2" *ngIf="ison">
+
+    <div class="row m-0">
+      <div class="col-11 text-white fw-bold">
+        {{title}}
+      </div>
+      <div class="col-1">
+        <span class="bi bi-x-lg pr-2 text-white" style="cursor: pointer;margin-right:5px" (click)="closemodal()"></span>
+
+      </div>
+    </div>
+
+  </main>
+
+  <div class="card m-0 shadow-none p-0"  id="report" style="overflow-y: hidden; height:calc(100vh - 150px);">
+    <div id="spinner"
+      style="text-align:center;position: relative;left:0; right:0; padding-left:0px; border:none;width:150px;height:150px"
+      *ngIf="!rpturl"><i style="font-size:80px;color:lightskyblue;text-align:center;margin-top:10%"
+        class="fa fa-refresh fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span>
+    </div>
+
+
+    <iframe id="ssrsiframe" style="overflow: hidden;" [src]="rpturl " (load)="onload()">
+    </iframe>
+
+    <div class="mask" *ngIf="bsspinner">
+      <i class="pei pei-spinner"></i>
+    </div>
+ 
+
+</div>

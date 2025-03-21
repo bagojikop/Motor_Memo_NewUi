@@ -1,0 +1,19 @@
+[
+    {
+        "cd": 1,
+        "nm": "*STANDARD*"
+    },
+    {
+        "cd": 2,
+        "nm": "Format 2"
+    },
+    {
+        "cd": 3,
+        "nm": "GSFC-KA"
+    }
+    ,
+    {
+        "cd": 4,
+        "nm": "GSFC-MH"
+    }
+]

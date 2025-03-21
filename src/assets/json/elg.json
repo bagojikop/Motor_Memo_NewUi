@@ -1,0 +1,18 @@
+[
+    {
+        "cd": "ip",
+        "nm": "Input"
+    },
+    {
+        "cd": "cp",
+        "nm": "Capital Goods"
+    },
+    {
+        "cd": "is",
+        "nm": "Input Services"
+    },
+    {
+        "cd": "no",
+        "nm": "Ineligilble"
+    }
+]

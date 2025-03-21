@@ -1,0 +1,14 @@
+[
+    {
+        "cd": 1,
+        "nm": "Stock Qty"
+    },
+    {
+        "cd": 2,
+        "nm": "Unit Qty"
+    },
+    {
+        "cd": 3,
+        "nm": "Packing Qty"
+    }
+]

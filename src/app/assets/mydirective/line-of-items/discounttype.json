@@ -1,0 +1,14 @@
+[
+    {
+      "id": 0,
+      "name": "Quantity"
+    },
+    {
+      "id": 1,
+      "name": "Alternate Quantity"
+    },
+    {
+      "id": 2,
+      "name": "Gross Amount (%)"
+    }
+  ]

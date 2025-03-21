@@ -1,0 +1,25 @@
+<label [ngClass]="name.errors?'text-danger' : ''" *ngIf="label">{{label}}</label>
+<ng-select #selectRef [(ngModel)]="ngModel" [items]="items" bindValue="{{bindValue}}" bindLabel="{{bindLabel}}"
+    (search)="OnSearch($event)" (open)="loadMore()" [clearOnBackspace]="true" (clear)="loadMore();" [clearable]="true"
+    (ngModelChange)="ngModelChange.emit($event)" [searchable]="true" [virtualScroll]="true" (scrollToEnd)="loadMore()"
+    [multiple]="multiple" (change)="onChange($event)"  #name="ngModel" [disabled]="disabled"
+    (blur)="OnBlur()" [required]="required"   
+    [addTag]="true" 
+    [ngClass]="{'no-margin': !applyMargins}">
+
+    <ng-template ng-label-tmp let-item="item">
+        <span>{{ getCombinedLabel(item) }}</span>
+    </ng-template>
+
+    <ng-template ng-option-tmp let-item="item" let-index="index">
+        <label class="h6">{{item[bindLabel]}}</label>
+        <div class="d-flex">
+            <div *ngFor="let x of bindSubObj ;let i=index">
+                <small class="text-success ms-2" style="font-size: 13px;">{{x.key}}</small> :
+                <small class="fst-bold text-success me-2" style="font-size: 13px;">
+                    {{subRowObj(item,x.value)}}
+                </small>{{ShowSeperator(i+1)}}
+            </div>
+        </div>
+    </ng-template>
+</ng-select>

@@ -1,0 +1,140 @@
+
+* {
+    font-family: "Roboto";
+    box-sizing: border-box;
+}
+
+
+.card {
+    width: 100%;
+    // height: calc(100vh - 91px);
+    // max-height: 800px;
+    border-radius: 0;
+    background-color: #ebebeb;
+}
+
+.card-header {
+    // padding: 5px;
+    // background-color: rgb(221, 219, 219);
+    height: 50px;
+    width: 100%;
+    z-index: 30;
+    position: sticky; 
+    // top:5px;  
+    // box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Adds shadow at the bottom */
+    // border-bottom: 1px solid rgba(163, 163, 163, 0.842);
+}
+
+
+
+.card-body {
+    width: 100%;
+    // height: calc(100vh - 100px);
+    padding: 0px;
+    // padding-top: 4px;
+     
+}
+
+
+.ms-n5 {
+    margin-left: 00px;
+}
+
+.ms-n1 {
+    margin-left: -9px;
+
+    border: none;
+}
+
+.fa {
+    padding-top: 5px;
+}
+
+.title {
+    padding-top: 1px;
+    text-align: center;
+    font-size: small;
+
+}
+
+.btun {
+    width: 120px;
+    text-align: center;
+    height: 15px;
+    font-size: medium;
+
+}
+
+.btn:hover {
+    background-color: #cecece;
+    opacity: 2;
+}
+
+.heading {
+    text-align: left;
+    padding: 1;
+    font-size: large;
+    font-weight: bold;
+}
+
+.img {
+    padding-top: 7px;
+    
+}
+
+.form-control1 {
+    width: 75px !important;
+    justify-content: center;
+}
+
+.form-control2 {
+    padding-top: 5px;
+    height: 28px !important;
+    width: 35px !important;
+    justify-content: center;
+}
+.modal_head{
+     
+     
+    margin: 1%;
+    background-color: #D8D6D6;
+ 
+}
+.header_modal{
+    padding: 0%;
+    text-align: left;
+    
+    font-size: large;
+    font-weight: bold;
+}
+
+@media (max-width: 992px) {
+
+    .resposiveHeader{
+        display: flex;
+        flex-direction: column;
+    }
+    .card-header {
+        // padding: 5px;
+        // background-color: rgb(221, 219, 219);
+        height: 150px;
+        width: 100%;
+        z-index: 30;
+        position: sticky; 
+        // top:5px;  
+        // box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Adds shadow at the bottom */
+        // border-bottom: 1px solid rgba(163, 163, 163, 0.842);
+    }
+    .exportBtns{
+        margin-left: 50px;
+    }
+    
+    
+}
+
+@media (max-width: 992px) {
+    .exportBtns{
+        margin-left: 80px;
+    }
+}
+ 

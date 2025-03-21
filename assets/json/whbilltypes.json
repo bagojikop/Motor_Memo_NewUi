@@ -1,0 +1,59 @@
+[
+    {
+        "cd": 4,
+        "nm": "Rake Clearing Against Activity With Gwn Uloading"
+    },
+    {
+        "cd": 5,
+        "nm": "Rake Clearing Against Activity  W/O.Gwn Unloading"
+    },
+    {
+        "cd": 7,
+        "nm": "Rake Clearing Comman Rate By Product"
+    },
+    {
+        "cd": 11,
+        "nm": "Rake Cealring Against Activity By Product"
+    },
+    {
+        "cd": 6,
+        "nm": "Local Transportation Summary"
+    },
+    {
+        "cd": 8,
+        "nm": "Local Transportation by Product"
+    },
+    {
+        "cd": 9,
+        "nm": "Loading At Godown"
+    },
+    {
+        "cd": 10,
+        "nm": "Unloading At Godown"
+    },
+   
+    {
+        "cd": 12,
+        "nm": "Warehouse Handling & Storage Bill"
+    },
+    {
+        "cd": 13,
+        "nm": "Storage Bill Summery"
+    },
+    {
+        "cd": 14,
+        "nm": "Storage Bill Product Wise"
+    },
+    {
+        "cd": 15,
+        "nm": "Rake/Warehouse Handling & Storage Bill"
+    },
+    {
+        "cd": 16,
+        "nm": "Standardization"
+    },
+    {
+        "cd": 17,
+        "nm": "Other Bill"
+    }
+]

@@ -1,0 +1,29 @@
+<div class="p-0">
+  <ag-grid-angular #agGrid class="ag-theme-balham"  [style]="style"  [ngClass]="class" class="ag-theme-balham" [gridOptions]="gridOptions"
+    [rowData]="list" [columnDefs]="columns" [defaultColDef]="defaultColDef" [pagination]="false"
+    [paginationPageSize]="pageSize" (filterChanged)="onFilterChanged()" (gridReady)="onGridReady($event)"
+    (cellClicked)='onCellClicked($event)' (rowClicked)="onRowClicked($event)">
+  </ag-grid-angular>
+
+
+  <div class="pagination d-flex align-items-center">
+    <button class="btn btn-sm text-light" (click)="Init(1)">
+      <b><<</b> </button>
+
+        <button class="btn btn-sm text-light" (click)="moveback()" [disabled]="currentPage <= 1"> <b><</b> </button>
+            <!-- this.totalPages
+        <button   *ngFor="let page of getPagesArray()"
+          [class.active]="page === currentPage"
+          (click)="Init(page)"
+        >
+          {{ page }}
+        </button> -->
+            
+          <span class="mx-1">page</span> {{currentPage}} <span class="mx-1">of</span>{{totalPages}}
+
+
+
+            <button class="btn btn-sm text-light" (click)="movenext()" [disabled]="this.totalPages <= currentPage"> <b>></b> </button>
+            <button class="btn btn-sm text-light" (click)="Init(this.totalPages)"> <b>>></b> </button>
+  </div>
+</div>

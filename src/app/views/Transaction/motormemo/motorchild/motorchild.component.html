@@ -1,0 +1,921 @@
+<div>
+    <app-navactions [title]="'Lorry Receipt'" (myfn)="navbar($event)"></app-navactions>
+
+    <div class="from-body">
+        <div class="card-body mt-2">
+            <fieldset [disabled]="navactions.fieldset">
+                <form #motorchild="ngForm" (keydown.enter)="$event.preventDefault()" novalidate>
+                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                        <div class="container">
+                            <!-- <div class="d-flex w-md-50"> -->
+                            <div class="d-flex w-100">
+
+                                <div class="d-flex w-md-100 w-50 me-2">
+                                    <div class="d-flex-width">
+                                        <label>LR Number</label>
+                                        <input class="form-control" type="text" numberOnly autocomplete="off"
+                                            [(ngModel)]="entity.memoNo" name="memoNo" [maxlength]="10" disabled="true"
+                                            [minlength]="10">
+                                    </div>
+                                    <div class="gapInputFields">
+                                        <label for="">Date</label>
+                                        <input name="meDt" class="form-control" type="date" DTpicker finDate
+                                            #vchDate="ngModel" DTpicker [(ngModel)]="entity.dt"
+                                            [min]="this.provider.companyinfo.finyear.fdt"
+                                            [max]="this.provider.companyinfo.finyear.tdt">
+
+                                    </div>
+                                    <div class="gapInputFields">
+                                        <div>
+                                            <label for="search" [ngClass]="{'text-danger': !entity.vehicleNo }">
+                                                Vehicle No
+                                            </label>
+                                            <div class="search-box">
+                                                <input type="text" id="search" class="form-control"
+                                                    placeholder=" Enter Last 4  Digits " name="Vehiclenumb"
+                                                    [(ngModel)]="entity.vehicleNo" required autocomplete="off"
+                                                    (input)="entity.vehicleNo = entity.vehicleNo.toUpperCase()"
+                                                    (blur)="Vehiclenotab()">
+                                                <button type="button" class="btn btn-light" tabindex="-1"
+                                                    (click)="getVehicles()">
+                                                    <i class="bi bi-arrow-return-left"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="d-flex w-50 w-md-100">
+                                    <div class="d-flex-width">
+                                        <!-- <dss-input label="From" name="memofrom"  type="text" autocomplete="off"
+                                            [required]="true" [(ngModel)]="entity.from" [styleCase]="'u'"></dss-input> -->
+                                        <app-ngselect apiUrl="Place/getPlace" label="from" bindLabel="cityName"
+                                            bindValue="cityName" name="place" [(ngModel)]="entity.from"
+                                            autocomplete="off" [required]="true" [addNewText]="true"
+                                            [disabled]="navactions.fieldset"></app-ngselect>
+                                    </div>
+                                    <div class="gapInputFields">
+                                        <!-- <dss-input label="To" name="memoto" type="text" autocomplete="off"
+                                            [required]="true" [(ngModel)]="entity.to" [styleCase]="'u'"></dss-input> -->
+                                        <app-ngselect apiUrl="Place/getPlace" label="To" bindLabel="cityName"
+                                            bindValue="cityName" name="memoto" [(ngModel)]="entity.to"
+                                            autocomplete="off" [required]="true" [addNewText]="true"
+                                            [disabled]="navactions.fieldset"></app-ngselect>
+
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="container mt-3">
+                        <div class="d-flex">
+
+                            <div class="card w-50 m-1">
+                                <div class="card-header d-flex justify-content-between"
+                                    style="background-color: #e0e2e4">
+                                    <!-- <h5 class="m-0 p-2" >Sender</h5>
+                                    <button type="button" class="btn btn-light" (click)="SenderSavefun()" tabindex="-1"
+                                        [disabled]="!(isSenderClicked)">Save</button> -->
+                                    <h5 class="m-0 p-2"
+                                        [ngClass]="{'text-success': !SenderisClicked, 'text-danger': SenderisClicked}">
+                                        Sender</h5>
+                                    <button type="button" class="btn btn-light" (click)="SenderSavefun()" tabindex="-1"
+                                        [disabled]="!isSenderClicked">Save</button>
+
+                                </div>
+                                <div class="card-body">
+                                    <div class="d-flex">
+                                        <div class="d-flex-width">
+                                            <label for=""
+                                                [ngClass]="{'text-danger': sendergstinInput.invalid && sendergstinInput.value?.length !== 15}">GSTIN</label>
+                                            <div class="input-group mb-3">
+                                                <input type="text" class="form-control" name="SenderGstin"
+                                                    #sendergstinInput="ngModel"
+                                                    [(ngModel)]="entity.motormemoDetails.senderGstin" [maxlength]="15"
+                                                    [minlength]="15"
+                                                    (input)="entity.motormemoDetails.senderGstin = entity.motormemoDetails.senderGstin.toUpperCase()"
+                                                    autocomplete="off" aria-describedby="basic-addon5">
+                                                <button class="input-group-text" style="cursor: pointer;" tabindex="-1"
+                                                    id="basic-addon5" (click)="sendergstinfun()"><i
+                                                        class="bi bi-list"></i></button>
+                                            </div>
+                                        </div>
+                                        <div class="gapInputFields">
+                                            <label>Mobile No</label>
+                                            <div class="input-group mb-3">
+                                                <input type="text" class="form-control" name="sendMobileNo"
+                                                    [(ngModel)]="entity.motormemoDetails.senderMobileNo"
+                                                    [maxlength]="12" autocomplete="off" aria-describedby="basic-addon4">
+                                                <button class="input-group-text" style="cursor: pointer;" tabindex="-1"
+                                                    id="basic-addon4" (click)="sendergstinfun()"><i
+                                                        class="bi bi-list"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class=" ">
+                                        <label for="">Sender Name</label>
+                                        <div class="input-group mb-3">
+                                            <input type="text" class="form-control" name="SenderName" autocomplete="off"
+                                                [(ngModel)]="entity.motormemoDetails.senderName"
+                                                aria-describedby="basic-addon2">
+                                            <button class="input-group-text" style="cursor: pointer;" id="basic-addon2"
+                                                tabindex="-1" (click)="Senderfuncion()"> <i
+                                                    class="bi bi-list"></i></button>
+                                        </div>
+                                    </div>
+
+                                    <dss-input id="w3review" label="Sender Address" name="sendAddress1"
+                                        [maxlength]="100" [(ngModel)]="entity.motormemoDetails.senderAddress1"
+                                        inputType="textarea" [rows]="2" [cols]="50" autocomplete="off"
+                                        (ngModelChange)="entity.motormemoDetails.senderAddress1=$event">
+                                    </dss-input>
+                                    <div class="d-flex">
+                                        <div class="d-flex-width">
+                                            <label>Pin Code</label>
+                                            <input class="form-control" type="text" numberOnly autocomplete="off"
+                                                [(ngModel)]="entity.motormemoDetails.senderPin" name="sendpin"
+                                                [maxlength]="6" [minlength]="6">
+                                        </div>
+                                        <div class="gapInputFields">
+                                            <app-ngselect apiUrl="state/getStates" label="State" bindLabel="stateName"
+                                                bindValue="stateCode" name="senderStateId"
+                                                [(ngModel)]="entity.motormemoDetails.senderStateId"
+                                                [disabled]="navactions.fieldset" autocomplete="off"
+                                                [defaultProperty]="entity.senderStateId" #senderStateId="ngModel"
+                                                [required]="true"></app-ngselect>
+                                        </div>
+                                    </div>
+                                    <dss-input label="Email" type="email" name="senderemail" autocomplete="off"
+                                        [(ngModel)]="entity.motormemoDetails.senderMail" [maxlength]="50"
+                                        (input)="entity.motormemoDetails.senderMail = entity.motormemoDetails.senderMail.toLowerCase()">
+                                    </dss-input>
+                                    <div class="d-flex">
+                                        <div class="d-flex-width">
+                                            <label for=""
+                                                [ngClass]="{'text-danger': !entity.motormemoDetails.senderBillNo }">Document
+                                                No</label>
+                                            <input type="text" numberOnly class="form-control" autocomplete="off"
+                                                [(ngModel)]="entity.motormemoDetails.senderBillNo" name="sendBillNo"
+                                                [maxlength]="10" required>
+                                        </div>
+                                        <div class="gapInputFields">
+                                            <label for=""
+                                                [ngClass]="{'text-danger': !entity.motormemoDetails.senderBillDt }">Document
+                                                Date</label>
+                                            <input label="Document Date" type="date" class="form-control"
+                                                [(ngModel)]="entity.motormemoDetails.senderBillDt" name="BillDT"
+                                                [maxlength]="10" autocomplete="off"
+                                                [max]="this.provider.companyinfo.finyear.tdt">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card w-50 m-1">
+                                <div class="card-header d-flex justify-content-between"
+                                    style="background-color: #e0e2e4">
+                                    <h5 class="m-0 p-2"
+                                        [ngClass]="{'text-success': !ReceiverisClicked, 'text-danger': ReceiverisClicked}">
+                                        Receiver</h5>
+                                    <button type="button" class="btn btn-light" (click)="ReceiverSavefun()"
+                                        tabindex="-1" [disabled]="!(isReceiverClicked )">
+                                        Save
+                                    </button>
+                                </div>
+                                <div class="card-body">
+                                    <div class="d-flex ">
+                                        <div class="d-flex-width">
+                                            <label for=""
+                                                [ngClass]="{'text-danger': gstinInput.invalid && gstinInput.value?.length !== 15}">GSTIN</label>
+                                            <div class="input-group mb-3">
+                                                <input type="text" class="form-control" name="ReceivGstin"
+                                                    #gstinInput="ngModel"
+                                                    [(ngModel)]="entity.motormemoDetails.receiverGstin" [maxlength]="15"
+                                                    [minlength]="15"
+                                                    (input)="entity.motormemoDetails.receiverGstin = entity.motormemoDetails.receiverGstin.toUpperCase()"
+                                                    autocomplete="off" aria-describedby="basic-addon6">
+                                                <span class="input-group-text" style="cursor: pointer;"
+                                                    id="basic-addon6" (click)="Recevergstin()"> <i
+                                                        class="bi bi-list"></i></span>
+                                            </div>
+                                        </div>
+                                        <div class="gapInputFields">
+                                            <label>Mobile No</label>
+                                            <div class="input-group mb-3">
+                                                <input type="text" class="form-control" name="recivMobileNo"
+                                                    [(ngModel)]="entity.motormemoDetails.receiverMobileNo"
+                                                    [maxlength]="12" numberOnly autocomplete="off"
+                                                    aria-describedby="basic-addon7">
+                                                <span class="input-group-text" style="cursor: pointer;"
+                                                    id="basic-addon7" (click)="Recevergstin()"> <i
+                                                        class="bi bi-list"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label for="">Receiver Name</label>
+                                        <div class="input-group mb-3">
+                                            <input type="text" class="form-control" name="receiverName"
+                                                [(ngModel)]="entity.motormemoDetails.receiverName" autocomplete="off"
+                                                aria-label="Recipient's username" aria-describedby="basic-addon2">
+                                            <span class="input-group-text" style="cursor: pointer;" id="basic-addon2"
+                                                (click)="receiverfuncion()"> <i class="bi bi-list"></i></span>
+                                        </div>
+                                    </div>
+
+                                    <dss-input id="w3review" label="Receiver Address" name="receivAddress"
+                                        [maxlength]="100" [(ngModel)]="entity.motormemoDetails.receiverAddress"
+                                        inputType="textarea" [rows]="2" [cols]="50" autocomplete="off"
+                                        (ngModelChange)="entity.motormemoDetails.receiverAddress=$event">
+                                    </dss-input>
+                                    <div class="d-flex">
+                                        <div class="d-flex-width">
+                                            <label>Pin Code</label>
+                                            <input class="form-control" type="text" numberOnly autocomplete="off"
+                                                [(ngModel)]="entity.motormemoDetails.receiverPin" name="receiverPin"
+                                                [maxlength]="6" [minlength]="6">
+                                        </div>
+                                        <div class="gapInputFields">
+                                            <app-ngselect apiUrl="state/getStates" label="State" bindLabel="stateName"
+                                                bindValue="stateCode" name="receivStateId"
+                                                [(ngModel)]="entity.motormemoDetails.receiverStateId"
+                                                [defaultProperty]="entity.receiverStateId" autocomplete="off"
+                                                [disabled]="navactions.fieldset" #receivStateId="ngModel"
+                                                [required]="true"></app-ngselect>
+                                        </div>
+                                    </div>
+                                    <dss-input label="Email" type="email" name="email" autocomplete="off"
+                                        [(ngModel)]="entity.motormemoDetails.receiverMail" [maxlength]="50"
+                                        (input)="entity.motormemoDetails.receiverMail = entity.motormemoDetails.receiverMail.toLowerCase()">
+                                    </dss-input>
+                                    <div class="d-flex">
+                                        <div class="d-flex-width">
+                                            <dss-input label="E-Way No" type="text" autocomplete="off"
+                                                [(ngModel)]="entity.motormemoDetails.ewayNo" name="receivewayNo"
+                                                [maxlength]="10" [minlength]="8">
+                                            </dss-input>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="container mt-3">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="m-0 p-2">Commodity</h5>
+                            </div>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center" scope="col" style="width: 20%;">
+                                            <b>Commodity</b>
+                                        </th>
+                                        <th class="text-center" scope="col" style="width: 10%;">
+                                            <b>UOM</b>
+                                        </th>
+                                        <th class="text-center" scope="col" style="width: 10%;">
+                                            <b>QTY</b>
+                                        </th>
+                                        <th class="text-center" scope="col" style="width: 10%;">
+                                            <b>Chrg.Weight</b>
+                                        </th>
+                                        <th class="text-center" scope="col" style="width: 10%;">
+                                            <b>Act.Weight</b>
+                                        </th>
+                                        <th class="text-center" scope="col" style="width: 10%;">
+                                            <b>Rate</b>
+                                        </th>
+                                        <th class="text-center" scope="col" style="width: 10%;">
+                                            <b>Freight</b>
+                                        </th>
+                                        <th class="text-center" scope="col" style="width: 10%;">
+                                            <b>Action</b>
+                                        </th>
+                                    </tr>
+
+                                    <tr>
+                                        <th style="width: 20%;">
+                                            <div class="input-group ">
+                                                <!-- <input type="text" class="form-control" name="commodity1"
+                                                    [maxlength]="15" [(ngModel)]="cmod.commodity" autocomplete="off"
+                                                    aria-describedby="basic-addon3">
+                                                <span class="input-group-text" id="basic-addon3">
+                                                    <i class="bi bi-list" (click)="commodityfuncion()"></i>
+                                                </span> -->
+                                                <app-ngselect style="width: 100%;" apiUrl="productinfo/getList"
+                                                    bindLabel="iName" bindValue="iName" name="commodity1"
+                                                    [(ngModel)]="cmod.commodity" #unit="ngModel"
+                                                    [addNewText]="true"></app-ngselect>
+                                            </div>
+                                        </th>
+                                        <th>
+
+                                            <!-- <input type="text" class="form-control" name="uom1" [maxlength]="15"
+                                                    [(ngModel)]="cmod.uom" aria-describedby="basic-addon3"
+                                                    autocomplete="off"
+                                                    (ngModelChange)="cmod.uom = cmod.uom.toUpperCase()">
+                                                <span class="input-group-text" id="basic-addon3"><i class="bi bi-list"
+                                                        (click)="Uomfuncion()"></i></span> -->
+                                            <app-ngselect style="width: 100%;" apiUrl="Unit/getUnit" name="uom1"
+                                                bindLabel="unitName" bindValue="unitName" [(ngModel)]="cmod.uom"
+                                                [addNewText]="true"></app-ngselect>
+
+                                            <!-- <dss-grid [columns]="columns" url="Unit/getUnit" [gridOptions]="gridOption.gridOptions" 
+                                                         (gridApi)="onGridReady($event)"  
+                                                        ></dss-grid>-->
+
+                                        </th>
+                                        <th>
+                                            <input name="qty1" [maxlength]="7" [(ngModel)]="cmod.qty"
+                                                class="form-control" digitOnly autocomplete="off" />
+                                        </th>
+                                        <th>
+                                            <input name="chrgWeight1" class="form-control" [maxlength]="7" digitOnly
+                                                [(ngModel)]="cmod.chrgWeight" autocomplete="off"
+                                                (ngModelChange)="calculateFreight()" />
+                                        </th>
+                                        <th>
+                                            <input class="form-control" name="actWeight1" [maxlength]="7" digitOnly
+                                                [(ngModel)]="cmod.actWeight" autocomplete="off" />
+                                        </th>
+                                        <th>
+                                            <!-- <input class="form-control" name="rate1" [maxlength]="7"
+                                                style="text-align: right;" [(ngModel)]="cmod.rate"
+                                                (ngModelChange)="calculateFreight()" digitOnly CurrencyMask fraction="2"
+                                                autocomplete="off" /> -->
+                                            <input class="form-control" name="rate1" [maxlength]="7"
+                                                style="text-align: right;" [(ngModel)]="cmod.rate"
+                                                (ngModelChange)="calculateFreight();" digitOnly CurrencyMask
+                                                fraction="2" autocomplete="off" #rateInput />
+                                            <!-- moveToNext($event, addButton) -->
+                                        </th>
+
+                                        <th>
+                                            <input class="form-control" name="freight1" [(ngModel)]="cmod.freight"
+                                                digitOnly CurrencyMask fraction="2" style="text-align: right;"
+                                                tabindex="-1" [readonly]="true" autocomplete="off" />
+                                        </th>
+                                        <th>
+                                            <button class="btn btn-light btn-sm" (click)="addgstTablerow()"
+                                                type="button" tabindex="0" #addButton>
+                                                <i class="fas fa-plus"></i>
+                                            </button>
+
+                                        </th>
+                                    </tr>
+
+                                </thead>
+                                <tbody class="actionTableHeight">
+                                    <div *ngIf="!entity?.motormemoCommodities || entity.motormemoCommodities.length === 0"
+                                        class="noDataImg">
+                                        <img src="../../../../../../assets/IMG/noData.png" width="50">
+                                        <p>Record is empty</p>
+                                    </div>
+
+                                    <tr *ngFor="let v of entity.motormemoCommodities;let i=index;">
+                                        <td style="width: 20%; text-align: left;">{{v.commodity}}</td>
+                                        <td>{{v.uom}}</td>
+                                        <td>{{v.qty}}</td>
+                                        <td>{{v.chrgWeight}}</td>
+                                        <td>{{v.actWeight}}</td>
+                                        <td style="text-align: right;">{{v.rate | number:'1.2-2'}}</td>
+                                        <td style="text-align: right;">{{v.freight | number:'1.2-2'}}</td>
+
+                                        <td class="text-center">
+                                            <button class="btn btn-primary btn-sm-custom-table me-1" type="button"
+                                                tabindex="-1" (click)="editgstTablerow(v,i)">
+                                                <i class="fas fa-edit"></i></button>
+                                            <button class="btn btn-danger btn-sm-custom-table" type="button"
+                                                tabindex="-1" (click)="deletegstTablerow(i)">
+                                                <i class="fas fa-trash"></i></button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td class="p-1 text-end">Total</td>
+                                        <td style="text-align: right;"> ₹ {{entity.TotalFreight |
+                                            number:'1.2-2'}}</td>
+                                        <td></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+
+                    </div>
+
+
+                    <div class="container mt-3">
+                        <form #otherchages="ngForm" class="needs-validation">
+                            <div class="card">
+                                <div class="card-header d-flex justify-content-between">
+                                    <h5 class="m-0 p-2">Debited To</h5>
+                                    <input type="text" style="width: 8rem;" class="form-control text-end"
+                                        name="totaldebitadd" [(ngModel)]="entity.totaldebitadd" autocomplete="off"
+                                        [disabled]="true" #totaldebitadd="ngModel" digitOnly CurrencyMask fraction="2"
+                                        (ngModelChange)="debittoamt()">
+                                </div>
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center" scope="col" style="width: 30%;">
+                                                <b>Other charges</b>
+                                            </th>
+                                            <th class="text-center" scope="col" style="width: 30%;">
+                                                <b>Account</b>
+                                            </th>
+                                            <th class="text-center" scope="col" style="width: 18%;">
+                                                <b>Amount</b>
+                                            </th>
+                                            <th class="text-center" scope="col" style="width: 12%;">
+                                                <b>Action</b>
+                                            </th>
+                                        </tr>
+
+                                        <tr>
+                                            <th>
+                                                <div>
+                                                    <app-ngselect apiUrl="Expense/getExpAcclist" class="p-0 text-start"
+                                                        bindLabel="expenseName" bindValue="expaccCode"
+                                                        name="otherExpensName" [(ngModel)]="other.expaccCode"
+                                                        (change)="onSelectotherExpacc($event)"
+                                                        [disabled]="navactions.fieldset" autocomplete="off" #f="ngModel"
+                                                        [applyMargins]="false"></app-ngselect>
+                                                </div>
+                                            </th>
+                                            <th style="width: 30%;">
+                                                <app-ngselect apiUrl="Account/getsupplier" class="p-0 text-start"
+                                                    bindLabel="accName" bindValue="accCode" name="otheraccountname"
+                                                    [(ngModel)]="other.accCode" (change)="onSelecotheracc($event)"
+                                                    (change)="other.accCodeNavigation=$event"
+                                                    [disabled]="navactions.fieldset" autocomplete="off" #f="ngModel"
+                                                    [defaultProperty]="other.accCodeNavigation"
+                                                    [applyMargins]="false"></app-ngselect>
+                                            </th>
+                                            <th style="width: 18%;">
+                                                <div>
+                                                    <input class="form-control" type="text" name="charges" digitOnly
+                                                        CurrencyMask fraction="2" [(ngModel)]="other.otherchag"
+                                                        [maxlength]="10" autocomplete="off">
+                                                </div>
+                                            </th>
+
+                                            <th class="text-center" style="width: 12%;">
+                                                <button class="btn btn-light btn-sm text-center" type="button"
+                                                    (click)="otherdataAdd()">
+
+                                                    <i class="fas fa-plus"></i>
+                                                </button>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="actionTableHeight">
+                                        <div *ngIf="!entity?.motormemoOtherCharges || entity.motormemoOtherCharges.length === 0"
+                                            class="noDataImg">
+                                            <img src="../../../../../../assets/IMG/noData.png" width="50">
+                                            <p>Record is empty</p>
+                                        </div>
+
+                                        <tr *ngFor="let v of entity.motormemoOtherCharges;let i=index;">
+                                            <td style="width: 28%;">{{v.expense?.expenseName}}</td>
+                                            <td style="width: 28%;">{{v.accCodeNavigation?.accName}}</td>
+                                            <td style="width: 18%; text-align: right; ">{{v.otherchag | number:'1.2-2'}}
+                                            </td>
+                                            <td class="text-center" style="width: 12%;">
+                                                <button class="btn btn-primary btn-sm-custom-table me-1" type="button"
+                                                    tabindex="-1" (click)="editOtherTablerow(v,i)">
+                                                    <i class="fas fa-edit"></i></button>
+                                                <button class="btn btn-danger btn-sm-custom-table" type="button"
+                                                    tabindex="-1" (click)="deleteOtherTablerow(i)">
+                                                    <i class="fas fa-trash"></i></button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td class="p-1 text-end" style="width: 28%;"></td>
+                                            <td class="p-1 text-end" style="width: 28%;">Total</td>
+                                            <td class="p-1 text-end" style="width: 18%;"> ₹ {{entity.totalothercharges |
+                                                number:'1.2-2'}}</td>
+                                            <td style="width: 12%;"></td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="container mt-3">
+                        <div class="d-flex flex-column">
+                            <div class="d-flex">
+                                <div style="width: 10rem;">
+                                    <label for="">Freight Type</label>
+                                    <!-- <select class="form-select select-wrapper" name="selectfreightType"
+                                        [(ngModel)]="entity.selectfreightType" (change)="calculateAmounts()">
+                                        <option *ngFor="let x of freightTypeList" [value]="x.id">{{x.name}}</option>
+                                    </select> -->
+                                    <select class="form-select select-wrapper" name="selectfreightType"
+                                        [(ngModel)]="entity.selectfreightType" (change)="calculateAmounts()">
+                                        <option [value]=0>FOR</option>
+                                        <option [value]=1>EX</option>
+                                        <option [value]=2>To be Billed</option>
+                                    </select>
+                                    <!-- {{entity.selectfreightType}} -->
+                                </div>
+                                <div style="width: 15rem;" class="ms-3">
+                                    <label for="">Sender Account</label>
+                                    <app-ngselect apiUrl="Account/getsupplier" bindLabel="accName" bindValue="accCode"
+                                        name="senderAccount" class="text-start"
+                                        [(ngModel)]="entity.motormemoDetails.senderAccount"
+                                        [disabled]="navactions.fieldset" autocomplete="off"
+                                        [defaultProperty]="entity.senderaccount" [applyMargins]="false"></app-ngselect>
+                                </div>
+                                <div class="ms-3">
+                                    <label for="">Sender Amount</label>
+                                    <input type="text" style="width: 10rem;" class="form-control text-end"
+                                        name="senderAmount" [(ngModel)]="entity.motormemoDetails.senderAmount"
+                                        CurrencyMask fraction="2" (ngModelChange)="OnchangeDebitAm()"
+                                        [disabled]="!entity.motormemoDetails.receiverAccount" autocomplete="off">
+
+                                </div>
+                                <div class="ms-5" style="width: 15rem; ">
+                                    <label for="">Receiver Account</label>
+                                    <app-ngselect apiUrl="Account/getsupplier" class="p-0 text-start"
+                                        bindLabel="accName" bindValue="accCode" name="receiverAccount"
+                                        [(ngModel)]="entity.motormemoDetails.receiverAccount"
+                                        [disabled]="navactions.fieldset" autocomplete="off"
+                                        [defaultProperty]="entity.receiveraccout" [applyMargins]="false"></app-ngselect>
+                                </div>
+                                <div class="ms-3">
+                                    <label for="">Receiver Amount</label>
+                                    <input type="text" style="width: 10rem;" class="form-control text-end"
+                                        name="receiverAmount" [(ngModel)]="entity.motormemoDetails.receiverAmount"
+                                        CurrencyMask fraction="2"
+                                        [disabled]="!entity.motormemoDetails.receiverAccount || true"
+                                        (change)="calculateAmounts()" autocomplete="off">
+                                </div>
+                                <div class="ms-4 d-flex align-items-center justify-content-center w-auto">
+                                    <input type="checkbox" name="Directcheckbox" [(ngModel)]="entity.Directpaid"
+                                        (change)="onCheckboxChange($event)">
+                                    <p class="mb-0 ms-2">Direct Paid to Vehicle Owner</p>
+                                </div>
+                                <!-- <div class="ms-4 d-flex align-items-center justify-content-center w-auto">
+                                    <input type="checkbox" name="Directcheckbox">
+                                    <p for="" class="mb-0 ms-2">Direct Paid to Vehicle Owner</p>
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr>
+                    <div class="container mt-3">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="m-0 p-2">Expenses</h5>
+                            </div>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center" scope="col" style="width: 24%;">
+                                            <b>Expense</b>
+                                        </th>
+                                        <th class="text-center" scope="col" style="width: 26%;">
+                                            <b>Account</b>
+                                        </th>
+                                        <th class="text-center" scope="col" style="width: 18%;">
+                                            <b>Amount</b>
+                                        </th>
+                                        <th class="text-center" scope="col" style="width: 12%;">
+                                            <b>Operation</b>
+                                        </th>
+                                        <th style="width: 8%;"> <b>Include Freight </b></th>
+                                        <th class="text-center" scope="col" style="width: 12%;">
+                                            <b>Action</b>
+                                        </th>
+                                    </tr>
+
+                                    <tr>
+
+                                        <th style="width: 24%;">
+
+                                            <app-ngselect apiUrl="Expense/getExpAcclist" class="p-0 text-start"
+                                                bindLabel="expenseName" bindValue="expaccCode" name="ExpensName"
+                                                [(ngModel)]="exp.expaccCode" (change)="onSelectExp($event)"
+                                                [disabled]="navactions.fieldset" autocomplete="off" #f="ngModel"
+                                                [applyMargins]="false"></app-ngselect>
+
+                                        </th>
+                                        <th style="width: 26%;">
+                                            <app-ngselect apiUrl="Account/getsupplier" class="p-0 text-start"
+                                                bindLabel="accName" bindValue="accCode" name="accountname"
+                                                (change)="exp.accCodeNavigation=$event;onSelectAcc($event)"
+                                                [(ngModel)]="exp.accCode" [disabled]="navactions.fieldset"
+                                                autocomplete="off" #f="ngModel" [applyMargins]="false"
+                                                [defaultProperty]="exp.accCodeNavigation"></app-ngselect>
+                                        </th>
+                                        <th style="width: 18%;">
+
+                                            <input class="form-control" type="text" name="charges" digitOnly
+                                                CurrencyMask fraction="2" #f="ngModel" [(ngModel)]="exp.charges"
+                                                [maxlength]="12" autocomplete="off">
+                                            <!-- (ngModelChange)="moveToNext($event, addButton)" -->
+                                        </th>
+                                        <th style="width: 12%;">
+                                            <div class="select-dropdown">
+                                                <select class="form-select select-wrapper" name="sssaction"
+                                                    [(ngModel)]="exp.action">
+                                                    <option [value]="1" [disabled]="isDirectChecked">Add</option>
+                                                    <option [value]="0" [disabled]="isDirectChecked">Deduct</option>
+                                                    <option [value]="2">Billed</option>
+                                                </select>
+                                            </div>
+
+                                        </th>
+                                        <th style="width: 8%;">
+                                            <input type="checkbox" name="expensesisChecked"
+                                                [(ngModel)]="exp.expensesisChecked" />
+                                        </th>
+                                        <th class="text-center" style="width: 12%;">
+                                            <button class="btn btn-light btn-sm text-center"
+                                                (click)="updateTotalCharges()" type="button" tabindex="0" #addButton>
+                                                <i class="fas fa-plus"></i>
+                                            </button>
+                                        </th>
+
+                                    </tr>
+                                </thead>
+                                <tbody class="actionTableHeight">
+                                    <div *ngIf="!entity?.motormemoExpenses || entity.motormemoExpenses.length === 0"
+                                        class="noDataImg">
+                                        <img src="../../../../../../assets/IMG/noData.png" width="50">
+                                        <p>Record is empty</p>
+                                    </div>
+
+                                    <tr *ngFor="let v of entity.motormemoExpenses;let i=index;">
+                                        <td style="width: 24%;">{{v.expense?.expenseName}}</td>
+                                        <td style="width: 26%;">{{v.accCodeNavigation?.accName }}</td>
+                                        <td style="width: 16%; text-align: right; ">{{v.charges | number:'1.2-2'}}
+                                        </td>
+                                        <td style="width: 12%;">{{ getSelectOptionLabel(v.action) }}</td>
+                                        <td style="width: 8%;">
+                                            <input type="checkbox" [checked]="v.expensesisChecked" tabindex="-1"
+                                                [(ngModel)]="v.expensesisChecked" disabled>
+                                        </td>
+
+                                        <td class="text-center" style="width: 12%;">
+                                            <button class="btn btn-primary btn-sm-custom-table me-1" type="button"
+                                                tabindex="-1" (click)="editExpTablerow(v,i)">
+                                                <i class="fas fa-edit"></i></button>
+                                            <button class="btn btn-danger btn-sm-custom-table" type="button"
+                                                tabindex="-1" (click)="deleteExpTablerow(i)">
+                                                <i class="fas fa-trash"></i></button>
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td style="width: 24%;"></td>
+                                        <td class="p-1 text-end" style="width: 26%;">Total</td>
+                                        <td class="p-1 text-end" style="width: 18%;"> ₹ {{entity.totalcharges |
+                                            number:'1.2-2'}}</td>
+                                        <th style="width: 12%;"></th>
+                                        <td style="width: 8%;"></td>
+                                        <td style="width: 12%;"></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+
+                    </div>
+                    <!-- <input type="text" class="form-control" [value]="getTotalCharges()" readonly> -->
+
+                    <div class="container mb-4 mt-3">
+                        <div class="d-flex ">
+                            <div style="width: 15rem;">
+                                <label for="">Vehicle Account</label>
+                                <app-ngselect apiUrl="Account/getsupplier" class="p-0 text-start" bindLabel="accName"
+                                    bindValue="accCode" name="ownerAccount"
+                                    (change)="entity.motormemoDetails.accCodeNavigation=$event"
+                                    [(ngModel)]="entity.motormemoDetails.ownerAccount" [disabled]="navactions.fieldset"
+                                    autocomplete="off" [defaultProperty]="entity.oweraccount"
+                                    [applyMargins]="false"></app-ngselect>
+                            </div>
+
+                            <div style="width: 10rem;" class="ms-4">
+                                <label for="">Freight Amount</label>
+                                <input type="text" class="form-control" name="FreightAmount" digitOnly CurrencyMask
+                                    fraction="2" [(ngModel)]="entity.freightdeductAmount" [disabled]="true"
+                                    (change)="freightAmountsum()">
+                            </div>
+                            <div style="width: 10rem;" class="ms-4">
+                                <label for="">Advance Amount</label>
+                                <input type="text" class="form-control" name="advanceAmount" digitOnly CurrencyMask
+                                    fraction="2" [(ngModel)]="entity.advanceAmount" [disabled]="true">
+                            </div>
+
+                            <div style="width: 10rem;" class="ms-4">
+                                <label for="">Left Amount</label>
+                                <input type="text" class="form-control" name="ownerCreditAmout" digitOnly CurrencyMask
+                                    fraction="2" [(ngModel)]="entity.ownerCreditAmout" [disabled]="true"
+                                    (Change)="totalcreditamount()">
+                            </div>
+
+                            <div style="width: 10rem;" class="ms-4">
+                                <label for="">Billed Amount</label>
+                                <input type="text" class="form-control" name="buildtotalamt" digitOnly CurrencyMask
+                                    fraction="2" [(ngModel)]="entity.buildtotalamt" [disabled]="true">
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="container ">
+                        <div class="bg-light mb-2">
+                            <h5 class="m-0 p-2">Receipt</h5>
+                        </div>
+                        <div class="mt-3 d-flex ">
+                            <div style="width: 15rem; margin-right: 5rem;">
+                                <label class="mb-0">No</label>
+                                <p>{{entity.acc003s?.txnNo}}</p>
+                            </div>
+
+                            <div style="width: 15rem;">
+                                <label class="mb-0">Date</label>
+                                <p>{{entity.acc003s?.txnDate | date:'dd-MM-yyyy'}}</p>
+                            </div>
+
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="container ">
+                        <div class="bg-light mb-2">
+                            <h5 class="m-0 p-2">Audit</h5>
+                        </div>
+                        <div class="mt-3 d-flex justify-content-between">
+                            <div>
+                                <label class="mb-0">Created User</label>
+                                <p>{{entity.motormemoAudit.createdUser}}</p>
+                            </div>
+
+                            <div>
+                                <label class="mb-0">Created Date</label>
+                                <p>{{entity.motormemoAudit.createdDt | date:'dd-MM-yyyy'}}</p>
+                            </div>
+
+                            <div>
+                                <label class="mb-0">Modified User</label>
+                                <p>{{entity.motormemoAudit.modifiedUser}}</p>
+                            </div>
+
+                            <div>
+                                <label class="mb-0">Modified Date</label>
+                                <p>{{entity.motormemoAudit.modifiedDt | date:'dd-MM-yyyy'}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </fieldset>
+        </div>
+
+    </div>
+</div>
+
+
+<!-- Modal  Vehicle No-->
+<div class="modal fade" id="exampleModal" tabindex="-1" data-bs-backdrop="static" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Vehicle list</h5>
+            </div>
+            <div class="modal-body p-0" style="height: calc(100vh - 250px);">
+                <table class="table border table-hover">
+                    <thead>
+                        <tr>
+                            <th style="width: 20px;">#</th>
+                            <th scope="col">Vehicle Numbers</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let v of reference;let i=index;" (click)="onRowClick(v)">
+                            <td style="width: 5rem; text-align: center;">{{ i +
+                                1 }}</td>
+                            <td>{{ v.vehicleNo }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!--Sender Modal -->
+<div class="modal fade" id="SenderModal" tabindex="-1" data-bs-backdrop="static" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header d-flex justify-content-between">
+                <h5 class="modal-title" id="exampleModalLabel">Sender List</h5>
+
+                <div class="d-flex align-items-center me-3">
+                    <input type="text" class="form-control me-5" placeholder="Search Sender..."
+                        [(ngModel)]="onserchinput" (input)="onserchvender()">
+
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+            </div>
+            <div class="modal-body p-0" style="height: calc(100vh - 250px);">
+                <table class="table border table-hover">
+                    <thead>
+                        <tr>
+                            <th style="width: 20px;">#</th>
+                            <th scope="col">Sender Name</th>
+                            <th scope="col">Sender State</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let v of filteredSenders | paginate: { itemsPerPage:pageSize,totalItems:this.totalCount,  currentPage: page }; let i = index"
+                            (click)="Senderclick(v)">
+                            <td style="width: 5rem;">{{ (page - 1) * pageSize +
+                                i + 1 }}</td>
+                            <td style="text-align: left;">{{ v.name }}</td>
+                            <td style="text-align: left;">{{
+                                v.state?.stateName}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+            <div class="modal-footer">
+                <pagination-controls (pageChange)="onPageChange($event)"></pagination-controls>
+                <!-- <button type="button" class="btn btn-secondary btn-sm"
+                         data-bs-dismiss="modal">Close</button> -->
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--Receiver Modal -->
+<div class="modal fade" id="Modal" tabindex="-1" data-bs-backdrop="static" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header d-flex justify-content-between">
+                <h5 class="modal-title" id="exampleModalLabel">Receiver list
+                </h5>
+
+                <div class="d-flex align-items-center me-3">
+                    <input type="text" class="form-control me-5" placeholder="Search Sender..."
+                        [(ngModel)]="onserchinput" (input)="onserchvender()">
+
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+            </div>
+            <div class="modal-body p-0" style="height: calc(100vh - 250px);">
+                <table class="table border table-hover">
+                    <thead>
+                        <tr>
+                            <th style="width: 20px;">#</th>
+                            <th scope="col">Receiver Name</th>
+                            <th scope="col">State Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let v of reference | paginate: { itemsPerPage:pageSize,totalItems:this.totalCount,  currentPage: page }; let i = index"
+                            (click)=" receivclick(v)">
+                            <td style="width: 5rem;">{{ i + 1 }}</td>
+                            <td style="text-align: left;">{{ v.name }}</td>
+                            <td style="text-align: left;">{{
+                                v.state?.stateName}}</td>
+
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <pagination-controls (pageChange)="onPageChange($event)"></pagination-controls>
+            </div>
+        </div>
+    </div>
+</div>

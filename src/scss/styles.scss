@@ -1,0 +1,478 @@
+/* You can add global styles to this file, and also import other style files */
+
+// If you want to override variables do it here
+@import "variables";
+
+// Import styles with default layout.
+@import "@coreui/coreui/scss/coreui";
+
+// Import Chart.js custom tooltips styles
+@import "@coreui/chartjs/scss/coreui-chartjs";
+
+// Custom styles for this theme
+@import "theme";
+
+// Some temp fixes
+//@import "fixes";
+
+// If you want to add custom CSS you can put it here.
+@import "custom";
+
+// Examples
+// We use those styles to show code examples, you should remove them in your application.
+@import "examples";
+
+.heightMasterPage {
+    display: block;
+    height: calc(100vh - 197px);
+    min-height: 450px;
+  
+  }
+ 
+
+@import "ag-grid-community/styles/ag-grid.css";
+@import "ag-grid-community/styles/ag-theme-balham.css";
+
+//@import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+//bootstrap 5 link 
+//fort awesome icons 
+ 
+ 
+
+* {
+  // font-family: "Roboto", sans-serif;
+  font-family: "Roboto";
+  font-weight: 200;
+  font-size: 0.9rem;
+}
+
+dss-input[name="vehicleNo"] {
+  input {
+    margin-top: 0px !important;
+    margin-bottom: 1px !important;
+  }
+}
+
+dss-input[name="commodity1"] input,
+dss-input[name="uom1"] input,
+dss-input[name="qty1"] input,
+dss-input[name="chrgWeight1"] input,
+dss-input[name="actWeight1"] input,
+dss-input[name="rate1"] input,
+dss-input[name="freight1"] input {
+  margin-top: 0px !important;
+  margin-bottom: 1px !important;
+}
+
+
+
+
+html,
+body {
+  height: 100%;
+  margin: 0px;
+  padding: 0px;
+}
+
+
+ng-helper {
+  ag-grid-angular {
+    height: calc(100vh - 130px) !important;
+    margin-top: 5px;
+  }
+}
+
+.ng-star-inserted {
+  .m-1 {
+
+    overflow-x: hidden;
+    margin: 0 !important;
+
+  }
+}
+
+.ag-theme-balham {
+  --ag-header-foreground-color: #000000;
+  /* Change header font color */
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+input,
+textarea {
+  font-weight: 300 !important;
+}
+
+.helperheight {
+  height: calc(100vh - 158px) !important;
+}
+
+// Specialy for bootstrap table resizeble styles     //Anil 03/06/2022
+:root {
+  --cell-width: 85px;
+}
+
+//-----------------------------
+
+.ng-dropdown-panel {
+  left: 0px !important;
+}
+
+.ng-dropdown-panel-items {
+  background-color: white;
+}
+
+.ng-select {
+  .ng-arrow {
+    font-family: "icomoon" !important;
+    border-color: inherit !important;
+    border-width: 0 !important;
+    font-size: 16px;
+    top: 0 !important;
+    left: -15px;
+    color: inherit;
+    text-align: center;
+    transform: rotate(0deg);
+    transform-origin: 8px 12px;
+    transition: transform 0.2s ease;
+
+    &:before {
+      content: "\21E9";
+    }
+  }
+
+  &.ng-select-opened {
+    .ng-arrow {
+      transform: rotate(180deg);
+    }
+  }
+}
+
+.popover {
+  max-width: 800px;
+}
+
+.popover-body {
+  background-color: #f3eded;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.popoverOptions {
+  box-shadow: 6px 6px 4px #d3d3d3 !important;
+}
+
+.popover-arrow::before {
+  border-right-color: lightgray !important;
+}
+
+.popover-arrow::after {
+  border-right-color: lightgray !important;
+}
+
+//iconbadges
+.iconClass {
+  position: relative;
+}
+
+.iconClass span {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  display: block;
+}
+
+//==============================
+
+.offcanvas-end {
+  width: 250px !important;
+}
+
+.accordion-body {
+  padding: 0px !important;
+}
+
+
+.btn-shadow {
+  box-shadow: 1px 1px 6px #808080 !important;
+}
+
+.btn-close {
+  box-shadow: none !important;
+}
+
+.myCustomModalClass .modal-dialog {
+  max-width: 278px;
+}
+
+.daybook tr {
+  border-bottom: 0.4pt solid rgb(0, 0, 0);
+}
+
+.daybooksubitem tr {
+  border-bottom: 0.5px solid #808080 !important;
+}
+
+.form-control:focus,
+.form-select:focus,
+.input-group:focus,
+ng-select-container:focus {
+  outline: none !important;
+  box-shadow: none !important;
+  border: 1px solid dodgerblue !important;
+}
+
+
+
+thead,
+tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+  font-family: "Roboto";
+  text-align: center;
+}
+
+
+td {
+  padding: 2px !important;
+}
+
+tfoot {
+  width: calc(100% - 8px);
+  display: table;
+  table-layout: fixed;
+  font-weight: bold;
+}
+
+
+.form-control[disabled="true"] {
+  background-color: #e9ecef !important;
+  opacity: 1 !important;
+}
+
+details {
+  padding: 10px;
+}
+
+details summary {
+  cursor: pointer;
+  transition: margin 150ms ease-out;
+}
+
+details>summary {
+  list-style: none;
+}
+
+details>summary>div {
+  padding-left: 10px;
+}
+
+summary::-webkit-details-marker {
+  display: none;
+}
+
+details>summary::after {
+  content: "+";
+  font-size: large;
+  font-weight: bold;
+  padding-left: 15%;
+  margin-right: 5px;
+}
+
+details[open] summary:after {
+  content: " -";
+  font-size: large;
+  font-weight: bold;
+}
+
+details>ul>li {
+  background-color: black !important;
+  color: white !important;
+}
+
+details>ul>li:hover {
+  background-color: rgb(97, 89, 89) !important;
+}
+
+details>ul>li:seleced {
+  background-color: rgb(97, 89, 89) !important;
+}
+
+.items {
+  text-decoration: none;
+}
+
+.modal-header {
+  padding-left: 15px !important;
+}
+
+.swal2-container {
+  z-index: 999999 !important;
+}
+
+.actionpopover>.popover-body {
+  padding: 0px !important;
+}
+
+.actionpopover>.popover-body>ul>li {
+  padding: 5px !important;
+}
+
+.popover {
+  border: 0px !important;
+}
+
+.switch.switch-medium {
+  height: 23px !important;
+  border-radius: 30px !important;
+}
+
+.switch[aria-checked="false"] {
+  small {
+    width: 21px !important;
+    height: 23px !important;
+    right: calc(100% - 22px) !important;
+  }
+}
+
+.switch[aria-checked="true"] {
+  small {
+    width: 21px !important;
+    height: 23px !important;
+    right: calc(100% - 50px) !important;
+  }
+}
+
+.dss-text-sm {
+  font-size: small;
+}
+
+.skyblue {
+  background-color: #caf0f8 !important;
+}
+
+//#17608c
+#modalId .modal-footer,
+#modalId .modal-header {
+  height: 40px !important;
+}
+
+#modalId .form-control,
+#modalId .form-select {
+  border-radius: 0px !important;
+}
+
+@media (max-width: 768px) {
+  .modal-dialog {
+    max-width: 100% !important;
+  }
+}
+
+.divcard {
+  background-color: #9adaeb;
+}
+
+.ag-root-wrapper {
+  margin-left: 6px;
+  margin-right: 6px;
+  border-radius: 6px;
+}
+
+.ag-header-container {
+  background-color: #e2e1e1;
+}
+
+.ag-body-horizontal-scroll-viewport {
+  overflow-x: hidden;
+}
+
+thead th {
+  background-color: #cae1ee !important;
+  text-align: center;
+  padding: 0px;
+}
+
+.borderTopRadius {
+  border-top-right-radius: 12px;
+  border-top-left-radius: 12px;
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+}
+
+.vertical-top-1 {
+  -webkit-box-shadow: 0px -2px 5px 0px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 0px -2px 5px 0px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px -2px 5px 0px rgba(0, 0, 0, 0.75);
+}
+
+.no-row-margin {
+  display: none !important;
+}
+
+::-webkit-scrollbar {
+  width: 7px !important;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey !important;
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: grey;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: grey;
+}
+
+.ng2-pdf-viewer-container {
+  height: calc(100vh - 145px) !important;
+  min-height: 510px;
+  background-color: #979797;
+}
+
+.switch.checked {
+  background-color: #208b3a !important;
+}
+
+.mastersHeading {
+  margin: 6px 4px 6px 0px;
+}
+
+.heightMasterPage {
+  display: block;
+  height: calc(100vh - 197px);
+  min-height: 450px;
+
+}
+
+.heightMasterPage1 {
+  width: 100%;
+  height: calc(100vh - 222px);
+  min-height: 435px;
+}
+
+.heightMasterPage2 {
+  width: 100%;
+  height: calc(100vh - 150px);
+  min-height: 500px;
+
+}
+
+
+.modal-backdrop.fade.show {
+  z-index: inherit !important;
+}
+
+
+.sidebar-nav .nav-group .nav-group-items{
+  background-color: rgb(53, 51, 51) !important;
+  border-radius: 10px; 
+} 

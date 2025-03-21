@@ -1,0 +1,910 @@
+<!-- 
+<button class="btn btn-primary d-flex align-items-center" id="lineOfItemsBtn" [ngClass]="cssclass" (click)="showModel()" [disabled]="disabled">
+     <span class="mx-1"> {{name}}</span>
+     </button> -->
+
+     <div class="modal fade show mt-3" id="InvItemsDesc" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false"
+     role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered" style="max-width: 65%;" role="document">
+         <div class="modal-content modal-content-size-l borderTopRadius" #unitTable>
+             <div style="height: 35px;" class="modal-header divcard ">
+                 <h5 class="modal-title p-0 m-0 mb-0" id="modalTitleId">Line of Items <span
+                         style="font-size: small;">({{InvItemsDesc.stateType ==1?'Intra-State':'Inter-State'}})</span>
+                 </h5>
+                 <button type="button" class="btn-close" (click)="closeInvItemsDesc()" aria-label="Close"></button>
+             </div>
+             <div class="modal-body py-1 p-2" style="overflow-x: hidden;">
+                 <div class="d-flex  mb-2">
+                     <div style="width: 20%;">
+                         <label for="" class="form-label mb-0 dss-text-sm fw-bold"> Item </label>
+ 
+                         <app-ngselect apiUrl="productinfo/getList" bindLabel="iName" bindValue="iId" name="unit"
+                             [(ngModel)]="InvItemsDesc.itm.product.iId" #unit="ngModel"
+                             [defaultProperty]="InvItemsDesc.itm.product" (change)="selectedItem($event)"></app-ngselect>
+  
+                     </div>
+ 
+                     <div style="width: 20%;" *ngIf="InvItemsDesc.SSO=='S'">
+                         <div class="form-group p-0">
+                             <br>
+                             <button class="btn btn-sm ligh_toutline_btn  rounded-circle me-2" type="button"><i
+                                     class="fa-brands fa-pinterest" data-toggle="tooltip" data-placement="bottom"
+                                     title="Purchase Rates" (click)="showPurRates()"></i></button>
+ 
+                             <button class="btn btn-sm ligh_toutline_btn rounded-circle" type="button"><i
+                                     class="fa-solid fa-dollar-sign" data-toggle="tooltip" data-placement="bottom"
+                                     title="Sales Rates" (click)="showSalesRates()"></i></button>
+                         </div>
+ 
+                     </div>
+ 
+                     <div style="width: 20%;">
+                         <div class="form-group px-1">
+                             <!-- <label for="" class="form-label mb-0 fw-bold">HSN</label>
+                             <input type="text" class="form-control form-control-sm" maxlength="8"
+                                 [(ngModel)]="InvItemsDesc.itm.hsn"> -->
+                             <dss-input label="HSN" [maxlength]="8" [(ngModel)]="InvItemsDesc.itm.hsn"></dss-input>
+                         </div>
+                     </div>
+ 
+                     <div style="width: 20%;" *ngIf="InvItemsDesc.GO=='go'">
+                         <div class="form-group mt-0 px-1">
+                                 <!-- <div style="margin-top: 12px;">
+                                        <ng-helper [(ngModel)]="InvItemsDesc.itm.gwnCode" id="gwnhelper" name="gwnhelper"
+                                        [DataSource]="reference.godowns" [DataField]="reference.GWNFields"
+                                        DataMember="lId" [(SelectedRow)]="InvItemsDesc.itm.godown" width="400px"
+                                        height="calc(100vh - 80px)" top="40px" #validations="ngModel"
+                                        (hclick)="getGWN()" >
+                
+                                        (SelectedRowChange)="selectedItem($event)" </ng-helper>
+                                    </div> -->
+                             <app-ngselect label="Godown" apiUrl="godown/getList" bindLabel="lName" bindValue="lId"
+                                 name="gwnhelper" [(ngModel)]="InvItemsDesc.itm.gwnCode"
+                                 [defaultProperty]="InvItemsDesc.itm" (SelectedRowChange)="selectedItem($event)">
+                             </app-ngselect>
+ 
+ 
+                         </div>
+                     </div>
+                     <div style="width: 20%;" *ngIf="InvItemsDesc.GO=='go'">
+                         <div class="form-group  px-1">
+                             <!-- <label for="my-input" class="fw-bold"> Rack No </label>
+                             <input id="my-input" class="form-control form-control-sm" type="text" name="RackNo"
+                                 [(ngModel)]="InvItemsDesc.itm.rackNo"> -->
+                             <dss-input label="Rack No" type="text" name="RackNo"
+                                 [(ngModel)]="InvItemsDesc.itm.rackNo"></dss-input>
+                         </div>
+                     </div>
+ 
+                 </div>
+ 
+                 <table class="table  table-bordered">
+                     <tbody id="unitTable">
+                         <tr>
+                             <th scope="col" class="p-1" width="28%">
+                                 <div class="form-group mt-0">
+                                     <label for="form-label"
+                                         class="dss-text-sm text-center d-block skyblue border-dark border-bottom fw-bold"
+                                         style="color: #dc3545;font-size: 1.2em;">
+                                         Quantity
+                                     </label>
+                                     <div class="input-group row m-0">
+                                         <div class="form-group mt-0 col col-sm p-0">
+                                             <label for=""
+                                                 class="form-label mb-0 dss-text-sm fw-bold text-center d-block skyblue">Unit</label>
+                                             <select class="form-select form-select-sm"
+                                                 [(ngModel)]="InvItemsDesc.itm.unit" (ngModelChange)="lineGrossAmt()">
+                                                 <option *ngFor="let x of InvItemsDesc.itm.product.invItemFactors"
+                                                     [value]="x.iUnit">
+                                                     {{x.iUnit}}</option>
+                                             </select>
+                                         </div>
+                                         <div class="form-group mt-0 col col-sm-4 p-0">
+                                             <label for=""
+                                                 class="form-label mb-0 dss-text-sm fw-bold text-center d-block skyblue">Qty</label>
+                                             <input type="text" class="form-control form-control-sm text-end" digitOnly
+                                                 onfocus="if(this.value==='0') this.value=''"
+                                                 onblur="if(this.value==='') this.value='0'"
+                                                 [(ngModel)]="InvItemsDesc.itm.qty" currency="INR"
+                                                 (change)="lineGrossAmt();showStockList();">
+                                         </div>
+                                         <div class="form-group mt-0 col col-sm-4 p-0">
+                                             <label for=""
+                                                 class="form-label mb-0 dss-text-sm fw-bold d-block skyblue ">Free
+                                                 Qty</label>
+ 
+                                             <div class="input-group input-group-sm">
+                                                 <input type="text" tabindex="-1"
+                                                     class="form-control form-control-sm text-end"
+                                                     [(ngModel)]="InvItemsDesc.itm.freeQty" digitOnly CurrencyMask
+                                                     (change)="showStockList()">
+                                                 <div class="input-group-text" (click)="showStockList();">
+                                                     <i class="bi bi-eye-fill"></i>
+                                                 </div>
+                                             </div>
+                                         </div>
+ 
+                                     </div>
+                                 </div>
+                             </th>
+ 
+                             <!-- --------//-------------- -->
+                             <th scope="col" width="28%" class="p-1">
+                                 <div class="form-group mt-0">
+                                     <label for=""
+                                         class="form-label d-block text-center mb-0 dss-text-sm skyblue border-dark border-bottom fw-bold"
+                                         style="color: #dc3545;font-size: 1.2em;"> Alternate
+                                         Qty</label>
+                                     <div class="input-group row m-0">
+                                         <div class="form-group mt-0 col-sm-3 p-0">
+                                             <label for="form-label"
+                                                 class="form-label mb-0 dss-text-sm fw-bold text-center d-block skyblue">Unit</label>
+                                             <select class="form-select form-select-sm"
+                                                 [(ngModel)]="InvItemsDesc.itm.altrUnit" [disabled]="true">
+                                                 <option *ngFor="let x of  InvItemsDesc.itm.product.invItemFactors"
+                                                     [value]="x.iUnit">
+                                                     {{x.iUnit}}</option>
+                                             </select>
+                                         </div>
+ 
+                                         <div class="form-group mt-0 col-sm-5 p-0">
+                                             <label for="form-label"
+                                                 class="form-label mb-0 dss-text-sm fw-bold text-center d-block skyblue">Qty</label>
+                                             <input type="text" class="form-control form-control-sm text-end" digitOnly
+                                                 [(ngModel)]="InvItemsDesc.itm.altrQty" [disabled]="true">
+                                         </div>
+                                         <div class="form-group mt-0 col-sm-4 p-0 m-0">
+                                             <label for="form-label"
+                                                 class="form-label mb-0 dss-text-sm fw-bold text-center d-block skyblue">Rate</label>
+                                             <input type="text" class="form-control form-control-sm text-end"
+                                                 [(ngModel)]="InvItemsDesc.itm.altrRate" disabled>
+                                         </div>
+                                     </div>
+                                 </div>
+                             </th>
+                             <!-- --------//---------- -->
+                             <th scope="col" width="30%" class="p-1">
+                                 <div class="form-group mt-0">
+                                     <label for=""
+                                         class="form-label d-block text-center mb-0 dss-text-sm skyblue border-dark  border-bottom fw-bold"
+                                         style="color: #dc3545;font-size: 1.2em;">
+                                         Rate per</label>
+ 
+ 
+ 
+ 
+ 
+                                     <div class="row m-0">
+                                         <div class="form-group mt-0 col col-sm-4  p-0">
+                                             <label for=""
+                                                 class="form-label mb-0 dss-text-sm fw-bold text-center d-block skyblue">Unit</label>
+                                             <select class="form-select form-select-sm"
+                                                 [(ngModel)]="InvItemsDesc.itm.ratePerUnit"
+                                                 (ngModelChange)="lineGrossAmt()">
+                                                 <option *ngFor="let x of  InvItemsDesc.itm.product.invItemFactors"
+                                                     [value]="x.iUnit">
+                                                     {{x.iUnit}}</option>
+                                             </select>
+                                         </div>
+                                         <div class="form-group mt-0 col col-sm-4  p-0">
+                                             <label for=""
+                                                 class="form-label d-block text-center mb-0 skyblue fw-bold">Incl
+                                                 Rate</label>
+                                             <input type="text" class="form-control form-control-sm" name="inclrate"
+                                                 CurrencyMask [(ngModel)]="InvItemsDesc.itm.inclRate"
+                                                 (ngModelChange)="defineExclRate()" autocomplete="off">
+                                         </div>
+                                         <div class="form-group mt-0 col col-sm-4  p-0 m-0">
+                                             <label for=""
+                                                 class="form-label mb-0 dss-text-sm fw-bold text-center d-block skyblue">Excl.Rate</label>
+ 
+                                             <input type="text" class="form-control form-control-sm" CurrencyMask
+                                                 currency="INR" [(ngModel)]="InvItemsDesc.itm.rate" fraction="3"
+                                                 (ngModelChange)="defineInclRate()">
+                                         </div>
+ 
+                                     </div>
+                                 </div>
+                             </th>
+                             <th class="p-1 m-1">
+                                 <!-- <div class="form-group mt-0"> -->
+                                 <label for="" class="form-label mb-0  d-block text-end ps-2 pe-1 skyblue fw-bold"
+                                     style="padding-top:2em;"> Gross Amt.</label>
+ 
+                                 <input type="text" class="form-control form-control-sm fw-bold"
+                                     [(ngModel)]="InvItemsDesc.itm.grossAmt" CurrencyMask currency="INR" symbol="₹"
+                                     [disabled]="true" (ngModelChange)="lineTaxableAmt()">
+                                 <!-- </div> -->
+                             </th>
+                         </tr>
+ 
+                         <tr class="mt-2" *ngIf="is_sidebar==false">
+                             <th scope="col" colspan="3" width="86%" class="p-0">
+                                 <table class="table table-bordered mb-0">
+                                     <tbody style="display: contents;">
+                                         <tr class="p-0">
+                                             <th col="scope" class="p-1">
+                                                 <div class="form-group mt-0">
+                                                     <label for=""
+                                                         class="form-label d-block text-center mb-0 dss-text-sm skyblue border-dark  border-bottom fw-bold"
+                                                         style="color: #dc3545;font-size: 1.2em;"> Discount
+                                                     </label>
+                                                     <div class="input-group row m-0">
+ 
+                                                         <div class="form-group col-sm-3 p-0 m-0">
+                                                             <label for=""
+                                                                 class="form-label d-block text-center mb-0 skyblue fw-bold">Discount
+                                                                 On</label>
+                                                             <select name="discOn" class="form-select form-select-sm"
+                                                                 [(ngModel)]="InvItemsDesc.itm.discountOn"
+                                                                 (change)="lineDiscount()">
+                                                                 <option *ngFor="let x of InvItemsDesc.discTypes"
+                                                                     [value]=x.id>
+                                                                     {{x.name}}</option>
+                                                             </select>
+                                                         </div>
+ 
+                                                         <div class="form-group col-sm-3 p-0 m-0">
+                                                             <label for=""
+                                                                 class="form-label d-block text-center mb-0 skyblue fw-bold">Rate</label>
+                                                             <input type="text" class="form-control form-control-sm"
+                                                                 name="disconrate" CurrencyMask autocomplete="off"
+                                                                 [(ngModel)]="InvItemsDesc.itm.discRate"
+                                                                 (ngModelChange)="lineDiscount()">
+ 
+                                                         </div>
+                                                         <div class="form-group col-sm-3 p-0 m-0">
+                                                             <label for=""
+                                                                 class="form-label d-block text-center mb-0 skyblue fw-bold">Disc.
+                                                                 Amt.</label>
+                                                             <input type="text" class="form-control form-control-sm"
+                                                                 CurrencyMask [(ngModel)]="InvItemsDesc.itm.disc1Amt"
+                                                                 [disabled]="true" (ngModelChange)="lineTaxableAmt()">
+                                                         </div>
+                                                         <div class="form-group col-sm-3 p-0 m-0">
+                                                             <label for=""
+                                                                 class="form-label d-block text-center mb-0 skyblue fw-bold">Special
+                                                                 Discount</label>
+                                                             <input type="text" class="form-control form-control-sm"
+                                                                 CurrencyMask [(ngModel)]="InvItemsDesc.itm.disc2Amt"
+                                                                 (ngModelChange)="lineTaxableAmt()">
+                                                         </div>
+                                                     </div>
+                                                 </div>
+                                             </th>
+                                         </tr>
+                                     </tbody>
+                                 </table>
+                             </th>
+                             <th scope="col" class="p-1">
+                                 <div class="form-group mt-0">
+                                     <label for="" class="form-label mb-0  d-block text-end ps-2 pe-1 skyblue fw-bold"
+                                         style="padding-top:2em;"> Taxable Amount </label>
+                                     <input type="text" class="form-control form-control-sm fw-bold" CurrencyMask
+                                         fraction="2" [(ngModel)]="InvItemsDesc.itm.assessValue" currency="INR"
+                                         symbol="₹" [disabled]="true">
+                                 </div>
+                             </th>
+ 
+                         </tr>
+ 
+                         <tr class="mt-2" *ngIf="is_sidebar==false">
+ 
+                             <th scope="col" class="p-1">
+                                 <div class="form-group mt-0">
+                                     <label for=""
+                                         class="form-label d-block text-center mb-0 dss-text-sm skyblue border-1  border-end unitsBorders fw-bold">CGST</label>
+ 
+                                     <div class="input-group">
+                                         <input type="text" class="form-control form-control-sm flat" placeholder="Rate"
+                                             [(ngModel)]="InvItemsDesc.itm.crate" CurrencyMask name="cgstrate"
+                                             autocomplete="off" [disabled]="InvItemsDesc.stateType==2">
+ 
+                                         <input type="text" class="form-control form-control-sm flat" placeholder="Amt."
+                                             [(ngModel)]="InvItemsDesc.itm.camt" CurrencyMask name="cgstamt"
+                                             autocomplete="off" (ngModelChange)="lineTotalAmt()" [disabled]="true">
+ 
+                                     </div>
+                                 </div>
+                             </th>
+                             <th scope="col" class="p-1">
+                                 <div class="form-group mt-0">
+                                     <label for=""
+                                         class="form-label d-block text-center mb-0 dss-text-sm skyblue border-1 border-end unitsBorders fw-bold"
+                                         style="border-color:#b8bfc9">SGST</label>
+                                     <div class="input-group">
+ 
+                                         <input type="text" class="form-control form-control-sm flat" CurrencyMask
+                                             placeholder="Rate" [(ngModel)]="InvItemsDesc.itm.srate" name="sgstrate"
+                                             autocomplete="off" [disabled]="InvItemsDesc.stateType==2">
+ 
+                                         <input type="text" class="form-control form-control-sm flat" CurrencyMask
+                                             placeholder="Amt." [(ngModel)]="InvItemsDesc.itm.samt" name="sgstamt"
+                                             autocomplete="off" (ngModelChange)="lineTotalAmt()" [disabled]="true">
+                                         <!-- [disabled]="InvItemsDesc.stateType==2 && InvItemsDesc.IO=='O' || InvItemsDesc.stateType==2 || InvItemsDesc.IO=='O' ? true:false" -->
+                                     </div>
+                                 </div>
+                             </th>
+ 
+                             <th scope="col" class="p-1">
+ 
+                                 <div class="form-group mt-0">
+                                     <label for=""
+                                         class="form-label d-block text-center mb-0 dss-text-sm skyblue border-en unitsBorders fw-bold"
+                                         style="border-color:#b8bfc9">IGST</label>
+ 
+                                     <div class="input-group">
+ 
+                                         <input type="text" class="form-control form-control-sm flat" placeholder="Rate"
+                                             [(ngModel)]="InvItemsDesc.itm.irate" CurrencyMask autocomplete="off"
+                                             [disabled]="InvItemsDesc.stateType==1">
+ 
+                                         <input type="text" class="form-control form-control-sm flat" placeholder="Amt."
+                                             [(ngModel)]="InvItemsDesc.itm.iamt" CurrencyMask autocomplete="off"
+                                             [disabled]="true" (ngModelChange)="lineTotalAmt()">
+ 
+                                     </div>
+                                 </div>
+                             </th>
+ 
+                             <th scope="col" class="p-1" style="width: 14%;">
+                                 <div class="form-group mt-0">
+                                     <label for=""
+                                         class="form-label d-block text-end mb-0 dss-text-sm skyblue border-dark pe-1 fw-bold">Total
+                                         GST</label>
+                                     <input type="text" class="form-control fw-bold form-control-sm" CurrencyMask
+                                         symbol="₹" currency="INR" [(ngModel)]="InvItemsDesc.itm.totalGST"
+                                         autocomplete="off" [disabled]="true">
+                                 </div>
+                             </th>
+                         </tr>
+ 
+                         <tr class="mt-2" *ngIf="is_sidebar==false">
+ 
+                             <fieldset [disabled]="reference.item.type=='Service'" class="p-0">
+                                 <th class="p-1" style="width: 28.8%;">
+                                     <div class="form-group mt-0">
+                                         <label for=""
+                                             class="form-label d-block text-center mb-0 dss-text-sm skyblue border-end unitsBorders fw-bold">Cess</label>
+                                         <div class="input-group">
+                                             <input type="text" class="form-control form-control-sm flat"
+                                                 placeholder="Rate" CurrencyMask [(ngModel)]="InvItemsDesc.itm.csrate"
+                                                 autocomplete="off" (ngModelChange)="lineTaxableAmt()">
+ 
+                                             <input type="text" class="form-control form-control-sm flat"
+                                                 placeholder="Amt." CurrencyMask fraction="2" currency="INR"
+                                                 autocomplete="off" [(ngModel)]="InvItemsDesc.itm.csamt"
+                                                 [disabled]="true">
+                                         </div>
+                                     </div>
+                                 </th>
+                                 <th class="p-1" style="width: 28.6%;">
+                                     <div class="form-group mt-0">
+                                         <label for=""
+                                             class="form-label d-block text-center mb-0 dss-text-sm skyblue border-end unitsBorders fw-bold">State
+                                             Cess</label>
+                                         <div class="input-group">
+                                             <input type="text" class="form-control form-control-sm flat"
+                                                 placeholder="Rate" CurrencyMask
+                                                 [(ngModel)]="InvItemsDesc.itm.stateCsrate"
+                                                 (ngModelChange)="lineTaxableAmt()">
+ 
+                                             <input type="text" class="form-control form-control-sm flat"
+                                                 placeholder="Amt." CurrencyMask
+                                                 [(ngModel)]="InvItemsDesc.itm.stateCsamt" [disabled]="true">
+                                         </div>
+                                     </div>
+                                 </th>
+ 
+                                 <th class="p-1" style="width: 14.3%;">
+                                     <div class="form-group mt-0">
+                                         <label for=""
+                                             class="form-label d-block text-center mb-0 dss-text-sm skyblue border-end unitsBorders fw-bold">
+                                             <small class="fw-bold"> Cess NonAdvolAmt </small> </label>
+                                         <input type="text" class="form-control form-control-sm" CurrencyMask
+                                             [(ngModel)]="InvItemsDesc.itm.csNonAdvlAmt"
+                                             (ngModelChange)="lineTotalAmt()">
+                                     </div>
+                                 </th>
+ 
+ 
+                                 <th scope="col" class="p-1" width="14.3%">
+                                     <div class="form-group mt-0">
+                                         <label for=""
+                                             class="form-label d-block mb-0 dss-text-sm skyblue border-dark fw-bold">
+                                             <small class="fw-bold"> State Cess NonAdvolAmt </small></label>
+                                         <input type="text" class="form-control form-control-sm" CurrencyMask
+                                             [(ngModel)]="InvItemsDesc.itm.stateCesNonAdvlAmt"
+                                             (ngModelChange)="lineTotalAmt()">
+                                     </div>
+                                 </th>
+                                 <th scope="col" class="p-1" style="width: 14%;">
+                                     <div class="form-group mt-0">
+                                         <label for=""
+                                             class="form-label d-block text-end mb-0 dss-text-sm skyblue border-dark pe-1 fw-bold">Total
+                                             CESS</label>
+                                         <input type="text" class="form-control form-control-sm" CurrencyMask symbol="₹"
+                                             currency="INR" [(ngModel)]="InvItemsDesc.itm.totalCs" [disabled]="true">
+                                     </div>
+                                 </th>
+                             </fieldset>
+                         </tr>
+                         <tr class="mt-2" *ngIf="is_sidebar==false">
+                             <th scope="col" class="p-0" style="width: 14.5%;">
+                                 <div class="form-group mt-0">
+                                     <label for=""
+                                         class="form-label d-block text-center mb-0 dss-text-sm skyblue border-dark fw-bold">
+                                         Other Charges</label>
+                                     <input type="text" class="form-control form-control-sm" CurrencyMask
+                                         [(ngModel)]="InvItemsDesc.itm.othCharges" (ngModelChange)="lineTotalAmt()">
+                                 </div>
+                             </th>
+ 
+                             <th scope="col" class="p-0" width="14%">
+                                 <!-- <div class="form-group mt-0">
+                                     <label for=""
+                                         class="form-label d-block text-center mb-0 dss-text-sm skyblue border-dark fw-bold">
+                                         Sale Rate</label>
+                                     <input type="text" class="form-control form-control-sm" CurrencyMask
+                                         [(ngModel)]="InvItemsDesc.itm.saleRate">
+                                 </div> -->
+                             </th>
+                             <th scope="col" class="p-0" width="14%">
+                                 <!-- <div class="form-group mt-0">
+                                     <label for=""
+                                         class="form-label d-block text-left mb-0 dss-text-sm skyblue border-dark fw-bold">
+                                         incl(GST)</label>
+                                         <div class="form-check form-switch ms-2">
+                                             <input class="form-check-input" type="checkbox" role="switch"
+                                                 name="includeingGST" id="flexSwitchCheckChecked" checked [(ngModel)]="InvItemsDesc.itm.checked" (change)="gstchecked($event)">
+     
+                                         </div>
+                                 </div> -->
+                             </th>
+                             <th scope="col" class="p-0" width="14%">
+                                 <div class="form-group mt-0">
+                                     <label for=""
+                                         class="form-label d-block text-end mb-0 dss-text-sm skyblue border-dark pe-1 fw-bold">Total
+                                         Amount</label>
+                                     <input type="text" class="form-control form-control-sm fw-bold" CurrencyMask
+                                         [disabled]="true" [(ngModel)]="InvItemsDesc.itm.totalitemValue" currency="INR"
+                                         symbol="₹">
+                                 </div>
+                             </th>
+                         </tr>
+                     </tbody>
+                 </table>
+ 
+             </div>
+ 
+             <div class="modal-footer justify-content-between py-1" *ngIf="is_sidebar==false">
+                 <div>
+                     <div class="alert alert-warning p-2 d-flex" role="alert" *ngIf="warningMessage">
+                         <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                         {{warningMessage}}
+                     </div>
+                 </div>
+                 <div>
+                     <button type="button" class="btn btn-sm  me-1 btn-success shadow" (click)="saveLineItem()"
+                         [disabled]="disabledsave()">
+                         <i class="bi bi-save" style="font-size: 1em;"></i>
+                         Save</button>
+                     <button type="button" class="btn btn-sm   btn-danger bi bi-close fs-large shadow"
+                         (click)="closeInvItemsDesc()">
+                         <i class="bi bi-x" style="font-size: 1em;"></i>
+                         Close</button>
+                 </div>
+             </div>
+         </div>
+     </div>
+ </div>
+ 
+ 
+ <section #sidebar class="card p-0 shadow" id="sidebar">
+     <div class="card-body pb-0 p-1" style="height: auto;">
+ 
+         <form #detailform="ngForm">
+ 
+             <table *ngIf="InvItemsDesc.IO=='I'" class="table table-bordered mb-0">
+                 <thead class="skyblue" style="width:calc(100% - 10px)">
+                     <tr>
+ 
+                         <th style="width: 15.5%;" class="pb-1">Batch No</th>
+                         <th style="width: 15.5%;" class="pb-1">Exp.Date</th>
+                         <th style="width: 15.5%;" class="pb-1">Billed Qty</th>
+                         <th style="width: 15.5%;" class="pb-1">Free Qty</th>
+                         <th style="width: 15.5%;" class="pb-1">MRP</th>
+                         <th style="width: 15.5%;" class="pb-1">
+                             <div class="row">
+                                 <div class="col col-sm-7">
+                                     Sale Rate
+                                 </div>
+                                 <div class="col col-sm-5 d-flex">
+                                     <small>incl(GST)</small>
+                                     <div class="form-check form-switch">
+                                         <input class="form-check-input" type="checkbox" role="switch"
+                                             name="includeingGST" id="flexSwitchCheckChecked"
+                                             [(ngModel)]="InvItemsDesc.itm.includeingGST" checked>
+ 
+                                     </div>
+                                 </div>
+                             </div>
+ 
+ 
+ 
+                         </th>
+                         <th style="width:7%" class="pb-1"> &nbsp;</th>
+                     </tr>
+                     <tr>
+                         <th style="width: 15.5%;" class="pt-1"><input type="text" name="batchNo" autocomplete="off"
+                                 #batchNofocus [(ngModel)]="InvItemBatch.batchNo" class="form-control form-control-sm"
+                                 #batchNo="ngModel" [ngClass]="{'is-invalid':batchNo.errors?.['required']}" required>
+                         </th>
+                         <th style="width: 15.5%;" class="pt-1"><input type="date" name="expdate" autocomplete="off"
+                                 [(ngModel)]="InvItemBatch.expDate" class="form-control form-control-sm"
+                                 #expdate="ngModel" [ngClass]="{'is-invalid':expdate.errors?.['required']}">
+                         </th>
+                         <th style="width: 15.5%;" class="pt-1"><input type="text" name="billedQty" autocomplete="off"
+                                 [(ngModel)]="InvItemBatch.billedQty" class="form-control form-control-sm text-end"
+                                 #billedQty="ngModel" CurrencyMask currency="INR">
+                             <!-- [required]="InvItemBatch.freeQty ? false:true" -->
+                         </th>
+ 
+                         <th style="width: 15.5%;" class="pt-1"><input type="text" name="freety" autocomplete="off"
+                                 [(ngModel)]="InvItemBatch.freeQty" CurrencyMask currency="INR"
+                                 class="form-control form-control-sm text-end">
+                             <!-- [required]="InvItemBatch.billedQty ? false:true" -->
+                         </th>
+                         <th style="width: 15.5%;" class="pt-1"><input type="text" name="mrp" autocomplete="off"
+                                 [(ngModel)]="InvItemBatch.mrp" CurrencyMask symbol="₹" currency="INR"
+                                 class="form-control form-control-sm text-end">
+                         </th>
+                         <th style="width: 15.5%;" class="pt-1">
+                             <input type="text" name="saleRate" autocomplete="off" [(ngModel)]="InvItemBatch.saleRate"
+                                 CurrencyMask symbol="₹" currency="INR" class="form-control form-control-sm text-end">
+                         </th>
+                         <th style="width:7%;" class="pt-1">
+                             <button class="btn btn-sm bi bi-plus btn-success" [disabled]="!detailform.valid"
+                                 (click)="saveInvItemsDescBth()"></button>
+                             <!-- || (rowIndex==null && InvItemsDesc.bth.length>0) -->
+                         </th>
+                     </tr>
+ 
+                 </thead>
+                 <tbody style="overflow-y: scroll;max-height: 120px;height:120px">
+                     <tr *ngFor="let x of InvItemsDesc.bth; let i=index">
+                         <td style="width: 15.5%;">
+                             {{x.batchNo}}
+                         </td>
+                         <td style="width: 15.5%;">
+                             {{x.expDate | date:'dd-MM-yyyy'}}
+                         </td>
+                         <td class="text-end" style="width: 15.5%;">
+                             {{x.billedQty |number:'1.2-2'}}
+                         </td>
+                         <td class="text-end" style="width: 15.5%;">
+                             {{x.freeQty | number:'1.2-2'}}
+                         </td>
+                         <td class="text-end" style="width: 15.5%;">
+                             {{x.mrp | currency:'INR':'symbol':'1.2-2'}}
+                         </td>
+                         <td class="text-end" style="width: 15.5%;">
+                             {{x.saleRate | currency:'INR':'symbol':'1.2-2'}}
+                         </td>
+                         <td style="width: 7%;">
+                             <button type="button" class="btn bi bi-three-dots-vertical p-0 text-start" placement="start"
+                                 [ngbPopover]="popContent" data-bs-placement="left">
+                             </button>
+ 
+                             <ng-template #popContent>
+ 
+                                 <div class="row">
+                                     <button class="btn btn-sm rounded-pill btn-primary w-100"
+                                         (click)="editInvItemsDescBth(x,i)">
+                                         <i class="bi bi-pencil-square fs-lg"></i> &nbsp;
+                                         Edit</button>
+                                 </div>
+ 
+                                 <div class="row mt-1">
+                                     <button class="btn btn-sm rounded-pill btn-danger w-100"
+                                         (click)="delInvItemsDescBth(x)">
+                                         <i class="bi bi-trash3 fs-lg"></i> &nbsp;
+                                         Delete</button>
+                                 </div>
+ 
+                             </ng-template>
+                         </td>
+                     </tr>
+ 
+                 </tbody>
+                 <tfoot>
+                     <tr>
+                         <td style="width: 15.5%;"><b>Total</b></td>
+                         <td style="width: 15.5%;"></td>
+                         <td style="width: 15.5%;" class="text-end fw-bold">{{InvItemsDesc.totalBilledQty |
+                             number:'1.2-2'}}</td>
+                         <td style="width: 15.5%;" class="text-end fw-bold">{{InvItemsDesc.totalFreeQty |
+                             number:'1.2-2'}}</td>
+                         <td style="width: 15.5%;"></td>
+                         <td style="width: 15.5%;" class="text-end fw-bold"></td>
+                         <td style="width:7%"></td>
+ 
+                     </tr>
+                 </tfoot>
+             </table>
+ 
+ 
+             <table *ngIf="InvItemsDesc.IO=='O'" class="table table-bordered mb-0">
+                 <thead>
+                     <tr class="text-white" style="background-color:#5e7dabbd;">
+                         <th class="text-center p-1 " scope="col" style="width:10%">
+                             <input type="checkbox" name="checkall" [(ngModel)]="InvItemsDesc.checked1"
+                                 (change)="AllChecked()">
+                         </th>
+                         <th class="text-left p-1 " scope="col" style="width:15%">
+                             Batch No</th>
+                         <th class="text-left p-1 " scope="col" style="width:10%">
+                             Expiry Date</th>
+                         <th class="text-end p-1 " scope="col" style="width:10%">
+                             MRP</th>
+                         <th class="text-end p-1" scope="col" style="width:15%">
+                             Stock
+                         </th>
+                         <th class="text-end p-1" scope="col" style="width:10%">
+                             Sale Rate
+                         </th>
+                         <th class="text-end p-1" scope="col" style="width:15%">
+                             Billable Qty
+                         </th>
+                         <th class="text-end p-1" scope="col" style="width:15%">
+                             Free Quantity
+                         </th>
+ 
+                     </tr>
+                     <tr>
+                         <th class="text-center p-1 " scope="col" style="width:10%"></th>
+                         <th class="text-left p-1 " scope="col" style="width:15%">
+                             <input class="form-control form-control-sm" name="bhno" [(ngModel)]="ref.batchNo"
+                                 (input)="BatchSearched()" autocomplete="off" placeholder="search batchNo">
+                         </th>
+                         <th class="text-left p-1 " scope="col" style="width:10%">
+                             <input class="form-control form-control-sm" name="expDt" [(ngModel)]="ref.expDate"
+                                 (input)="DateSearched()" autocomplete="off" placeholder="search expDt">
+                         </th>
+                         <th class="text-end p-1 " scope="col" style="width:10%"></th>
+                         <th class="text-end p-1" scope="col" style="width:15%"></th>
+                         <th class="text-end p-1" scope="col" style="width:10%"></th>
+                         <th class="text-end p-1" scope="col" style="width:15%"></th>
+                         <th class="text-end p-1" scope="col" style="width:15%"></th>
+                     </tr>
+ 
+                 </thead>
+                 <tbody style="overflow-y: scroll;max-height: 120px;">
+ 
+                     <tr *ngFor="let v of InvItemsDesc.bth;let i=index;">
+                         <td style="width:10%" class="p-2 text-center">
+                             <input type="checkbox" [name]="'check'+v.detlId" [(ngModel)]="v.checked"
+                                 [id]="'check'+v.detlId" (change)="clearQty(v)" [disabled]="v.disabled">
+                         </td>
+                         <td style="width:15%" class="p-2">{{v.batchNo}}</td>
+                         <td style="width:10%" class="p-2">{{v.expDate |
+                             date:'dd-MM-yyyy'}}</td>
+                         <td style="width:10%" class="p-2 text-end">{{v.mrp |
+                             number:'1.2-2'}}</td>
+                         <td style="width:15%" class="p-2 text-end">{{v.billedQty}}</td>
+                         <!-- <td style="width:20%" class="p-2 text-end">{{v.billableQty}}</td>
+                         <td style="width:20%" class="p-2 text-end">{{v.freeQty}}</td> -->
+                         <td style="width:10%" class="p-2 text-end">{{v.saleRate | number:'1.2-2'}}</td>
+                         <td style="width:15%" class="p-2"><input class="form-control form-control-sm text-end"
+                                 [name]="'billableqty'+v.detlId" [(ngModel)]="v.billableQty" (change)="totalUsedQty()">
+                         </td>
+                         <td style="width:15%" class="p-2"><input class="form-control form-control-sm text-end"
+                                 [name]="'freeQty'+v.detlId" [(ngModel)]="v.freeQty" (change)="totalUsedQty()"></td>
+ 
+                     </tr>
+ 
+                 </tbody>
+                 <tfoot>
+                     <tr>
+                         <td class="p-1 fw-bold" scope="col" style="width:10%"><b>Total</b></td>
+                         <td class="p-1" scope="col" style="width:15%"></td>
+                         <td class="p-1" scope="col" style="width:10%"></td>
+                         <td class="p-1" scope="col" style="width:10%"></td>
+                         <td class="p-1" scope="col" style="width:15%"></td>
+                         <td class="p-1 text-end fw-bold" scope="col" style="width:10%"> </td>
+                         <td class="p-1 text-end fw-bold" scope="col" style="width:15%">
+                             <b>{{InvItemsDesc?.totalBilledQuantity || 0}}</b>
+                         </td>
+                         <td class="p-1 text-end fw-bold" scope="col" style="width:15%">
+                             <b>{{InvItemsDesc?.totalFreeQuantity || 0}}</b>
+                         </td>
+ 
+                     </tr>
+                 </tfoot>
+             </table>
+ 
+         </form>
+     </div>
+     <div class="card-footer text-end">
+         <button type="button" tabindex="-1" class="btn btn-sm rounded-0 btn-primary me-2" (click)="save()">Save</button>
+         <button type="button" tabindex="-1" class="btn btn-sm rounded-0 btn-secondary"
+             (click)="closeStockList()">Close</button>
+     </div>
+ </section>
+ 
+ 
+ <!-- 
+ <section #slide class="card p-0 shadow" id="slide">
+     <div class="card-body pb-0 p-1">
+         <table class="table table-bordered mb-0">
+             <thead class="skyblue" style="width:calc(100% - 10px)">
+                 <tr>
+                     <th style="width: 30%;" class="pb-1">Date</th>
+                     <th style="width: 35%;" class="pb-1">Qty</th>
+                     <th style="width: 35%;" class="pb-1">Rate</th>
+                 </tr>
+             </thead>
+             <tbody style="overflow-y:scroll;height: calc(100vh - 550px);">
+                 <tr *ngFor="let x of InvItemsDesc.bth; let i=index">
+                     <td style="width: 30%;">
+                         {{x.vchDate | date:'dd-MM-yyyy'}}
+                     </td>
+                     <td style="width: 35%;">
+                         {{x.qty}}
+                     </td>
+                     <td class="text-end" style="width: 35%;">
+                         {{x.rate |number:'1.2-2'}}
+                     </td>
+                 </tr>
+             </tbody>
+         </table>
+     </div>
+     <div class="card-footer text-end">
+         <button type="button" tabindex="-1" class="btn btn-sm rounded-0 btn-primary me-2" (click)="save()">Save</button>
+         <button type="button" tabindex="-1" class="btn btn-sm rounded-0 btn-secondary"
+             (click)="closeStockList()">Close</button>
+     </div>
+ </section> -->
+ 
+ 
+ 
+ 
+ 
+ <div id="salesRate" class="modal" tabindex="-1" style="z-index: 9999;">
+     <div class="modal-dialog modal-dialog-centered" style="max-width: 70%;">
+         <div class="modal-content modal-content-size-l" #unitTable>
+             <div class="modal-header p-2 divcard text-white">
+                 <h6 class="modal-title">Sales Rates</h6>
+                 <button type="button" class="btn-close me-1" data-bs-dismiss="modal" aria-label="Close"></button>
+             </div>
+             <div class="modal-body p-0">
+                 <form #DG='ngForm' role="form" autocomplete="off" (keydown.enter)="$event.preventDefault()">
+                     <div class="row m-0">
+                         <table class="table table-bordered mb-0">
+                             <thead class="skyblue">
+                                 <tr>
+                                     <th style="width: 20%;" class="p-1">Date</th>
+                                     <th style="width: 40%;" class="p-1">Firm</th>
+                                     <th style="width: 20%;" class="p-1">Vouchar No</th>
+                                     <th style="width: 20%;" class="p-1 text-end">Rate</th>
+                                 </tr>
+                             </thead>
+                             <tbody style="overflow-y:scroll;height: calc(100vh - 510px);">
+                                 <tr *ngFor="let x of salesRates; let i=index">
+                                     <td style="width: 20%;">
+                                         {{x.salesInvoice.vchDate | date:'dd-MM-yyyy'}}
+                                     </td>
+                                     <td style="width: 40%;">
+                                         {{x.firmAlias}}
+                                     </td>
+                                     <td style="width: 20%;">
+                                         {{x.salesInvoice.vchNo}}
+                                     </td>
+                                     <td class="text-end" style="width: 20%;">
+                                         {{x.inclRate |number:'1.2-2'}}
+                                     </td>
+                                 </tr>
+                             </tbody>
+                         </table>
+ 
+                     </div>
+                     <div class="modal-footer p-1">
+                         <!-- <button type="button" tabindex="-1" class="btn btn-sm rounded-0 btn-primary me-2"
+                             (click)="save()">Save</button> -->
+                         <button type="button" tabindex="-1" class="btn btn-sm rounded-0 btn-secondary"
+                             (click)="closesalesRate()">Close</button>
+                     </div>
+                 </form>
+             </div>
+         </div>
+     </div>
+ </div>
+ 
+ 
+ 
+ 
+ 
+ <div id="purchaseRate" class="modal" tabindex="-1" style="z-index: 9999;">
+     <div class="modal-dialog modal-dialog-centered" style="max-width: 70%;">
+         <div class="modal-content modal-content-size-l" #unitTable>
+             <div class="modal-header p-2 divcard text-white">
+                 <h6 class="modal-title">Purchase Rates</h6>
+                 <button type="button" class="btn-close me-1" data-bs-dismiss="modal" aria-label="Close"></button>
+             </div>
+             <div class="modal-body p-0">
+                 <form #DG='ngForm' role="form" autocomplete="off" (keydown.enter)="$event.preventDefault()">
+                     <div class="row m-0">
+                         <div class="col-sm-10"></div>
+                         <div class="col-sm-2">
+ 
+                             <div class="input-group">
+ 
+                                 <div class="input-group-prepend me-1 mt-1">
+ 
+                                     <b>Margine(%)</b>
+ 
+                                 </div>
+ 
+ 
+                                 <input class="form-control form-control-sm mb-1" type="text" name="margine"
+                                     [(ngModel)]="entity.margine" CurrencyMask currency="INR" fraction="2"
+                                     (change)="calculateSaleRate()">
+ 
+ 
+ 
+                             </div>
+ 
+                         </div>
+                     </div>
+                     <div class="row m-0">
+                         <table class="table table-bordered mb-0">
+                             <thead class="skyblue">
+                                 <tr>
+                                     <th style="width: 15%;" class="p-1">Date</th>
+                                     <th style="width: 20%;" class="p-1">Firm</th>
+                                     <!-- <th style="width: 15%;" class="p-1">Vouchar</th> -->
+                                     <th style="width: 15%;" class="p-1">Bill No</th>
+                                     <!-- <th style="width: 20%;" class="p-1">Supplier</th> -->
+                                     <th style="width: 20%;" class="p-1 text-end">Pur. Rate</th>
+                                     <th style="width: 20%;" class="p-1 text-end">Sale Rate</th>
+                                 </tr>
+                             </thead>
+                             <tbody style="overflow-y:scroll;height: calc(100vh - 510px);">
+                                 <tr *ngFor="let x of list; let i=index">
+                                     <td style="width: 15%;">
+                                         {{x.vchDate | date:'dd-MM-yyyy'}}
+                                     </td>
+                                     <td style="width: 20%;">
+                                         {{x.firmAlias}}
+                                     </td>
+                                     <!-- <td style="width: 15%;">
+                                         {{x.vchNo}}
+                                     </td> -->
+                                     <td style="width: 15%;">
+                                         {{x.billNo}}
+                                     </td>
+                                     <!-- <td style="width: 20%;">
+                                         {{x.purchaseInvoice?.accCodeNavigation?.accName}}
+                                     </td> -->
+                                     <td class="text-end" style="width: 20%;">
+                                         {{x.inclRate |number:'1.2-2'}}
+                                     </td>
+                                     <td class="text-end" style="width: 20%;">
+                                         {{x.saleRate |number:'1.2-2'}}
+                                     </td>
+                                 </tr>
+                             </tbody>
+                         </table>
+ 
+                     </div>
+                     <div class="modal-footer p-1">
+                         <!-- <button type="button" tabindex="-1" class="btn btn-sm rounded-0 btn-primary me-2"
+                                 (click)="save()">Save</button> -->
+                         <button type="button" tabindex="-1" class="btn btn-sm rounded-0 btn-secondary"
+                             (click)="closepurchaseRate()">Close</button>
+                     </div>
+                 </form>
+             </div>
+         </div>
+     </div>
+ </div>

@@ -1,0 +1,184 @@
+<div [hidden]="rptMode">
+    <form #vi="ngForm" class="needs-validation" novalidate>
+        <div class="from-body">
+            <div>
+                <app-navactions [title]="'Contra'" (myfn)="navbar($event)"></app-navactions>
+                <div>
+                    <fieldset [disabled]="navactions.fieldset" class="mt-3">
+                        <div class="d-flex d-flex-column container">
+                            <div class="d-flex-width">
+                                <div>
+                                    <dss-input label="Vouchar No" name="vchno" [(ngModel)]="entity.vchNo"
+                                        placeholder="Auto No" [disabled]="true" />
+                                </div>
+                                <div>
+                                    <dss-input label="Challan No" name="challonno" [(ngModel)]="entity.challanNo"
+                                        [disabled]="true" />
+                                </div>
+                                <div>
+                                    <label>Date</label>
+                                    <input class="form-control" name="vchDate" type="date" [(ngModel)]="entity.vchDate"
+                                        finDate #vchDate="ngModel" [min]="finyear.fdt" [max]="finyear.tdt"
+                                        [ngClass]="{'is-invalid':vchDate.errors?.['required']}" required>
+                                </div>
+                            </div>
+                            <div class="d-flex flex-column gapInputFields">
+                                <label>Account</label>
+                                <app-ngselect apiUrl="Account/getAcclist" class="form-control-sm p-0"
+                                    bindLabel="accName" bindValue="accCode" name="recpayeeaccount"
+                                    [(ngModel)]="entity.accCode" [defaultProperty]="entity.accCodeNavigation"
+                                     
+                                    [disabled]="navactions.fieldset"></app-ngselect>
+                                <!-- <app-ngbselect [items]="reference.accounts" [name]="'recpayeeaccount'"
+                                        [bindLabel]="'accName'" [bindValue]="'accCode'" [model]="entity.accCode"
+                                        (update)="entity.accCode=$event.value"
+                                        [disabled]="navactions.fieldset"></app-ngbselect> -->
+
+                                <div>
+                                    <label>Transaction Type</label>
+                                    <select class="form-select" aria-label="Default select example"
+                                        name="transactiontype" [(ngModel)]="entity.transType" (change)="type(entity.transType)">
+                                        <option value="1">Debit</option>
+                                        <option value="0">Credit</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="gapInputFields">
+                                <div>
+                                    <dss-input label="Narration" inputType="textarea" id="w3review" name="narration"
+                                        [rows]="3" [(ngModel)]="entity.nar" [maxlength]="100" [cols]="50"
+                                        [styleCase]="'c'" />
+                                </div>
+                                <div>
+                                    <label class="mb-0 mt-2">Amount</label>
+                                    <input class="form-control text-end" name="amount" [disabled]="true"
+                                        [(ngModel)]="entity.amount" CurrencyMask currency="INR" symbol fraction="2"
+                                        autocomplete="off">
+                                </div>
+
+                            </div>
+                        </div>
+                        <hr />
+
+                        <div *ngIf="viewing1==1" class="container mt-3">
+
+                            <h5>Credited To</h5>
+
+                        </div>
+                        <div *ngIf="viewing1==2" class="container mt-3">
+
+                            <h5>Debited To</h5>
+
+                        </div>
+                        <div class="container">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th class="text-left p-1 " scope="col" style="width:35%">
+                                            Account</th>
+                                        <th class="text-end p-1 " scope="col" style="width:20%">
+                                            Amount</th>
+                                        <th class="text-center p-1 " scope="col" style="width:35%">
+                                            Nar</th>
+
+                                        <th class="text-center p-1" scope="col" style="width:10%">
+                                            Action
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th class="p-1 " scope="col" style="width:35%">
+                                            <app-ngselect apiUrl="Account/getAcclist" bindLabel="accName"
+                                                bindValue="accCode" name="contraItemsaccount"
+                                                [(ngModel)]="rec.contraItems.accCode" (change)="getAccountDetl($event)"
+                                                [defaultProperty]="rec.contraItems.accCodeNavigation"
+                                                [disabled]="navactions.fieldset" [applyMargins]="false"></app-ngselect>
+                                            <!-- <app-ngbselect [items]="reference.accounts" [name]="'contraItemsaccount'"
+                                            [bindLabel]="'accName'" [bindValue]="'accCode'"
+                                            [model]="rec.contraItems.accCode"
+                                            (update)="rec.contraItems.accCode=$event.value;this.rec.contraItems.accCodeNavigation=$event.obj"
+                                            [disabled]="navactions.fieldset"></app-ngbselect> -->
+                                        </th>
+                                        <th class="text-center p-1 " scope="col" style="width:20%">
+                                            <input type="text" class="form-control text-end" autocomplete="off"
+                                                name="contraItemsamount" [(ngModel)]="rec.contraItems.amount"
+                                                CurrencyMask currency="INR" fraction="2">
+                                        </th>
+                                        <th class="text-center p-1" scope="col" style="width:35%">
+                                            <input type="text" class="form-control" autocomplete="off"
+                                                name="contraItemsnar" [(ngModel)]="rec.contraItems.nar">
+                                        </th>
+                                        <th class="text-center p-1" scope="col" style="width:10%">
+                                            <button class="btn btn-light btn-sm" type="button" (click)="AddDebited()"
+                                                [disabled]="!rec.contraItems.amount">
+                                                <i class="fas fa-plus"></i></button>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody class="actionTableHeight">
+                                    <div *ngIf="!entity?.acc00601s || entity.acc00601s.length === 0" class="noDataImg">
+                                        <img src="../../../../../../assets/IMG/noData.png" width="50">
+                                        <p>Record is empty</p>
+                                    </div>
+                                    <tr *ngFor="let v of entity.acc00601s;let i=index;">
+                                        <td style="width:35%" class="p-1">{{v.accCodeNavigation.accName}}</td>
+                                        <td style="width:20%" class="p-1 text-end">{{v.amount | number:'1.2-2'}}</td>
+                                        <td style="width:35%" class="p-1">{{v.nar}}</td>
+                                        <td style="width:10%" class="p-1 text-right">
+                                            <div class="text-center">
+
+                                                <button class="btn btn-primary btn-sm-custom-table me-1" type="button"
+                                                    (click)="ContraEdit(v)">
+                                                    <i class="fas fa-edit"></i></button>
+                                                <button class="btn btn-danger btn-sm-custom-table" type="button"
+                                                    (click)="ContraDelete(v)">
+                                                    <i class="fas fa-trash"></i></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td class="p-1 text-end" scope="col" style="width:35%"><b>Total</b></td>
+                                        <td class="p-1 text-end" scope="col" style="width:20%">
+                                            <b> ₹ {{entity.amount | number:'1.2-2'}}</b>
+                                        </td>
+                                        <td class="p-1" scope="col" style="width:35%"></td>
+                                        <td class="p-1" scope="col" style="width:10%"></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                        <hr/>
+                        <div class="container">
+                            <h5 class="mt-2">Audit</h5>
+                            <div class="mt-3 d-flex justify-content-between">
+                                <div>
+                                    <label class="mb-0">Created User</label>
+                                    <p>{{entity.contraAudit?.createdUser}}</p>
+                                </div>
+    
+                                <div>
+                                    <label class="mb-0">Created Date</label>
+                                    <p>{{entity.contraAudit?.createdDt | date:'dd-MM-yyyy'}}</p>
+                                </div>
+    
+                                <div>
+                                    <label class="mb-0">Modified User</label>
+                                    <p>{{entity.contraAudit?.modifiedUser}}</p>
+                                </div>
+    
+                                <div>
+                                    <label class="mb-0">Modified Date</label>
+                                    <p>{{entity.contraAudit?.modifiedDt | date:'dd-MM-yyyy'}}</p>
+                                </div>
+    
+                            </div>
+                        </div>
+
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+ 

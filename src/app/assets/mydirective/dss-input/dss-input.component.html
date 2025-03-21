@@ -1,0 +1,37 @@
+<label [ngClass]="{'text-danger': required && !ngModel}" *ngIf="label">{{ label }}</label>
+
+<textarea *ngIf="inputType === 'textarea'"
+  [id]="id"
+  [class]="class"
+  [name]="name"
+  [rows]="rows"
+  [cols]="cols"
+  [maxlength]="maxlength"
+  [placeholder]="placeholder"
+  [(ngModel)]="ngModel"
+  (input)="onInputChange($event)"
+  [required]="required"
+  (keydown)="onKeyDown($event)"
+  [autocomplete]="autocomplete"
+  [style]="styleCase"
+  (ngModelChange)="ngModelChange.emit($event)">
+</textarea>
+
+<input *ngIf="!inputType"
+  [id]="id"
+  [class]="class"
+  [type]="type"
+  [name]="name"
+  [maxlength]="maxlength"
+  [disabled]="disabled"
+  [minlength]="minlength"
+  [placeholder]="placeholder"
+  [(ngModel)]="ngModel"
+  (input)="onInputChange($event)"
+  (change)="_change(ngModel)"
+  [required]="required"
+  [ngClass]="{'no-margin': !applyMargins}"
+  (keydown)="onKeyDown($event)"
+  [autocomplete]="autocomplete"
+  [style]="styleCase"
+  (ngModelChange)="ngModelChange.emit($event)" />

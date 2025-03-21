@@ -1,0 +1,16 @@
+[
+    {
+        "Code": "USD",
+        "Currency": "US Dollar",
+        "Country": "AMERICAN SAMOA",
+        "NumericCode": 840,
+        "CurrencyCode": "$"    
+    },
+    {
+        "Code": "INR",
+        "Currency": "Indian Rupee",
+        "Country": "BHUTAN",
+        "NumericCode": 356 ,
+        "CurrencyCode" :"₹" 
+    }
+]

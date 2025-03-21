@@ -1,0 +1,106 @@
+<div>
+    <div>
+        <app-navactions [title]="'User Info'" (myfn)="navbar($event)"></app-navactions>
+        <div>
+            <form #UserInfoForm="ngForm" class="needs-validation" novalidate>
+                <fieldset [disabled]="navactions.fieldset" class="d-flex d-flex-column container d-flex justify-content-center align-items-center mt-3">
+                    <div [ngClass]="entity.userId==null ?'' :''">
+                        <div class="">
+                            <dss-input label="Name" [styleCase]="'c'" name="userLongName"
+                                [(ngModel)]="entity.userLongname" [required]="true" [width]="'clamp(300px, 0px, 0px)'"                                />
+
+                        </div>
+                        <div>
+                            <dss-input label="Mobile No" [width]="'clamp(140px, 0px, 0px)'"
+                            name="mobileNo" [maxlength]="10" [(ngModel)]="entity.mobileno"
+                                [required]="true" />
+                        </div>
+
+                        <div>
+
+                            <dss-input type="email" [width]="'clamp(300px, 0px, 0px)'"
+                            label="Email Id" name="emailid" #emailid="ngModel"
+                                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" [required]="true"
+                                [ngClass]="{'is-invalid': emailid.invalid && (emailid.dirty || emailid.touched)}"
+                                [(ngModel)]="entity.emailId">
+                            </dss-input>
+                            <div *ngIf="emailid.invalid && (emailid.dirty || emailid.touched)" class="invalid-feedback">
+                                <!-- <span *ngIf="emailid.errors?.required">Email is required.</span> -->
+                                <!-- <span *ngIf="emailid.errors?.pattern">Invalid email format. Please enter a valid
+                                    email.</span> -->
+                            </div>
+                        </div>
+
+
+                        <div class="mb-4">
+
+                            <label>Designation</label>
+                            <ng-select bindLabel="roleName" style="width:clamp(300px, 0px, 0px)"
+                            bindValue="roleId" name="rolenm" [loading]="loading"
+                                        [virtualScroll]="true" [items]="degignations" [disabled]="navactions.fieldset"
+                                        [(ngModel)]="entity.roleId" placeholder="Select Designation">
+                                    </ng-select>
+                         
+
+                            <!-- <app-ngselect apiUrl="RoleInfo/getList" class="form-control p-0" bindLabel="roleName"
+                                bindValue="roleId" name="rolenm" [(ngModel)]="entity.roleId"
+                                [defaultProperty]="entity.role" [disabled]="navactions.fieldset"></app-ngselect> -->
+
+                        </div>
+
+                    </div>
+                    <!-- <div class="border-start mx-3" style="height: 300px;"></div> -->
+
+                    <div class="ms-5" *ngIf="entity.userId==null">
+                        <h5>Set Password</h5>
+                        
+                        <div class="card-body">
+
+                            <div class="col col-12 col-sm-8">
+                                <div class="input-group ">
+                                    <span class="input-group-text" id="basic-addon1"><i class="fa fa-user"
+                                            aria-hidden="true"></i></span>
+                                    <input type="text" class="form-control" name="usernm" #UserName="ngModel"
+                                        maxlength="8" [(ngModel)]="entity.userName" placeholder="Username"
+                                        autocomplete="off">
+
+                                </div>
+                            </div>
+                            <br>
+
+                            <div class="row">
+                                <div class="col col-12 col-sm-8">
+                                    <div class="input-group ">
+                                        <span class="input-group-text">
+                                            <i class="fa fa-lock"></i>
+                                        </span>
+                                        <input name="myPassword" [(ngModel)]="entity.credential.password"
+                                            class="form-control input-sm" [type]="pswType" autocomplete="new-password"
+                                            placeholder="Password"
+                                            [minlength]="!entity.userId || resetPassword==true ?6 :0" maxlength="50"
+                                            [required]="!entity.userId || resetPassword==true" #Psw="ngModel"
+                                            [disabled]="disablePsw()" />
+                                        <span role="button" (click)="changetype()" class="input-group-text">
+                                            <i class="fa fa-eye">
+                                            </i>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col col-12 col-sm-4">
+
+                                    <button class="btn btn-primary rounded-pill" (click)="genratepsw()"
+                                        [disabled]="disablePsw()" title="Generate Password"
+                                        [disabled]="!entity.userName">Generate Password</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </fieldset>
+
+            </form>
+        </div>
+    </div>
+
+
+</div>

@@ -1,0 +1,94 @@
+<div>
+    <div>
+        <app-navactions [title]="'Financial Year'" (myfn)="navbar($event)"></app-navactions>
+        <div>
+            <form #FinYearForm="ngForm" class="needs-validation" novalidate>
+                <fieldset [disabled]="navactions.fieldset">
+                    <div class="d-flex w-75 m-3">
+
+                        <div class="d-flex-width">
+                            <div class=" ">
+                                <label [ngClass]="{'text-danger':!entity.firmCode}">Firm</label>
+                                <ng-select class="form-control  p-0" bindLabel="firmName" bindValue="firmCode"
+                                    name="firmCode" [loading]="loading" [disabled]="disabledata"
+                                    [virtualScroll]="true" [items]="firms" [(ngModel)]="entity.firmCode"
+                                    required="true">
+                                    <!-- (change)="branch()" -->
+                                </ng-select>
+                            </div>
+                            <div class=" ">
+                                <dss-input label="From Id" name="fromdivId" placeholder="From Id" [whiteSpace]="false"
+                                    [(ngModel)]="entity.fromDivId" [disabled]="true" />
+                            </div>
+                        </div>
+
+                        <div class="gapInputFields">
+                            <div class=" ">
+                                <dss-input label="Fin Year" name="divId" [whiteSpace]="false" [disabled]="disabledata"
+                                    [(ngModel)]="entity.divId" [required]="true" />
+
+                            </div>
+                            <div class="  ">
+                                <input class="form-check-input" name="isprevious" type="checkbox"
+                                    [(ngModel)]="isChecked" id="flexCheckDefault">
+                                <p class="form-check-label " for="Previousyear">
+                                    Do you want to create from an existing last year?
+                                </p>
+
+                            </div>
+                        </div>
+
+                        <div class="gapInputFields">
+                            <div class=" ">
+                                <dss-input label="Prefix/Suffix" [whiteSpace]="false" name="prefix" [maxlength]="5"
+                                    [(ngModel)]="entity.prefix" [required]="true" />
+                            </div>
+                            <div class="d-flex d-flex-column">
+                                <div class="d-flex-width">
+                                    <dss-input label="From Date" type="date" name="fdt"
+                                        [ngModel]="entity.fdt | date:'yyyy-MM-dd'" (ngModelChange)="entity.fdt=$event"
+                                        [required]="true" />
+                                </div>
+
+
+                                <div class="gapInputFields">
+                                    <dss-input label="To Date" type="date" name="tdt" [required]="true"
+                                        [ngModel]="entity.tdt | date:'yyyy-MM-dd'"
+                                        (ngModelChange)="entity.tdt=$event" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+ 
+                    <hr>
+                    <div class="m-3">
+                        <h5 class="mt-2">Audit</h5>
+                        <div class="mt-3 d-flex justify-content-between">
+                            <div>
+                                <label class="mb-0">Created User</label>
+                                <p>{{entity?.createdUser}}</p>
+                            </div>
+
+                            <div>
+                                <label class="mb-0">Created Date</label>
+                                <p>{{entity?.createdDt | date:'dd-MM-yyyy'}}</p>
+                            </div>
+
+                            <div>
+                                <label class="mb-0">Modified User</label>
+                                <p>{{entity?.modifiedUser}}</p>
+                            </div>
+
+                            <div>
+                                <label class="mb-0">Modified Date</label>
+                                <p>{{entity?.modifiedDt| date:'dd-MM-yyyy'}}</p>
+                            </div>
+
+                        </div>
+                    </div>
+                </fieldset>
+
+            </form>
+        </div>
+    </div>

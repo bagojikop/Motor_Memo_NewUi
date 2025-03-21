@@ -1,0 +1,456 @@
+<div>
+    <app-masternav [title]="'Vehicle Info'" (myfn)="navbar($event)"></app-masternav>
+    <fieldset [disabled]="navactions.fieldset">
+        <form #vi="ngForm" class="needs-validation" novalidate>
+
+
+            <div class="container">
+                <div class="w-75">
+                    <div class="d-flex mt-3 ">
+                        <div class="d-flex-width">
+                            <dss-input label="Vehicle No" name="vehicleNo1" [(ngModel)]="entity.vehicleNo"
+                                [styleCase]="'u'" [maxlength]="10" [whiteSpace]="false"></dss-input>
+                            <div class="">
+                                <label>Vehicle type</label>
+                                <ng-select bindLabel="vtypeName" bindValue="vtypeId" name="vtypeName"
+                                    [loading]="loading" [virtualScroll]="true" [disabled]="navactions.fieldset"
+                                    (change)="getcityinmtr($event)" [items]="reference.vtypes"
+                                    [(ngModel)]="entity.vtypeId" placeholder="Select Type">
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="gapInputFields">
+
+                            <fieldset class="border border-1 p-2 border-light-subtle rounded-2 mb-2">
+                                <legend class="ms-1 px-1 float-none bg-white w-auto m-0 p-0" style="font-size: small;">
+                                    Vehicle</legend>
+
+                                <div class="d-flex">
+                                    <div class="d-flex align-items-center me-4">
+                                        <input type="radio" id="contactChoice1" name="contact" value="Own"
+                                            (change)="onOptionChange(1)" [checked]="entity.isOwn === 1" />
+                                        <label class="ms-2" for="contactChoice2">Own</label>
+                                    </div>
+                                    <div class="d-flex align-items-center">
+                                        <input type="radio" id="contactChoice2" name="contact" value="Hire"
+                                            (change)="onOptionChange(0)" [checked]="entity.isOwn === 0" />
+                                        <label class="ms-2" for="contactChoice1">Hire</label>
+                                    </div>
+                                </div>
+                            </fieldset>
+
+                            <div>
+                                <label for="">Capacity In MTS</label>
+                                <input class="form-control" numberOnly [(ngModel)]="entity.capacityMts" autocomplete="off" name="Capacity"
+                                    [maxlength]="10">
+                            </div>
+                        </div>
+
+                        <div class="gapInputFields">
+                            <div>
+                                <app-ngselect apiUrl="Account/getAcclist" label="Hire Account" name="AccountName"
+                                    class="p-0" bindLabel="accName" bindValue="accCode" [(ngModel)]="entity.accCode"
+                                    [defaultProperty]="entity.accCodeNavigation" [disabled]="navactions.fieldset"
+                                    #AccountName="ngModel" (change)="getpandetails($event)"></app-ngselect>
+
+                                <!-- <a (click)="accountcreatemodel()">
+                                    Create new Account
+                                </a> -->
+                                <a href="#" data-bs-toggle="modal" data-bs-target="#staticBackdrop" tabindex="-1"
+                                    data-bs-target="#exampleModal">
+                                    Create new Account
+                                </a>
+
+                            </div>
+                            <div class="">
+                                <dss-input label="PAN No" name="panno" [(ngModel)]="entity.panNo" [maxlength]="10"
+                                    [styleCase]="'u'" [whiteSpace]="false" #panInput="ngModel"
+                                    (ngModelChange)="validatePan(entity.panNo)">
+                                </dss-input>
+                                <div *ngIf="isInvalidPan" class="error">
+                                    <p style="color: red; font-size: 10px;">A valid PAN must be in the format
+                                        `AAAAA9999A`.</p>
+                                </div>
+
+                            </div>
+                        </div>
+                        <!-- <div class="gapInputFields">
+                            <label for="">Credit Limit Amount</label>
+                            <input class="form-control" [(ngModel)]="entity.creditLimitAmt" numberOnly
+                                name="creditLimitAmt" [maxlength]="10">
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="container">
+                <div class="card">
+                    <!-- <div class="card-header">
+                        <h5>Header</h5>
+                    </div> -->
+                    <div class="card-body">
+                        <div class="d-flex">
+                            <div class="d-flex flex-column">
+                                <div class="">
+                                    <label for="">Engine No</label>
+                                    <dss-input [(ngModel)]="entity.enginno" name="enginno" [styleCase]="'u'"
+                                        [maxlength]="10"></dss-input>
+                                </div>
+                                <div class="">
+                                    <label for="">Chassis No</label>
+                                    <dss-input [(ngModel)]="entity.chassisno" [styleCase]="'u'"
+                                        name="Chassis"></dss-input>
+                                </div>
+                            </div>
+
+                            <div class="d-flex flex-column gapInputFields">
+                                <div class="">
+                                    <dss-input label="Driver Name" [(ngModel)]="entity.driverName" autocomplete="off"
+                                        name="drivername"></dss-input>
+                                </div>
+                                <div class="d-flex">
+                                    <div class="d-flex-width">
+                                        <label for="">Driver Mobile No</label>
+                                        <input class="form-control" [(ngModel)]="entity.driverMobileNo" numberOnly autocomplete="off"
+                                            name="driverMobileNo" [maxlength]="13" autocomplete="off" [minlength]="10">
+                                    </div>
+
+                                    <div class="gapInputFields">
+                                        <dss-input label="Driver Lic No" [(ngModel)]="entity.driverLicNo" autocomplete="off"
+                                            name="driverLicNo"></dss-input>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="gapInputFields">
+                                <dss-input label="Driver Address" name="driverAddress" [maxlength]="100" autocomplete="off"
+                                    [(ngModel)]="entity.driverAddress" inputType='textarea' [rows]="4" [cols]="50">
+                                </dss-input>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+
+            <div class="container">
+                <div class="d-flex ">
+                    <div class="me-4">
+                        <fieldset class="border border-1 p-2 border-light-subtle rounded-2 mb-2">
+                            <legend class="ms-1 px-1 float-none bg-white w-auto m-0 p-0" style="font-size: small;">
+                                Insurance
+                            </legend>
+                            <dss-input label="Number" name="insuranceNo" [(ngModel)]="entity.mst10801s.insuranceNo" autocomplete="off" />
+                            <div class="d-flex align-items-center">
+
+                                <dss-input style="margin-right: 5px;" label="From" name="insuranceFrom" type="date" autocomplete="off"
+                                    [(ngModel)]="entity.mst10801s.insuranceFrom" />
+                                <dss-input label="To" name="insuranceTo" type="date" autocomplete="off"
+                                    [(ngModel)]="entity.mst10801s.insuranceTo" />
+
+                            </div>
+
+                        </fieldset>
+                    </div>
+
+                    <div class="me-4">
+                        <fieldset class="border border-1 p-2 border-light-subtle rounded-2 mb-2">
+                            <legend class="ms-1 px-1 float-none bg-white w-auto m-0 p-0" style="font-size: small;">
+                                Fitness
+                            </legend>
+                            <dss-input label="Number" name="fitnessNo" [(ngModel)]="entity.mst10801s.fitnessNo"  autocomplete="off"/>
+                            <div class="d-flex align-items-center">
+
+                                <dss-input style="margin-right: 5px;" label="From" name="fitnessFrom" type="date"
+                                    [(ngModel)]="entity.mst10801s.fitnessFrom" />
+                                <dss-input label="To" name="fitnessTo" type="date"
+                                    [(ngModel)]="entity.mst10801s.fitnessTo" />
+
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="me-3">
+                        <fieldset class="border border-1 p-2 border-light-subtle rounded-2 mb-2">
+                            <legend class="ms-1 px-1 float-none bg-white w-auto m-0 p-0" style="font-size: small;">
+                                Permit
+                            </legend>
+                            <dss-input label="Number" name="permitno" [(ngModel)]="entity.mst10801s.permitno" />
+                            <div class="d-flex align-items-center">
+
+                                <dss-input style="margin-right: 5px;" label="From" name="permitFm" type="date"
+                                    [(ngModel)]="entity.mst10801s.permitFm" />
+                                <dss-input label="To" name="permitTo" type="date"
+                                    [(ngModel)]="entity.mst10801s.permitTo" />
+
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+
+            </div>
+            <hr>
+            <div class="container">
+                <div class="bg-light">
+                    <h5 class="m-0 p-2">Bank Details</h5>
+                </div>
+                <div class="d-flex">
+                    <div class="d-flex-width" style="width: 30%;">
+                        <dss-input name="Account Name" label="Account Name" [maxlength]="15" [styleCase]="'u'"
+                            [(ngModel)]="entity.mst10804.bankName" />
+
+                    </div>
+                    <div class="gapInputFields" style="width: 20%;">
+                        <dss-input name="Bank Address" label="Bank Address" [(ngModel)]="entity.mst10804.address" />
+
+                    </div>
+                    <div class="gapInputFields" style="width: 20%;">
+                        <dss-input name="Account No" label="Account No" [maxlength]="15" [styleCase]="'u'"
+                            [(ngModel)]="entity.mst10804.bankaccNo" />
+
+                    </div>
+                    <div class="gapInputFields" style="width: 20%;">
+                        <dss-input name="IFSC Code" label="IFSC Code" [maxlength]="15" [styleCase]="'u'"
+                            [(ngModel)]="entity.mst10804.ifscCode" [applyMargins]="false" />
+                    </div>
+                </div>
+            </div>
+
+            <hr>
+
+            <div class="container mt-3">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="m-0 p-2">Tax Details</h5>
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th class="text-center" scope="col" style="width: 20%;">
+                                    <b>State</b>
+                                </th>
+                                <th class="text-center" scope="col" style="width: 10%;">
+                                    <b>Tax No</b>
+                                </th>
+                                <th class="text-center" scope="col" style="width: 10%;">
+                                    <b>TaxDue from</b>
+                                </th>
+                                <th class="text-center" scope="col" style="width: 10%;">
+                                    <b>TaxDue To</b>
+                                </th>
+                                <th class="text-center" scope="col" style="width: 10%;">
+                                    <b>Permit No</b>
+                                </th>
+                                <th class="text-center" scope="col" style="width: 10%;">
+                                    <b>Permit From</b>
+                                </th>
+                                <th class="text-center" scope="col" style="width: 10%;">
+                                    <b>Permit To</b>
+                                </th>
+                                <th class="text-center" scope="col" style="width: 10%;">
+                                    <b>Action</b>
+                                </th>
+                            </tr>
+
+                            <tr>
+                                <th>
+                                    <app-ngselect apiUrl="state/getStates" class="p-0" bindLabel="stateName"
+                                        [disabled]="navactions.fieldset" bindValue="stateCode" name="state"
+                                        [(ngModel)]="info.reference.StateId"
+                                        (change)="statechagename($event)"></app-ngselect>
+                                </th>
+                                <th>
+                                    <dss-input name="taxno" [maxlength]="15" [styleCase]="'u'"
+                                        [(ngModel)]="info.reference.taxno" [applyMargins]="false" />
+                                </th>
+                                <th>
+                                    <dss-input name="tax_fm" type="date" [(ngModel)]="info.reference.taxFm"
+                                        [applyMargins]="false" />
+                                </th>
+                                <th>
+                                    <dss-input name="tax_to" type="date" [(ngModel)]="info.reference.taxTo"
+                                        [applyMargins]="false" />
+                                </th>
+                                <th>
+                                    <dss-input name="permit" [maxlength]="15" [(ngModel)]="info.reference.permitno"
+                                        [styleCase]="'u'" [applyMargins]="false" />
+                                </th>
+
+                                <th>
+                                    <dss-input name="permit_fm" type="date" [(ngModel)]="info.reference.permitFm"
+                                        [applyMargins]="false" />
+                                </th>
+
+                                <th>
+                                    <dss-input name="permit_to" type="date" [(ngModel)]="info.reference.permitTo"
+                                        [applyMargins]="false" />
+                                </th>
+                                <th class="text-center">
+                                    <button class="btn btn-light btn-sm" type="button" (click)="Addtaxdata()">
+                                        <i class="fas fa-plus"></i></button>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="actionTableHeight">
+                            <div *ngIf="!entity?.mst10805s || entity.mst10805s.length === 0" class="noDataImg">
+                                <img src="../../../../../../assets/IMG/noData.png" width="50">
+                                <p>Record is empty</p>
+                            </div>
+
+                            <tr *ngFor="let v of entity.mst10805s;let i=index;">
+                                <td style="width: 20%;">{{v.state.stateName}}</td>
+                                <td>{{v.taxno}}</td>
+                                <td>{{v.taxFm}}</td>
+                                <td>{{v.taxTo}}</td>
+                                <td>{{v.permitno}}</td>
+                                <td>{{v.permitFm}}</td>
+                                <td>{{v.permitTo}}</td>
+
+                                <td class="text-center">
+                                    <button class="btn btn-sm-custom-table me-1" type="button"
+                                        (click)="editgstTablerow(v,i)">
+                                        <i class="fas fa-edit"></i></button>
+                                    <button class="btn  btn-sm-custom-table" type="button"
+                                        (click)="deletegstTablerow(i)">
+                                        <i class="fas fa-trash"></i></button>
+                                </td>
+                            </tr>
+                        </tbody>
+
+                    </table>
+                </div>
+
+            </div>
+            <hr>
+
+            <div class="container" *ngIf="selectedOption === 'Own'">
+                <div class="bg-light p-2">
+                    <h5 class="m-0">Account</h5>
+                </div>
+                <div class="d-flex ">
+                    <div class="d-flex-width">
+                        <label for="">Account Firm</label>
+                        <ng-select style="margin-bottom: 10px;" name="Place" bindLabel="Place"
+                            bindValue="Place"></ng-select>
+                    </div>
+                    <div class="gapInputFields">
+                        <label for="">Provision Account</label>
+                        <ng-select style="margin-bottom: 10px;" name="Place" bindLabel="Place"
+                            bindValue="Place"></ng-select>
+                    </div>
+                    <div class="gapInputFields">
+                        <label for="">Expenses Account</label>
+                        <ng-select style="margin-bottom: 10px;" name="Place" bindLabel="Place"
+                            bindValue="Place"></ng-select>
+                    </div>
+                </div>
+            </div>
+            <hr>
+
+            <div class="container">
+                <div class="bg-light mb-2">
+                    <h5 class="m-0 p-2">Audit</h5>
+                </div>
+                <div class="mt-3 d-flex justify-content-between">
+                    <div>
+                        <label class="mb-0">Created User</label>
+                        <p>{{entity.createdUser}}</p>
+                    </div>
+
+                    <div>
+                        <label class="mb-0">Created Date</label>
+                        <p>{{entity.createdDt | date:'dd-MM-yyyy'}}</p>
+                    </div>
+
+                    <div>
+                        <label class="mb-0">Modified User</label>
+                        <p>{{entity.modifiedUser}}</p>
+                    </div>
+
+                    <div>
+                        <label class="mb-0">Modified Date</label>
+                        <p>{{entity.modifiedDt | date:'dd-MM-yyyy'}}</p>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </fieldset>
+</div>
+
+<div class="modal fade" id="exampleModal" data-bs-backdrop="static" role="dialog" aria-labelledby="exampleModalLabel">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <form #vi="ngForm" class="needs-validation">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Account Create</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <dss-input name="accName" label="Account Name" [(ngModel)]="reference.accName" [maxlength]="100"
+                        [required]="true" [styleCase]="'c'">
+                    </dss-input>
+
+                    <div class="d-flex">
+                        <div class="d-flex-width">
+                            <app-ngselect apiUrl="Place/getPlace" label="Place" bindLabel="cityName" bindValue="cityId"
+                                name="placesd" [(ngModel)]="reference.placeId" [disabled]="navactions.fieldset">
+                            </app-ngselect>
+                        </div>
+                        <div class="gapInputFields">
+                            <app-ngselect apiUrl="SubGroup/getGroup" label="Group" bindLabel="sgName" bindValue="sgCode"
+                                name="sgCode" [(ngModel)]="reference.sgCode" [disabled]="navactions.fieldset" [bindSubObj]="[{key:'Group',value:'grpName'},
+                             {key:'Primary Group',value:'grpCodeNavigation?.mgCodeNavigation?.mgName'}]"
+                                [defaultProperty]="reference.sgCodeNavigation">
+                            </app-ngselect>
+                        </div>
+
+                    </div>
+                    <div class="d-flex mt-2">
+                        <div class="d-flex-width">
+                            <div>
+                                <dss-input label="PAN No" name="panno" [(ngModel)]="reference.panNo" [maxlength]="10"
+                                    [styleCase]="'u'" [whiteSpace]="false" #panInput="ngModel"
+                                    (ngModelChange)="validatePanmodel(reference.panNo)"></dss-input>
+                            </div>
+                            <div *ngIf="isInvalidPanmodel" class="error">
+                                <p style="color: red; font-size: 10px;">A valid PAN must be in the format
+                                    `AAAAA9999A`.</p>
+                            </div>
+                        </div>
+
+                        <div class="gapInputFields">
+                            <label for="">Mobile No</label>
+                            <input class="form-control" [(ngModel)]="reference.ownermobileno" numberOnly
+                                name="ownermobileno" [maxlength]="13" [minlength]="10">
+                        </div>
+                        <div class="gapInputFields">
+                            <dss-input name="alias" label="Alias/Account ID" [(ngModel)]="reference.accAlias"
+                                [maxlength]="10" [whiteSpace]="false">
+                            </dss-input>
+                        </div>
+                    </div>
+
+
+                    <div class="d-flex">
+                        <div class="d-flex-width">
+                            <dss-input name="bankName" label="Bank Name" [(ngModel)]="reference.mst01104.bankName" />
+
+                        </div>
+                        <div class="gapInputFields">
+                            <dss-input name="ifsccode" label="IFSC Code" [(ngModel)]="reference.mst01104.ifscCode"
+                                [maxlength]="50" [whiteSpace]="false" [styleCase]="'u'" />
+                        </div>
+                        <div class="gapInputFields">
+                            <dss-input name="bankaccountno" numberOnly label="Account No" [whiteSpace]="false"
+                                [(ngModel)]="reference.mst01104.bankaccNo" [maxlength]="50" />
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary btn-sm" (click)="submitModuledata()">Save</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

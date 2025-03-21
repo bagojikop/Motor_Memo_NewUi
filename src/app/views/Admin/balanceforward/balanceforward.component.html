@@ -1,0 +1,75 @@
+<div>
+    <div>
+
+
+        <div class="mastersHeading m-0">
+            <div class="row m-0 pt-2">
+                <div class="col col-sm-6">
+                    <div class="d-flex justify-content-start align-items-center">
+                        <span style="font-size:20px;">Balance Forward</span>
+                    </div>
+                </div>
+                <div class="col col-sm-6 text-end">
+                    <strong style="float: right; margin-top: 5px; font-weight: 600;">Financial Year is {{entity.finyear
+                        || 0}}</strong>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="d-flex-width ms-4 mt-3">
+     
+            <div class="mt-3 me-5">
+                <label [class]="!entity.firmCode?'text-danger':''">Firm</label>
+                <ng-select bindLabel="firmName" bindValue="firmCode" name="firmnm" [loading]="loading"
+                    [disabled]="disabledata" [virtualScroll]="true" [items]="firms" [(ngModel)]="entity.firmCode"
+                    placeholder="Select Firm">
+                </ng-select>
+            </div>
+            <div class="d-flex d-flex-column mt-3">
+                <div class="d-flex-width">
+                    <div class="form-check">
+                        <input class="form-check-input" name="isprevious" type="checkbox" [(ngModel)]="entity.account"
+                            (change)="check()" id="flexCheckDefault">
+                        <label class="form-check-label" for="Previousyear">
+                            Account
+                        </label>
+                    </div>
+                </div>
+                <div class="gapInputFields">
+                    <div class="form-check">
+                        <input class="form-check-input" name="isprevious" type="checkbox" [(ngModel)]="entity.inventory"
+                            (change)="check1()" id="flexCheckDefault">
+                        <label class="form-check-label" for="Previousyear">
+                            Inventory
+                        </label>
+                    </div>
+                </div>
+
+                <div class="gapInputFields">
+                    <div class="form-check">
+                        <input class="form-check-input" name="isprevious" type="checkbox" [(ngModel)]="entity.inventory"
+                            (change)="check()" id="flexCheckDefault">
+                        <label class="form-check-label" for="Previousyear">
+                            With Mrp
+                        </label>
+                    </div>
+                </div>
+               
+            </div>
+            <div class="me-5">
+                <div class="text-end mt-3">
+                    <button (click)="save()" class="btn btn-outline-success btn-sm">
+                        Balance Forward
+                    </button>
+                </div>
+            </div>
+
+
+        </div>
+
+
+
+
+
+    </div>
+</div>

@@ -1,0 +1,18 @@
+[
+    {
+        "cd": 1,
+        "nm": "Taxable"
+    },
+    {
+        "cd": 2,
+        "nm": "Nil Rated"
+    },
+    {
+        "cd": 3,
+        "nm": "Exempt"
+    },
+    {
+        "cd": 4,
+        "nm": "Non GST"
+    }
+]

@@ -1,0 +1,16 @@
+:host {
+  .legend {
+    small {
+      font-size: x-small;
+    }
+  }
+}
+
+.bgIMG{
+  background-image: url('../../../assets/IMG/erp1.jpg') !important;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: calc(100vh - 68px);
+}
+

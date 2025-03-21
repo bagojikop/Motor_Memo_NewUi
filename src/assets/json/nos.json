@@ -1,0 +1,22 @@
+[
+    {
+        "cd":1,
+        "nm":"Transport"
+    },
+    {
+        "cd":2,
+        "nm":"WareHouse"
+    },
+    {
+        "cd":3,
+        "nm":"Loading/Unloading"
+    },
+    {
+        "cd":4,
+        "nm":"Rake Handling"
+    },
+    {
+        "cd":5,
+        "nm":"Storage"
+    }
+]

@@ -1,0 +1,25 @@
+.search-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: fit-content;
+  height: 34px;
+}
+
+.search-box input {
+  padding-right: 40px; /* Make space for the button inside */
+  height: 35px;
+}
+
+.search-box button {
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+}
+
+ 

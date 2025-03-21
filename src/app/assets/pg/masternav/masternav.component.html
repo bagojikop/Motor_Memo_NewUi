@@ -1,0 +1,181 @@
+<div class="p-2 navaction">
+    <div class="navaction-res d-flex justify-content-between">
+        <div class="d-flex">
+
+            <span style="font-size:20px; margin-left: 3px;">{{title}}</span>
+
+            <div *ngIf="isRcm">
+                
+                <div class="d-flex">
+                    <div class="border-start mx-3 custom-border-color" style="height: 30px;"></div>
+                    <label class="mb-0 me-2" style="margin-top: 4px;">IsRcm</label>
+                    <ui-switch [checked]=false name="rcm" (change)="getisRCM($event)" [disabled]="navactions.isRcmDisabled"></ui-switch>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex">
+            <div>
+                <button class="btn btn-sm  btn-outline-success" [disabled]="navactions.new1" type="button"
+                    (click)="newRecord()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-plus-square-fill" viewBox="0 0 16 16">
+                        <path
+                            d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm6.5 4.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3a.5.5 0 0 1 1 0" />
+                    </svg>
+                </button>
+
+
+
+                <button class="btn btn-sm btn-outline-secondary mx-2" [disabled]="navactions.edit1" type="button"
+                    (click)="edit()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-pencil-square" viewBox="0 0 16 16">
+                        <path
+                            d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                        <path fill-rule="evenodd"
+                            d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
+                    </svg>
+                </button>
+
+
+
+                <!-- <button class="btn btn-sm btn-outline-success" [disabled]="navactions.print1" type="button"
+                    (click)="print()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-printer-fill" viewBox="0 0 16 16">
+                        <path
+                            d="M5 1a2 2 0 0 0-2 2v1h10V3a2 2 0 0 0-2-2zm6 8H5a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1">
+                        </path>
+                        <path
+                            d="M0 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-1v-2a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v2H2a2 2 0 0 1-2-2zm2.5 1a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1">
+                        </path>
+                    </svg>
+                </button> -->
+
+                <!-- <app-uploadDocs [docAttach]="docInfo" name="Doc" (DocResponse)="docrec($event)"
+                    [disabledd]="navactions.document1" [serverapi]="provider.serverapi" *ngIf="isDoc">
+                </app-uploadDocs> -->
+
+                <!-- <button class="btn btn-sm btn-light  me-2 rounded-pill  d-flex" 
+                [disabled]="navactions.document1"  name="DOC" 
+                    [serverapi]="provider.serverapi"
+                    type="button" (click)="documents()">
+                    <span>Doc</span>&nbsp;<i class="bi bi-files"></i>
+                </button> -->
+
+
+            </div>
+            <div class="border-end mx-2" style="height: 30px;"></div>
+            <div>
+                <!-- <div class="border-end border-slateBlue"> -->
+                <button class="btn btn-sm btn-outline-success" [disabled]="navactions.save1" type="button"
+                    (click)="mainsave()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-floppy-fill" viewBox="0 0 16 16">
+                        <path
+                            d="M0 1.5A1.5 1.5 0 0 1 1.5 0H3v5.5A1.5 1.5 0 0 0 4.5 7h7A1.5 1.5 0 0 0 13 5.5V0h.086a1.5 1.5 0 0 1 1.06.44l1.415 1.414A1.5 1.5 0 0 1 16 2.914V14.5a1.5 1.5 0 0 1-1.5 1.5H14v-5.5A1.5 1.5 0 0 0 12.5 9h-9A1.5 1.5 0 0 0 2 10.5V16h-.5A1.5 1.5 0 0 1 0 14.5z" />
+                        <path
+                            d="M3 16h10v-5.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5zm9-16H4v5.5a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5zM9 1h2v4H9z" />
+                    </svg>
+                </button>
+                <!-- </div> -->
+
+                <button class="btn btn-sm btn-outline-secondary mx-2" type="button" (click)="undo()"
+                    [disabled]="navactions.undo1">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-arrow-counterclockwise" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M8 3a5 5 0 1 1-4.546 2.914.5.5 0 0 0-.908-.417A6 6 0 1 0 8 2z" />
+                        <path
+                            d="M8 4.466V.534a.25.25 0 0 0-.41-.192L5.23 2.308a.25.25 0 0 0 0 .384l2.36 1.966A.25.25 0 0 0 8 4.466" />
+                    </svg>
+                </button>
+
+
+                <button class="btn btn-sm btn-outline-danger" type="button" (click)="close()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-x-square-fill" viewBox="0 0 16 16">
+                        <path
+                            d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm3.354 4.646L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 1 1 .708-.708">
+                        </path>
+                    </svg>
+                </button>
+
+            </div>
+        </div>
+
+        <!-- <div class="col col-lg-11 d-flex justify-content-end" >
+        </div> -->
+    </div>
+
+
+    <div class="navaction-resrs">
+        <div class="row m-0 align-items-center">
+            <div class="col col-sm-5">
+                <div class="col col-lg d-flex align-items-center">
+                    <h5 class="mat-subheading-1 mb-1 ms-3 ">{{title}}</h5>
+                </div>
+            </div>
+            <div class="col col-sm-3 offset-sm-4">
+                <button class="btn float-right float-end" type="button" [ngbPopover]="lR" style="z-index: 9999;"
+                    aria-label="Toggle navigation">
+                    <i class="bi bi-three-dots-vertical btn-outline-dark"></i>
+                </button>
+
+                <ng-template class="collapse navbar-collapse" #lR id="menu">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+                        <li class="nav-item  border-secondary mb-2">
+                            <button class="btn btn-sm  btn-light     d-flex" [disabled]="navactions.new1" type="button"
+                                (click)="newRecord()">
+                                <span>New</span>&nbsp;<i class="bi bi-plus-circle"></i>
+                            </button>
+                        </li>
+
+                        <li class="nav-item  border-secondary mb-2">
+                            <button class="btn btn-sm btn-light    d-flex" [disabled]="navactions.edit1" type="button"
+                                (click)="edit()">
+                                <span>Edit</span>&nbsp;<i class="bi bi-pencil-square"></i>
+                            </button>
+                        </li>
+
+                        <li class="nav-item mb-2">
+                            <button class="btn btn-sm btn-light d-flex" [disabled]="navactions.print1" type="button"
+                                (click)="print()">
+                                <span>Print</span>&nbsp;<i class="bi bi-file-pdf"></i>
+                            </button>
+
+
+                        </li>
+
+                    </ul>
+
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+                        <li class=" nav-item  border-secondary mb-2">
+                            <button class="btn btn-sm btn-light    d-flex" [disabled]="navactions.save1" type="button"
+                                (click)="mainsave()">
+                                <span>Save</span>&nbsp;<i class="bi bi-check-circle "></i>
+                            </button>
+                        </li>
+                        <li class=" nav-item  border-secondary mb-2">
+                            <button class="btn btn-sm btn-light   d-flex" [disabled]="navactions.save1" type="button"
+                                (click)="undo()" [disabled]="navactions.undo1">
+                                <span>Undo</span>&nbsp;<i class="bi bi-arrow-counterclockwise"></i>
+                            </button>
+                        </li>
+
+                        <li class=" nav-item btn btn-sm btn-light  mb-2  d-flex" type="button" (click)="close()">
+                            <span>Close</span>&nbsp; <i class="bi bi-x-circle"></i>
+                        </li>
+
+
+                    </ul>
+                </ng-template>
+            </div>
+        </div>
+    </div>
+    <!--     
+   -->
+
+</div>
