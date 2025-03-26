@@ -41,8 +41,8 @@
                 <th style="width: 10%;text-align: center;" class="fw-bold"> Edit</th>
                 <th style="width: 10%;text-align: center;" class="fw-bold"> Delete</th>
                 <th style="width: 10%;text-align: center;" class="fw-bold"> Print</th>
-                <th style="width: 10%;text-align: center;" class="fw-bold"> Op Balance</th>
-                <th style="width: 10%;text-align: center;" class="fw-bold"> Sys Admin</th>
+                <!-- <th style="width: 10%;text-align: center;" class="fw-bold"> Op Balance</th>
+                <th style="width: 10%;text-align: center;" class="fw-bold"> Sys Admin</th> -->
 
 
             </tr>
@@ -68,13 +68,12 @@
                 <td style="width: 10%; text-align: center;">
                     <input type="checkbox" [(ngModel)]="item.p" (ngModelChange)="item.p=changeMode(item.p)">
                 </td>
-                <td style="width: 10%; text-align: center;">
+                <!-- <td style="width: 10%; text-align: center;">
                     <input type="checkbox" [(ngModel)]="item.o" (ngModelChange)="item.o=changeMode(item.o)">
                 </td>
                 <td style="width: 10%; text-align: center;">
-                    <input type="checkbox" [(ngModel)]="item.sysAdmin">
-
-                </td>
+                    <input type="checkbox" [(ngModel)]="item.sysAdmin"> 
+                </td> -->
 
             </tr>
         </tbody>
@@ -83,74 +82,3 @@
 
 
 </div>
-
-
-<!-- user -->
-<!-- 
-<form class="form-horizontal" role="form">
-    <div class="card">
-        <div class="card-header d-flex justify-content-between">
-
-            <strong><i class="fa fa-edit me-1"></i>User</strong>
-            <div class="text-end">
-                <button role="button" type="submit" (click)="save()" class="btn m-0 me-1 btn-sm btn-primary">
-                    Save
-                </button>
-
-                <button class="btn m-0 btn-sm btn-danger" type="button" (click)="close()">
-                    Close 
-                </button>
-            </div>
-        </div>
-        <div class="card-body">
-            <table class="table table-bordered">
-                <thead style="background-color: rgb(235, 245, 241);">
-                    <tr>
-                        <th style="width: 15%;text-align: center;"> User </th>
-                        <th style="width: 25%;text-align: center;"> Full Name</th>
-                        <th style="width: 10%;"> Add</th>
-                        <th style="width: 10%;"> Edit</th>
-                        <th style="width: 10%;"> Delete</th>
-                        <th style="width: 10%;"> Print</th>
-                        <th style="width: 10%;"> Op Balance</th>
-                        <th style="width: 10%;"> Sys Admin</th>
-                        
-                       
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let access of list;let i=index;">
-                        <td style="width: 15%; text-align: left;">
-                            {{access.user.username}}
-                        </td>
-                        <td style="width:25%; text-align: left;">
-                            {{access.user.userLongName}}</td>
-                        <td style="width: 10%; text-align: center;">
-                            <input type="checkbox" [(ngModel)]="list[i].a" name="add{{list[i].id}}">
-
-                        </td>
-                        <td style="width: 10%; text-align: center;">
-                            <input type="checkbox" [(ngModel)]="list[i].e" name="edit{{list[i].id}}">
-                        </td>
-                        <td style="width: 10%; text-align: center;">
-                            <input type="checkbox" [(ngModel)]="list[i].d" name="delete{{list[i].id}}" >
-                        </td>
-                        
-                        <td style="width: 10%; text-align: center;">
-                            <input type="checkbox" [(ngModel)]="list[i].p" name="print{{list[i].id}}">
-                        </td>
-                        <td style="width: 10%; text-align: center;">
-                            <input type="checkbox" [(ngModel)]="list[i].o" name="opbalance{{list[i].id}}">
-                        </td>
-                        <td style="width: 10%; text-align: center;">
-                            <input type="checkbox" [(ngModel)]="list[i].sysAdmin" name="sysadmin{{list[i].id}}">
-
-                        </td>
-                        
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-    </div>
-</form> -->
