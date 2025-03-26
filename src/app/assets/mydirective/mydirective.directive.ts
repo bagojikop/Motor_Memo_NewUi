@@ -233,7 +233,7 @@ export class decimalDirective implements OnChanges {
     if (value == "") {
       value = 0;
     }
-    value = value.toString().replace(",", "");
+    value = value? value.toString().replace(",", ""):0;
     if (value > Math.floor(value)) {
       var n = this.decimalPipe.transform(parseFloat(value).toFixed(this.fraction), f);
       this.ngModelChange.emit(n)

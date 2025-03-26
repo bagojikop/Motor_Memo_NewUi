@@ -1,12 +1,13 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit, ViewChild } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, inject, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { NgxSpinnerService } from 'ngx-spinner'; 
+import { NgxSpinnerService } from 'ngx-spinner';
 import { MyProvider } from '../../../../assets/services/provider';
 import { CommonModule, DatePipe, Location } from '@angular/common';
-import { http, Master, NavbarActions } from '../../../../assets/services/services'; 
+import { http, Master, NavbarActions, UserPermissions } from '../../../../assets/services/services';
 import { FormsModule, NgForm } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 import { AuthService } from '../../../../assets/services/auth.service';
+import { DialogsComponent } from '../../../pg/dialogs/dialogs.component';
 
 declare var $: any;
 
@@ -14,8 +15,9 @@ declare var $: any;
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
-    imports:[FormsModule,CommonModule],
-  schemas:[CUSTOM_ELEMENTS_SCHEMA]
+  imports: [FormsModule, CommonModule],
+  providers:[DialogsComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class LoginComponent implements OnInit {
 
@@ -36,12 +38,13 @@ export class LoginComponent implements OnInit {
     this.passwordVisible = !this.passwordVisible;
   }
 
+  userAccessCtrl = inject(UserPermissions);
+
   constructor(private http: http,
     private spinner: NgxSpinnerService,
     private provider: MyProvider,
-    // private dialog: DialogsComponent,
     private router: Router,
-    //private _cacheService: CacheService,
+    private dialog: DialogsComponent,
     public navactions: NavbarActions,
     private authService: AuthService,) {
 
@@ -51,40 +54,49 @@ export class LoginComponent implements OnInit {
   getfn() {
     this.passwordVisible == true ? 'text' : 'password';
   }
-  logfun() {
-    this.router.navigate(['/home']);
+  Submit() {
+    if (this.Loginform.valid) {
+      this.spinner.show();
+
+      this.http.get("login/usergrants", this.entity).subscribe({
+        next: (res) => {
+          if (res.status_cd == 1) {
+            this.userAccessCtrl.setInfo(res.data);
+            this.router.navigate(['selectfirm']);
+          } else {
+          this.dialog.swal({ dialog: 'error', title: 'Error', message: "Plese Check Username and Password" });
+          }
+        }, error: err => {
+          this.dialog.swal({ dialog: 'error', title: 'Error', message: err.message });
+ 
+        }, complete: () => {
+          this.spinner.hide();
+        }
+      })
+    }else{
+      this.dialog.swal({ dialog: 'Warning', title: 'Error', message: "Plese Enter Username and Password" });
+      
+    }
   }
 
   ngOnInit(): void {
-
     this.reference = {};
-
   } 
-  async Submit() {
-    this.router.navigate(['selectfirm']);
-  }
+
   setforgotpassword() {
-
-
     this.router.navigate(['forgotpassword']);
-
   }
 
 
   SendOTP(obj) {
-
     this.http.put('token/SendOTP', null, { username: obj.username }).subscribe({
       next: (res: any) => {
-
         var params = { name: obj }
         this.router.navigate(['otpverification'], { state: params });
-
       }, error: (err: any) => {
-        this.spinner.hide() 
+        this.spinner.hide()
       }
     })
-
-
   };
 }
 

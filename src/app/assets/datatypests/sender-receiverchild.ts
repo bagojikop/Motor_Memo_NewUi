@@ -7,6 +7,7 @@ export interface SubconsigneeObj {
     ApproximateKg: string
     code: any
     iId: string
+    id: number
     branchStateId: string
     pincode: number
     hsncode: number

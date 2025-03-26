@@ -16,13 +16,13 @@ import { MydirectiveModule } from '../../../../assets/mydirective/mydirective.mo
 import { ngselectComponent } from '../../../../assets/pg/ngselect/ngselect.component';
 import { pipe } from 'rxjs';
 import { NavactionsComponent } from '../../../../assets/pg/navactions/navactions.component';
-import { UppercaseDirective,NumberOnlyDirective } from '../../../../assets/mydirective/mydirective.directive';
+import { UppercaseDirective,NumberOnlyDirective, DTFormatDirective } from '../../../../assets/mydirective/mydirective.directive';
 
 @Component({
   selector: 'app-declarationchild',
   templateUrl: './declarationchild.component.html',
   styleUrls: ['./declarationchild.component.scss'],
-  imports: [FormsModule, CommonModule, NumberOnlyDirective, ngselectComponent,NavactionsComponent, NgSelectModule, DssInputComponent, MydirectiveModule],
+  imports: [FormsModule, CommonModule,DTFormatDirective, NumberOnlyDirective, ngselectComponent,NavactionsComponent, NgSelectModule, DssInputComponent, MydirectiveModule],
   providers:[NavbarActions],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

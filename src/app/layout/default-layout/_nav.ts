@@ -77,7 +77,7 @@ export const navItems: INavData[] = [
     children: [
       { name: 'Motor Memo', iconComponent: { name: 'cil-file' }, url: 'Motormaster' },
       { name: 'Sundry', iconComponent: { name: 'cil-list' }, url: 'Summary' },
-      { name: 'Expenses', iconComponent: { name: 'cil-credit-card' }, url: 'Expense' },
+      // { name: 'Expenses', iconComponent: { name: 'cil-credit-card' }, url: 'Expense' },
       { name: 'Contra Entry', iconComponent: { name: 'cil-credit-card' }, url: 'Contramaster' },
       { name: 'Journal Entry', iconComponent: { name: 'cil-notes' }, url: 'Journalmaster' },
       { name: 'Receipt', iconComponent: { name: 'cil-credit-card' }, url: 'Receiptmaster' },
@@ -94,7 +94,18 @@ export const navItems: INavData[] = [
       { name: 'Balance Forward', iconComponent: { name: 'cil-calculator' }, url: 'Balanceforward' },
       { name: 'Firm Type', iconComponent: { name: 'cil-layers' }, url: 'Firmtypemaster' },
       { name: 'UserInfo', iconComponent: { name: 'cil-layers' }, url: 'Userinfomaster' },
-      { name: 'RoleInfo', iconComponent: { name: 'cil-layers' }, url: 'Roleinfomaster' }
+      { name: 'RoleInfo', iconComponent: { name: 'cil-layers' }, url: 'Roleinfomaster' },
+
+
+      {
+        name: 'Permission',
+        url: '/Permission',
+        iconComponent: { name: 'cil-notes' },
+        children: [
+          { name: 'User Access', iconComponent: { name: 'cil-layers' }, url: 'UserAccess' },
+          { name: 'Role Access', iconComponent: { name: 'cil-layers' }, url: 'Roleaccess' },
+        ]
+      },
     ]
   }
 ];

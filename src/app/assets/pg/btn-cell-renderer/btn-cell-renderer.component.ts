@@ -1,9 +1,10 @@
 
 import { CommonModule } from '@angular/common';
-import { Component,AfterViewInit, CUSTOM_ELEMENTS_SCHEMA  } from '@angular/core';
+import { Component,AfterViewInit, CUSTOM_ELEMENTS_SCHEMA, inject  } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AgRendererComponent, ICellRendererAngularComp } from 'ag-grid-angular';
 import { IAfterGuiAttachedParams } from 'ag-grid-community';
+import { UserPermissions } from '../../services/services';
  
 declare var $: any;
 
@@ -22,7 +23,7 @@ declare var $: any;
 
     <button type="button" id ="del" class="btn text-danger text-center p-0 px-1 ms-2 border-1"
     data-bs-toggle="tooltip" data-bs-placement="bottom" title="remove"
-    (click)="onClick($event)">
+    (click)="onClick($event)" [disabled]="userAccess.d == 0">
    <i id='del' class="fa fa-trash" ></i>
   </button>
     `
@@ -30,10 +31,14 @@ declare var $: any;
 
 export class ActBtnComponent implements ICellRendererAngularComp,AfterViewInit {
 
+  userAccessControl=inject(UserPermissions);
+  userAccess:any={};
+
   params;
   label: string;
 
   agInit(params): void {
+    this.userAccess = this.userAccessControl.getInfo();
     this.params = params;
     this.label = this.params.label || null;
   }

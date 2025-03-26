@@ -17,7 +17,8 @@ import { MydirectiveModule } from '../../../../assets/mydirective/mydirective.mo
 import { MasternavComponent } from '../../../../assets/pg/masternav/masternav.component';
 import { ngselectComponent } from '../../../../assets/pg/ngselect/ngselect.component';
 import { NavactionsComponent } from '../../../../assets/pg/navactions/navactions.component';
-import {CurrencyMaskDirective} from "../../../../assets/mydirective/currencyMask/currency-mask.directive"; 
+import { CurrencyMaskDirective } from "../../../../assets/mydirective/currencyMask/currency-mask.directive";
+import { DTFormatDirective } from '../../../../assets/mydirective/mydirective.directive';
 
 declare var bootstrap: any;
 declare var $: any;
@@ -28,7 +29,7 @@ declare var $: any;
   selector: 'app-receiptchild',
   templateUrl: './receiptchild.component.html',
   styleUrls: ['./receiptchild.component.scss'],
-  imports: [FormsModule, CommonModule,CurrencyMaskDirective, ngselectComponent, NgSelectModule, DssInputComponent, MydirectiveModule,NavactionsComponent],
+  imports: [FormsModule, CommonModule, DTFormatDirective, CurrencyMaskDirective, ngselectComponent, NgSelectModule, DssInputComponent, MydirectiveModule, NavactionsComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class ReceiptchildComponent {
@@ -164,6 +165,7 @@ export class ReceiptchildComponent {
     this.entity.acc00300 = <acc00300Obj>{};
     this.entity.acc00301 = <acc00301Obj>{};
     this.entity.motormemo = {};
+    this.entity.divId = this.provider.companyinfo.company.divId
     this.entity.amount = 0;
     this.entity.txnType = 2;
     this.entity.against = 1;
@@ -179,7 +181,7 @@ export class ReceiptchildComponent {
       next: (res: any) => {
         if (res.status_cd == 1) {
           this.entity = res.data;
-         this.entity.acc00301.accCodeNavigation = res.data.acc00301.accCodeNavigation ;
+          this.entity.acc00301.accCodeNavigation = res.data.acc00301.accCodeNavigation;
 
           this.entity.recApprove = this.entity.recApprove || <recApproveObj>{};
           this.entity.acc00300 = this.entity.acc00300 || <acc00300Obj>{};

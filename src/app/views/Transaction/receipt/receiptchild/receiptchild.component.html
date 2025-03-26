@@ -18,7 +18,7 @@
                             <div>
                                 <label>Date</label>
                                 <input class="form-control" name="vchDate" type="date" [(ngModel)]="entity.vchDate"
-                                    finDate #vchDate="ngModel" [min]="finyear.fdt" [max]="finyear.tdt"
+                                    finDate #vchDate="ngModel" DTpicker [min]="finyear.fdt" [max]="finyear.tdt"
                                     [ngClass]="{'is-invalid':vchDate.errors?.['required']}" required>
                             </div>
                         </div>
@@ -26,7 +26,7 @@
                             <label>Account</label>
                             <app-ngselect apiUrl="Account/getAcclist" class="p-0" bindLabel="accName"
                                 bindValue="accCode" name="account" [(ngModel)]="entity.accCode"
-                                [defaultProperty]="entity.accCodeNavigation" [disabled]="navactions.fieldset"
+                                [defaultProperty]="entity.accCodeNavigation || entity.acc00301?.lraccount" [disabled]="navactions.fieldset"
                                 #account="ngModel" [ngClass]="{'is-invalid': account.errors?.['required']}"
                                 [required]="true"></app-ngselect>
 

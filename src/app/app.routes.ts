@@ -114,10 +114,10 @@ export const routes: Routes = [
         path: 'Contramaster',
         loadComponent: () => import('./views/Transaction/contra/contramaster/contramaster.component').then((m) => m.ContramasterComponent)
       },
-      {
-        path: 'Expense',
-        loadComponent: () => import('./views/Transaction/expense/expense.component').then((m) => m.ExpenseComponent)
-      },
+      // {
+      //   path: 'Expense',
+      //   loadComponent: () => import('./views/Transaction/expense/expense.component').then((m) => m.ExpenseComponent)
+      // },
       {
         path: 'Journalchild',
         loadComponent: () => import('./views/Transaction/journal/journalchild/journalchild.component').then((m) => m.JournalchildComponent)
@@ -201,6 +201,14 @@ export const routes: Routes = [
       {
         path: 'Userinfomaster',
         loadComponent: () => import('./views/Admin/UserInfo/userinfomaster/userinfomaster.component').then((m) => m.UserinfomasterComponent)
+      },
+      {
+        path: 'UserAccess',
+        loadComponent: () => import('./views/Admin/UserInfo/user-accesschild/user-accesschild.component').then((m) => m.UserAccesschildComponent)
+      },
+      {
+        path: 'Roleaccess',
+        loadComponent: () => import('./views/Admin/RoleInfo/roleaccess/roleaccess.component').then((m) => m.RoleaccessComponent)
       },
 
 

@@ -18,8 +18,8 @@ import { ngselectComponent } from '../../../../assets/pg/ngselect/ngselect.compo
 import { NgxPaginationModule } from 'ngx-pagination';
 import { prototype } from 'events';
 import { NavactionsComponent } from '../../../../assets/pg/navactions/navactions.component';
- import { CurrencyMaskDirective } from '../../../../assets/mydirective/currencyMask/currency-mask.directive';
-import { NumberOnlyDirective, UppercaseDirective } from '../../../../assets/mydirective/mydirective.directive';
+import { CurrencyMaskDirective } from '../../../../assets/mydirective/currencyMask/currency-mask.directive';
+import { NumberOnlyDirective, DTFormatDirective, UppercaseDirective } from '../../../../assets/mydirective/mydirective.directive';
 
 
 
@@ -27,7 +27,8 @@ import { NumberOnlyDirective, UppercaseDirective } from '../../../../assets/mydi
   selector: 'app-motorchild',
   templateUrl: './motorchild.component.html',
   styleUrls: ['./motorchild.component.scss'],
-  imports: [FormsModule, CommonModule, NumberOnlyDirective,CurrencyMaskDirective, ngselectComponent, NgSelectModule, DssInputComponent, MydirectiveModule, NgxPaginationModule, NavactionsComponent],
+  imports: [FormsModule, CommonModule, DTFormatDirective, NumberOnlyDirective, CurrencyMaskDirective, ngselectComponent, NgSelectModule, DssInputComponent, MydirectiveModule, NgxPaginationModule, NavactionsComponent],
+  providers: [DatePipe],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class MotorchildComponent {
@@ -252,9 +253,9 @@ export class MotorchildComponent {
   }
 
   onSelectExp(ev) {
-    this.exp.expense = {};
-    // this.exp.expenseId=ev.expaccCode;
-    this.exp.expense.expenseName = ev.expenseName;
+    this.exp.sundries = {};
+ 
+    this.exp.sundries.sundryName = ev.sundryName;
     this.exp.accCodeNavigation = ev.accCodeNavigation;
   }
 
@@ -265,9 +266,10 @@ export class MotorchildComponent {
   }
 
   onSelectotherExpacc(ev) {
-    this.other.expense = {}
-    // this.other.expaccCode = ev.expaccCode;
-    this.other.expense.expenseName = ev.expenseName;
+    this.other.sundries = {}
+ 
+    this.other.sundries.sundryName = ev.sundryName;
+    // this.other.accCode = this.other.accCodeNavigation.accCode;
     this.other.accCodeNavigation = ev.accCodeNavigation;
 
 
@@ -295,11 +297,11 @@ export class MotorchildComponent {
           this.entity.motormemoAudit.createdDt = this.entity.motormemoAudit.createdDt ?? this.datepipe.transform(this.entity.motormemoAudit.createdDt, 'yyyy-MM-dd')
           this.entity.motormemoAudit.modifiedDt = this.entity.motormemoAudit.modifiedDt ?? this.datepipe.transform(this.entity.motormemoAudit.modifiedDt, 'yyyy-MM-dd');
 
-          this.entity.dt = this.entity.dt ?? this.datepipe.transform(this.entity.dt, 'yyyy-MM-dd');
+          // this.entity.dt = this.entity.dt ?? this.datepipe.transform(this.entity.dt, 'yyyy-MM-dd');
 
           this.pastentity = Object.assign({}, this.entity);
 
-          this.entity.dt = new Date().toShortString();
+          // this.entity.dt = new Date().toShortString();
         }
         this.spinner.hide();
         this.additinOfFreight();
@@ -319,76 +321,83 @@ export class MotorchildComponent {
   }
 
   save() {
+    
+    Object.keys(this.motorchild.form.controls).forEach(key => {
+      const control = this.motorchild.form.controls[key];
+      if (control.invalid) {
+        console.log(`Invalid Field: ${key}`, control.errors);
+      }
+    });
 
-    // if (this.vi.valid) {
-    this.spinner.show();
-    if (!this.entity.vchId) {
-      if (!this.entity.motormemoAudit.createdUser)
-        this.entity.motormemoAudit.createdUser = this.provider.companyinfo.company.username;
-      this.entity.motormemoAudit.createdDt =
+    if (this.motorchild.valid) {
+      this.spinner.show();
+      if (!this.entity.vchId) {
+        if (!this.entity.motormemoAudit.createdUser)
+          this.entity.motormemoAudit.createdUser = this.provider.companyinfo.company.username;
+        this.entity.motormemoAudit.createdDt =
 
+          this.entity.firmId = this.provider.companyinfo.company?.firm.firmCode,
+          this.entity.divId = this.provider.companyinfo.company.divId;
+
+        this.http.post('MotorMemo/insert', this.master.cleanObject(this.entity, 2)).subscribe({
+          next: (res: any) => {
+            if (res.status_cd == 1) {
+
+              this.entity.vchId = res.data.vchId;
+
+              if (!this.entity.motormemoAudit) {
+                this.entity.motormemoAudit = <MotormemoAuditObj>{};
+              }
+              if (!this.entity.motormemoDetails) {
+                this.entity.motormemoDetails = <MotormemoDetailsObj>{};
+              }
+
+              this.dialog.swal({ dialog: "success", title: "Success", message: "Record is saved sucessfully" });
+              this.navactions.navaction("OK");
+            }
+
+            this.spinner.hide()
+
+          }, error: (err: any) => {
+            this.spinner.hide()
+            this.dialog.swal({ dialog: 'error', title: 'Error', message: err.message })
+          }
+        })
+      }
+      else {
         this.entity.firmId = this.provider.companyinfo.company?.firm.firmCode,
-        this.entity.divId = this.provider.companyinfo.company.divId;
+          this.entity.divId = this.provider.companyinfo.company.divId;
+        this.entity.motormemoAudit.modifiedUser = this.provider.companyinfo.company.username;
+        this.http.put('MotorMemo/update', this.master.cleanObject(this.entity, 2), { id: this.entity.vchId }).subscribe({
+          next: (res: any) => {
+            this.spinner.hide()
+            if (res.status_cd == 1) {
+              this.entity.vchId = res.data.vchId;
+              if (!this.entity.motormemoAudit) {
+                this.entity.motormemoAudit = <MotormemoAuditObj>{};
+              }
+              if (!this.entity.motormemoDetails) {
+                this.entity.motormemoDetails = <MotormemoDetailsObj>{};
+              }
 
-      this.http.post('MotorMemo/insert', this.master.cleanObject(this.entity, 2)).subscribe({
-        next: (res: any) => {
-          if (res.status_cd == 1) {
-
-            this.entity.vchId = res.data.vchId;
-
-            if (!this.entity.motormemoAudit) {
-              this.entity.motormemoAudit = <MotormemoAuditObj>{};
+              this.dialog.swal({ dialog: "success", title: "Success", message: "Record is Update sucessfully" });
+              this.navactions.navaction("OK");
+            } else {
+              this.dialog.swal({ dialog: 'error', title: 'Error', message: res.errors.exception.InnerException.message })
             }
-            if (!this.entity.motormemoDetails) {
-              this.entity.motormemoDetails = <MotormemoDetailsObj>{};
-            }
 
-            this.dialog.swal({ dialog: "success", title: "Success", message: "Record is saved sucessfully" });
-            this.navactions.navaction("OK");
+
+          }, error: (err: any) => {
+            this.spinner.hide()
+            this.dialog.swal({ dialog: 'error', title: 'Error', message: err.message })
           }
+        })
+      }
 
-          this.spinner.hide()
 
-        }, error: (err: any) => {
-          this.spinner.hide()
-          this.dialog.swal({ dialog: 'error', title: 'Error', message: err.message })
-        }
-      })
+    } else {
+      this.dialog.swal({ dialog: 'error', title: 'Error', message: "Please Fill All The Required Fields.." })
     }
-    else {
-      this.entity.firmId = this.provider.companyinfo.company?.firm.firmCode,
-        this.entity.divId = this.provider.companyinfo.company.divId;
-      this.entity.motormemoAudit.modifiedUser = this.provider.companyinfo.company.username;
-      this.http.put('MotorMemo/update', this.master.cleanObject(this.entity, 2), { id: this.entity.vchId }).subscribe({
-        next: (res: any) => {
-          this.spinner.hide()
-          if (res.status_cd == 1) {
-            this.entity.vchId = res.data.vchId;
-            if (!this.entity.motormemoAudit) {
-              this.entity.motormemoAudit = <MotormemoAuditObj>{};
-            }
-            if (!this.entity.motormemoDetails) {
-              this.entity.motormemoDetails = <MotormemoDetailsObj>{};
-            }
-
-            this.dialog.swal({ dialog: "success", title: "Success", message: "Record is Update sucessfully" });
-            this.navactions.navaction("OK");
-          } else {
-            this.dialog.swal({ dialog: 'error', title: 'Error', message: res.errors.exception.InnerException.message })
-          }
-
-
-        }, error: (err: any) => {
-          this.spinner.hide()
-          this.dialog.swal({ dialog: 'error', title: 'Error', message: err.message })
-        }
-      })
-    }
-
-
-    // } else {
-    //   this.dialog.swal({ dialog: 'error', title: 'Error', message: "Please Fill All The Required Fields.." })
-    // }
   }
 
   account(index) {
@@ -958,7 +967,7 @@ export class MotorchildComponent {
 
   Vehiclenotab() {
     this.http.get('Vehicle/vehiclebyInfo', {
-      vehicleno: this.entity.vehicleNo || "",
+      vehicleno: this.entity.vehicleNo ,
     }).subscribe({
       next: (res: any) => {
         if (res.status_cd == 1) {

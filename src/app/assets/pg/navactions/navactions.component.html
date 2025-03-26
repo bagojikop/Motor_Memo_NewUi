@@ -17,7 +17,7 @@
 
         <div class="d-flex">
             <div>
-                <button class="btn btn-sm  btn-outline-success" [disabled]="navactions.new1" type="button"
+                <button class="btn btn-sm  btn-outline-success" [disabled]="userAccess.a == 0 ||navactions.new1" type="button"
                     (click)="newRecord()">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-plus-square-fill" viewBox="0 0 16 16">
@@ -28,7 +28,7 @@
 
 
 
-                <button class="btn btn-sm btn-outline-secondary mx-2" [disabled]="navactions.edit1" type="button"
+                <button class="btn btn-sm btn-outline-secondary mx-2" [disabled]="userAccess.e == 0  ||navactions.edit1" type="button"
                     (click)="edit()">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-pencil-square" viewBox="0 0 16 16">
@@ -41,7 +41,7 @@
 
 
 
-                <button class="btn btn-sm btn-outline-success" [disabled]="navactions.print1" type="button"
+                <button class="btn btn-sm btn-outline-success" [disabled]="userAccess.p == 0  || navactions.print1" type="button"
                     (click)="print()">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-printer-fill" viewBox="0 0 16 16">
@@ -119,21 +119,21 @@
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
                         <li class="nav-item  border-secondary mb-2">
-                            <button class="btn btn-sm  btn-light     d-flex" [disabled]="navactions.new1" type="button"
+                            <button class="btn btn-sm  btn-light     d-flex" [disabled]="navactions.new1 && userAccess.a" type="button"
                                 (click)="newRecord()">
                                 <span>New</span>&nbsp;<i class="bi bi-plus-circle"></i>
                             </button>
                         </li>
 
                         <li class="nav-item  border-secondary mb-2">
-                            <button class="btn btn-sm btn-light    d-flex" [disabled]="navactions.edit1" type="button"
+                            <button class="btn btn-sm btn-light    d-flex" [disabled]="navactions.edit1 && userAccess.e" type="button"
                                 (click)="edit()">
                                 <span>Edit</span>&nbsp;<i class="bi bi-pencil-square"></i>
                             </button>
                         </li>
 
                         <li class="nav-item mb-2">
-                            <button class="btn btn-sm btn-light d-flex" [disabled]="navactions.print1" type="button"
+                            <button class="btn btn-sm btn-light d-flex" [disabled]="navactions.print1 && userAccess.p" type="button"
                                 (click)="print()">
                                 <span>Print</span>&nbsp;<i class="bi bi-file-pdf"></i>
                             </button>

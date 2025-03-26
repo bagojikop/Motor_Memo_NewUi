@@ -22,14 +22,14 @@ declare var bootstrap: any;
 declare var $: any;
 import '../../../../assets/services/datePrototype'
 import { NavactionsComponent } from '../../../../assets/pg/navactions/navactions.component';
-import { NumberOnlyDirective } from '../../../../assets/mydirective/mydirective.directive';
+import { DTFormatDirective, NumberOnlyDirective } from '../../../../assets/mydirective/mydirective.directive';
 import {CurrencyMaskDirective} from "../../../../assets/mydirective/currencyMask/currency-mask.directive"; 
 
 @Component({
   selector: 'app-paymentchild',
   templateUrl: './paymentchild.component.html',
   styleUrls: ['./paymentchild.component.scss'],
-  imports: [FormsModule, CommonModule,CurrencyMaskDirective, ngselectComponent,NumberOnlyDirective,DecimalPipe, NgSelectModule, NgxPaginationModule, DssInputComponent, MydirectiveModule, NavactionsComponent],
+  imports: [FormsModule, CommonModule,DTFormatDirective,CurrencyMaskDirective, ngselectComponent,NumberOnlyDirective,DecimalPipe, NgSelectModule, NgxPaginationModule, DssInputComponent, MydirectiveModule, NavactionsComponent],
   providers:[],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

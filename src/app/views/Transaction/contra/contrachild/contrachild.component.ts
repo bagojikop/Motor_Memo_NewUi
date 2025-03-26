@@ -17,6 +17,7 @@ import { MasternavComponent } from '../../../../assets/pg/masternav/masternav.co
 import { ngselectComponent } from '../../../../assets/pg/ngselect/ngselect.component';
 import { NavactionsComponent } from '../../../../assets/pg/navactions/navactions.component';
 import {CurrencyMaskDirective} from "../../../../assets/mydirective/currencyMask/currency-mask.directive"; 
+import { DTFormatDirective, NumberOnlyDirective } from '../../../../assets/mydirective/mydirective.directive';
 
 declare var bootstrap: any;
 declare var $: any; 
@@ -25,7 +26,7 @@ declare var $: any;
   selector: 'app-contrachild',
   templateUrl: './contrachild.component.html',
   styleUrls: ['./contrachild.component.scss'],
-    imports:[FormsModule,CommonModule,CurrencyMaskDirective,ngselectComponent,NgSelectModule, DssInputComponent, MydirectiveModule, NavactionsComponent],
+    imports:[FormsModule,CommonModule,DTFormatDirective,CurrencyMaskDirective,NumberOnlyDirective,ngselectComponent,NgSelectModule, DssInputComponent, MydirectiveModule, NavactionsComponent],
   schemas:[CUSTOM_ELEMENTS_SCHEMA]
 })
 export class ContrachildComponent {

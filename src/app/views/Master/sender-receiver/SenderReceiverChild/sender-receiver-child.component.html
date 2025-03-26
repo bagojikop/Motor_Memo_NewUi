@@ -14,8 +14,8 @@
                                             <label for="">GSTIN</label>
                                             <div class="input-group mb-3">
                                                 <input type="text" class="form-control" name="gstin" autocomplete="off"
-                                                    [(ngModel)]="entity.gstinNo" required maxlength="15" autocomplete="off"
-                                                    aria-describedby="basic-addon2">
+                                                    [(ngModel)]="entity.gstinNo" required maxlength="15"
+                                                    autocomplete="off" aria-describedby="basic-addon2">
                                                 <button class="input-group-text" style="cursor: pointer;"
                                                     id="basic-addon2" tabindex="-1" (click)="ongstFunction()"> <i
                                                         class="bi bi-arrow-return-left"></i></button>
@@ -39,8 +39,8 @@
                                         </dss-input>
                                         <div>
                                             <label for="">Mobile No</label>
-                                            <input class="form-control" [(ngModel)]="entity.mobileNo" numberOnly autocomplete="off"
-                                                name="mobno" [maxlength]="10">
+                                            <input class="form-control" [(ngModel)]="entity.mobileNo" numberOnly
+                                                autocomplete="off" name="mobno" [maxlength]="10">
                                         </div>
                                     </div>
                                     <div class="gapInputFields">
@@ -48,13 +48,12 @@
                                             [(ngModel)]="entity.address" inputType="textarea" [rows]="4" [cols]="50"
                                             (ngModelChange)="entity.address=$event" [styleCase]="'u'">
                                         </dss-input>
-
-
+ 
                                         <div class="d-flex">
                                             <div class="d-flex-width">
-                                                <app-ngselect apiUrl="Place/getPlace" label="Place" bindLabel="cityName"
-                                                    bindValue="cityId" name="place" [(ngModel)]="entity.placeId"
-                                                    [defaultProperty]="entity.accCodeNavigation?.place"
+                                                <app-ngselect label="Place" apiUrl="Place/getPlace" class="p-0"
+                                                    bindLabel="cityName" bindValue="cityId" name="pl"
+                                                    [(ngModel)]="entity.placeId" [defaultProperty]="entity.place"
                                                     [disabled]="navactions.fieldset"></app-ngselect>
                                             </div>
 
@@ -66,8 +65,7 @@
                                         </div>
                                         <app-ngselect label="State" apiUrl="state/getStates" class="p-0"
                                             bindLabel="stateName" bindValue="stateCode" name="state"
-                                            [(ngModel)]="entity.stateCode"
-                                            [defaultProperty]="entity.stateCodeNavigation"
+                                            [(ngModel)]="entity.stateCode" [defaultProperty]="entity.state"
                                             [disabled]="navactions.fieldset"></app-ngselect>
 
                                     </div>

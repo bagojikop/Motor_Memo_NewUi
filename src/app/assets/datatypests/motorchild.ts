@@ -66,8 +66,9 @@ export interface Acc003sObj{
 export interface otherchargesObj{
   otherdiscription: string
   accCodeNavigation: any
+  
   otherchag: number
-  expense:any
+  sundries:any
 }
 
 export interface MotormemoExpensesObj { 
@@ -75,7 +76,7 @@ export interface MotormemoExpensesObj {
   accName:string
   accCodeNavigation:any
   expensesisChecked: boolean
-  expense:any
+  sundries:any
   charges: number
   action: number 
 }

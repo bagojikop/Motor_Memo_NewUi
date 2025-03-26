@@ -40,7 +40,7 @@
                                 <div>
                                     <label for="">Account</label>
                                     <app-ngselect apiUrl="Account/getsupplier" name="Account Name" class="p-0"
-                                        bindLabel="accName" bindValue="accCode" [(ngModel)]="entity.accCode"
+                                        bindLabel="accName" bindValue="accCode" [(ngModel)]="entity.ExpaccCode"
                                         [defaultProperty]="entity.accCodeNavigation" 
                                         [apiParams]="apiParams()" #AccountName="ngModel"></app-ngselect>
                                 </div>

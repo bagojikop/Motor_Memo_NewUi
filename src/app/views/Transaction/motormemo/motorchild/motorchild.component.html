@@ -7,9 +7,7 @@
                 <form #motorchild="ngForm" (keydown.enter)="$event.preventDefault()" novalidate>
                     <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                         <div class="container">
-                            <!-- <div class="d-flex w-md-50"> -->
                             <div class="d-flex w-100">
-
                                 <div class="d-flex w-md-100 w-50 me-2">
                                     <div class="d-flex-width">
                                         <label>LR Number</label>
@@ -23,7 +21,7 @@
                                             #vchDate="ngModel" DTpicker [(ngModel)]="entity.dt"
                                             [min]="this.provider.companyinfo.finyear.fdt"
                                             [max]="this.provider.companyinfo.finyear.tdt">
-
+ 
                                     </div>
                                     <div class="gapInputFields">
                                         <div>
@@ -34,8 +32,9 @@
                                                 <input type="text" id="search" class="form-control"
                                                     placeholder=" Enter Last 4  Digits " name="Vehiclenumb"
                                                     [(ngModel)]="entity.vehicleNo" required autocomplete="off"
-                                                    (input)="entity.vehicleNo = entity.vehicleNo.toUpperCase()"
-                                                    (blur)="Vehiclenotab()">
+                                                    (input)="entity.vehicleNo = entity.vehicleNo.toUpperCase()" >
+                                                    <!-- (blur)="Vehiclenotab()" -->
+
                                                 <button type="button" class="btn btn-light" tabindex="-1"
                                                     (click)="getVehicles()">
                                                     <i class="bi bi-arrow-return-left"></i>
@@ -43,20 +42,15 @@
                                             </div>
                                         </div>
                                     </div>
-
                                 </div>
                                 <div class="d-flex w-50 w-md-100">
                                     <div class="d-flex-width">
-                                        <!-- <dss-input label="From" name="memofrom"  type="text" autocomplete="off"
-                                            [required]="true" [(ngModel)]="entity.from" [styleCase]="'u'"></dss-input> -->
                                         <app-ngselect apiUrl="Place/getPlace" label="from" bindLabel="cityName"
                                             bindValue="cityName" name="place" [(ngModel)]="entity.from"
                                             autocomplete="off" [required]="true" [addNewText]="true"
                                             [disabled]="navactions.fieldset"></app-ngselect>
                                     </div>
                                     <div class="gapInputFields">
-                                        <!-- <dss-input label="To" name="memoto" type="text" autocomplete="off"
-                                            [required]="true" [(ngModel)]="entity.to" [styleCase]="'u'"></dss-input> -->
                                         <app-ngselect apiUrl="Place/getPlace" label="To" bindLabel="cityName"
                                             bindValue="cityName" name="memoto" [(ngModel)]="entity.to"
                                             autocomplete="off" [required]="true" [addNewText]="true"
@@ -76,11 +70,8 @@
                             <div class="card w-50 m-1">
                                 <div class="card-header d-flex justify-content-between"
                                     style="background-color: #e0e2e4">
-                                    <!-- <h5 class="m-0 p-2" >Sender</h5>
-                                    <button type="button" class="btn btn-light" (click)="SenderSavefun()" tabindex="-1"
-                                        [disabled]="!(isSenderClicked)">Save</button> -->
                                     <h5 class="m-0 p-2"
-                                        [ngClass]="{'text-success': !SenderisClicked, 'text-danger': SenderisClicked}">
+                                        [ngClass]="{'text-black': !SenderisClicked, 'text-danger': SenderisClicked}">
                                         Sender</h5>
                                     <button type="button" class="btn btn-light" (click)="SenderSavefun()" tabindex="-1"
                                         [disabled]="!isSenderClicked">Save</button>
@@ -167,7 +158,7 @@
                                                 Date</label>
                                             <input label="Document Date" type="date" class="form-control"
                                                 [(ngModel)]="entity.motormemoDetails.senderBillDt" name="BillDT"
-                                                [maxlength]="10" autocomplete="off"
+                                                [maxlength]="10" autocomplete="off" DTpicker
                                                 [max]="this.provider.companyinfo.finyear.tdt">
 
                                         </div>
@@ -179,7 +170,7 @@
                                 <div class="card-header d-flex justify-content-between"
                                     style="background-color: #e0e2e4">
                                     <h5 class="m-0 p-2"
-                                        [ngClass]="{'text-success': !ReceiverisClicked, 'text-danger': ReceiverisClicked}">
+                                        [ngClass]="{'text-black': !ReceiverisClicked, 'text-danger': ReceiverisClicked}">
                                         Receiver</h5>
                                     <button type="button" class="btn btn-light" (click)="ReceiverSavefun()"
                                         tabindex="-1" [disabled]="!(isReceiverClicked )">
@@ -256,7 +247,7 @@
                                         <div class="d-flex-width">
                                             <dss-input label="E-Way No" type="text" autocomplete="off"
                                                 [(ngModel)]="entity.motormemoDetails.ewayNo" name="receivewayNo"
-                                                [maxlength]="10" [minlength]="8">
+                                                [maxlength]="10" >
                                             </dss-input>
                                         </div>
 
@@ -303,12 +294,6 @@
                                     <tr>
                                         <th style="width: 20%;">
                                             <div class="input-group ">
-                                                <!-- <input type="text" class="form-control" name="commodity1"
-                                                    [maxlength]="15" [(ngModel)]="cmod.commodity" autocomplete="off"
-                                                    aria-describedby="basic-addon3">
-                                                <span class="input-group-text" id="basic-addon3">
-                                                    <i class="bi bi-list" (click)="commodityfuncion()"></i>
-                                                </span> -->
                                                 <app-ngselect style="width: 100%;" apiUrl="productinfo/getList"
                                                     bindLabel="iName" bindValue="iName" name="commodity1"
                                                     [(ngModel)]="cmod.commodity" #unit="ngModel"
@@ -316,40 +301,25 @@
                                             </div>
                                         </th>
                                         <th>
-
-                                            <!-- <input type="text" class="form-control" name="uom1" [maxlength]="15"
-                                                    [(ngModel)]="cmod.uom" aria-describedby="basic-addon3"
-                                                    autocomplete="off"
-                                                    (ngModelChange)="cmod.uom = cmod.uom.toUpperCase()">
-                                                <span class="input-group-text" id="basic-addon3"><i class="bi bi-list"
-                                                        (click)="Uomfuncion()"></i></span> -->
                                             <app-ngselect style="width: 100%;" apiUrl="Unit/getUnit" name="uom1"
                                                 bindLabel="unitName" bindValue="unitName" [(ngModel)]="cmod.uom"
                                                 [addNewText]="true"></app-ngselect>
 
-                                            <!-- <dss-grid [columns]="columns" url="Unit/getUnit" [gridOptions]="gridOption.gridOptions" 
-                                                         (gridApi)="onGridReady($event)"  
-                                                        ></dss-grid>-->
-
                                         </th>
                                         <th>
-                                            <input name="qty1" [maxlength]="7" [(ngModel)]="cmod.qty"
+                                            <input name="qty1" [maxlength]="7" [(ngModel)]="cmod.qty" numberOnly
                                                 class="form-control" digitOnly autocomplete="off" />
                                         </th>
                                         <th>
-                                            <input name="chrgWeight1" class="form-control" [maxlength]="7" digitOnly
-                                                [(ngModel)]="cmod.chrgWeight" autocomplete="off"
+                                            <input name="chrgWeight1" class="form-control" [maxlength]="7" numberOnly
+                                                digitOnly [(ngModel)]="cmod.chrgWeight" autocomplete="off"
                                                 (ngModelChange)="calculateFreight()" />
                                         </th>
                                         <th>
-                                            <input class="form-control" name="actWeight1" [maxlength]="7" digitOnly
-                                                [(ngModel)]="cmod.actWeight" autocomplete="off" />
+                                            <input class="form-control" name="actWeight1" [maxlength]="7" numberOnly
+                                                digitOnly [(ngModel)]="cmod.actWeight" autocomplete="off" />
                                         </th>
                                         <th>
-                                            <!-- <input class="form-control" name="rate1" [maxlength]="7"
-                                                style="text-align: right;" [(ngModel)]="cmod.rate"
-                                                (ngModelChange)="calculateFreight()" digitOnly CurrencyMask fraction="2"
-                                                autocomplete="off" /> -->
                                             <input class="form-control" name="rate1" [maxlength]="7"
                                                 style="text-align: right;" [(ngModel)]="cmod.rate"
                                                 (ngModelChange)="calculateFreight();" digitOnly CurrencyMask
@@ -448,8 +418,8 @@
                                         <tr>
                                             <th>
                                                 <div>
-                                                    <app-ngselect apiUrl="Expense/getExpAcclist" class="p-0 text-start"
-                                                        bindLabel="expenseName" bindValue="expaccCode"
+                                                    <app-ngselect apiUrl="Sundry/getExpAcclist" class="p-0 text-start"
+                                                        bindLabel="sundryName" bindValue="sId"
                                                         name="otherExpensName" [(ngModel)]="other.expaccCode"
                                                         (change)="onSelectotherExpacc($event)"
                                                         [disabled]="navactions.fieldset" autocomplete="off" #f="ngModel"
@@ -490,7 +460,7 @@
                                         </div>
 
                                         <tr *ngFor="let v of entity.motormemoOtherCharges;let i=index;">
-                                            <td style="width: 28%;">{{v.expense?.expenseName}}</td>
+                                            <td style="width: 28%;">{{v.sundries?.sundryName}}</td>
                                             <td style="width: 28%;">{{v.accCodeNavigation?.accName}}</td>
                                             <td style="width: 18%; text-align: right; ">{{v.otherchag | number:'1.2-2'}}
                                             </td>
@@ -523,10 +493,6 @@
                             <div class="d-flex">
                                 <div style="width: 10rem;">
                                     <label for="">Freight Type</label>
-                                    <!-- <select class="form-select select-wrapper" name="selectfreightType"
-                                        [(ngModel)]="entity.selectfreightType" (change)="calculateAmounts()">
-                                        <option *ngFor="let x of freightTypeList" [value]="x.id">{{x.name}}</option>
-                                    </select> -->
                                     <select class="form-select select-wrapper" name="selectfreightType"
                                         [(ngModel)]="entity.selectfreightType" (change)="calculateAmounts()">
                                         <option [value]=0>FOR</option>
@@ -572,10 +538,6 @@
                                         (change)="onCheckboxChange($event)">
                                     <p class="mb-0 ms-2">Direct Paid to Vehicle Owner</p>
                                 </div>
-                                <!-- <div class="ms-4 d-flex align-items-center justify-content-center w-auto">
-                                    <input type="checkbox" name="Directcheckbox">
-                                    <p for="" class="mb-0 ms-2">Direct Paid to Vehicle Owner</p>
-                                </div> -->
                             </div>
                         </div>
                     </div>
@@ -611,8 +573,8 @@
 
                                         <th style="width: 24%;">
 
-                                            <app-ngselect apiUrl="Expense/getExpAcclist" class="p-0 text-start"
-                                                bindLabel="expenseName" bindValue="expaccCode" name="ExpensName"
+                                            <app-ngselect apiUrl="Sundry/getExpAcclist" class="p-0 text-start"
+                                                bindLabel="sundryName" bindValue="sId" name="ExpensName"
                                                 [(ngModel)]="exp.expaccCode" (change)="onSelectExp($event)"
                                                 [disabled]="navactions.fieldset" autocomplete="off" #f="ngModel"
                                                 [applyMargins]="false"></app-ngselect>
@@ -665,14 +627,14 @@
                                     </div>
 
                                     <tr *ngFor="let v of entity.motormemoExpenses;let i=index;">
-                                        <td style="width: 24%;">{{v.expense?.expenseName}}</td>
+                                        <td style="width: 24%;">{{v.sundries?.sundryName}}</td>
                                         <td style="width: 26%;">{{v.accCodeNavigation?.accName }}</td>
                                         <td style="width: 16%; text-align: right; ">{{v.charges | number:'1.2-2'}}
                                         </td>
                                         <td style="width: 12%;">{{ getSelectOptionLabel(v.action) }}</td>
                                         <td style="width: 8%;">
                                             <input type="checkbox" [checked]="v.expensesisChecked" tabindex="-1"
-                                                [(ngModel)]="v.expensesisChecked" disabled>
+                                                [(ngModel)]="v.expensesisChecked" name="expensesisChecked" disabled>
                                         </td>
 
                                         <td class="text-center" style="width: 12%;">
@@ -701,8 +663,6 @@
                         </div>
 
                     </div>
-                    <!-- <input type="text" class="form-control" [value]="getTotalCharges()" readonly> -->
-
                     <div class="container mb-4 mt-3">
                         <div class="d-flex ">
                             <div style="width: 15rem;">
@@ -839,7 +799,7 @@
 
                 <div class="d-flex align-items-center me-3">
                     <input type="text" class="form-control me-5" placeholder="Search Sender..."
-                        [(ngModel)]="onserchinput" (input)="onserchvender()">
+                        [(ngModel)]="onserchinput" name="onserchinput" (input)="onserchvender()">
 
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
@@ -868,8 +828,7 @@
             </div>
             <div class="modal-footer">
                 <pagination-controls (pageChange)="onPageChange($event)"></pagination-controls>
-                <!-- <button type="button" class="btn btn-secondary btn-sm"
-                         data-bs-dismiss="modal">Close</button> -->
+
             </div>
         </div>
     </div>
@@ -886,7 +845,7 @@
                 </h5>
 
                 <div class="d-flex align-items-center me-3">
-                    <input type="text" class="form-control me-5" placeholder="Search Sender..."
+                    <input type="text" name="onserchinput" class="form-control me-5" placeholder="Search Sender..."
                         [(ngModel)]="onserchinput" (input)="onserchvender()">
 
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>

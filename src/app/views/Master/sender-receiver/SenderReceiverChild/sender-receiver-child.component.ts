@@ -21,7 +21,7 @@ import { UppercaseDirective, NumberOnlyDirective } from '../../../../assets/mydi
   selector: 'app-sender-receiver-child',
   templateUrl: './sender-receiver-child.component.html',
   styleUrls: ['./sender-receiver-child.component.scss'],
-  imports: [FormsModule, CommonModule,NumberOnlyDirective, ngselectComponent, NgSelectModule, DssInputComponent, MydirectiveModule, MasternavComponent],
+  imports: [FormsModule, CommonModule, NumberOnlyDirective, ngselectComponent, NgSelectModule, DssInputComponent, MydirectiveModule, MasternavComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class SenderReceiverChildComponent {
@@ -33,7 +33,7 @@ export class SenderReceiverChildComponent {
   status: boolean = false;
   ngview: boolean = false;
   stateParams: any;
-
+  isSaved: boolean;
   mode: any;
   rowIndex: any;
   param;
@@ -60,9 +60,7 @@ export class SenderReceiverChildComponent {
   }
 
   ngOnInit(): void {
-    setInterval(() => {
-      this.windowrespo();
-    }, 1000)
+
 
     this.entity = <SubconsigneeObj>{};
     this.reference.places = [];
@@ -72,10 +70,11 @@ export class SenderReceiverChildComponent {
     let paramss: any = this.location.getState();
     this.navactions.navaction(paramss.action);
     this.entity.sCode = paramss.id;
-    this.Init();
+
     if (this.entity.sCode) {
       this.navactions.fieldset = true;
       this.callbackedit();
+     // this.navactions.navaction("view");
     } else {
       this.navactions.fieldset = false;
       this.newRecord();
@@ -83,19 +82,6 @@ export class SenderReceiverChildComponent {
 
   }
 
-  windowrespo() {
-    if (window.innerWidth <= 767) {
-      this.status = true;
-
-
-
-    } else {
-      this.status = false;
-    }
-  }
-  Init() {
-
-  }
 
   apiParams() {
     var x = {
@@ -143,10 +129,11 @@ export class SenderReceiverChildComponent {
   callbackedit() {
     this.spinner.show();
     var url = "Vendor/edit"
-    this.http.get(url, { id: this.stateParams.id }).subscribe({
+    this.http.get(url, { id: this.entity.sCode }).subscribe({
       next: (res: any) => {
         if (res.status_cd == 1) {
           this.entity = res.data;
+          this.entity.id = res.data.id;
           //  this.pastentity = Object.assign({}, this.entity);
           this.cd.detectChanges();
         }
@@ -161,12 +148,12 @@ export class SenderReceiverChildComponent {
   save() {
 
     this.spinner.show();
-    if (!this.entity.sCode) {
+    if (!this.entity.id) {
       if (!this.entity.createdUser)
-        this.entity.createdUser = this.provider.companyinfo.userinfo.username;
+        this.entity.createdUser = this.provider.companyinfo.company.username;
 
       this.entity.createdUser = this.provider.companyinfo.company.username;
-      this.entity.sCode = 2;
+
       this.http.post('Vendor/insert', this.entity).subscribe({
         next: (res: any) => {
           if (res.status_cd == 1) {
@@ -176,7 +163,7 @@ export class SenderReceiverChildComponent {
             this.dialog.swal({ dialog: "success", title: "Success", message: "Record is saved sucessfully" });
             this.navactions.navaction("OK");
           }
-
+          this.isSaved = true;
           this.spinner.hide()
 
         }, error: (err: any) => {
@@ -186,13 +173,13 @@ export class SenderReceiverChildComponent {
       })
     }
     else {
-      this.entity.modifiedUser = this.provider.companyinfo.userinfo.username;
-      this.http.put('Vendor/update', this.master.cleanObject(this.entity, 2), { id: this.entity.sCode }).subscribe({
+      this.entity.modifiedUser = this.provider.companyinfo.company.username;
+      this.http.put('Vendor/update', this.master.cleanObject(this.entity, 2), { id: this.entity.id }).subscribe({
         next: (res: any) => {
           this.spinner.hide()
           if (res.status_cd == 1) {
             this.entity.sCode = res.data.sCode;
-
+            this.isSaved = true;
             this.dialog.swal({ dialog: "success", title: "Success", message: "Record is Update sucessfully" });
             this.navactions.navaction("OK");
           } else {
@@ -223,9 +210,11 @@ export class SenderReceiverChildComponent {
 
   }
   edit() {
-    this.navactions.navaction("view");
-    this.callbackedit();
+    
+    if (this.isSaved) {
 
+      this.callbackedit();
+    }
   }
 
   undo() {
@@ -234,7 +223,7 @@ export class SenderReceiverChildComponent {
 
   ongstFunction() {
     if (this.entity.gstinNo) {
- 
+
       this.http.get('Account/getvender', { no: this.entity.gstinNo }).subscribe({
         next: (res: any) => {
           if (res.status_cd == 1) {

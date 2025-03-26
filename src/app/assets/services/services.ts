@@ -1,35 +1,54 @@
-import { Inject, Injectable, NgZone } from '@angular/core';
+import { computed, inject, Inject, Injectable, NgZone, signal } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpEvent, HttpHandler, HttpHeaders, HttpInterceptor, HttpParams, HttpRequest, HttpResponse } from '@angular/common/http';
 import { MyProvider } from './provider';
 import { catchError, map } from 'rxjs/operators';
-import { forkJoin, Observable, of, throwError } from 'rxjs';
+import { BehaviorSubject, forkJoin, Observable, of, throwError } from 'rxjs';
 import { DatePipe, formatDate } from '@angular/common';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ArraySortPipe } from '../pipes/inrcrdr.pipe';
 import { NgxImageCompressService } from 'ngx-image-compress';
 import { ActivatedRouteSnapshot, CanActivate, Router } from '@angular/router';
-import  apiport from '../../../assets/app-config.json';
+import apiport from '../../../assets/app-config.json';
  
+
 declare var $: any;
- 
+
 @Injectable()
-export class castFromArrayBuffer  {
-  
-castInbase64(response) {
-  const byteCharacters = atob(response.fileContents);
-  const byteNumbers = new Array(byteCharacters.length);
-  for (let i = 0; i < byteCharacters.length; i++) {
-    byteNumbers[i] = byteCharacters.charCodeAt(i);
+export class castFromArrayBuffer {
+
+  castInbase64(response) {
+    const byteCharacters = atob(response.fileContents);
+    const byteNumbers = new Array(byteCharacters.length);
+    for (let i = 0; i < byteCharacters.length; i++) {
+      byteNumbers[i] = byteCharacters.charCodeAt(i);
+    }
+    const byteArray = new Uint8Array(byteNumbers);
+
+    // Convert the byte array to a Blob
+    const blob = new Blob([byteArray], { type: 'application/pdf' });
+
+    // Create a URL for the Blob
+    return URL.createObjectURL(blob);
   }
-  const byteArray = new Uint8Array(byteNumbers);
-
-  // Convert the byte array to a Blob
-  const blob = new Blob([byteArray], { type: 'application/pdf' });
-
-  // Create a URL for the Blob
-  return URL.createObjectURL(blob);
 }
+
+ 
+@Injectable({ providedIn: 'root' }) // Ensure Singleton Service
+export class UserPermissions {
+  private userControl = signal<string | null>(null); // Store as string to avoid losing data
+
+  setInfo(obj: any) {
+    this.userControl.set(JSON.stringify(obj)); // Convert object to JSON string
+  }
+
+  getInfo() {
+    return computed(() => {
+      const data = this.userControl();
+      return data ? JSON.parse(data) : null;
+    })();
+  }
 }
+
 
 
 @Injectable()
@@ -68,7 +87,7 @@ export class ngselectpagination {
     this.onScroll(null, array, arrayBuffer)
   }
 
-  onScroll({ end }, array, arrayBuffer) {
+  onScroll(end , array, arrayBuffer) {
     if (this.Loading || array.length <= arrayBuffer.length) {
       return;
     }
@@ -92,36 +111,36 @@ export class ngselectpagination {
 }
 
 
-  @Injectable({
-    providedIn:'root'
-  })
-  export class gridOptions{
-    gridOptions = {
-      responsiveLayout: true,
-      autoGroupColumnDef: {
-        headerName: 'Group',
-        minWidth: 200,
-      },
-      groupUseEntireRow: true,
-    }
+@Injectable({
+  providedIn: 'root'
+})
+export class gridOptions {
+  gridOptions = {
+    responsiveLayout: true,
+    autoGroupColumnDef: {
+      headerName: 'Group',
+      minWidth: 200,
+    },
+    groupUseEntireRow: true,
   }
+}
 
 
 @Injectable({
   providedIn: 'root'
-}) 
-export class NavbarActions{
+})
+export class NavbarActions {
   new1: boolean = false;
   edit1: boolean = false;
   print1: boolean = false;
   save1: boolean = false;
   undo1: boolean = false;
-  document1:boolean=false;
-  pastentity:any={};
+  document1: boolean = false;
+  pastentity: any = {};
   fieldset: boolean = false;
-  ngview:boolean=false;
-  isRcmDisabled:boolean=false;
-  constructor(){}
+  ngview: boolean = false;
+  isRcmDisabled: boolean = false;
+  constructor() { }
 
   navaction(mode) {
     if (mode == "new") {
@@ -129,15 +148,15 @@ export class NavbarActions{
       this.edit1 = true;
       this.print1 = true;
       this.save1 = false;
-      this.document1=true;
+      this.document1 = true;
 
 
       if (Object.keys(this.pastentity).length > 0) {
         this.undo1 = true;
-      
+
       } else {
         this.undo1 = false;
-      
+
       }
       this.fieldset = false;
       //  option -EDIT
@@ -146,8 +165,8 @@ export class NavbarActions{
       this.edit1 = false;
       this.print1 = false;
       this.save1 = true;
-      this.document1=true;
-      this.isRcmDisabled=true;
+      this.document1 = true;
+      this.isRcmDisabled = true;
 
       if (Object.keys(this.pastentity).length > 0) {
         this.undo1 = false;
@@ -157,23 +176,23 @@ export class NavbarActions{
 
       this.fieldset = true;
       //option -SAVE
-    } 
-    else if (mode == "edit") {    
+    }
+    else if (mode == "edit") {
       this.new1 = false;
       this.edit1 = true;
-      this.document1=false;
+      this.document1 = false;
       this.print1 = true;
       this.save1 = false;
       this.undo1 = false;
       this.pastentity = Array;
       this.fieldset = false;
-      this.ngview=false;
-    }else{
+      this.ngview = false;
+    } else {
       this.new1 = false;
       this.edit1 = false;
       this.print1 = false;
       this.save1 = true;
-      this.document1=true;
+      this.document1 = true;
       if (Object.keys(this.pastentity).length > 0) {
         this.undo1 = false;
       } else {
@@ -188,12 +207,12 @@ export class NavbarActions{
 
 @Injectable({
   providedIn: 'root',
-  
+
 })
 export class http {
   status: boolean = false;
-  constructor(public http: HttpClient, public provider: MyProvider) { 
-    this.provider.serverapi=apiport.server;
+  constructor(public http: HttpClient, public provider: MyProvider) {
+    this.provider.serverapi = apiport.server;
   }
 
   jsonget(url: any) {
@@ -206,7 +225,7 @@ export class http {
       header = new HttpHeaders({
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${this.provider.companyinfo.user.access_token}`,
-        'database':this.provider.companyinfo.database
+        'database': this.provider.companyinfo.database
       })
     }
     return this.http.get<any>(this.provider.serverapi + url, { headers: header, params: param })
@@ -217,14 +236,14 @@ export class http {
     return this.http.get(this.provider.serverapi + url,
       { params: param, responseType: 'arraybuffer' })
   };
- 
+
 
   put(url: any, data: any, param: any) {
 
     const header = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${this.provider.companyinfo.user.access_token}`,
-      'database':this.provider.companyinfo.database
+      'database': this.provider.companyinfo.database
     })
 
     return this.http.put<any>(this.provider.serverapi + url, data, { headers: header, params: param })
@@ -233,21 +252,21 @@ export class http {
   post(url: any, data: any, params?) {
 
     const header = new HttpHeaders({
-       'Content-Type': 'application/json',
+      'Content-Type': 'application/json',
       'Authorization': `Bearer ${this.provider.companyinfo.user.access_token}`,
-      'database':this.provider.companyinfo.database
+      'database': this.provider.companyinfo.database
     })
 
     return this.http.post<any>(this.provider.serverapi + url, data, { headers: header, params: params })
   }
 
- 
+
   attachDoc(url: any, data: any, params?) {
 
     const header = new HttpHeaders({
       //'Content-Type':  'application/octet-stream',
       'Authorization': `Bearer ${this.provider.companyinfo.user.access_token}`,
-      'database':this.provider.companyinfo.database
+      'database': this.provider.companyinfo.database
     })
 
     return this.http.post<any>(this.provider.serverapi + url, data, { headers: header, params: params })
@@ -259,7 +278,7 @@ export class http {
     const header = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${this.provider.companyinfo.user.access_token}`,
-      'database':this.provider.companyinfo.database
+      'database': this.provider.companyinfo.database
     })
 
     return this.http.delete<any>(this.provider.serverapi + url, { headers: header, params: param })
@@ -821,7 +840,7 @@ export class imgResize {
 
     promis.then((res) => {
       this.reader.readAsDataURL(files[0]);
-      this.reader.onload = (event) => { // called once readAsDataURL is completed
+      this.reader.onload = (event: any) => { // called once readAsDataURL is completed
         this.url = event.target.result;
       }
 
@@ -833,7 +852,7 @@ export class imgResize {
   changeIMGQuality(quality) {
     this.reader.readAsDataURL(this.file[0]);
 
-    this.reader.onload = (event) => { // called once readAsDataURL is completed
+    this.reader.onload = (event: any) => { // called once readAsDataURL is completed
       this.url = event.target.result;
 
       this.imageCompress.compressFile(this.url, 1, quality, quality).then(
@@ -846,7 +865,7 @@ export class imgResize {
             this.imgformatedsize = this.formatSizeUnits(res.size);
 
             this.reader.readAsDataURL(res);
-            this.reader.onload = (event) => {
+            this.reader.onload = (event: any) => {
               this.url = event.target.result;
             }
 
@@ -940,7 +959,7 @@ export class cacheservice {
   };
 
 }
- 
+
 
 @Injectable()
 export class toNumber {
@@ -948,13 +967,13 @@ export class toNumber {
   number(e) {
     if (typeof (e) === 'number') return e;
     if (typeof (e) === 'string') {
-        var str = e.trim();
-        var value = Number(e.replace(/[^0-9.-]+/g, ""));
-        return str.startsWith('(') && str.endsWith(')') ? -value: value;
+      var str = e.trim();
+      var value = Number(e.replace(/[^0-9.-]+/g, ""));
+      return str.startsWith('(') && str.endsWith(')') ? -value : value;
     }
 
     return e;
-    
+
   }
 }
 
@@ -1640,26 +1659,26 @@ export class Master {
     ]
 
   };
-  
+
   cleanObject = (obj, level, recurse = true) => {
     const isObject = _ => _ instanceof Object && _.constructor.name == "Object"
     const isEmpty = _ => isObject(_) ? !!!Object.values(_).length : false
-      for (let key in obj) {
-        if (level) {
-          if ([null, undefined].indexOf(obj[key]) > -1)
-            delete obj[key]
-          else if (isObject(obj[key]))
-            obj[key] = this.cleanObject(obj[key], level, false)
-        }
-        if (recurse) {
-          if (isEmpty(obj[key]))
-            delete obj[key]
-          --level
-        }
+    for (let key in obj) {
+      if (level) {
+        if ([null, undefined].indexOf(obj[key]) > -1)
+          delete obj[key]
+        else if (isObject(obj[key]))
+          obj[key] = this.cleanObject(obj[key], level, false)
       }
-      return obj
+      if (recurse) {
+        if (isEmpty(obj[key]))
+          delete obj[key]
+        --level
+      }
     }
+    return obj
   }
+}
 
 
 
@@ -1703,14 +1722,16 @@ export class CompressImageService {
           ctx.canvas.toBlob(
             // callback, called when blob created
             blob => {
-              observer.next(new File(
-                [blob],
-                file.name,
-                {
-                  type: imageType,
-                  lastModified: Date.now(),
-                }
-              ))
+              if (blob) {
+                observer.next(new File(
+                  [blob],
+                  file.name,
+                  {
+                    type: imageType,
+                    lastModified: Date.now(),
+                  }
+                ))
+              }
             },
             imageType,
             qualityRatio, // reduce image quantity

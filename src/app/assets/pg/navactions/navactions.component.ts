@@ -1,5 +1,5 @@
-import { Component, Input, Output,EventEmitter, OnInit, OnChanges, SimpleChanges, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
-import { NavbarActions } from '../../services/services';
+import { Component, Input, Output,EventEmitter, OnInit, OnChanges, SimpleChanges, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA, inject, AfterViewInit } from '@angular/core';
+import { NavbarActions, UserPermissions } from '../../services/services';
 import { MyProvider } from '../../services/provider';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -13,7 +13,7 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./navactions.component.scss'],
   schemas:[CUSTOM_ELEMENTS_SCHEMA,NO_ERRORS_SCHEMA]
 })
-export class NavactionsComponent implements OnInit {
+export class NavactionsComponent implements OnInit,AfterViewInit {
   isRcm:boolean=false;
   status: boolean = false;
   @Input() PrintPrv:boolean;
@@ -24,6 +24,10 @@ export class NavactionsComponent implements OnInit {
   @Output() myfn=new EventEmitter();
   @Output() document=new EventEmitter<any>();
   @Output() Rcm= new EventEmitter<boolean>()
+ 
+
+  userAccess:any={};
+  userAccessCtrl = inject(UserPermissions);
 
   constructor(public navactions:NavbarActions,private router:Router, public provider:MyProvider){ }
 
@@ -34,7 +38,9 @@ export class NavactionsComponent implements OnInit {
       this.isRcm=true;
     }
   }
-  
+  ngAfterViewInit(): void {
+    this.userAccess= this.userAccessCtrl.getInfo();
+  }
 
   getisRCM(event)
   {
@@ -52,6 +58,7 @@ export class NavactionsComponent implements OnInit {
     this.navactions.undo1=false;
     this.myfn.emit('new');
   }
+ 
 
   edit()
   {

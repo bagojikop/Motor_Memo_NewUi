@@ -1,19 +1,19 @@
-import { Component, Input, Output,EventEmitter, OnInit, OnChanges, SimpleChanges, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
-import { NavbarActions } from '../../services/services';
+import { Component, Input, Output,EventEmitter, OnInit, OnChanges, SimpleChanges, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA, AfterViewInit, inject } from '@angular/core';
+import { NavbarActions, UserPermissions } from '../../services/services';
 import { MyProvider } from '../../services/provider';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 @Component({ 
-  standalone:true,
+   
   schemas:[CUSTOM_ELEMENTS_SCHEMA,NO_ERRORS_SCHEMA],
   imports:[FormsModule,CommonModule],
   selector: 'app-masternav',
   templateUrl: './masternav.component.html',
-  styleUrls: ['./masternav.component.scss']
+  styleUrls: ['./masternav.component.scss'],
 })
-export class MasternavComponent implements OnInit {
+export class MasternavComponent implements OnInit,AfterViewInit {
   isRcm:boolean=false;
   status: boolean = false;
   @Input() PrintPrv:boolean;
@@ -24,6 +24,9 @@ export class MasternavComponent implements OnInit {
   @Output() myfn=new EventEmitter();
   @Output() document=new EventEmitter<any>();
   @Output() Rcm= new EventEmitter<boolean>()
+
+    userAccess:any={};
+    userAccessCtrl = inject(UserPermissions);
 
   constructor(public navactions:NavbarActions,private router:Router, public provider:MyProvider){ }
 
@@ -51,6 +54,11 @@ export class MasternavComponent implements OnInit {
     this.navactions.document1=true;
     this.navactions.undo1=false;
     this.myfn.emit('new');
+  }
+
+  
+  ngAfterViewInit(): void {
+    this.userAccess= this.userAccessCtrl.getInfo();
   }
 
   edit()
