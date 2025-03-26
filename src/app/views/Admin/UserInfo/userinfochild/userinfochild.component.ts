@@ -42,7 +42,7 @@ interface credential {
   selector: 'app-userinfochild',
   templateUrl: './userinfochild.component.html',
   styleUrls: ['./userinfochild.component.scss'],
-  imports: [FormsModule, CommonModule, ngselectComponent, NgSelectModule, DssInputComponent, MydirectiveModule, NavactionsComponent],
+  imports: [FormsModule, CommonModule, NgSelectModule, DssInputComponent, MydirectiveModule, NavactionsComponent],
   providers: [NavbarActions],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

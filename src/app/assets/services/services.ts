@@ -8,7 +8,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ArraySortPipe } from '../pipes/inrcrdr.pipe';
 import { NgxImageCompressService } from 'ngx-image-compress';
 import { ActivatedRouteSnapshot, CanActivate, Router } from '@angular/router';
-import apiport from '../../../assets/app-config.json';
+import {environment} from '../../../environments/environment';
  
 
 declare var $: any;
@@ -212,7 +212,7 @@ export class NavbarActions {
 export class http {
   status: boolean = false;
   constructor(public http: HttpClient, public provider: MyProvider) {
-    this.provider.serverapi = apiport.server;
+    this.provider.serverapi = environment.server;
   }
 
   jsonget(url: any) {

@@ -24,7 +24,7 @@ interface RoleObj {
   selector: 'app-roleinfochild',
   templateUrl: './roleinfochild.component.html',
   styleUrls: ['./roleinfochild.component.scss'],
-  imports: [FormsModule, CommonModule, ngselectComponent, NgSelectModule, DssInputComponent, MydirectiveModule,NavactionsComponent],
+  imports: [FormsModule, CommonModule, NgSelectModule, DssInputComponent, MydirectiveModule,NavactionsComponent],
   providers: [NavbarActions],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

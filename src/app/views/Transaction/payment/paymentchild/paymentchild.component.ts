@@ -29,7 +29,7 @@ import {CurrencyMaskDirective} from "../../../../assets/mydirective/currencyMask
   selector: 'app-paymentchild',
   templateUrl: './paymentchild.component.html',
   styleUrls: ['./paymentchild.component.scss'],
-  imports: [FormsModule, CommonModule,DTFormatDirective,CurrencyMaskDirective, ngselectComponent,NumberOnlyDirective,DecimalPipe, NgSelectModule, NgxPaginationModule, DssInputComponent, MydirectiveModule, NavactionsComponent],
+  imports: [FormsModule, CommonModule,DTFormatDirective,CurrencyMaskDirective, ngselectComponent,NumberOnlyDirective, NgSelectModule, NgxPaginationModule, DssInputComponent, MydirectiveModule, NavactionsComponent],
   providers:[],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

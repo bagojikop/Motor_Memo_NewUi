@@ -27,7 +27,7 @@ declare var $: any;
   selector: 'app-vehicle-infochild',
   templateUrl: './vehicle-infochild.component.html',
   styleUrls: ['./vehicle-infochild.component.scss'],
-  imports: [FormsModule, CommonModule, ngselectComponent, NumberOnlyDirective, decimalDirective, NgSelectModule, DssInputComponent, MydirectiveModule, MasternavComponent],
+  imports: [FormsModule, CommonModule, ngselectComponent, NumberOnlyDirective, NgSelectModule, DssInputComponent, MydirectiveModule, MasternavComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class VehicleInfochildComponent {

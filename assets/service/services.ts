@@ -193,7 +193,7 @@ export class NavbarActions{
 export class http {
   status: boolean = false;
   constructor(public http: HttpClient, public provider: MyProvider) { 
-    this.provider.serverapi="http://localhost:5267/"
+    // this.provider.serverapi="http://localhost:5267/"
   }
 
   jsonget(url: any) {

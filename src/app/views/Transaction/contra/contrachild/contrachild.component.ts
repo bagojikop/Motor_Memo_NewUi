@@ -26,7 +26,7 @@ declare var $: any;
   selector: 'app-contrachild',
   templateUrl: './contrachild.component.html',
   styleUrls: ['./contrachild.component.scss'],
-    imports:[FormsModule,CommonModule,DTFormatDirective,CurrencyMaskDirective,NumberOnlyDirective,ngselectComponent,NgSelectModule, DssInputComponent, MydirectiveModule, NavactionsComponent],
+    imports:[FormsModule,CommonModule,DTFormatDirective,CurrencyMaskDirective,ngselectComponent,NgSelectModule, DssInputComponent, MydirectiveModule, NavactionsComponent],
   schemas:[CUSTOM_ELEMENTS_SCHEMA]
 })
 export class ContrachildComponent {
