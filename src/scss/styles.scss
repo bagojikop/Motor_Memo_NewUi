@@ -23,12 +23,12 @@
 @import "examples";
 
 .heightMasterPage {
-    display: block;
-    height: calc(100vh - 197px);
-    min-height: 450px;
-  
-  }
- 
+  display: block;
+  height: calc(100vh - 197px);
+  min-height: 450px;
+
+}
+
 
 @import "ag-grid-community/styles/ag-grid.css";
 @import "ag-grid-community/styles/ag-theme-balham.css";
@@ -36,8 +36,8 @@
 //@import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 //bootstrap 5 link 
 //fort awesome icons 
- 
- 
+
+
 
 * {
   // font-family: "Roboto", sans-serif;
@@ -472,8 +472,7 @@ thead th {
 }
 
 
-.sidebar-nav .nav-group .nav-group-items{
+.nav-group-items, .sidebar-nav .nav-group.show .nav-group-toggle, .sidebar-nav .nav-group.show{
   background-color: rgb(53, 51, 51) !important;
-  border-radius: 10px; 
-} 
- 
+  border-radius: 10px;
+}

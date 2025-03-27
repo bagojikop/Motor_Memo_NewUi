@@ -16,14 +16,14 @@ import { MydirectiveModule } from '../../../../assets/mydirective/mydirective.mo
 import { ngselectComponent } from '../../../../assets/pg/ngselect/ngselect.component';
 import { pipe } from 'rxjs';
 import { NavactionsComponent } from '../../../../assets/pg/navactions/navactions.component';
-import { UppercaseDirective,NumberOnlyDirective, DTFormatDirective } from '../../../../assets/mydirective/mydirective.directive';
+import { UppercaseDirective, NumberOnlyDirective, DTFormatDirective } from '../../../../assets/mydirective/mydirective.directive';
 
 @Component({
   selector: 'app-declarationchild',
   templateUrl: './declarationchild.component.html',
   styleUrls: ['./declarationchild.component.scss'],
-  imports: [FormsModule, CommonModule,DTFormatDirective, NumberOnlyDirective, ngselectComponent,NavactionsComponent, NgSelectModule, DssInputComponent, MydirectiveModule],
-  providers:[NavbarActions],
+  imports: [FormsModule, CommonModule, DTFormatDirective, NumberOnlyDirective, ngselectComponent, NavactionsComponent, NgSelectModule, DssInputComponent, MydirectiveModule],
+  providers: [NavbarActions],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 
@@ -252,16 +252,36 @@ export class DeclarationchildComponent {
 
   totalVehicle: number
   AddVehicle() {
-    if (this.rowIndex == null) {
-      this.entity.mst10301s.push(this.reference);
-      this.entity.noOfVehicles = this.getTotalVehicles();
-    } else {
 
-      this.entity.mst10301s[this.rowIndex] = this.reference;
-    }
+    this.http.get('Declaration/cheackvehicle', { id: this.reference.vehicleNo }).subscribe({
+      next: (res: any) => {
+        if (res.data == true) {
 
-    this.reference = {};
-    this.rowIndex = null;
+          if (this.rowIndex == null) {
+            this.entity.mst10301s.push(this.reference);
+            this.entity.noOfVehicles = this.getTotalVehicles();
+          } else { 
+            this.entity.mst10301s[this.rowIndex] = this.reference;
+          }
+       
+          this.rowIndex = null;
+
+        } else {
+          this.reference = {};
+          this.dialog.swal({ dialog: 'error', title: 'error!', message: "Please Enter Valide Vehicle Number" })
+        }
+
+        this.spinner.hide();
+      }, error: (err: any) => {
+        this.spinner.hide();
+        this.dialog.swal({ dialog: 'Warning', title: 'Warning!', message: "Please fill all required Fields." })
+      }
+    })
+
+
+
+
+   
 
   }
 
