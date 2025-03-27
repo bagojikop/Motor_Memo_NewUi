@@ -108,24 +108,24 @@
     font-weight: bold;
 }
 
-// @media (max-width: 992px) {
+@media (max-width: 992px) {
 
-//     .resposiveHeader{
-//         display: flex;
-//         flex-direction: column;
-//     }
-//     .card-header { 
-//         height: 150px;
-//         width: 100%;
-//         z-index: 30;
-//         position: sticky;  
-//     }
-//     .exportBtns{
-//         margin-left: 50px;
-//     }
+    .resposiveHeader{
+        display: flex;
+        flex-direction: column;
+    }
+    .card-header { 
+        height: 150px;
+        width: 100%;
+        z-index: 30;
+        position: sticky;  
+    }
+    .exportBtns{
+        margin-left: 50px;
+    }
     
     
-// }
+}
 
 @media (max-width: 992px) {
     .exportBtns{
