@@ -14,20 +14,26 @@
                     </div>
                     <form #loginform="ngForm" class="mt-4 px-3" (ngSubmit)="Submit()">
                         <div class="form-group">
-                            <div style="width: 100%;">
-                                <input id="username" class="form-control" name="username" placeholder="Username"
-                                    [(ngModel)]="entity.username" />
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <i class="fa-solid fa-user"></i>
+                                </span>
+
+                                <input type="text" name="username"
+                                    class="form-control rounded-end ng-dirty ng-valid ng-touched" placeholder="Username"
+                                    autocomplete="off" [(ngModel)]="entity.username" required>
                             </div>
                         </div>
                         <div class="form-group mt-4">
-                            <div style="width: 100%;" class="d-flex">
-                                <div style="width: 100%;">
-                                    <input id="password" type="password" class="form-control" name="password" [minlength]="4"
-                                        [maxlength]="20" placeholder="Password" autocomplete="current-password"
-                                        [(ngModel)]="entity.psw" [required]="true" />
-                                </div>
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <i class="fa-solid fa-lock"></i>
+                                </span>
 
-
+                                <input type="password" name="password"
+                                    class="form-control form-control ng-dirty ng-valid ng-touched"
+                                    [(ngModel)]="entity.psw" placeholder="Password" autocomplete="current-password"
+                                    required style="border-top-right-radius: 5px; border-bottom-right-radius: 5px;">
                             </div>
                         </div>
                         <div class="text-end">

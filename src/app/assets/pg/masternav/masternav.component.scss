@@ -11,41 +11,8 @@
     justify-content: space-between;
     display: block;
 }
-
-
-@media only screen and (max-width : '576px'){
-    .navaction-res{
-        display: none !important;
-    }
-
-    .navaction-resrs{
-        display: block !important;
-        
-    }
-}
-
-@media only screen and (min-width : '576px'){
-    .navaction-res{
-        display: none !important;
-    }
-
-    .navaction-resrs{
-        display: block !important;
-        
-    }
-}
-
-
-@media only screen and (min-width : '492px'){
-    .navaction-res{
-        display: flex !important;
-    }
-
-    .navaction-resrs{
-        display: none !important;
-    }
-}
-
+ 
+ 
  
 
  

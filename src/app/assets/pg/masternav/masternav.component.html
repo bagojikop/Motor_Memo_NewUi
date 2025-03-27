@@ -1,5 +1,5 @@
-<div class="p-2 navaction">
-    <div class="navaction-res d-flex justify-content-between">
+<div class="p-2 card" style="position: sticky !important;top:45px;z-index: 99999;">
+    <div class=" d-flex justify-content-between">
         <div class="d-flex">
 
             <span style="font-size:20px; margin-left: 3px;">{{title}}</span>
@@ -82,77 +82,6 @@
         <!-- <div class="col col-lg-11 d-flex justify-content-end" >
         </div> -->
     </div>
-
-
-    <div class="navaction-resrs">
-        <div class="row m-0 align-items-center">
-            <div class="col col-sm-5">
-                <div class="col col-lg d-flex align-items-center">
-                    <h5 class="mat-subheading-1 mb-1 ms-3 ">{{title}}</h5>
-                </div>
-            </div>
-            <div class="col col-sm-3 offset-sm-4">
-                <button class="btn float-right float-end" type="button" [ngbPopover]="lR" style="z-index: 9999;"
-                    aria-label="Toggle navigation">
-                    <i class="bi bi-three-dots-vertical btn-outline-dark"></i>
-                </button>
-
-
-                <ng-template class="collapse navbar-collapse" #lR id="menu">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-
-
-                        <li class="nav-item  border-secondary mb-2">
-                            <button class="btn btn-sm  btn-light     d-flex" [disabled]="userAccess.a == 0  || navactions.new1" type="button"
-                                (click)="newRecord()">
-                                <span>New</span>&nbsp;<i class="bi bi-plus-circle"></i>
-                            </button>
-                        </li>
-
-                        <li class="nav-item  border-secondary mb-2">
-                            <button class="btn btn-sm btn-light    d-flex" [disabled]="userAccess.e == 0 || navactions.edit1" type="button"
-                                (click)="edit()">
-                                <span>Edit</span>&nbsp;<i class="bi bi-pencil-square"></i>
-                            </button>
-                        </li>
-
-                        <li class="nav-item mb-2">
-                            <button class="btn btn-sm btn-light d-flex" [disabled]="userAccess.p == 0 || navactions.print1" type="button"
-                                (click)="print()">
-                                <span>Print</span>&nbsp;<i class="bi bi-file-pdf"></i>
-                            </button>
-
-
-                        </li>
-
-                    </ul>
-
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-
-                        <li class=" nav-item  border-secondary mb-2">
-                            <button class="btn btn-sm btn-light    d-flex" [disabled]="navactions.save1" type="button"
-                                (click)="mainsave()">
-                                <span>Save</span>&nbsp;<i class="bi bi-check-circle "></i>
-                            </button>
-                        </li>
-                        <li class=" nav-item  border-secondary mb-2">
-                            <button class="btn btn-sm btn-light   d-flex" [disabled]="navactions.save1" type="button"
-                                (click)="undo()" [disabled]="navactions.undo1">
-                                <span>Undo</span>&nbsp;<i class="bi bi-arrow-counterclockwise"></i>
-                            </button>
-                        </li>
-
-                        <li class=" nav-item btn btn-sm btn-light  mb-2  d-flex" type="button" (click)="close()">
-                            <span>Close</span>&nbsp; <i class="bi bi-x-circle"></i>
-                        </li>
-
-
-                    </ul>
-                </ng-template>
-            </div>
-        </div>
-    </div>
-    <!--     
-   -->
+ 
 
 </div>
