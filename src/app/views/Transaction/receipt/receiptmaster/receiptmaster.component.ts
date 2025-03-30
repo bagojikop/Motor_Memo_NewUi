@@ -124,13 +124,12 @@ export class ReceiptmasterComponent {
     },
     ]
     this.Init();
-    this.gridParams = {
-      branchId: this.provider.companyinfo.company?.branchCode,
+    this.gridParams = { 
       firmId: this.provider.companyinfo.company?.firmCode,
       divId: this.provider.companyinfo.company.divId,
-      username: this.provider.companyinfo.userinfo.username,
-      from_date: "01-04-2022",
-      to_date: "31-03-2023",
+      // username: this.provider.companyinfo.userinfo.username,
+      // from_date: "01-04-2022",
+      // to_date: "31-03-2023",
       isApproval: "false",
     }
   }

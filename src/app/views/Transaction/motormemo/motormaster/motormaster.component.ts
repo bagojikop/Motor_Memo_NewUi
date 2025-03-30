@@ -35,7 +35,7 @@ export class MotormasterComponent implements OnInit {
   referance: any;
   defaultColDef: any;
   stateParams: any;
-
+  gridParams: any = {};
   mode: any;
   private gridApi: GridApi;
 
@@ -88,24 +88,15 @@ export class MotormasterComponent implements OnInit {
         },
         flex: 1
       },
+      
     ];
-    // this.columns = [
-    //   { field: 'accName', headerName: 'Account Name', filter: "agTextColumnFilter", flex: 3 },
-    //   { field: 'placeIdNavigation.cityName', headerName: 'Place', filter: "agTextColumnFilter", flex: 2 },
-    //   { field: 'sgCodeNavigation.sgName', headerName: 'Group', filter: "agTextColumnFilter", flex: 2 },
-    //   { field: 'accAlias', headerName: 'Alias/Account ID', filter: "agTextColumnFilter", flex: 2 },
-    //   {
-    //     headerName: 'Action',
-    //     cellRenderer: ActBtnComponent,
-    //     filter: false,
-    //     cellRendererParams: {
-    //       onClick: this.onBtnClick1.bind(this),
-    //     },
-    //     flex: 1
-    //   },
-    // ];
-
+  
     this.Init();
+    this.gridParams = { 
+      firm_id: this.provider.companyinfo.company?.firmCode,
+      div_id: this.provider.companyinfo.company.divId, 
+      // isApproval: "false",
+    }
   }
 
   Init() {
@@ -119,10 +110,9 @@ export class MotormasterComponent implements OnInit {
 
   onGridReady(params: any) {
     this.gridApi = params;
-    if (this.gridApi) {
-      // this.gridApi.sizeColumnsToFit();
-      this.Init();
-    }
+    // if (this.gridApi) { 
+    //   this.Init();
+    // }
   }
 
   onBtnClick1(e: any) {

@@ -17,11 +17,11 @@
                                     </div>
                                     <div class="gapInputFields">
                                         <label for="">Date</label>
-                                        <input name="meDt" class="form-control" type="date" 
-                                            #vchDate="ngModel" [(ngModel)]="entity.dt" finDate DTpicker
+                                        <input name="meDt" class="form-control" type="date" #vchDate="ngModel"
+                                            [(ngModel)]="entity.dt" finDate DTpicker
                                             [min]="this.provider.companyinfo.finyear.fdt"
                                             [max]="this.provider.companyinfo.finyear.tdt">
- 
+
                                     </div>
                                     <div class="gapInputFields">
                                         <div>
@@ -32,8 +32,8 @@
                                                 <input type="text" id="search" class="form-control"
                                                     placeholder=" Enter Last 4  Digits " name="Vehiclenumb"
                                                     [(ngModel)]="entity.vehicleNo" required autocomplete="off"
-                                                    (input)="entity.vehicleNo = entity.vehicleNo.toUpperCase()" >
-                                                    <!-- (blur)="Vehiclenotab()" -->
+                                                    (input)="entity.vehicleNo = entity.vehicleNo.toUpperCase()">
+                                                <!-- (blur)="Vehiclenotab()" -->
 
                                                 <button type="button" class="btn btn-light" tabindex="-1"
                                                     (click)="getVehicles()">
@@ -57,9 +57,7 @@
                                             [disabled]="navactions.fieldset"></app-ngselect>
 
                                     </div>
-                                </div>
-
-
+                                </div> 
                             </div>
                         </div>
                     </div>
@@ -247,7 +245,7 @@
                                         <div class="d-flex-width">
                                             <dss-input label="E-Way No" type="text" autocomplete="off"
                                                 [(ngModel)]="entity.motormemoDetails.ewayNo" name="receivewayNo"
-                                                [maxlength]="10" >
+                                                [maxlength]="10">
                                             </dss-input>
                                         </div>
 
@@ -419,8 +417,8 @@
                                             <th>
                                                 <div>
                                                     <app-ngselect apiUrl="Sundry/getExpAcclist" class="p-0 text-start"
-                                                        bindLabel="sundryName" bindValue="sId"
-                                                        name="otherExpensName" [(ngModel)]="other.expaccCode"
+                                                        bindLabel="sundryName" bindValue="sId" name="otherExpensName"
+                                                        [(ngModel)]="other.expaccCode"
                                                         (change)="onSelectotherExpacc($event)"
                                                         [disabled]="navactions.fieldset" autocomplete="off" #f="ngModel"
                                                         [applyMargins]="false"></app-ngselect>
@@ -445,8 +443,7 @@
 
                                             <th class="text-center" style="width: 12%;">
                                                 <button class="btn btn-light btn-sm text-center" type="button"
-                                                    (click)="otherdataAdd()">
-
+                                                    (click)="otherdataAdd()"> 
                                                     <i class="fas fa-plus"></i>
                                                 </button>
                                             </th>
@@ -678,26 +675,28 @@
                             <div style="width: 10rem;" class="ms-4">
                                 <label for="">Freight Amount</label>
                                 <input type="text" class="form-control" name="FreightAmount" digitOnly CurrencyMask
-                                    fraction="2" [(ngModel)]="entity.freightdeductAmount" [disabled]="true" autocomplete="off"
-                                    (change)="freightAmountsum()">
+                                    fraction="2" [(ngModel)]="entity.freightdeductAmount" [disabled]="true"
+                                    autocomplete="off" (change)="freightAmountsum()">
                             </div>
                             <div style="width: 10rem;" class="ms-4">
                                 <label for="">Advance Amount</label>
                                 <input type="text" class="form-control" name="advanceAmount" digitOnly CurrencyMask
-                                    fraction="2" [(ngModel)]="entity.advanceAmount" [disabled]="true" autocomplete="off">
+                                    fraction="2" [(ngModel)]="entity.advanceAmount" [disabled]="true"
+                                    autocomplete="off">
                             </div>
 
                             <div style="width: 10rem;" class="ms-4">
                                 <label for="">Left Amount</label>
                                 <input type="text" class="form-control" name="ownerCreditAmout" digitOnly CurrencyMask
-                                    fraction="2" [(ngModel)]="entity.ownerCreditAmout" [disabled]="true" autocomplete="off"
-                                    (Change)="totalcreditamount()">
+                                    fraction="2" [(ngModel)]="entity.ownerCreditAmout" [disabled]="true"
+                                    autocomplete="off" (Change)="totalcreditamount()">
                             </div>
 
                             <div style="width: 10rem;" class="ms-4">
                                 <label for="">Billed Amount</label>
                                 <input type="text" class="form-control" name="buildtotalamt" digitOnly CurrencyMask
-                                    fraction="2" [(ngModel)]="entity.buildtotalamt" [disabled]="true"  autocomplete="off">
+                                    fraction="2" [(ngModel)]="entity.buildtotalamt" [disabled]="true"
+                                    autocomplete="off">
                             </div>
                         </div>
                     </div>

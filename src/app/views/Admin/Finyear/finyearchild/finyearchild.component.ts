@@ -180,8 +180,7 @@ export class FinyearchildComponent {
     var url = "FinYears/get"
     var paramss = {
       divId: this.entity.divId,
-      firmCode: this.entity.firmCode,
-      branchCode: this.entity.branchCode
+      firmCode: this.entity.firmCode, 
 
     }
     this.http.get(url, paramss).subscribe({

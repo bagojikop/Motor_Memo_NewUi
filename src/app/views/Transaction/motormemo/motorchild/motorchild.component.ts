@@ -122,8 +122,7 @@ export class MotorchildComponent {
     let paramss: any = this.location.getState();
     this.navactions.navaction(paramss.action);
     this.entity.vchId = paramss.id;
-
-    this.entity.dt = new Date().toShortString();
+ 
 
     this.reference = []
     if (this.entity.vchId) {
