@@ -6,9 +6,9 @@ import { MyProvider } from '../../../../../assets/services/provider';
 import { DialogsComponent } from '../../../../../assets/pg/dialogs/dialogs.component';
 import { resolve } from '@angular/compiler-cli';
 import { Product, invItemFactor, invItemGst, invItemlocation, supplier, invItemSupplier } from "../../../../../Models/product"
-import { FormsModule, NgForm } from '@angular/forms'; 
+import { FormsModule, NgForm } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import {mst010} from '../../../../../assets/datatypests/productchild'
+import { mst010 } from '../../../../../assets/datatypests/productchild'
 import { NgSelectModule } from '@ng-select/ng-select';
 import { DssInputComponent } from '../../../../../assets/mydirective/dss-input/dss-input.component';
 import { MydirectiveModule } from '../../../../../assets/mydirective/mydirective.module';
@@ -25,8 +25,8 @@ declare var $: any;
   selector: 'app-productchild',
   templateUrl: './productchild.component.html',
   styleUrls: ['./productchild.component.scss'],
-    imports:[FormsModule,CommonModule,NgSelectModule,NumberOnlyDirective, DssInputComponent, MydirectiveModule, MasternavComponent],
-  schemas:[CUSTOM_ELEMENTS_SCHEMA]
+  imports: [FormsModule, CommonModule, NgSelectModule, NumberOnlyDirective, DssInputComponent, MydirectiveModule, MasternavComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class ProductchildComponent {
   @ViewChild("vi") vi: NgForm;
@@ -147,10 +147,10 @@ export class ProductchildComponent {
       }
     })
   }
-  
+
   save() {
     this.spinner.show();
- 
+
     if (!this.entity.iId) {
 
 
@@ -224,7 +224,8 @@ export class ProductchildComponent {
     this.location.back();
   }
   newRecord() {
-
+    this.pastentity = JSON.parse(JSON.stringify(this.entity))
+    this.entity = <mst010>{};
   }
   edit() {
     this.navactions.navaction("view");

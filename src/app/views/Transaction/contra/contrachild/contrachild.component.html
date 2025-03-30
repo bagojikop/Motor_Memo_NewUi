@@ -46,7 +46,7 @@
                                 </div>
                                 <div>
                                     <label class="mb-0 mt-2">Amount</label>
-                                    <input class="form-control text-end" name="amount" [disabled]="true" 
+                                    <input class="form-control text-end" name="amount" [disabled]="true"
                                         [(ngModel)]="entity.amount" CurrencyMask currency="INR" symbol fraction="2"
                                         autocomplete="off">
                                 </div>
@@ -55,88 +55,93 @@
                         </div>
                         <hr />
 
-                        <div *ngIf="viewing1==1" class="container mt-3">
 
-                            <h5>Credited To</h5>
-
-                        </div>
-                        <div *ngIf="viewing1==2" class="container mt-3">
-
-                            <h5>Debited To</h5>
-
-                        </div>
                         <div class="container">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th class="text-left p-1 " scope="col" style="width:35%">
-                                            Account</th>
-                                        <th class="text-end p-1 " scope="col" style="width:20%">
-                                            Amount</th>
-                                        <th class="text-center p-1 " scope="col" style="width:35%">
-                                            Nar</th>
-
-                                        <th class="text-center p-1" scope="col" style="width:10%">
-                                            Action
-                                        </th>
-                                    </tr>
-                                    <tr>
-                                        <th class="p-1 " scope="col" style="width:35%">
-                                            <app-ngselect apiUrl="Account/getAcclist" bindLabel="accName"
-                                                bindValue="accCode" name="contraItemsaccount"
-                                                [(ngModel)]="rec.contraItems.accCode" (change)="getAccountDetl($event)"
-                                                [defaultProperty]="rec.contraItems.accCodeNavigation"
-                                                [disabled]="navactions.fieldset" [applyMargins]="false"></app-ngselect>
-                                        </th>
-                                        <th class="text-center p-1 " scope="col" style="width:20%">
-                                            <input type="text" class="form-control text-end" autocomplete="off"
-                                                name="contraItemsamount" [(ngModel)]="rec.contraItems.amount"
-                                                CurrencyMask currency="INR" fraction="2">
-                                        </th>
-                                        <th class="text-center p-1" scope="col" style="width:35%">
-                                            <input type="text" class="form-control" autocomplete="off"
-                                                name="contraItemsnar" [(ngModel)]="rec.contraItems.nar">
-                                        </th>
-                                        <th class="text-center p-1" scope="col" style="width:10%">
-                                            <button class="btn btn-light btn-sm" type="button" (click)="AddDebited()"
-                                                [disabled]="!rec.contraItems.amount">
-                                                <i class="fas fa-plus"></i></button>
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody class="actionTableHeight">
-                                    <div *ngIf="!entity?.acc00601s || entity.acc00601s.length === 0" class="noDataImg">
-                                        <img src="../../../../../../assets/IMG/noData.png" width="50">
-                                        <p>Record is empty</p>
+                            <div class="card">
+                                <div class="card-header">
+                                    <div *ngIf="viewing1==1" class="container ">
+                                        <h5>Credited To</h5>
                                     </div>
-                                    <tr *ngFor="let v of entity.acc00601s;let i=index;">
-                                        <td style="width:35%" class="p-1">{{v.accCodeNavigation.accName}}</td>
-                                        <td style="width:20%" class="p-1 text-end">{{v.amount | number:'1.2-2'}}</td>
-                                        <td style="width:35%" class="p-1">{{v.nar}}</td>
-                                        <td style="width:10%" class="p-1 text-right">
-                                            <div class="text-center">
+                                    <div *ngIf="viewing1==2" class="container ">
+                                        <h5>Debited To</h5>
+                                    </div>
+                                </div>
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-left p-1 " scope="col" style="width:35%">
+                                                Account</th>
+                                            <th class="text-end p-1 " scope="col" style="width:20%">
+                                                Amount</th>
+                                            <th class="text-center p-1 " scope="col" style="width:35%">
+                                                Nar</th>
 
-                                                <button class="btn btn-primary btn-sm-custom-table me-1" type="button"
-                                                    (click)="ContraEdit(v)">
-                                                    <i class="fas fa-edit"></i></button>
-                                                <button class="btn btn-danger btn-sm-custom-table" type="button"
-                                                    (click)="ContraDelete(v)">
-                                                    <i class="fas fa-trash"></i></button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <td class="p-1 text-end" scope="col" style="width:35%"><b>Total</b></td>
-                                        <td class="p-1 text-end" scope="col" style="width:20%">
-                                            <b> ₹ {{entity.amount | number:'1.2-2'}}</b>
-                                        </td>
-                                        <td class="p-1" scope="col" style="width:35%"></td>
-                                        <td class="p-1" scope="col" style="width:10%"></td>
-                                    </tr>
-                                </tfoot>
-                            </table>
+                                            <th class="text-center p-1" scope="col" style="width:10%">
+                                                Action
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th class="p-1 " scope="col" style="width:35%">
+                                                <app-ngselect apiUrl="Account/getAcclist" bindLabel="accName"
+                                                    bindValue="accCode" name="contraItemsaccount"
+                                                    [(ngModel)]="rec.contraItems.accCode"
+                                                    (change)="getAccountDetl($event)"
+                                                    [defaultProperty]="rec.contraItems.accCodeNavigation"
+                                                    [disabled]="navactions.fieldset"
+                                                    [applyMargins]="false"></app-ngselect>
+                                            </th>
+                                            <th class="text-center p-1 " scope="col" style="width:20%">
+                                                <input type="text" class="form-control text-end" autocomplete="off"
+                                                    name="contraItemsamount" [(ngModel)]="rec.contraItems.amount"
+                                                    CurrencyMask currency="INR" fraction="2">
+                                            </th>
+                                            <th class="text-center p-1" scope="col" style="width:35%">
+                                                <input type="text" class="form-control" autocomplete="off"
+                                                    name="contraItemsnar" [(ngModel)]="rec.contraItems.nar">
+                                            </th>
+                                            <th class="text-center p-1" scope="col" style="width:10%">
+                                                <button class="btn btn-light btn-sm" type="button"
+                                                    (click)="AddDebited()" [disabled]="!rec.contraItems.amount">
+                                                    <i class="fas fa-plus"></i></button>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="actionTableHeight">
+                                        <div *ngIf="!entity?.acc00601s || entity.acc00601s.length === 0"
+                                            class="noDataImg">
+                                            <img src="../../../../../../assets/IMG/noData.png" width="50">
+                                            <p>Record is empty</p>
+                                        </div>
+                                        <tr *ngFor="let v of entity.acc00601s;let i=index;">
+                                            <td style="width:35%" class="p-1">{{v.accCodeNavigation.accName}}</td>
+                                            <td style="width:20%" class="p-1 text-end">{{v.amount | number:'1.2-2'}}
+                                            </td>
+                                            <td style="width:35%" class="p-1">{{v.nar}}</td>
+                                            <td style="width:10%" class="p-1 text-right">
+                                                <div class="text-center">
+
+                                                    <button class="btn btn-primary btn-sm-custom-table me-1"
+                                                        type="button" (click)="ContraEdit(v)">
+                                                        <i class="fas fa-edit"></i></button>
+                                                    <button class="btn btn-danger btn-sm-custom-table" type="button"
+                                                        (click)="ContraDelete(v)">
+                                                        <i class="fas fa-trash"></i></button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td class="p-1 text-end" scope="col" style="width:35%"><b>Total</b></td>
+                                            <td class="p-1 text-end" scope="col" style="width:20%">
+                                                <b> ₹ {{entity.amount | number:'1.2-2'}}</b>
+                                            </td>
+                                            <td class="p-1" scope="col" style="width:35%"></td>
+                                            <td class="p-1" scope="col" style="width:10%"></td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
                         </div>
                         <hr />
                         <div class="container">

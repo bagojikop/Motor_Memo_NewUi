@@ -20,6 +20,7 @@ import { prototype } from 'events';
 import { NavactionsComponent } from '../../../../assets/pg/navactions/navactions.component';
 import { CurrencyMaskDirective } from '../../../../assets/mydirective/currencyMask/currency-mask.directive';
 import { NumberOnlyDirective, DTFormatDirective, UppercaseDirective } from '../../../../assets/mydirective/mydirective.directive';
+import { finDateDirective } from '../../../../assets/mydirective/findate/findate.directive';
 
 
 
@@ -27,7 +28,7 @@ import { NumberOnlyDirective, DTFormatDirective, UppercaseDirective } from '../.
   selector: 'app-motorchild',
   templateUrl: './motorchild.component.html',
   styleUrls: ['./motorchild.component.scss'],
-  imports: [FormsModule, CommonModule, DTFormatDirective, NumberOnlyDirective, CurrencyMaskDirective, ngselectComponent, NgSelectModule, DssInputComponent, MydirectiveModule, NgxPaginationModule, NavactionsComponent],
+  imports: [FormsModule, CommonModule, DTFormatDirective,finDateDirective, NumberOnlyDirective, CurrencyMaskDirective, ngselectComponent, NgSelectModule, DssInputComponent, MydirectiveModule, NgxPaginationModule, NavactionsComponent],
   providers: [DatePipe],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
@@ -409,8 +410,8 @@ export class MotorchildComponent {
   }
   newRecord() {
     this.pastentity = JSON.parse(JSON.stringify(this.entity))
-
-    this.entity.dt = new Date().toShortString();
+     
+   
     this.entity = <SubconsigneeObj>{};
     this.entity.motormemoAudit = <MotormemoAuditObj>{};
     this.entity.motormemoDetails = <MotormemoDetailsObj>{};
@@ -420,6 +421,7 @@ export class MotorchildComponent {
     this.entity.memoNo = 0;
     this.entity.selectfreightType = 0;
     this.entity.totalcharges = 0;
+    this.entity.dt = new Date().toShortString();
   }
   edit() {
     this.navactions.navaction("view");

@@ -37,7 +37,7 @@
                                         <div class="gapInputFields">
                                             <label for="">Credit Limit</label>
                                             <input name="CreditLimit" autocomplete="off" class="form-control text-end"
-                                                [(ngModel)]="entity.creditLimit" [maxlength]="10" decimal>
+                                                [(ngModel)]="entity.creditLimit" [maxlength]="10" CurrencyMask currency="INR" fraction="2">
 
                                         </div>
 
@@ -288,7 +288,7 @@
                                     <div class="gapInputFields">
                                         <dss-input name="bankaccountno" numberOnly label="Account No" autocomplete="off"
                                             [whiteSpace]="false" [(ngModel)]="entity.mst01104.bankaccNo"
-                                            [maxlength]="50" />
+                                            [maxlength]="20" />
                                     </div>
                                 </div>
 

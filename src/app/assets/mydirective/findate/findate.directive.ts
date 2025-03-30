@@ -3,7 +3,7 @@ import { AfterViewInit, ChangeDetectorRef, Directive, ElementRef, HostListener, 
 import { MyProvider } from "../../services/provider";
  
 
-@Directive({ selector: '[finDate]', standalone:false, })
+@Directive({ selector: '[finDate]', standalone:true, })
 
 export class finDateDirective implements AfterViewInit {
   customdate: any;

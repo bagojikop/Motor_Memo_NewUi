@@ -8,19 +8,18 @@
         <div class="col col-12 col-sm-6">
             <div class="d-flex justify-content-end align-items-center">
                 <button type="submit" class="btn btn-outline-success btn-sm" (click)="addNew()"><svg
-                    xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                    class="bi bi-plus-square-fill" viewBox="0 0 16 16">
-                    <path
-                        d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm6.5 4.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3a.5.5 0 0 1 1 0" />
-                </svg></button>
+                        xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-plus-square-fill" viewBox="0 0 16 16">
+                        <path
+                            d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm6.5 4.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3a.5.5 0 0 1 1 0" />
+                    </svg></button>
             </div>
         </div>
     </div>
 </div>
-<hr/>
-<dss-grid [columns]="columns" url="AccOpbl/getList" [gridOptions]="gridOption.gridOptions" 
-class="heightMasterPage" [defaultColDef]="defaultColDef" [params]="gridParams"
-    (gridApi)="onGridReady($event)" [pageSize]="15"></dss-grid>
+<hr />
+<dss-grid [columns]="columns" url="AccOpbl/getList" [gridOptions]="gridOption.gridOptions" class="heightMasterPage"
+    [defaultColDef]="defaultColDef" [params]="gridParams" (gridApi)="onGridReady($event)" [pageSize]="15"></dss-grid>
 
 
 
@@ -44,7 +43,7 @@ class="heightMasterPage" [defaultColDef]="defaultColDef" [params]="gridParams"
                                 <div class="form-group">
                                     <app-ngselect label="Account" apiUrl="Account/getAcclist" class="p-0"
                                         bindLabel="accName" bindValue="accCode" name="ObalAccName"
-                                        [(ngModel)]="entity.accCode" #ObalAccName="ngModel" 
+                                        [(ngModel)]="entity.accCode" #ObalAccName="ngModel"
                                         [ngClass]="{'is-invalid': ObalAccName.errors?.['required']}" [required]="true"
                                         [defaultProperty]="entity.accCodeNavigation"
                                         (change)="selectaccName($event)"></app-ngselect>
@@ -52,15 +51,19 @@ class="heightMasterPage" [defaultColDef]="defaultColDef" [params]="gridParams"
                                 <div class="form-group mt-2">
                                     <label class="mb-0">Credit</label>
                                     <input type="text" class="form-control form-control text-end" autocomplete="off"
-                                        name="crBal" #crBal="ngModel" [(ngModel)]="entity.crbal" CurrencyMask style="width:clamp(130px, 100%, 0px)"
-                                        currency="INR" fraction="2" [disabled]="disableCredit()" #crbal>
+                                        name="crBal" #crBal="ngModel" [(ngModel)]="entity.crbal" CurrencyMask
+                                        style="width:clamp(130px, 100%, 0px)" currency="INR" fraction="2"
+                                        [readonly]="entity.drbal > 0" #crbal>
                                 </div>
+
                                 <div class="form-group mt-2">
                                     <label class="mb-0">Debit</label>
                                     <input type="text" class="form-control form-control text-end" autocomplete="off"
-                                        name="drBal" #drbal #drBal="ngModel" [(ngModel)]="entity.drbal" CurrencyMask style="width:clamp(130px, 100%, 0px)"
-                                        currency="INR" fraction="2" [disabled]="disableDebit()">
+                                        name="drBal" #drbal #drBal="ngModel" [(ngModel)]="entity.drbal" CurrencyMask
+                                        style="width:clamp(130px, 100%, 0px)" currency="INR" fraction="2"
+                                        [readonly]="entity.crbal > 0">
                                 </div>
+
                             </div>
                         </div>
 
@@ -68,8 +71,7 @@ class="heightMasterPage" [defaultColDef]="defaultColDef" [params]="gridParams"
                 </fieldset>
             </div>
             <div class="modal-footer p-1" style="background-color: rgb(214, 214, 214);">
-                <button type="button" class="btn btn-sm btn-danger" tabindex="-1"
-                    (click)="close()">Close</button>
+                <button type="button" class="btn btn-sm btn-danger" tabindex="-1" (click)="close()">Close</button>
                 <button type="button" class="btn btn-sm btn-primary" [disabled]="!f.valid"
                     (click)="save()">Save</button>
             </div>

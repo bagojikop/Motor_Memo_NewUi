@@ -46,17 +46,16 @@
                                     <div class="gapInputFields">
                                         <dss-input id="w3review" label="Address" name="accAddress1" [maxlength]="100"
                                             [(ngModel)]="entity.address" inputType="textarea" [rows]="4" [cols]="50"
-                                            (ngModelChange)="entity.address=$event" [styleCase]="'u'">
+                                            (ngModelChange)="entity.address=$event" >
                                         </dss-input>
- 
+
                                         <div class="d-flex">
                                             <div class="d-flex-width">
                                                 <app-ngselect label="Place" apiUrl="Place/getPlace" class="p-0"
                                                     bindLabel="cityName" bindValue="cityId" name="pl"
                                                     [(ngModel)]="entity.placeId" [defaultProperty]="entity.place"
-                                                    [disabled]="navactions.fieldset"></app-ngselect>
-                                            </div>
-
+                                                    [disabled]="navactions.fieldset"  ></app-ngselect>
+                                            </div> 
                                             <div class="gapInputFields">
                                                 <label for="">Pin Code</label>
                                                 <input class="form-control" type="text" numberOnly autocomplete="off"

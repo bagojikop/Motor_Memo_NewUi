@@ -1,6 +1,6 @@
 <div>
     <app-navactions [title]="'Declaration'" (myfn)="navbar($event)"></app-navactions>
-    <form #vi="ngForm" class="needs-validation" novalidate>
+    <form #vi="ngForm" class="needs-validation">
         <fieldset [disabled]="navactions.fieldset">
             <div class="container mt-4">
                 <div class="d-flex">
@@ -39,7 +39,7 @@
                         </div>
                         <div>
                             <label for="HUB">
-                                <input type="checkbox" id="huf" name="huf" [(ngModel)]="entity.ishuf">
+                                <input type="checkbox" id="huf" name="huf" [(ngModel)]="entity.ishuf" required>
                                 HUF
                             </label>
                         </div>

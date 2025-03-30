@@ -74,7 +74,7 @@ export class SenderReceiverChildComponent {
     if (this.entity.sCode) {
       this.navactions.fieldset = true;
       this.callbackedit();
-     // this.navactions.navaction("view");
+      // this.navactions.navaction("view");
     } else {
       this.navactions.fieldset = false;
       this.newRecord();
@@ -133,7 +133,7 @@ export class SenderReceiverChildComponent {
       next: (res: any) => {
         if (res.status_cd == 1) {
           this.entity = res.data;
-          this.entity.id = res.data.id;
+          this.entity.id = res.data.id; 
           //  this.pastentity = Object.assign({}, this.entity);
           this.cd.detectChanges();
         }
@@ -207,10 +207,11 @@ export class SenderReceiverChildComponent {
     this.location.back();
   }
   newRecord() {
-
+    this.pastentity = JSON.parse(JSON.stringify(this.entity))
+      this.entity = <SubconsigneeObj>{};
   }
   edit() {
-    
+
     if (this.isSaved) {
 
       this.callbackedit();
@@ -250,4 +251,12 @@ export class SenderReceiverChildComponent {
 
     }
   }
+
+  // getstate(e){
+  //   console.log(e);
+    
+  //   this.entity.state = e.taluka.district.stateCodeNavigation 
+  //   console.log(this.entity.state.stateName);
+    
+  // }
 }

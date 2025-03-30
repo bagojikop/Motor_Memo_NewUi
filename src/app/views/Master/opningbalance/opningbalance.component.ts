@@ -16,13 +16,13 @@ import { MasternavComponent } from '../../../assets/pg/masternav/masternav.compo
 import { ngselectComponent } from '../../../assets/pg/ngselect/ngselect.component';
 import { ArraySortPipe } from '../../../assets/pipes/inrcrdr.pipe';
 declare var $: any;
-import {CurrencyMaskDirective} from "../../../assets/mydirective/currencyMask/currency-mask.directive"; 
+import { CurrencyMaskDirective } from "../../../assets/mydirective/currencyMask/currency-mask.directive";
 
 @Component({
   selector: 'app-opningbalance',
   templateUrl: './opningbalance.component.html',
   styleUrls: ['./opningbalance.component.scss'],
-  imports: [FormsModule, CommonModule,CurrencyMaskDirective, ngselectComponent, NgSelectModule, DssGridComponent],
+  imports: [FormsModule, CommonModule, CurrencyMaskDirective, ngselectComponent, NgSelectModule, DssGridComponent],
   providers: [DialogsComponent, Master, ArraySortPipe, DatePipe, DecimalPipe],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
@@ -92,7 +92,7 @@ export class OpningbalanceComponent {
         filter: "agNumberColumnFilter",
         valueParser: params => Number(params.crbal),
         cellRenderer: (data) => {
-          return data.value ? this.decimalpipe.transform(data.value, '1.2-2') : '';
+          return data.value ? this.decimalpipe.transform(data.value, '1.2-2') : 0;
         },
         minWidth: 100,
         flex: 1,
@@ -107,7 +107,7 @@ export class OpningbalanceComponent {
         flex: 1,
         valueParser: params => Number(params.drbal),
         cellRenderer: (data) => {
-          return data.value ? this.decimalpipe.transform(data.value, '1.2-2') : '';
+          return data.value ? this.decimalpipe.transform(data.value, '1.2-2') : 0;
         },
         cellStyle: { textAlign: 'end' },
         headerClass: "ag-right-aligned-header",
@@ -171,11 +171,7 @@ export class OpningbalanceComponent {
         this.http.post('AccOpbl/insert', this.entity).subscribe({
           next: (res: any) => {
             if (res.status_cd == 1) {
-
-
               this.entity.vchId = res.data.vchId;
-              // this.entity.drbal=Number(this.entity.drbal);
-              // this.entity.crbal=Number(this.entity.crbal);
               this.gridApi.applyTransaction({ add: [this.entity] });
               this.dialog.swal({ dialog: "success", title: "Success", message: "Record is saved sucessfully" })
                 .then((res: any) => {
@@ -290,7 +286,7 @@ export class OpningbalanceComponent {
     $("#accOpeningBal").modal('show');
 
   }
-
+ 
 
 
   close() {

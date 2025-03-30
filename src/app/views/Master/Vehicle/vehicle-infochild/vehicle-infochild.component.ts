@@ -248,8 +248,7 @@ export class VehicleInfochildComponent {
     })
   }
   save() {
-
-
+ 
     this.entity.mst01101 = this.entity.mst01101;
     this.entity.mst01104 = this.entity.mst01104;
     this.entity.mst01109 = this.entity.mst01109;
@@ -297,9 +296,7 @@ export class VehicleInfochildComponent {
         this.spinner.hide()
         this.dialog.swal({ dialog: 'error', title: 'Error', message: err.message })
       }
-    })
-    // }
-
+    }) 
   }
 
 

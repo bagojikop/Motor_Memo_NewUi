@@ -99,7 +99,7 @@
                                 <div class="">
                                     <label for="">Chassis No</label>
                                     <dss-input [(ngModel)]="entity.chassisno" [styleCase]="'u'"
-                                        name="Chassis"></dss-input>
+                                        name="Chassis" [maxlength]="20"></dss-input>
                                 </div>
                             </div>
 
@@ -117,7 +117,7 @@
 
                                     <div class="gapInputFields">
                                         <dss-input label="Driver Lic No" [(ngModel)]="entity.driverLicNo" autocomplete="off"
-                                            name="driverLicNo"></dss-input>
+                                            name="driverLicNo" [maxlength]="20"></dss-input>
                                     </div>
                                 </div>
                             </div>
@@ -140,7 +140,7 @@
                             <legend class="ms-1 px-1 float-none bg-white w-auto m-0 p-0" style="font-size: small;">
                                 Insurance
                             </legend>
-                            <dss-input label="Number" name="insuranceNo" [(ngModel)]="entity.mst10801s.insuranceNo" autocomplete="off" />
+                            <dss-input label="Number" name="insuranceNo" [(ngModel)]="entity.mst10801s.insuranceNo" [maxlength]="20" autocomplete="off" />
                             <div class="d-flex align-items-center">
 
                                 <dss-input style="margin-right: 5px;" label="From" name="insuranceFrom" type="date" autocomplete="off"
@@ -158,7 +158,7 @@
                             <legend class="ms-1 px-1 float-none bg-white w-auto m-0 p-0" style="font-size: small;">
                                 Fitness
                             </legend>
-                            <dss-input label="Number" name="fitnessNo" [(ngModel)]="entity.mst10801s.fitnessNo"  autocomplete="off"/>
+                            <dss-input label="Number" name="fitnessNo" [(ngModel)]="entity.mst10801s.fitnessNo" [maxlength]="20"  autocomplete="off"/>
                             <div class="d-flex align-items-center">
 
                                 <dss-input style="margin-right: 5px;" label="From" name="fitnessFrom" type="date"
@@ -174,7 +174,7 @@
                             <legend class="ms-1 px-1 float-none bg-white w-auto m-0 p-0" style="font-size: small;">
                                 Permit
                             </legend>
-                            <dss-input label="Number" name="permitno" [(ngModel)]="entity.mst10801s.permitno" />
+                            <dss-input label="Number" name="permitno" [(ngModel)]="entity.mst10801s.permitno" [maxlength]="20"/>
                             <div class="d-flex align-items-center">
 
                                 <dss-input style="margin-right: 5px;" label="From" name="permitFm" type="date"

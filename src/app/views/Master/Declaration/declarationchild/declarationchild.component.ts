@@ -150,53 +150,59 @@ export class DeclarationchildComponent {
   }
 
   save() {
+    if (this.vi.valid) {
 
-    this.spinner.show();
-    if (!this.entity.declrId) {
-      if (!this.entity.createdUser)
-        this.entity.createdUser = this.provider.companyinfo.company.username;
-      this.entity.sCode = 2;
-      this.entity.declrNo = 10;
-      this.entity.fyId = this.provider.companyinfo.company.divId
-      this.http.post('Declaration/insert', this.entity).subscribe({
-        next: (res: any) => {
-          if (res.status_cd == 1) {
+      this.spinner.show();
+      if (!this.entity.declrId) {
+        if (!this.entity.createdUser)
+          this.entity.createdUser = this.provider.companyinfo.company.username;
+        this.entity.sCode = 2;
+        this.entity.declrNo = 10;
+        this.entity.fyId = this.provider.companyinfo.company.divId
+        this.http.post('Declaration/insert', this.entity).subscribe({
+          next: (res: any) => {
+            if (res.status_cd == 1) {
 
-            this.entity.sCode = res.data.sCode;
+              this.entity.sCode = res.data.sCode;
 
-            this.dialog.swal({ dialog: "success", title: "Success", message: "Record is saved sucessfully" });
-            this.navactions.navaction("OK");
+              this.dialog.swal({ dialog: "success", title: "Success", message: "Record is saved sucessfully" });
+              this.navactions.navaction("OK");
+            }
+
+            this.spinner.hide()
+
+          }, error: (err: any) => {
+            this.spinner.hide()
+            this.dialog.swal({ dialog: 'error', title: 'Error', message: err.message })
           }
+        })
+      }
+      else {
+        this.entity.modifiedUser = this.provider.companyinfo.company.userinfo.username;
+        this.entity.modifiedUser = this.provider.companyinfo.company.username;
+        this.http.put('Declaration/update', this.master.cleanObject(this.entity, 2), { id: this.entity.declrId }).subscribe({
+          next: (res: any) => {
+            this.spinner.hide()
+            if (res.status_cd == 1) {
+              this.entity.sCode = res.data.sCode;
 
-          this.spinner.hide()
+              this.dialog.swal({ dialog: "success", title: "Success", message: "Record is Update sucessfully" });
+              this.navactions.navaction("OK");
+            } else {
+              this.dialog.swal({ dialog: 'error', title: 'Error', message: res.errors.exception.InnerException.message })
+            }
 
-        }, error: (err: any) => {
-          this.spinner.hide()
-          this.dialog.swal({ dialog: 'error', title: 'Error', message: err.message })
-        }
-      })
+
+          }, error: (err: any) => {
+            this.spinner.hide()
+            this.dialog.swal({ dialog: 'error', title: 'Error', message: err.message })
+          }
+        })
+      }
     }
     else {
-      this.entity.modifiedUser = this.provider.companyinfo.company.userinfo.username;
-      this.entity.modifiedUser = this.provider.companyinfo.company.username;
-      this.http.put('Declaration/update', this.master.cleanObject(this.entity, 2), { id: this.entity.declrId }).subscribe({
-        next: (res: any) => {
-          this.spinner.hide()
-          if (res.status_cd == 1) {
-            this.entity.sCode = res.data.sCode;
+      this.dialog.swal({ dialog: 'error', title: 'Error', message: "Please Fill All Required fields." })
 
-            this.dialog.swal({ dialog: "success", title: "Success", message: "Record is Update sucessfully" });
-            this.navactions.navaction("OK");
-          } else {
-            this.dialog.swal({ dialog: 'error', title: 'Error', message: res.errors.exception.InnerException.message })
-          }
-
-
-        }, error: (err: any) => {
-          this.spinner.hide()
-          this.dialog.swal({ dialog: 'error', title: 'Error', message: err.message })
-        }
-      })
     }
 
   }
@@ -210,6 +216,8 @@ export class DeclarationchildComponent {
   }
   newRecord() {
     this.entity.mst10301s = <mst10301sObj[]>[];
+    this.pastentity = JSON.parse(JSON.stringify(this.entity))
+          this.entity = <AccountObj>{};
   }
   edit() {
     this.navactions.navaction("view");
@@ -260,10 +268,10 @@ export class DeclarationchildComponent {
           if (this.rowIndex == null) {
             this.entity.mst10301s.push(this.reference);
             this.entity.noOfVehicles = this.getTotalVehicles();
-          } else { 
+          } else {
             this.entity.mst10301s[this.rowIndex] = this.reference;
           }
-       
+
           this.rowIndex = null;
 
         } else {
@@ -281,7 +289,7 @@ export class DeclarationchildComponent {
 
 
 
-   
+
 
   }
 

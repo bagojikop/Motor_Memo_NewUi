@@ -12,7 +12,8 @@ import { DssInputComponent } from '../../../../assets/mydirective/dss-input/dss-
 import { ngselectComponent } from '../../../../assets/pg/ngselect/ngselect.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import {MasternavComponent } from '../../../../assets/pg/masternav/masternav.component'
-import { decimalDirective, NumberOnlyDirective } from '../../../../assets/mydirective/mydirective.directive';
+import { decimalDirective, NumberOnlyDirective,   } from '../../../../assets/mydirective/mydirective.directive';
+import { CurrencyMaskDirective } from "../../../../assets/mydirective/currencyMask/currency-mask.directive";
 
 declare var $: any;
 
@@ -21,7 +22,7 @@ declare var $: any;
   selector: 'app-accountinfochild',
   templateUrl: './accountinfochild.component.html',
   styleUrls: ['./accountinfochild.component.scss'],
-  imports:[FormsModule,CommonModule,ngselectComponent,NumberOnlyDirective,decimalDirective, NgSelectModule, DssInputComponent, MydirectiveModule, MasternavComponent, ],
+  imports:[FormsModule,CommonModule,ngselectComponent,CurrencyMaskDirective, NumberOnlyDirective,decimalDirective, NgSelectModule, DssInputComponent, MydirectiveModule, MasternavComponent, ],
   // providers: [,],
   schemas:[CUSTOM_ELEMENTS_SCHEMA]
 })

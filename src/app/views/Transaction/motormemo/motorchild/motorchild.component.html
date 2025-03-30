@@ -17,8 +17,8 @@
                                     </div>
                                     <div class="gapInputFields">
                                         <label for="">Date</label>
-                                        <input name="meDt" class="form-control" type="date" DTpicker finDate
-                                            #vchDate="ngModel" DTpicker [(ngModel)]="entity.dt"
+                                        <input name="meDt" class="form-control" type="date" 
+                                            #vchDate="ngModel" [(ngModel)]="entity.dt" finDate DTpicker
                                             [min]="this.provider.companyinfo.finyear.fdt"
                                             [max]="this.provider.companyinfo.finyear.tdt">
  
@@ -678,26 +678,26 @@
                             <div style="width: 10rem;" class="ms-4">
                                 <label for="">Freight Amount</label>
                                 <input type="text" class="form-control" name="FreightAmount" digitOnly CurrencyMask
-                                    fraction="2" [(ngModel)]="entity.freightdeductAmount" [disabled]="true"
+                                    fraction="2" [(ngModel)]="entity.freightdeductAmount" [disabled]="true" autocomplete="off"
                                     (change)="freightAmountsum()">
                             </div>
                             <div style="width: 10rem;" class="ms-4">
                                 <label for="">Advance Amount</label>
                                 <input type="text" class="form-control" name="advanceAmount" digitOnly CurrencyMask
-                                    fraction="2" [(ngModel)]="entity.advanceAmount" [disabled]="true">
+                                    fraction="2" [(ngModel)]="entity.advanceAmount" [disabled]="true" autocomplete="off">
                             </div>
 
                             <div style="width: 10rem;" class="ms-4">
                                 <label for="">Left Amount</label>
                                 <input type="text" class="form-control" name="ownerCreditAmout" digitOnly CurrencyMask
-                                    fraction="2" [(ngModel)]="entity.ownerCreditAmout" [disabled]="true"
+                                    fraction="2" [(ngModel)]="entity.ownerCreditAmout" [disabled]="true" autocomplete="off"
                                     (Change)="totalcreditamount()">
                             </div>
 
                             <div style="width: 10rem;" class="ms-4">
                                 <label for="">Billed Amount</label>
                                 <input type="text" class="form-control" name="buildtotalamt" digitOnly CurrencyMask
-                                    fraction="2" [(ngModel)]="entity.buildtotalamt" [disabled]="true">
+                                    fraction="2" [(ngModel)]="entity.buildtotalamt" [disabled]="true"  autocomplete="off">
                             </div>
                         </div>
                     </div>
