@@ -211,6 +211,10 @@ export const routes: Routes = [
         loadComponent: () => import('./views/Admin/RoleInfo/roleaccess/roleaccess.component').then((m) => m.RoleaccessComponent)
       },
       {
+        path: 'Moduleaccess',
+        loadComponent: () => import('./views/Admin/moduleaccess/moduleaccess.component').then((m) => m.ModuleaccessComponent)
+      },
+      {
         path: 'Forgotpassword',
         loadComponent: () => import('./assets/pg/Login/forgotpassword/forgotpassword.component').then((m) => m.ForgotpasswordComponent)
       },

@@ -97,6 +97,7 @@ export const navItems: INavData[] = [
       { name: 'RoleInfo', iconComponent: { name: 'cil-layers' }, url: 'Roleinfomaster' },
 
 
+
       {
         name: 'Permission',
         url: '/Permission',
@@ -104,6 +105,7 @@ export const navItems: INavData[] = [
         children: [
           { name: 'User Access', iconComponent: { name: 'cil-layers' }, url: 'UserAccess' },
           { name: 'Role Access', iconComponent: { name: 'cil-layers' }, url: 'Roleaccess' },
+          { name: 'Module Access', iconComponent: { name: 'cil-layers' }, url: 'Moduleaccess' },
         ]
       },
     ]
