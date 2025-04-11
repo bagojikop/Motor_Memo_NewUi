@@ -12,8 +12,6 @@ import { FormsModule } from '@angular/forms';
 import { ngselectComponent } from '../../../assets/pg/ngselect/ngselect.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { DssInputComponent } from '../../../assets/mydirective/dss-input/dss-input.component';
-import { MydirectiveModule } from '../../../assets/mydirective/mydirective.module';
-import { MasternavComponent } from '../../../assets/pg/masternav/masternav.component';
 import { DssGridComponent } from '../../../assets/pg/dss-grid/dss-grid.component';
 import { ArraySortPipe } from '../../../assets/pipes/inrcrdr.pipe';
 declare const $: any;

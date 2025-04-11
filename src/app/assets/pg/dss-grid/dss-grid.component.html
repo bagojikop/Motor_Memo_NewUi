@@ -11,14 +11,7 @@
       <b><<</b> </button>
 
         <button class="btn btn-sm text-light" (click)="moveback()" [disabled]="currentPage <= 1"> <b><</b> </button>
-            <!-- this.totalPages
-        <button   *ngFor="let page of getPagesArray()"
-          [class.active]="page === currentPage"
-          (click)="Init(page)"
-        >
-          {{ page }}
-        </button> -->
-            
+    
           <span class="mx-1">page</span> {{currentPage}} <span class="mx-1">of</span>{{totalPages}}
 
 

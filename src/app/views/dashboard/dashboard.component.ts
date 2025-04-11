@@ -1,28 +1,13 @@
-import { DOCUMENT, NgStyle } from '@angular/common';
+import { DOCUMENT } from '@angular/common';
 import { Component, CUSTOM_ELEMENTS_SCHEMA, DestroyRef, effect, inject, OnInit, Renderer2, signal, WritableSignal } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { ChartOptions } from 'chart.js';
 import {
-  AvatarComponent,
-  ButtonDirective,
-  ButtonGroupComponent,
-  CardBodyComponent,
-  CardComponent,
-  CardFooterComponent,
-  CardHeaderComponent,
-  ColComponent,
-  FormCheckLabelDirective,
-  GutterDirective,
-  ProgressBarDirective,
-  ProgressComponent,
-  RowComponent,
-  TableDirective,
-  TextColorDirective
-} from '@coreui/angular';
-import { ChartjsComponent } from '@coreui/angular-chartjs';
-import { IconDirective } from '@coreui/icons-angular';
 
- import { DashboardChartsData, IChartProps } from './dashboard-charts-data';
+  TableDirective,
+} from '@coreui/angular';
+
+import { DashboardChartsData, IChartProps } from './dashboard-charts-data';
 import { RouterModule } from '@angular/router';
 
 interface IUser {
@@ -41,11 +26,11 @@ interface IUser {
 
 @Component({
   standalone: true,
-    schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    templateUrl: 'dashboard.component.html',
-    styleUrls: ['dashboard.component.scss'],
-    imports:  [RouterModule],
-    providers:[TableDirective]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  templateUrl: 'dashboard.component.html',
+  styleUrls: ['dashboard.component.scss'],
+  imports: [RouterModule],
+  providers: [TableDirective]
 })
 export class DashboardComponent implements OnInit {
 

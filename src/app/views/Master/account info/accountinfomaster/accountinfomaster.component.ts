@@ -1,4 +1,4 @@
-import { Component, HostListener, NO_ERRORS_SCHEMA, OnInit } from '@angular/core';
+import { Component, NO_ERRORS_SCHEMA, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DialogsComponent } from '../../../../assets/pg/dialogs/dialogs.component';
 import { MyProvider } from '../../../../assets/services/provider';
@@ -6,8 +6,6 @@ import { Location } from '@angular/common';
 import { gridOptions, http } from '../../../../assets/services/services';
 import { ActBtnComponent } from '../../../../assets/pg/btn-cell-renderer/btn-cell-renderer.component';
 import { GridApi } from 'ag-grid-community';
-import { debounceTime } from 'rxjs/operators';
-import { fromEvent } from 'rxjs';
 import { DssGridComponent } from '../../../../assets/pg/dss-grid/dss-grid.component';
 import { HttpClient } from '@angular/common/http';
 

@@ -12,7 +12,7 @@ import { DssInputComponent } from '../../../../assets/mydirective/dss-input/dss-
 import { MydirectiveModule } from '../../../../assets/mydirective/mydirective.module';
 import { MasternavComponent } from '../../../../assets/pg/masternav/masternav.component';
 import { ngselectComponent } from '../../../../assets/pg/ngselect/ngselect.component';
-import { UppercaseDirective, NumberOnlyDirective } from '../../../../assets/mydirective/mydirective.directive';
+import { NumberOnlyDirective } from '../../../../assets/mydirective/mydirective.directive';
 
 
 
@@ -30,6 +30,7 @@ export class SenderReceiverChildComponent {
   sgCodeNavigation: string
   reference: any = {};
   acc: any = {};
+  state: []
   status: boolean = false;
   ngview: boolean = false;
   stateParams: any;
@@ -66,10 +67,10 @@ export class SenderReceiverChildComponent {
     this.reference.places = [];
     this.reference.suppliers = [];
 
-
     let paramss: any = this.location.getState();
     this.navactions.navaction(paramss.action);
     this.entity.sCode = paramss.id;
+    this.getstates();
 
     if (this.entity.sCode) {
       this.navactions.fieldset = true;
@@ -133,7 +134,8 @@ export class SenderReceiverChildComponent {
       next: (res: any) => {
         if (res.status_cd == 1) {
           this.entity = res.data;
-          this.entity.id = res.data.id; 
+          this.entity.id = res.data.id;
+          this.getState(this.entity);
           //  this.pastentity = Object.assign({}, this.entity);
           this.cd.detectChanges();
         }
@@ -146,55 +148,64 @@ export class SenderReceiverChildComponent {
     })
   }
   save() {
+    Object.keys(this.vi.form.controls).forEach(key => {
+      const control = this.vi.form.controls[key];
+      if (control.invalid) {
+        console.log(`Invalid Field: ${key}`, control.errors);
+      }
+    });
 
-    this.spinner.show();
-    if (!this.entity.id) {
-      if (!this.entity.createdUser)
+    if (this.vi.valid) {
+      this.spinner.show();
+      if (!this.entity.id) {
+        if (!this.entity.createdUser)
+          this.entity.createdUser = this.provider.companyinfo.company.username;
+
         this.entity.createdUser = this.provider.companyinfo.company.username;
 
-      this.entity.createdUser = this.provider.companyinfo.company.username;
+        this.http.post('Vendor/insert', this.entity).subscribe({
+          next: (res: any) => {
+            if (res.status_cd == 1) {
 
-      this.http.post('Vendor/insert', this.entity).subscribe({
-        next: (res: any) => {
-          if (res.status_cd == 1) {
+              this.entity.sCode = res.data.sCode;
 
-            this.entity.sCode = res.data.sCode;
-
-            this.dialog.swal({ dialog: "success", title: "Success", message: "Record is saved sucessfully" });
-            this.navactions.navaction("OK");
-          }
-          this.isSaved = true;
-          this.spinner.hide()
-
-        }, error: (err: any) => {
-          this.spinner.hide()
-          this.dialog.swal({ dialog: 'error', title: 'Error', message: err.message })
-        }
-      })
-    }
-    else {
-      this.entity.modifiedUser = this.provider.companyinfo.company.username;
-      this.http.put('Vendor/update', this.master.cleanObject(this.entity, 2), { id: this.entity.id }).subscribe({
-        next: (res: any) => {
-          this.spinner.hide()
-          if (res.status_cd == 1) {
-            this.entity.sCode = res.data.sCode;
+              this.dialog.swal({ dialog: "success", title: "Success", message: "Record is saved sucessfully" });
+              this.navactions.navaction("OK");
+            }
             this.isSaved = true;
-            this.dialog.swal({ dialog: "success", title: "Success", message: "Record is Update sucessfully" });
-            this.navactions.navaction("OK");
-          } else {
-            this.dialog.swal({ dialog: 'error', title: 'Error', message: res.errors.exception.InnerException.message })
+            this.spinner.hide()
+
+          }, error: (err: any) => {
+            this.spinner.hide()
+            this.dialog.swal({ dialog: 'error', title: 'Error', message: err.message })
           }
+        })
+      }
+      else {
+        this.entity.modifiedUser = this.provider.companyinfo.company.username;
+        this.http.put('Vendor/update', this.master.cleanObject(this.entity, 2), { id: this.entity.id }).subscribe({
+          next: (res: any) => {
+            this.spinner.hide()
+            if (res.status_cd == 1) {
+              this.entity.sCode = res.data.sCode;
+              this.isSaved = true;
+              this.dialog.swal({ dialog: "success", title: "Success", message: "Record is Update sucessfully" });
+              this.navactions.navaction("OK");
+            } else {
+              this.dialog.swal({ dialog: 'error', title: 'Error', message: res.errors.exception.InnerException.message })
+            }
 
 
-        }, error: (err: any) => {
-          this.spinner.hide()
-          this.dialog.swal({ dialog: 'error', title: 'Error', message: err.message })
-        }
-      })
+          }, error: (err: any) => {
+            this.spinner.hide()
+            this.dialog.swal({ dialog: 'error', title: 'Error', message: err.message })
+          }
+        })
+      }
+
+    } else {
+      this.dialog.swal({ dialog: 'error', title: 'Error', message: "Please Fill All The Required Fields.." })
     }
-
-
 
   }
 
@@ -208,7 +219,7 @@ export class SenderReceiverChildComponent {
   }
   newRecord() {
     this.pastentity = JSON.parse(JSON.stringify(this.entity))
-      this.entity = <SubconsigneeObj>{};
+    this.entity = <SubconsigneeObj>{};
   }
   edit() {
 
@@ -252,11 +263,30 @@ export class SenderReceiverChildComponent {
     }
   }
 
-  // getstate(e){
-  //   console.log(e);
-    
-  //   this.entity.state = e.taluka.district.stateCodeNavigation 
-  //   console.log(this.entity.state.stateName);
-    
-  // }
+
+  getState(event){
+    this.entity.state = event.stateCode;
+  }
+
+  getstates(){
+    this.loading = true;
+    this.http.get('state/list').subscribe({
+      next: (res: any) => {
+        if (res.status_cd == 1) {
+          this.state = res.data;
+          this.entity.stateCode = res.data[0].firmCode
+          this.loading = false;
+        } else {
+          this.loading = false;
+          this.dialog.swal({ dialog: 'error', title: 'Error', message: res.errors.exception.Message });
+        }
+
+
+        this.spinner.hide();
+      }, error: (err: any) => {
+        this.spinner.hide();
+        this.dialog.swal({ dialog: 'error', title: 'Error', message: err.message });
+      }
+    })
+  }
 }

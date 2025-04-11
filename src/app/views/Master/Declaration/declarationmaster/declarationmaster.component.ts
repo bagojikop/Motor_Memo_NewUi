@@ -9,7 +9,6 @@ import { ActBtnComponent } from '../../../../assets/pg/btn-cell-renderer/btn-cel
 import { GridApi } from 'ag-grid-community';
 import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-import { DssInputComponent } from '../../../../assets/mydirective/dss-input/dss-input.component';
 import { DssGridComponent } from '../../../../assets/pg/dss-grid/dss-grid.component';
 declare var $: any;
 @Component({

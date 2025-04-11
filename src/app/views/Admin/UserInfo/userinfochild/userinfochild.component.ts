@@ -10,9 +10,6 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { DssInputComponent } from '../../../../assets/mydirective/dss-input/dss-input.component';
 import { MydirectiveModule } from '../../../../assets/mydirective/mydirective.module';
-import { MasternavComponent } from '../../../../assets/pg/masternav/masternav.component';
-import { ngselectComponent } from '../../../../assets/pg/ngselect/ngselect.component';
-import { NavbarComponent } from '@coreui/angular';
 import { NavactionsComponent } from '../../../../assets/pg/navactions/navactions.component';
 declare var $: any;
 

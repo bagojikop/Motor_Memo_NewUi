@@ -5,7 +5,7 @@
         <div class="mt-2">
             <div class="card-body">
                 <fieldset [disabled]="navactions.fieldset">
-                    <form #account="ngForm" class="needs-validation" novalidate>
+                    <form #vi="ngForm" class="needs-validation" novalidate>
                         <div class=" ">
                             <div class="container">
                                 <div class="d-flex d-flex-column">
@@ -14,7 +14,7 @@
                                             <label for="">GSTIN</label>
                                             <div class="input-group mb-3">
                                                 <input type="text" class="form-control" name="gstin" autocomplete="off"
-                                                    [(ngModel)]="entity.gstinNo" required maxlength="15"
+                                                    [(ngModel)]="entity.gstinNo" required maxlength="15" minlength="15"
                                                     autocomplete="off" aria-describedby="basic-addon2">
                                                 <button class="input-group-text" style="cursor: pointer;"
                                                     id="basic-addon2" tabindex="-1" (click)="ongstFunction()"> <i
@@ -46,7 +46,7 @@
                                     <div class="gapInputFields">
                                         <dss-input id="w3review" label="Address" name="accAddress1" [maxlength]="100"
                                             [(ngModel)]="entity.address" inputType="textarea" [rows]="4" [cols]="50"
-                                            (ngModelChange)="entity.address=$event" >
+                                            (ngModelChange)="entity.address=$event">
                                         </dss-input>
 
                                         <div class="d-flex">
@@ -54,19 +54,25 @@
                                                 <app-ngselect label="Place" apiUrl="Place/getPlace" class="p-0"
                                                     bindLabel="cityName" bindValue="cityId" name="pl"
                                                     [(ngModel)]="entity.placeId" [defaultProperty]="entity.place"
-                                                    [disabled]="navactions.fieldset"  ></app-ngselect>
-                                            </div> 
+                                                    [disabled]="navactions.fieldset"></app-ngselect>
+                                            </div>
                                             <div class="gapInputFields">
                                                 <label for="">Pin Code</label>
                                                 <input class="form-control" type="text" numberOnly autocomplete="off"
                                                     [(ngModel)]="entity.pincode" name="pincode" [maxlength]="6">
                                             </div>
                                         </div>
-                                        <app-ngselect label="State" apiUrl="state/getStates" class="p-0"
+                                        <!-- <app-ngselect label="State" apiUrl="state/getStates" class="p-0"
                                             bindLabel="stateName" bindValue="stateCode" name="state"
                                             [(ngModel)]="entity.stateCode" [defaultProperty]="entity.state"
-                                            [disabled]="navactions.fieldset"></app-ngselect>
-
+                                            [disabled]="navactions.fieldset"></app-ngselect> -->
+                                        <div>
+                                            <label>State</label>
+                                            <ng-select bindLabel="stateName" bindValue="stateCode" name="state"
+                                                [loading]="loading" [virtualScroll]="true" [disabled]="navactions.fieldset"
+                                                [items]="state" [(ngModel)]="entity.state"  (change)="getState($event)"    placeholder="Select state">
+                                            </ng-select>
+                                        </div>
                                     </div>
 
                                     <div class="gapInputFields">

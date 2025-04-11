@@ -17,9 +17,9 @@ declare var $: any;
   selector: 'app-summary',
   templateUrl: './summary.component.html',
   styleUrls: ['./summary.component.scss'],
-    imports:[DssGridComponent,FormsModule,CommonModule,ngselectComponent, DssInputComponent],
-  providers:[http,HttpClient,DialogsComponent,ActBtnComponent, FormControl],
-  schemas:[NO_ERRORS_SCHEMA]
+  imports: [DssGridComponent, FormsModule, CommonModule, ngselectComponent, DssInputComponent],
+  providers: [http, HttpClient, DialogsComponent, ActBtnComponent, FormControl],
+  schemas: [NO_ERRORS_SCHEMA]
 })
 export class SummaryComponent {
   entity: any = {};
@@ -133,13 +133,13 @@ export class SummaryComponent {
   }
 
 
-  apiParams(){
+  apiParams() {
     var x = {
       PageNumber: 1,
       PageSize: 10,
       Keys: []
     }
-    
+
     return x;
   }
   edit(s) {
@@ -250,5 +250,5 @@ export class SummaryComponent {
   onOperationChange(value: string) {
     console.log('Selected Operation:', value);
   }
-  
+
 }

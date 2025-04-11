@@ -3,13 +3,14 @@ import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { DialogsComponent } from '../../../assets/pg/dialogs/dialogs.component';
 import { MyProvider } from '../../../assets/services/provider';
-import { DatePipe, Location } from '@angular/common';
+import { CommonModule, DatePipe, Location } from '@angular/common';
 import { http, Master, NavbarActions } from '../../../assets/services/services';
 import { validation } from '../../../assets/services/services';
 import { HttpClient } from '@angular/common/http';
 import { ActBtnComponent } from '../../../assets/pg/btn-cell-renderer/btn-cell-renderer.component';
-import { DssGridComponent } from '../../../assets/pg/dss-grid/dss-grid.component';
 import { ArraySortPipe } from '../../../assets/pipes/inrcrdr.pipe';
+import { FormsModule } from '@angular/forms';
+import { NgSelectModule } from '@ng-select/ng-select';
 declare var $: any;
 
 interface ModuleObj {
@@ -34,10 +35,11 @@ interface ModuleObj {
   selector: 'app-moduleaccess',
   templateUrl: './moduleaccess.component.html',
   styleUrls: ['./moduleaccess.component.scss'],
-  imports: [DssGridComponent],
+  imports: [FormsModule, CommonModule, NgSelectModule],
   providers: [http, HttpClient, DialogsComponent, ActBtnComponent, validation, DatePipe, Master, ArraySortPipe],
   schemas: [NO_ERRORS_SCHEMA]
 })
+
 
 
 
@@ -53,7 +55,7 @@ export class ModuleaccessComponent {
   ModuleaccessForm: any;
   disabledata: boolean = false;
   degignations = [];
-  list = [];
+  list: any = [];
   users = [];
 
 
@@ -169,7 +171,9 @@ export class ModuleaccessComponent {
       })
     }
   }
+
   save() {
+
     this.spinner.show();
     this.http.put("Modules/update", this.list, null).subscribe(
 
@@ -197,3 +201,4 @@ export class ModuleaccessComponent {
   }
 
 }
+

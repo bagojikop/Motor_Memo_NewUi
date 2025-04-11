@@ -1,14 +1,10 @@
-import { CommonModule, DatePipe, DecimalPipe, Location } from '@angular/common';
-import { http, imgResize, Master, NavbarActions, toNumber } from '../../../../assets/services/services';
-import { Component, AfterViewInit, HostListener, NgZone, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { CommonModule, DatePipe, Location } from '@angular/common';
+import { http, Master, NavbarActions, toNumber } from '../../../../assets/services/services';
+import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MyProvider } from '../../../../assets/services/provider';
 import { DialogsComponent } from '../../../../assets/pg/dialogs/dialogs.component';
-import { resolve } from '@angular/compiler-cli';
-import { NgxImageCompressService } from 'ngx-image-compress';
-import { Router } from '@angular/router';
-import { castFromArrayBuffer } from '../../../../assets/services/services';
-import { ReportDictionory } from '../../../../../../assets/service/interfaces';
+ import { ReportDictionory } from '../../../../../../assets/service/interfaces';
 import { v4 as uuidv4 } from 'uuid'
 import { PaymentObj, acc00200Obj, payApproveObj, acc00201Obj, paySellerBuyerObj, accCodeNavigationObj } from '../../../../assets/datatypests/paymentchild'
 import { FormsModule } from '@angular/forms';
@@ -16,8 +12,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { DssInputComponent } from '../../../../assets/mydirective/dss-input/dss-input.component';
 import { MydirectiveModule } from '../../../../assets/mydirective/mydirective.module';
-import { MasternavComponent } from '../../../../assets/pg/masternav/masternav.component';
-import { ngselectComponent } from '../../../../assets/pg/ngselect/ngselect.component';
+ import { ngselectComponent } from '../../../../assets/pg/ngselect/ngselect.component';
 declare var bootstrap: any;
 declare var $: any;
 import '../../../../assets/services/datePrototype'

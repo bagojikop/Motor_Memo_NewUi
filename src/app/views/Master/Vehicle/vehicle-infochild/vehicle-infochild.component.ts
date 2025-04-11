@@ -1,14 +1,11 @@
 import { CommonModule, DatePipe, Location } from '@angular/common';
 import { http, Master, NavbarActions } from '../../../../assets/services/services';
-import { Component, AfterViewInit, HostListener, ViewChild, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component, ViewChild, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MyProvider } from '../../../../assets/services/provider';
 import { DialogsComponent } from '../../../../assets/pg/dialogs/dialogs.component';
-import { resolve } from '@angular/compiler-cli';
-import { Product, invItemFactor, invItemGst, invItemlocation, supplier, invItemSupplier } from "../../../../Models/product"
 import { FormsModule, NgForm } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { dateFormat } from '../../../../../../assets/service/services';
 import { mst10804Obj, mst10801sObj, mst10805sObj, referenceObj, SubconsigneeObj } from '../../../../assets/datatypests/vehicleInfochild'
 import { grpCodeNavigationObj, mst01101Obj, mst01104Obj, mst01109Obj } from '../../../../assets/datatypests/accontinfochild'
 import { NgSelectModule } from '@ng-select/ng-select';
@@ -16,7 +13,7 @@ import { DssInputComponent } from '../../../../assets/mydirective/dss-input/dss-
 import { MydirectiveModule } from '../../../../assets/mydirective/mydirective.module';
 import { MasternavComponent } from '../../../../assets/pg/masternav/masternav.component';
 import { ngselectComponent } from '../../../../assets/pg/ngselect/ngselect.component';
-import { decimalDirective, NumberOnlyDirective } from '../../../../assets/mydirective/mydirective.directive';
+import { NumberOnlyDirective } from '../../../../assets/mydirective/mydirective.directive';
 
 declare var bootstrap: any;
 declare var $: any;
@@ -248,7 +245,7 @@ export class VehicleInfochildComponent {
     })
   }
   save() {
- 
+
     this.entity.mst01101 = this.entity.mst01101;
     this.entity.mst01104 = this.entity.mst01104;
     this.entity.mst01109 = this.entity.mst01109;
@@ -296,7 +293,7 @@ export class VehicleInfochildComponent {
         this.spinner.hide()
         this.dialog.swal({ dialog: 'error', title: 'Error', message: err.message })
       }
-    }) 
+    })
   }
 
 

@@ -1,10 +1,9 @@
 import { CommonModule, DatePipe, Location } from '@angular/common';
 import { http, imgResize, Master, NavbarActions, toNumber } from '../../../../assets/services/services';
-import { Component, AfterViewInit, HostListener, NgZone, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component, NgZone, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MyProvider } from '../../../../assets/services/provider';
 import { DialogsComponent } from '../../../../assets/pg/dialogs/dialogs.component';
-import { resolve } from '@angular/compiler-cli';
 import { NgxImageCompressService } from 'ngx-image-compress';
 import { castFromArrayBuffer } from '../../../../assets/services/services';
 import { ReportDictionory } from '../../../../../../assets/service/interfaces';
@@ -26,7 +25,7 @@ import { DTFormatDirective } from '../../../../assets/mydirective/mydirective.di
   selector: 'app-journalchild',
   templateUrl: './journalchild.component.html',
   styleUrls: ['./journalchild.component.scss'],
-  imports: [FormsModule, CommonModule,DTFormatDirective, CurrencyMaskDirective, ngselectComponent, NgSelectModule, DssInputComponent, MydirectiveModule, NavactionsComponent],
+  imports: [FormsModule, CommonModule, DTFormatDirective, CurrencyMaskDirective, ngselectComponent, NgSelectModule, DssInputComponent, MydirectiveModule, NavactionsComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class JournalchildComponent {
@@ -222,7 +221,7 @@ export class JournalchildComponent {
     // } else{
     //   this.viewing1 = 1;
     // }
-   
+
   }
 
   newRecord() {

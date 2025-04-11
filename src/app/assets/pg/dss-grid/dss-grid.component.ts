@@ -1,4 +1,4 @@
-import { Component, Input, Output,EventEmitter, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { http } from '../../services/services';
 import { DialogsComponent } from '../dialogs/dialogs.component';
@@ -11,104 +11,101 @@ import { AgGridAngular, AgGridModule } from 'ag-grid-angular';
 
 @Component({
   selector: 'dss-grid',
-  standalone:true,
- imports:[FormsModule,AgGridModule, CommonModule],
+  standalone: true,
+  imports: [FormsModule, AgGridModule, CommonModule],
   templateUrl: './dss-grid.component.html',
   styleUrls: ['./dss-grid.component.scss'],
-  providers:[AgGridAngular],
-  schemas:[CUSTOM_ELEMENTS_SCHEMA,]
+  providers: [AgGridAngular],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA,]
 })
 export class DssGridComponent implements OnInit {
-  @Output() onCellClick=new EventEmitter();
-  @Output() onRowClick=new EventEmitter();
-  @Output() action=new EventEmitter();
-  @Input() style:any; 
-  @Input() columns=[];
-  @Input() gridOptions={};
+  @Output() onCellClick = new EventEmitter();
+  @Output() onRowClick = new EventEmitter();
+  @Output() action = new EventEmitter();
+  @Input() style: any;
+  @Input() columns = [];
+  @Input() gridOptions = {};
   @Input() class;
   @Input() url;
-  @Input() defaultColDef={};
+  @Input() defaultColDef = {};
   @Input() params;
-  @Output() gridApi=new EventEmitter();
+  @Output() gridApi = new EventEmitter();
   @Input() pageSize;
-  api:any
+  api: any
   list: any[] = [];
-  
+
   currentPage = 1;
-   
+
   totalPages = 0;
-  columnApi:any;
+  columnApi: any;
 
-  constructor(private spinner: NgxSpinnerService,private services:MyProvider, public http: http, public dialog: DialogsComponent) { }
+  constructor(private spinner: NgxSpinnerService, private services: MyProvider, public http: http, public dialog: DialogsComponent) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
-  Init(newPage,filters?) {
+  Init(newPage, filters?) {
     this.spinner.show();
     this.currentPage = newPage;
-    var   param={ pageNumber: this.currentPage,keys:filters ,pageSize:this.pageSize || 10 }
+    var param = { pageNumber: this.currentPage, keys: filters, pageSize: this.pageSize || 10 }
 
-    if(this.params){
+    // if(this.params){
 
-
-      this.http.put(this.url, param,this.params).subscribe({
-        next: (res: any) => {
-          if (res.status_cd == 1) {
-            this.list = res.data;
-            if (res.pageDetails)
-              this.totalPages = res.pageDetails.totalPages;
-          } else {
-            this.dialog.swal({ dialog: 'error', title: 'Error', message: res.errors.exception.Message });
-          }
-          this.spinner.hide();
-        }, error: (err: any) => {
-          this.spinner.hide();
-          this.dialog.swal({ dialog: 'error', title: 'Error', message: err.message });
+    //   this.http.put(this.url, param,this.params).subscribe({
+    //     next: (res: any) => {
+    //       if (res.status_cd == 1) {
+    //         this.list = res.data;
+    //         if (res.pageDetails)
+    //           this.totalPages = res.pageDetails.totalPages;
+    //       } else {
+    //         this.dialog.swal({ dialog: 'error', title: 'Error', message: res.errors.exception.Message });
+    //       }
+    //       this.spinner.hide();
+    //     }, error: (err: any) => {
+    //       this.spinner.hide();
+    //       this.dialog.swal({ dialog: 'error', title: 'Error', message: err.message });
+    //     }
+    //   })
+    // }else{
+    this.http.post(this.url, param,this.params).subscribe({
+      next: (res: any) => {
+        if (res.status_cd == 1) {
+          this.list = res.data;
+          if (res.pageDetails)
+            this.totalPages = res.pageDetails.totalPages;
+        } else {
+          this.dialog.swal({ dialog: 'error', title: 'Error', message: res.errors.message || res.errors.exception.Message });
         }
-      })
-    }else{
-      this.http.post(this.url, param).subscribe({
-        next: (res: any) => {
-          if (res.status_cd == 1) {
-            this.list = res.data;
-            if (res.pageDetails)
-              this.totalPages = res.pageDetails.totalPages;
-          } else {
-            this.dialog.swal({ dialog: 'error', title: 'Error', message:res.errors.message || res.errors.exception.Message });
-          }
-          this.spinner.hide();
-        }, error: (err: any) => {
-          this.spinner.hide();
-          this.dialog.swal({ dialog: 'error', title: 'Error', message: err.message });
-        }
-      })
-    }
-   
+        this.spinner.hide();
+      }, error: (err: any) => {
+        this.spinner.hide();
+        this.dialog.swal({ dialog: 'error', title: 'Error', message: err.message });
+      }
+    })
+    // }
+
   }
 
   getPagesArray(): number[] {
     const pagesArray = [];
     for (let page = 1; page <= this.totalPages; page++) {
-          //@ts-ignore
+      //@ts-ignore
       pagesArray.push(page);
     }
     return pagesArray;
   }
 
 
-  movenext()
-  {
-       this.currentPage += 1
-       this.Init(this.currentPage);
+  movenext() {
+    this.currentPage += 1
+    this.Init(this.currentPage);
   }
 
-  moveback()
-  {
+  moveback() {
     this.currentPage -= 1
 
     this.Init(this.currentPage);
   }
- 
+
 
   onGridReady(params) {
     if (params.api) {
@@ -121,18 +118,16 @@ export class DssGridComponent implements OnInit {
       console.warn("Grid API is not yet available.");
     }
   }
-  
 
-  onCellClicked($event)
-  {
-    
+
+  onCellClicked($event) {
+
 
     this.onCellClick.emit($event);
   }
 
-  
-  onRowClicked($event)
-  {
+
+  onRowClicked($event) {
     this.onRowClick.emit($event);
   }
 
@@ -148,16 +143,16 @@ export class DssGridComponent implements OnInit {
           if (filterModel) {
             const key = column.getColDef().field;
             const value = filterModel.filter;
-                //@ts-ignore
+            //@ts-ignore
             filterData.push({ key, value });
           }
         }
       });
-      this.currentPage=1;
-      this.Init(this.currentPage,filterData)
-     //onsole.log('Filter Data:', filterData);
+      this.currentPage = 1;
+      this.Init(this.currentPage, filterData)
+      //onsole.log('Filter Data:', filterData);
     }
   }
-  
+
 
 }

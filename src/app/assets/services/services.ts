@@ -36,6 +36,8 @@ export class castFromArrayBuffer {
 @Injectable({ providedIn: 'root' }) // Ensure Singleton Service
 export class UserPermissions {
   private userControl = signal<string | null>(null); // Store as string to avoid losing data
+  
+ 
 
   setInfo(obj: any) {
     this.userControl.set(JSON.stringify(obj)); // Convert object to JSON string

@@ -1,22 +1,18 @@
 import { CommonModule, DatePipe, Location } from '@angular/common';
 import { http, Master, NavbarActions } from '../../../../assets/services/services';
-import { Component, AfterViewInit, HostListener, ViewChild, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component, ViewChild, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MyProvider } from '../../../../assets/services/provider';
 import { DialogsComponent } from '../../../../assets/pg/dialogs/dialogs.component';
-import { resolve } from '@angular/compiler-cli';
-import { Product, invItemFactor, invItemGst, invItemlocation, supplier, invItemSupplier } from "../../../../Models/product"
 import { FormsModule, NgForm } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { dateFormat } from '../../../../../../assets/service/services';
 import { AccountObj, mst10301sObj } from '../../../../assets/datatypests/declarationchild'
 import { NgSelectModule } from '@ng-select/ng-select';
 import { DssInputComponent } from '../../../../assets/mydirective/dss-input/dss-input.component';
 import { MydirectiveModule } from '../../../../assets/mydirective/mydirective.module';
 import { ngselectComponent } from '../../../../assets/pg/ngselect/ngselect.component';
-import { pipe } from 'rxjs';
 import { NavactionsComponent } from '../../../../assets/pg/navactions/navactions.component';
-import { UppercaseDirective, NumberOnlyDirective, DTFormatDirective } from '../../../../assets/mydirective/mydirective.directive';
+import { NumberOnlyDirective, DTFormatDirective } from '../../../../assets/mydirective/mydirective.directive';
 
 @Component({
   selector: 'app-declarationchild',
@@ -217,7 +213,7 @@ export class DeclarationchildComponent {
   newRecord() {
     this.entity.mst10301s = <mst10301sObj[]>[];
     this.pastentity = JSON.parse(JSON.stringify(this.entity))
-          this.entity = <AccountObj>{};
+    this.entity = <AccountObj>{};
   }
   edit() {
     this.navactions.navaction("view");

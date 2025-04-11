@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA,
 import { CommonModule, DatePipe, DecimalPipe, Location } from '@angular/common';
 import { NavbarActions, http, ngselectpagination, Master } from '../../../../assets/services/services';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { MyProvider } from  '../../../../assets/services/provider';
+import { MyProvider } from '../../../../assets/services/provider';
 import { DialogsComponent } from '../../../../assets/pg/dialogs/dialogs.component';
 import { HttpClient } from '@angular/common/http';
 import { FormsModule, NgForm } from '@angular/forms';
@@ -11,8 +11,8 @@ import { MydirectiveModule } from '../../../../assets/mydirective/mydirective.mo
 import { DssInputComponent } from '../../../../assets/mydirective/dss-input/dss-input.component';
 import { ngselectComponent } from '../../../../assets/pg/ngselect/ngselect.component';
 import { NgSelectModule } from '@ng-select/ng-select';
-import {MasternavComponent } from '../../../../assets/pg/masternav/masternav.component'
-import { decimalDirective, NumberOnlyDirective,   } from '../../../../assets/mydirective/mydirective.directive';
+import { MasternavComponent } from '../../../../assets/pg/masternav/masternav.component'
+import { NumberOnlyDirective, } from '../../../../assets/mydirective/mydirective.directive';
 import { CurrencyMaskDirective } from "../../../../assets/mydirective/currencyMask/currency-mask.directive";
 
 declare var $: any;
@@ -22,9 +22,9 @@ declare var $: any;
   selector: 'app-accountinfochild',
   templateUrl: './accountinfochild.component.html',
   styleUrls: ['./accountinfochild.component.scss'],
-  imports:[FormsModule,CommonModule,ngselectComponent,CurrencyMaskDirective, NumberOnlyDirective,decimalDirective, NgSelectModule, DssInputComponent, MydirectiveModule, MasternavComponent, ],
+  imports: [FormsModule, CommonModule, ngselectComponent, CurrencyMaskDirective, NumberOnlyDirective, NgSelectModule, DssInputComponent, MydirectiveModule, MasternavComponent,],
   // providers: [,],
-  schemas:[CUSTOM_ELEMENTS_SCHEMA]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AccountinfochildComponent implements OnInit {
   @ViewChild("account") account: NgForm;
@@ -203,12 +203,12 @@ export class AccountinfochildComponent implements OnInit {
   addFirm() {
 
     this.reference.accCode = this.entity.accCode;
-    
+
     var x = this.entity.mst01110s.filter((firm) => firm.firmCode === this.reference.firmCode);
 
     if (x.length == 0) {
       if (this.idx == null) {
-          
+
         this.entity.mst01110s.push(this.reference);
       } else {
         alert('Firm already added!');
@@ -271,12 +271,12 @@ export class AccountinfochildComponent implements OnInit {
           if (!this.entity.mst01104) this.entity.mst01104 = <mst01104Obj>{};
 
           this.entity.createdDt = this.entity.createdDt ? this.datepipe.transform(this.entity.createdDt, 'yyyy-MM-dd') : null;
-          
+
           this.entity.modifiedDt = this.entity.modifiedDt ? this.datepipe.transform(this.entity.modifiedDt, 'yyyy-MM-dd') : null;
 
           this.pastentity = Object.assign({}, this.entity);
 
-          this.entity.isDisabled=  this.entity.isDisabled || 0 ;
+          this.entity.isDisabled = this.entity.isDisabled || 0;
 
 
           //this.onSelectGroup(this.entity);
@@ -292,7 +292,12 @@ export class AccountinfochildComponent implements OnInit {
   }
 
   save() {
- 
+    Object.keys(this.account.form.controls).forEach(key => {
+      const control = this.account.form.controls[key];
+      if (control.invalid) {
+        console.log(`Invalid Field: ${key}`, control.errors);
+      }
+    });
 
     if (this.account.valid) {
       this.spinner.show();
@@ -388,7 +393,7 @@ export class AccountinfochildComponent implements OnInit {
 
     } else {
       this.viewing1 = 1;
-      
+
       this.viewing2 = null;
 
     }
@@ -429,7 +434,7 @@ export class AccountinfochildComponent implements OnInit {
     if (this.rowIndex == null) {
       this.entity.accBusinessLocations.push(this.acc.accBusinessLocations);
     } else {
-      
+
       this.entity.accBusinessLocations[this.rowIndex] = this.acc.accBusinessLocations;
     }
     this.acc.accBusinessLocations = <accBusinessLocationObj>{};
@@ -440,7 +445,7 @@ export class AccountinfochildComponent implements OnInit {
     this.reference.accBusinessLocations.cityName = index
   }
   editrow(s) {
-    
+
     this.rowIndex = this.entity.accBusinessLocations.indexOf(s);
     this.acc.accBusinessLocations = Object.assign({}, s);
   }
@@ -452,7 +457,7 @@ export class AccountinfochildComponent implements OnInit {
     }
     this.dialog.swal(params).then(data => {
       if (data == true) {
-        
+
         this.param = this.entity.accBusinessLocations.indexOf(s);
         this.iConfirmFn2();
       }
@@ -460,7 +465,7 @@ export class AccountinfochildComponent implements OnInit {
   }
   iConfirmFn2() {
     if (this.param != undefined) {
-      
+
       this.entity.accBusinessLocations.splice(this.param, 1);
       var params = {
       }
@@ -476,7 +481,7 @@ export class AccountinfochildComponent implements OnInit {
     }
     this.dialog.swal(params).then(data => {
       if (data == true) {
-        
+
         this.param = this.entity.mst01110s.indexOf(s);
         this.iConfirmFn3();
       }
@@ -484,7 +489,7 @@ export class AccountinfochildComponent implements OnInit {
   }
   iConfirmFn3() {
     if (this.param != undefined) {
-      
+
       this.entity.mst01110s.splice(this.param, 1);
       var params = {
       }

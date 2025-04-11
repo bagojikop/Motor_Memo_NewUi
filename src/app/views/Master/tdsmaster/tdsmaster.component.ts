@@ -2,8 +2,7 @@ import { Component, CUSTOM_ELEMENTS_SCHEMA, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { DialogsComponent } from '../../../assets/pg/dialogs/dialogs.component';
-import { MyProvider } from '../../../assets/services/provider';
-import { CommonModule, Location } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { gridOptions, http } from '../../../assets/services/services';
 import { ActBtnComponent } from '../../../assets/pg/btn-cell-renderer/btn-cell-renderer.component';
 import { GridApi } from 'ag-grid-community';
@@ -12,17 +11,15 @@ import { ngselectComponent } from '../../../assets/pg/ngselect/ngselect.componen
 import { NgSelectModule } from '@ng-select/ng-select';
 import { DssInputComponent } from '../../../assets/mydirective/dss-input/dss-input.component';
 import { MydirectiveModule } from '../../../assets/mydirective/mydirective.module';
-import { MasternavComponent } from '../../../assets/pg/masternav/masternav.component';
 import { DssGridComponent } from '../../../assets/pg/dss-grid/dss-grid.component';
-import { NavactionsComponent } from '../../../assets/pg/navactions/navactions.component';
-import { UppercaseDirective,NumberOnlyDirective } from '../../../assets/mydirective/mydirective.directive';
+import { NumberOnlyDirective } from '../../../assets/mydirective/mydirective.directive';
 declare var $: any;
 
 @Component({
   selector: 'app-tdsmaster',
   templateUrl: './tdsmaster.component.html',
   styleUrls: ['./tdsmaster.component.scss'],
-  imports: [FormsModule, CommonModule,NumberOnlyDirective, ngselectComponent, NgSelectModule, DssInputComponent, MydirectiveModule, DssGridComponent],
+  imports: [FormsModule, CommonModule, NumberOnlyDirective, ngselectComponent, NgSelectModule, DssInputComponent, MydirectiveModule, DssGridComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 

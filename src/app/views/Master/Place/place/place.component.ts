@@ -13,7 +13,6 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { DssInputComponent } from '../../../../assets/mydirective/dss-input/dss-input.component';
 import { MydirectiveModule } from '../../../../assets/mydirective/mydirective.module';
 import { DssGridComponent } from '../../../../assets/pg/dss-grid/dss-grid.component';
-import { MasternavComponent } from '../../../../assets/pg/masternav/masternav.component';
 import { ngselectComponent } from '../../../../assets/pg/ngselect/ngselect.component';
 declare var $: any;
 @Component({

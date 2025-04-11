@@ -37,7 +37,8 @@
                                         <div class="gapInputFields">
                                             <label for="">Credit Limit</label>
                                             <input name="CreditLimit" autocomplete="off" class="form-control text-end"
-                                                [(ngModel)]="entity.creditLimit" [maxlength]="10" CurrencyMask currency="INR" fraction="2">
+                                                [(ngModel)]="entity.creditLimit" [maxlength]="10" CurrencyMask
+                                                currency="INR" fraction="2">
 
                                         </div>
 
@@ -96,9 +97,19 @@
                                             </ng-select>
                                         </div>
                                         <div class="gapInputFields w-25">
-                                            <dss-input label="GSTIN" name="gstno" [maxlength]="15" autocomplete="off"
-                                                [(ngModel)]="entity.mst01109.accGstn" [styleCase]="'u'" [whiteSpace]="false"
-                                                [applyMargins]="false" />
+                                            <label>GSTIN</label>
+                                            <input name="gstno" class="form-control" 
+                                                   [maxlength]="15" [minlength]="15"
+                                                   autocomplete="off" 
+                                                   [(ngModel)]="entity.mst01109.accGstn"
+                                                   #gstin="ngModel" required />
+                                            
+                                            <div *ngIf="gstin.invalid && (gstin.dirty || gstin.touched)" class="error-message" style="color: red;">
+                                               <div *ngIf="gstin.errors?.['minlength'] || gstin.errors?.['maxlength']">
+                                                GSTIN must be exactly 15 characters long
+                                              </div>
+                                            </div>
+
                                         </div>
                                     </div>
                                 </div>
@@ -196,7 +207,7 @@
 
                                                 <div class="gapInputFields">
                                                     <dss-input name="contactperson" label="Contact Person"
-                                                        [(ngModel)]="entity.mst01101.contactPerson" [maxlength]="50"
+                                                        [(ngModel)]="entity.mst01101.contactPerson" [maxlength]="12"
                                                         (ngModelChange)="entity.mst01101.contactPerson=$event"
                                                         autocomplete="off" [styleCase]="'c'" />
                                                 </div>

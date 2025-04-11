@@ -1,11 +1,9 @@
 import { CommonModule, DatePipe, Location } from '@angular/common';
 import { http, Master, NavbarActions } from '../../../../../assets/services/services';
-import { Component, AfterViewInit, HostListener, ViewChild, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component, ViewChild, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MyProvider } from '../../../../../assets/services/provider';
 import { DialogsComponent } from '../../../../../assets/pg/dialogs/dialogs.component';
-import { resolve } from '@angular/compiler-cli';
-import { Product, invItemFactor, invItemGst, invItemlocation, supplier, invItemSupplier } from "../../../../../Models/product"
 import { FormsModule, NgForm } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { mst010 } from '../../../../../assets/datatypests/productchild'
@@ -13,8 +11,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { DssInputComponent } from '../../../../../assets/mydirective/dss-input/dss-input.component';
 import { MydirectiveModule } from '../../../../../assets/mydirective/mydirective.module';
 import { MasternavComponent } from '../../../../../assets/pg/masternav/masternav.component';
-import { ngselectComponent } from '../../../../../assets/pg/ngselect/ngselect.component';
-import { UppercaseDirective, NumberOnlyDirective } from '../../../../../assets/mydirective/mydirective.directive';
+import { NumberOnlyDirective } from '../../../../../assets/mydirective/mydirective.directive';
 
 declare var bootstrap: any;
 declare var $: any;

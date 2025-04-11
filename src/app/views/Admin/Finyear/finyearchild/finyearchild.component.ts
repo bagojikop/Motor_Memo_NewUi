@@ -11,7 +11,6 @@ import { FormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { DssInputComponent } from '../../../../assets/mydirective/dss-input/dss-input.component';
 import { MydirectiveModule } from '../../../../assets/mydirective/mydirective.module';
-import { MasternavComponent } from '../../../../assets/pg/masternav/masternav.component';
 import { ngselectComponent } from '../../../../assets/pg/ngselect/ngselect.component';
 import { NavactionsComponent } from '../../../../assets/pg/navactions/navactions.component';
 
@@ -23,7 +22,7 @@ declare var $: any;
   styleUrls: ['./finyearchild.component.scss'],
   imports: [FormsModule, CommonModule, NgSelectModule, DssInputComponent, MydirectiveModule, NavactionsComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  providers:[ngselectComponent]
+  providers: [ngselectComponent]
 })
 export class FinyearchildComponent {
   entity: any;
@@ -180,7 +179,7 @@ export class FinyearchildComponent {
     var url = "FinYears/get"
     var paramss = {
       divId: this.entity.divId,
-      firmCode: this.entity.firmCode, 
+      firmCode: this.entity.firmCode,
 
     }
     this.http.get(url, paramss).subscribe({

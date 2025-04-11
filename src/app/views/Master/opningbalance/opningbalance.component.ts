@@ -9,10 +9,7 @@ import { ActBtnComponent } from '../../../assets/pg/btn-cell-renderer/btn-cell-r
 import { GridApi } from 'ag-grid-community';
 import { FormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { DssInputComponent } from '../../../assets/mydirective/dss-input/dss-input.component';
-import { MydirectiveModule } from '../../../assets/mydirective/mydirective.module';
 import { DssGridComponent } from '../../../assets/pg/dss-grid/dss-grid.component';
-import { MasternavComponent } from '../../../assets/pg/masternav/masternav.component';
 import { ngselectComponent } from '../../../assets/pg/ngselect/ngselect.component';
 import { ArraySortPipe } from '../../../assets/pipes/inrcrdr.pipe';
 declare var $: any;
@@ -286,7 +283,7 @@ export class OpningbalanceComponent {
     $("#accOpeningBal").modal('show');
 
   }
- 
+
 
 
   close() {

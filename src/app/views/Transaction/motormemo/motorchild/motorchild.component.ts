@@ -1,13 +1,11 @@
 import { CommonModule, DatePipe, Location } from '@angular/common';
 import { http, Master, NavbarActions } from '../../../../assets/services/services';
-import { Component, AfterViewInit, HostListener, ViewChild, Inject, inject, ChangeDetectorRef, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component, ViewChild, inject, ChangeDetectorRef, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MyProvider } from '../../../../assets/services/provider';
 import { DialogsComponent } from '../../../../assets/pg/dialogs/dialogs.component';
-import { resolve } from '@angular/compiler-cli';
 import { FormsModule, NgForm } from '@angular/forms';
 import { SubconsigneeObj, MotormemoAuditObj, MotormemoDetailsObj, Acc003sObj } from '../../../../assets/datatypests/motorchild';
-import { debounceTime } from 'rxjs';
 declare var bootstrap: any;
 declare var $: any;
 import "../../../../../app/assets/services/datePrototype";
@@ -28,7 +26,7 @@ import { finDateDirective } from '../../../../assets/mydirective/findate/findate
   selector: 'app-motorchild',
   templateUrl: './motorchild.component.html',
   styleUrls: ['./motorchild.component.scss'],
-  imports: [FormsModule, CommonModule, DTFormatDirective,finDateDirective, NumberOnlyDirective, CurrencyMaskDirective, ngselectComponent, NgSelectModule, DssInputComponent, MydirectiveModule, NgxPaginationModule, NavactionsComponent],
+  imports: [FormsModule, CommonModule, DTFormatDirective, finDateDirective, NumberOnlyDirective, CurrencyMaskDirective, ngselectComponent, NgSelectModule, DssInputComponent, MydirectiveModule, NgxPaginationModule, NavactionsComponent],
   providers: [DatePipe],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
@@ -122,7 +120,7 @@ export class MotorchildComponent {
     let paramss: any = this.location.getState();
     this.navactions.navaction(paramss.action);
     this.entity.vchId = paramss.id;
- 
+
 
     this.reference = []
     if (this.entity.vchId) {
@@ -254,7 +252,7 @@ export class MotorchildComponent {
 
   onSelectExp(ev) {
     this.exp.sundries = {};
- 
+
     this.exp.sundries.sundryName = ev.sundryName;
     this.exp.accCodeNavigation = ev.accCodeNavigation;
   }
@@ -267,7 +265,7 @@ export class MotorchildComponent {
 
   onSelectotherExpacc(ev) {
     this.other.sundries = {}
- 
+
     this.other.sundries.sundryName = ev.sundryName;
     // this.other.accCode = this.other.accCodeNavigation.accCode;
     this.other.accCodeNavigation = ev.accCodeNavigation;
@@ -321,7 +319,7 @@ export class MotorchildComponent {
   }
 
   save() {
-    
+
     Object.keys(this.motorchild.form.controls).forEach(key => {
       const control = this.motorchild.form.controls[key];
       if (control.invalid) {
@@ -409,8 +407,8 @@ export class MotorchildComponent {
   }
   newRecord() {
     this.pastentity = JSON.parse(JSON.stringify(this.entity))
-     
-   
+
+
     this.entity = <SubconsigneeObj>{};
     this.entity.motormemoAudit = <MotormemoAuditObj>{};
     this.entity.motormemoDetails = <MotormemoDetailsObj>{};
@@ -968,7 +966,7 @@ export class MotorchildComponent {
 
   Vehiclenotab() {
     this.http.get('Vehicle/vehiclebyInfo', {
-      vehicleno: this.entity.vehicleNo ,
+      vehicleno: this.entity.vehicleNo,
     }).subscribe({
       next: (res: any) => {
         if (res.status_cd == 1) {

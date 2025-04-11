@@ -27,47 +27,48 @@
     </div>
 </div>
 <hr />
-<div class="heightMasterPage2">
-    <div class="d-flex d-flex-column container pb-2">
-        <div class="">
-            <label>Role</label>
+<div class="container">
 
-            <ng-select bindLabel="roleName" bindValue="roleId" name="rolenm" [loading]="loading" style="width:clamp(300px, 0px, 0px)"
-                                [virtualScroll]="true" [items]="degignations" (change)="user()"
-                                [(ngModel)]="entity.roleId" placeholder="Select Designation">
+    <div class="heightMasterPage2">
+        <div class="d-flex d-flex-column pb-2">
+            <div class="">
+                <label>Role</label>
 
-                            </ng-select>
-            <!-- <app-ngselect apiUrl="RoleInfo/getList" class="form-control p-0" bindLabel="roleName" bindValue="roleId"
-                name="rolenm" [(ngModel)]="entity.roleId" [defaultProperty]="entity.role" (change)="user()"
-                [disabled]="navactions.fieldset"></app-ngselect> -->
+                <ng-select bindLabel="roleName" bindValue="roleId" name="rolenm" [loading]="loading"
+                    style="width:clamp(300px, 0px, 0px)" [virtualScroll]="true" [items]="degignations" (change)="user()"
+                    [(ngModel)]="entity.roleId" placeholder="Select Designation">
+
+                </ng-select>
+            </div>
+            <div class="ms-3 me-3">
+                <label>User</label>
+                <ng-select bindLabel="userName" bindValue="userId" name="usernm" [loading]="loading"
+                    [virtualScroll]="true" [items]="users" (change)="showmodules()" [(ngModel)]="entity.userId"
+                    placeholder="Select User" style="width:clamp(300px, 0px, 0px)">
+                </ng-select>
+            </div>
         </div>
-        <div class="ms-3 me-3">
-            <label>User</label>
-            <ng-select bindLabel="userLongName" bindValue="userId" name="usernm" [loading]="loading"
-                [virtualScroll]="true" [items]="users" (change)="showmodules()" [(ngModel)]="entity.userId"
-                placeholder="Select User"  style="width:clamp(300px, 0px, 0px)"                >
-            </ng-select>
-        </div>
+
+        <table class="table table-bordered container">
+            <thead>
+
+                <tr>
+                    <th class="text-left py-2" scope="col" style="width:50%">Modules</th>
+                    <th class="text-left py-2" scope="col" style="width:40%">Access</th>
+                </tr>
+
+            </thead>
+            <tbody style="height:calc(100vh - 240px);overflow-y: scroll;">
+                <tr *ngFor="let v of list">
+                    <td class="text-left py-2" style="width:50%">{{v.moduleName}}</td>
+                    <td class="text-left py-2" style="width:40%">
+                        <input type="checkbox" class="p-1" [disabled]="disabledata" [(ngModel)]="v.status" />
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+
     </div>
-
-    <table class="table table-bordered container">
-        <thead>
-
-            <tr>
-                <th class="text-left py-2" scope="col" style="width:50%">Modules</th>
-                <th class="text-left py-2" scope="col" style="width:40%">Access</th>
-            </tr>
-
-        </thead>
-        <tbody style="height:calc(100vh - 240px);overflow-y: scroll;">
-            <tr *ngFor="let v of list">
-                <td class="text-left py-2" style="width:50%">{{v.moduleName}}</td>
-                <td class="text-left py-2" style="width:40%">
-                    <input type="checkbox" class="p-1" [disabled]="disabledata" [(ngModel)]="v.status" />
-                </td>
-            </tr>
-        </tbody>
-    </table>
-
 
 </div>

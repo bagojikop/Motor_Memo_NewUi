@@ -1,12 +1,9 @@
 import { CommonModule, DatePipe, Location } from '@angular/common';
-import { http, imgResize, Master, NavbarActions, toNumber } from '../../../../assets/services/services';
-import { Component, AfterViewInit, HostListener, NgZone, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { http, Master, NavbarActions } from '../../../../assets/services/services';
+import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MyProvider } from '../../../../assets/services/provider';
 import { DialogsComponent } from '../../../../assets/pg/dialogs/dialogs.component';
-import { resolve } from '@angular/compiler-cli';
-import { NgxImageCompressService } from 'ngx-image-compress';
-import { castFromArrayBuffer } from '../../../../assets/services/services';
 import { ReportDictionory } from '../../../../../../assets/service/interfaces';
 import { v4 as uuidv4 } from 'uuid'
 import { ReceiptObj, acc00300Obj, recApproveObj, acc00301Obj } from '../../../../assets/datatypests/receiptchild'
@@ -14,7 +11,6 @@ import { FormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { DssInputComponent } from '../../../../assets/mydirective/dss-input/dss-input.component';
 import { MydirectiveModule } from '../../../../assets/mydirective/mydirective.module';
-import { MasternavComponent } from '../../../../assets/pg/masternav/masternav.component';
 import { ngselectComponent } from '../../../../assets/pg/ngselect/ngselect.component';
 import { NavactionsComponent } from '../../../../assets/pg/navactions/navactions.component';
 import { CurrencyMaskDirective } from "../../../../assets/mydirective/currencyMask/currency-mask.directive";
