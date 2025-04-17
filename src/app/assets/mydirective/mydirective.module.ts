@@ -21,7 +21,7 @@ import { capitalizeDirective, decimalDirective,
     SpecialwithnumDirective,   DTFormatDirective, MinMaxNumberDirective, } from './mydirective.directive';
 import { NgbAccordion, NgbModule, NgbPanel, NgbPanelContent, NgbPanelHeader, NgbPanelTitle, NgbPanelToggle, NgbPopoverModule } from '@ng-bootstrap/ng-bootstrap';
 import { NavactionsComponent } from '../pg/navactions/navactions.component';
-import { PdfViewerModule } from 'ng2-pdf-viewer';
+
 import { NgxSpinnerModule } from 'ngx-spinner'; 
 //import { CurrencyMaskDirective } from './ngx-currency-mask/currency-mask.directive'; 
 import { finDateDirective } from './findate/findate.directive';
@@ -32,11 +32,10 @@ import { NgHelperModule } from 'dss-ng-helper';
 import {  UploadImageComponent } from '../upload-docs/upload-docs.component';
 import { LineOfItemsComponent } from './line-of-items/line-of-items.component';
 import { ngselectComponent } from '../pg/ngselect/ngselect.component'; 
-
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { DssGridComponent } from '../pg/dss-grid/dss-grid.component';
 // import { DssDateFormatModule } from 'dss-date-format';
-
-import {PdfReaderComponent} from '../pg/pdf-reader/pdf-reader.component';
+ 
 import { DssInputComponent } from './dss-input/dss-input.component';
 import {CapitalizeModule} from 'dss-capitalize';
 import "@angular/common/locales/global/en-IN";

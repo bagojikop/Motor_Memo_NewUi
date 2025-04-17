@@ -101,8 +101,8 @@
                                 <div class="form-group d-flex-width">
                                     <app-ngselect apiUrl="Account/getWithOutBankCash" label="Account" bindLabel="accName"
                                         bindValue="accCode" name="recpayeeaccount" [(ngModel)]="entity.acc00201.accCode"
-                                        [defaultProperty]="entity.accCodeNavigation"
-                                        (change)="getAccountDetl($event)" [disabled]="navactions.fieldset"></app-ngselect>
+                                        [defaultProperty]="entity.acc00201.accCodeNavigation"
+                                        [disabled]="navactions.fieldset"></app-ngselect>
     
                                 </div>
     
@@ -172,12 +172,8 @@
     </form>
 </div>
 
-
-
-
-
-<div>
-    <dss-report-viewer [dictionory]="myReportDictionory" [serviceUrl]="myServiceUrl" docName="Payment" [mail]=""
-        [wapp]="" ReportTitle="Payment Entry">
+<div *ngIf="rptMode">
+    <dss-report-viewer [(isShow)]="rptMode" [dictionory]="myReportDictionory" [serviceUrl]="myServiceUrl"
+        docName="Payment" [mail]="" [wapp]="" ReportTitle="Payment Entry">
     </dss-report-viewer>
 </div>

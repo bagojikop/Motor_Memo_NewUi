@@ -6,6 +6,7 @@ import { forkJoin, Observable, of, throwError } from 'rxjs';
 import { DatePipe, formatDate } from '@angular/common';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ActivatedRouteSnapshot, CanActivate, Router } from '@angular/router';
+import { environment } from '../../src/environments/environment';
 
 
 
@@ -69,7 +70,7 @@ export class ngselectpagination {
     this.onScroll(null, array, arrayBuffer)
   }
 
-  onScroll({ end }, array, arrayBuffer) {
+  onScroll({ end }:any, array, arrayBuffer) {
     if (this.Loading || array.length <= arrayBuffer.length) {
       return;
     }
@@ -194,6 +195,9 @@ export class http {
   status: boolean = false;
   constructor(public http: HttpClient, public provider: MyProvider) { 
     // this.provider.serverapi="http://localhost:5267/"
+
+     this.provider.serverapi=environment.server;
+
   }
 
   jsonget(url: any) {
@@ -467,7 +471,6 @@ export class validation {
       gstin: /[0-9]{2}[a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}[1-9A-Za-z]{1}[Zz1-9A-Ja-j]{1}[0-9a-zA-Z]{1}/,
       uin: /[0-9]{4}[A-Z]{3}[0-9]{5}[UO]{1}[N][A-Z0-9]{1}/,
       nrid: /[0-9]{4}[a-zA-Z]{3}[0-9]{5}[N][R][0-9a-zA-Z]{1}/,
-      provisional: /[0-9]{2}[a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}[1-9A-Za-z]{1}[Z]{1}[0-9a-zA-Z]{1}/ || /^[0-9]{4}[A][R][0-9]{7}[Z]{1}[0-9]{1}/ || /^[0-9]{2}[a-zA-Z]{4}[0-9]{5}[a-zA-Z]{1}[0-9]{1}[Z]{1}[0-9]{1}/ || /^[0-9]{4}[a-zA-Z]{3}[0-9]{5}[0-9]{1}[Z]{1}[0-9]{1}/,
       number: /^[0-9]*$/,
       fo_otp: /^[0-9]+$/,
       pincode: /^[0-9]{6}$/,
@@ -960,7 +963,7 @@ export class CompressImageService {
           ctx.drawImage(img, 0, 0, elem.width, elem.height)
           ctx.canvas.toBlob(
             // callback, called when blob created
-            blob => {
+            (blob:any) => {
               observer.next(new File(
                 [blob],
                 file.name,

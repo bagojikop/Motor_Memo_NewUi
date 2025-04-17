@@ -46,10 +46,12 @@
               "node_modules/bootstrap-icons/font/bootstrap-icons.css",
               "./node_modules/quill/dist/quill.core.css",
               "./node_modules/quill/dist/quill.bubble.css",
+              
               "./node_modules/ag-grid-community/styles/ag-grid.css",
               "./node_modules/ag-grid-community/styles/ag-theme-balham.css",
               "./node_modules/@fortawesome/fontawesome-free/css/all.css",
               "./node_modules/quill/dist/quill.snow.css"
+
             ],
             "scripts": [
               "./node_modules/jquery/dist/jquery.min.js",
@@ -131,4 +133,5 @@
       }
     }
   }
+  
 }

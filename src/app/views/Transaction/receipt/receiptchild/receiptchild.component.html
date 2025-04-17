@@ -191,3 +191,8 @@
         </div>
     </form>
 </div>
+<div *ngIf="rptMode">
+    <dss-report-viewer [(isShow)]="rptMode" [dictionory]="myReportDictionory" [serviceUrl]="myServiceUrl"
+        docName="Receipt" [mail]="" [wapp]="" ReportTitle="Receipt Entry">
+    </dss-report-viewer>
+</div>

@@ -19,13 +19,15 @@ import '../../../../assets/services/datePrototype'
 import { NavactionsComponent } from '../../../../assets/pg/navactions/navactions.component';
 import { DTFormatDirective, NumberOnlyDirective } from '../../../../assets/mydirective/mydirective.directive';
 import {CurrencyMaskDirective} from "../../../../assets/mydirective/currencyMask/currency-mask.directive"; 
+import { ArraySortPipe } from '../../../../assets/pipes/inrcrdr.pipe';
+import {PdfReaderComponent} from '../../../../assets/pdf-reader/pdf-reader.component';
 
 @Component({
   selector: 'app-paymentchild',
   templateUrl: './paymentchild.component.html',
   styleUrls: ['./paymentchild.component.scss'],
-  imports: [FormsModule, CommonModule,DTFormatDirective,CurrencyMaskDirective, ngselectComponent,NumberOnlyDirective, NgSelectModule, NgxPaginationModule, DssInputComponent, MydirectiveModule, NavactionsComponent],
-  providers:[],
+  imports: [FormsModule, CommonModule,DTFormatDirective,CurrencyMaskDirective,PdfReaderComponent, ngselectComponent,NumberOnlyDirective, NgSelectModule, NgxPaginationModule, DssInputComponent, MydirectiveModule, NavactionsComponent],
+  providers:[DatePipe, DialogsComponent,PdfReaderComponent, Master, ArraySortPipe],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class PaymentchildComponent {
@@ -91,8 +93,8 @@ export class PaymentchildComponent {
 
 
     this.entity.payApprove = <payApproveObj>{};
-    this.rec.acc00201 = <acc00201Obj>{};
-    this.rec.acc00201.accCodeNavigation = <accCodeNavigationObj>{};
+    this.entity.acc00201 = <acc00201Obj>{};
+    this.entity.acc00201.accCodeNavigation = <accCodeNavigationObj>{};
 
     this.entity.paySellerBuyer = <paySellerBuyerObj>{};
     this.finyear = this.provider.companyinfo.finyear;
@@ -114,16 +116,13 @@ export class PaymentchildComponent {
       username: this.provider.companyinfo.userinfo.username,
       div_id: this.provider.companyinfo.company.divId
     }
-    this.Init();
+   
   }
-  Init() {
+ 
 
-
-  }
-
-  getAccountDetl(obj) {
-    this.rec.acc00201.accCodeNavigation = obj;
-  }
+  // getAccountDetl(obj) {
+  //   this.entity.acc00201.accCodeNavigation = obj;
+  // }
 
   newRecord() {
     this.entity = <PaymentObj>{};
@@ -157,6 +156,7 @@ export class PaymentchildComponent {
 
           this.entity.paySellerBuyer = this.entity.paySellerBuyer || <paySellerBuyerObj>{};
           this.entity.acc00200 = this.entity.acc00200 || <acc00200Obj>{};
+          this.entity.acc00201 = this.entity.acc00201 || <acc00201Obj>{};
           this.entity.vchDate = this.entity.vchDate ?? this.datepipe.transform(this.entity.vchDate, 'yyyy-MM-dd')
           this.entity.txnDate = this.entity.txnDate ?? this.datepipe.transform(this.entity.txnDate, 'yyyy-MM-dd')
           this.entity.refDate = this.entity.refDate ?? this.datepipe.transform(this.entity.refDate, 'yyyy-MM-dd')
@@ -232,8 +232,6 @@ export class PaymentchildComponent {
   myReportDictionory: ReportDictionory = <ReportDictionory>{};
 
   paymentprint() {
-
-
     this.myServiceUrl = "PaymentReport";
 
     this.myReportDictionory = {

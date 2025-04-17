@@ -15,6 +15,9 @@ import { ngselectComponent } from '../../../../assets/pg/ngselect/ngselect.compo
 import { NavactionsComponent } from '../../../../assets/pg/navactions/navactions.component';
 import { CurrencyMaskDirective } from "../../../../assets/mydirective/currencyMask/currency-mask.directive";
 import { DTFormatDirective } from '../../../../assets/mydirective/mydirective.directive';
+import { ArraySortPipe } from '../../../../assets/pipes/inrcrdr.pipe';
+import {PdfReaderComponent} from '../../../../assets/pdf-reader/pdf-reader.component';
+
 
 declare var bootstrap: any;
 declare var $: any;
@@ -25,8 +28,9 @@ declare var $: any;
   selector: 'app-receiptchild',
   templateUrl: './receiptchild.component.html',
   styleUrls: ['./receiptchild.component.scss'],
-  imports: [FormsModule, CommonModule, DTFormatDirective, CurrencyMaskDirective, ngselectComponent, NgSelectModule, DssInputComponent, MydirectiveModule, NavactionsComponent],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  imports: [FormsModule, CommonModule, DTFormatDirective, CurrencyMaskDirective,PdfReaderComponent, ngselectComponent, NgSelectModule, DssInputComponent,  NavactionsComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  providers: [DatePipe, DialogsComponent,PdfReaderComponent, Master, ArraySortPipe]
 })
 export class ReceiptchildComponent {
   entity: ReceiptObj;
@@ -105,7 +109,7 @@ export class ReceiptchildComponent {
       this.newRecord();
     }
 
-    this.Init();
+   
     this.docInfo = {
       typ: "Receipt",
       vch_id: this.entity.vchId,
@@ -140,16 +144,11 @@ export class ReceiptchildComponent {
     }
   }
 
-  Init() {
-
-  }
+  
 
   windowrespo() {
     if (window.innerWidth <= 767) {
       this.status = true;
-
-
-
     } else {
       this.status = false;
     }
@@ -182,7 +181,7 @@ export class ReceiptchildComponent {
           this.entity.recApprove = this.entity.recApprove || <recApproveObj>{};
           this.entity.acc00300 = this.entity.acc00300 || <acc00300Obj>{};
 
-          this.entity.vchDate = this.entity.vchDate ?? this.datepipe.transform(this.entity.vchDate, 'yyyy-MM-dd')
+          //this.entity.vchDate =  new Date(this.entity.vchDate);
           this.entity.txnDate = this.entity.txnDate ?? this.datepipe.transform(this.entity.txnDate, 'yyyy-MM-dd')
           this.entity.refDate = this.entity.refDate ?? this.datepipe.transform(this.entity.refDate, 'yyyy-MM-dd')
           this.entity.acc00300.createdDt = this.entity.acc00300.createdDt ?? this.datepipe.transform(this.entity.acc00300.createdDt, 'yyyy-MM-dd')
@@ -232,7 +231,7 @@ export class ReceiptchildComponent {
 
   receiptprint() {
     this.myServiceUrl = "ReceiptReport";
-
+    
     this.myReportDictionory = {
       reportCacheId: uuidv4(),
       reportParams: [
