@@ -1,3 +1,4 @@
+<div [hidden]="rptMode">
 <div>
     <app-navactions [title]="'Lorry Receipt'" (myfn)="navbar($event)"></app-navactions>
 
@@ -752,7 +753,7 @@
 
     </div>
 </div>
-
+</div>
 
 <!-- Modal  Vehicle No-->
 <div class="modal fade" id="exampleModal" tabindex="-1" data-bs-backdrop="static" aria-labelledby="exampleModalLabel"
@@ -876,4 +877,10 @@
             </div>
         </div>
     </div>
+</div>
+
+<div *ngIf="rptMode">
+    <dss-report-viewer [(isShow)]="rptMode" [dictionory]="myReportDictionory" [serviceUrl]="myServiceUrl"
+        docName="Motormemo" [mail]="" [wapp]="" ReportTitle="Motormemo Entry">
+    </dss-report-viewer>
 </div>

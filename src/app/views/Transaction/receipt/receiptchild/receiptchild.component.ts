@@ -17,6 +17,7 @@ import { CurrencyMaskDirective } from "../../../../assets/mydirective/currencyMa
 import { DTFormatDirective } from '../../../../assets/mydirective/mydirective.directive';
 import { ArraySortPipe } from '../../../../assets/pipes/inrcrdr.pipe';
 import {PdfReaderComponent} from '../../../../assets/pdf-reader/pdf-reader.component';
+import { PdfViewerComponent, PdfViewerModule } from 'ng2-pdf-viewer';
 
 
 declare var bootstrap: any;
@@ -28,9 +29,9 @@ declare var $: any;
   selector: 'app-receiptchild',
   templateUrl: './receiptchild.component.html',
   styleUrls: ['./receiptchild.component.scss'],
-  imports: [FormsModule, CommonModule, DTFormatDirective, CurrencyMaskDirective,PdfReaderComponent, ngselectComponent, NgSelectModule, DssInputComponent,  NavactionsComponent],
+  imports: [FormsModule, CommonModule, DTFormatDirective,PdfViewerModule, CurrencyMaskDirective,PdfReaderComponent, ngselectComponent, NgSelectModule, DssInputComponent,  NavactionsComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  providers: [DatePipe, DialogsComponent,PdfReaderComponent, Master, ArraySortPipe]
+  providers: [DatePipe, DialogsComponent,PdfReaderComponent, Master, ArraySortPipe,PdfViewerComponent,PdfViewerModule]
 })
 export class ReceiptchildComponent {
   entity: ReceiptObj;

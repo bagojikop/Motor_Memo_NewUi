@@ -245,6 +245,16 @@ export const navItems = ({
           ]
         },
       ]
+    },
+    {
+      name: 'Report',
+      url: '/Reports',
+      iconComponent: { name: 'cil-puzzle' },
+      children: [
+        { name: 'Cash Bank Book', iconComponent: { name: 'cil-file' }, url: 'cashbankbook' },
+        { name: 'Day Book', iconComponent: { name: 'cil-list' }, url: 'daybook' },
+        
+      ]
     }
   ];
 

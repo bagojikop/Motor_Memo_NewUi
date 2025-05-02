@@ -2,11 +2,7 @@ import { DOCUMENT } from '@angular/common';
 import { Component, CUSTOM_ELEMENTS_SCHEMA, DestroyRef, effect, inject, OnInit, Renderer2, signal, WritableSignal } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ChartOptions } from 'chart.js';
-import {
-
-  TableDirective,
-} from '@coreui/angular';
-
+import {TableDirective,} from '@coreui/angular';
 import { DashboardChartsData, IChartProps } from './dashboard-charts-data';
 import { RouterModule } from '@angular/router';
 

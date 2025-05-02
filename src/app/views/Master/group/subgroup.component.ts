@@ -14,7 +14,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { DssInputComponent } from '../../../assets/mydirective/dss-input/dss-input.component';
 import { DssGridComponent } from '../../../assets/pg/dss-grid/dss-grid.component';
 import { ArraySortPipe } from '../../../assets/pipes/inrcrdr.pipe';
-declare const $: any;
+ 
+ declare var $:any;
 
 @Component({
   selector: 'app-subgroup',
@@ -109,8 +110,8 @@ export class SubgroupComponent {
   addNew() {
     this.entity = {};
     this.entity.srNo = 0;
+    
     $("#group").modal('show');
-
   }
   onGridReady(params) {
 
@@ -128,6 +129,7 @@ export class SubgroupComponent {
     this.entity = s;
     this.entity.grpCodeNavigation = s.grpCodeNavigation;
     $("#group").modal('show');
+     
   }
   Delete(s) {
     var params = {

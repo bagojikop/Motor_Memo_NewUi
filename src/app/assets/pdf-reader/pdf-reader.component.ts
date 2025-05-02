@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild, EventEmitter, Input, OnChanges, Output, SimpleChanges, NO_ERRORS_SCHEMA } from '@angular/core';
-import { PDFDocumentProxy, PdfViewerComponent } from 'ng2-pdf-viewer';
+import { PDFDocumentProxy,PdfViewerModule, PdfViewerComponent } from 'ng2-pdf-viewer';
 
 import { saveAs } from 'file-saver';
 import { ReportDictionory, MailNav, WappNav } from '../../../../assets/service/interfaces';
@@ -13,7 +13,7 @@ import { QuillModule } from 'ngx-quill';
 declare var $: any;
 @Component({
   selector: 'dss-report-viewer',
-  imports:[FormsModule,CommonModule,QuillModule],
+  imports:[FormsModule,CommonModule,PdfViewerModule,QuillModule],
   templateUrl: './pdf-reader.component.html',
   styleUrls: ['./pdf-reader.component.scss'],
   schemas:[NO_ERRORS_SCHEMA]

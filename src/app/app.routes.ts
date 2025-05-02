@@ -191,6 +191,14 @@ export const routes: Routes = [
         loadComponent: () => import('./views/Admin/RoleInfo/roleinfomaster/roleinfomaster.component').then((m) => m.RoleinfomasterComponent)
       },
       {
+        path: 'cashbankbook',
+        loadComponent: () => import('./views/Reports/chashbank-book/chashbank-book.component').then((m) => m.ChashbankBookComponent)
+      },
+      {
+        path: 'daybook',
+        loadComponent: () => import('./views/Reports/day-book/day-book.component').then((m) => m.DayBookComponent)
+      },
+      {
         path: 'Roleinfochild',
         loadComponent: () => import('./views/Admin/RoleInfo/roleinfochild/roleinfochild.component').then((m) => m.RoleinfochildComponent)
       },

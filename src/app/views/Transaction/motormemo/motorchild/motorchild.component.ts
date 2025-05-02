@@ -4,6 +4,8 @@ import { Component, ViewChild, inject, ChangeDetectorRef, CUSTOM_ELEMENTS_SCHEMA
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MyProvider } from '../../../../assets/services/provider';
 import { DialogsComponent } from '../../../../assets/pg/dialogs/dialogs.component';
+import { ReportDictionory } from '../../../../../../assets/service/interfaces';
+import { v4 as uuidv4 } from 'uuid'
 import { FormsModule, NgForm } from '@angular/forms';
 import { SubconsigneeObj, MotormemoAuditObj, MotormemoDetailsObj, Acc003sObj } from '../../../../assets/datatypests/motorchild';
 declare var bootstrap: any;
@@ -19,15 +21,16 @@ import { NavactionsComponent } from '../../../../assets/pg/navactions/navactions
 import { CurrencyMaskDirective } from '../../../../assets/mydirective/currencyMask/currency-mask.directive';
 import { NumberOnlyDirective, DTFormatDirective, UppercaseDirective } from '../../../../assets/mydirective/mydirective.directive';
 import { finDateDirective } from '../../../../assets/mydirective/findate/findate.directive';
-
+import { ArraySortPipe } from '../../../../assets/pipes/inrcrdr.pipe';
+import {PdfReaderComponent} from '../../../../assets/pdf-reader/pdf-reader.component';
 
 
 @Component({
   selector: 'app-motorchild',
   templateUrl: './motorchild.component.html',
   styleUrls: ['./motorchild.component.scss'],
-  imports: [FormsModule, CommonModule, DTFormatDirective, finDateDirective, NumberOnlyDirective, CurrencyMaskDirective, ngselectComponent, NgSelectModule, DssInputComponent, MydirectiveModule, NgxPaginationModule, NavactionsComponent],
-  providers: [DatePipe],
+  imports: [FormsModule, CommonModule, DTFormatDirective, finDateDirective, NumberOnlyDirective,PdfReaderComponent, CurrencyMaskDirective, ngselectComponent, NgSelectModule, DssInputComponent, MydirectiveModule, NgxPaginationModule, NavactionsComponent],
+  providers: [DatePipe, DialogsComponent,PdfReaderComponent, Master,ArraySortPipe ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class MotorchildComponent {
@@ -150,6 +153,8 @@ export class MotorchildComponent {
     this.other = {}
   }
 
+   
+
   navbar(s) {
     switch (s) {
       case 'new':
@@ -171,6 +176,7 @@ export class MotorchildComponent {
         break;
 
       case 'print':
+        this.motormemoprint();
         this.ngview = true;
         break;
 
@@ -181,6 +187,29 @@ export class MotorchildComponent {
 
   }
 
+
+  parameters: any[] = [];
+    rptMode: boolean = false;
+    pdfSrc: string;
+    myServiceUrl: string;
+    myReportDictionory: ReportDictionory = <ReportDictionory>{};
+  
+    motormemoprint() {
+      this.myServiceUrl = "MetormemoReport";
+      
+      this.myReportDictionory = {
+        reportCacheId: uuidv4(),
+        reportParams: [
+          {
+            key: "vch_id", value: this.entity.vchId,
+          },
+          {
+            key: "firm_id", value: this.provider.companyinfo.company?.firmCode,
+  
+          }]
+      };
+      this.rptMode = true;
+    }
   editgstTablerow(obj, index) {
     this.rowIndex = index;
     this.cmod = Object.assign({}, obj);
