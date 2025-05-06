@@ -42,6 +42,7 @@
               "src/scss/styles.scss",
               "src/scss/inputStyles.scss",
               "node_modules/bootstrap-icons/font/bootstrap-icons.css",
+              "node_modules/ngx-ui-switch/ui-switch.component.scss",
               "node_modules/@ng-select/ng-select/themes/default.theme.css",
               "node_modules/ngx-spinner/animations/ball-circus.css",
               "node_modules/bootstrap-icons/font/bootstrap-icons.css",

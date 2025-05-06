@@ -162,7 +162,7 @@ export class DayBookComponent {
       this.generatePinnedBottomData();
     }, 100);
 
-    var x = this.datepipe.transform(new Date(), 'yyyy-MM-dd');
+    var x = this.datepipe.transform(new Date(), 'yyyy-MM-dd')?? '';
     this.entity.edt = this.provider.companyinfo.finyear.tdt >= x ? x : this.provider.companyinfo.finyear.tdt;
 
   }

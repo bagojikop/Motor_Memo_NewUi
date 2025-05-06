@@ -164,13 +164,13 @@ export class ChashbankBookComponent {
     }, 100);
   
 
-    var x = this.datepipe.transform(new Date(), 'yyyy-MM-dd');
+    var x = this.datepipe.transform(new Date(), 'yyyy-MM-dd')?? '';
     this.entity.edt = this.provider.companyinfo.finyear.tdt >= x ? x : this.provider.companyinfo.finyear.tdt;
   }
   getAccObj(event){
     this.reference.accCodeobj=event;
-   
   }
+  
   close(){
     this.location.back();
   }

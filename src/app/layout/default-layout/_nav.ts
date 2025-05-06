@@ -253,7 +253,8 @@ export const navItems = ({
       children: [
         { name: 'Cash Bank Book', iconComponent: { name: 'cil-file' }, url: 'cashbankbook' },
         { name: 'Day Book', iconComponent: { name: 'cil-list' }, url: 'daybook' },
-        
+        { name: 'Ledger', iconComponent: { name: 'cil-list' }, url: 'Ledger' },
+        { name: 'Group List', iconComponent: { name: 'cil-list' }, url: 'SubGroupreport' },
       ]
     }
   ];

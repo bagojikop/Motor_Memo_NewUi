@@ -199,6 +199,14 @@ export const routes: Routes = [
         loadComponent: () => import('./views/Reports/day-book/day-book.component').then((m) => m.DayBookComponent)
       },
       {
+        path: 'Ledger',
+        loadComponent: () => import('./views/Reports/ledger/ledger.component').then((m) => m.LedgerComponent)
+      },
+      {
+        path: 'SubGroupreport',
+        loadComponent: () => import('./views/Reports/grouplist/grouplist.component').then((m) => m.GrouplistComponent)
+      },
+      {
         path: 'Roleinfochild',
         loadComponent: () => import('./views/Admin/RoleInfo/roleinfochild/roleinfochild.component').then((m) => m.RoleinfochildComponent)
       },
