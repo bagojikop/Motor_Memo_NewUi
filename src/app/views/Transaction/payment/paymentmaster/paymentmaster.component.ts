@@ -58,13 +58,7 @@ export class PaymentmasterComponent {
     this.stateParams = this.location.getState();
     this.mode = this.stateParams.action;
     this.innerWidth = window.innerWidth;
-    // setTimeout(() => {
-    //   this.gridApi.sizeColumnsToFit();
-    // }, 1000);
-
-    // this.frameworkComponents = {
-    //   buttonRenderer: ActBtnComponent,
-    // }
+  
     this.defaultColDef = {
       sortable: true,
       floatingFilter: true,
@@ -122,44 +116,15 @@ export class PaymentmasterComponent {
       flex: 1
     },
     ]
-    this.Init();
+  
     this.gridParams = { 
       firm_id: this.provider.companyinfo.company?.firmCode,
       div_id: this.provider.companyinfo.company.divId,
-      // username: this.provider.companyinfo.userinfo.username,
-      // from_date: "01-04-2022",
-      // to_date: "31-03-2023",
+     
       isApproval: "false",
     }
   }
-  Init() {
-    //   this.spinner.show();
-
-    // this.entity.username=this.provider.companyinfo.userinfo.username;
-    // this.entity.from_date="01-04-2022";
-    // this.entity.to_date="31-03-2023";
-    // this.entity.branch_id=this.provider.companyinfo.company?.branchCode;
-    // this.entity.firm_id=this.provider.companyinfo.company?.firmCode;
-    // this.entity.div_id=this.provider.companyinfo.company.divId
-    // this.entity.isApproval="false";
-    //   this.http.get('payment/payments',this.entity).subscribe({
-    //     next: (res: any) => {
-    //       if (res.status_cd == 1) {
-
-    //         this.list = res.data;
-    //         this.spinner.hide();
-    //       } else {
-    //         this.dialog.swal({ dialog: 'error', title: 'Error', message: res.errors.exception.Message })
-    //       }
-
-    //       this.spinner.hide();
-    //     }, error: (err: any) => {
-
-    //       this.spinner.hide();
-    //       this.dialog.swal({ dialog: 'error', title: 'Error', message: err.message });
-    //     }
-    //   })
-  }
+  
   addNew() {
     var params = {
       action: 'new',

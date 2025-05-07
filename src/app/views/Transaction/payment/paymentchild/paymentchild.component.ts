@@ -1,5 +1,5 @@
 import { CommonModule, DatePipe, Location } from '@angular/common';
-import { http, Master, NavbarActions, toNumber } from '../../../../assets/services/services';
+import { http, Master, NavbarActions } from '../../../../assets/services/services';
 import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MyProvider } from '../../../../assets/services/provider';
@@ -13,8 +13,6 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { DssInputComponent } from '../../../../assets/mydirective/dss-input/dss-input.component';
 import { MydirectiveModule } from '../../../../assets/mydirective/mydirective.module';
  import { ngselectComponent } from '../../../../assets/pg/ngselect/ngselect.component';
-declare var bootstrap: any;
-declare var $: any;
 import '../../../../assets/services/datePrototype'
 import { NavactionsComponent } from '../../../../assets/pg/navactions/navactions.component';
 import { DTFormatDirective, NumberOnlyDirective } from '../../../../assets/mydirective/mydirective.directive';

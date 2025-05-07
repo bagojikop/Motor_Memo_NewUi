@@ -1,4 +1,4 @@
-import { Component, HostListener, NO_ERRORS_SCHEMA,ViewChild } from '@angular/core';
+import { Component, HostListener, ViewChild } from '@angular/core';
 import { CommonModule, DatePipe, Location,DecimalPipe } from '@angular/common';
 import { http, Master, NavbarActions } from '../../../assets/services/services';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
@@ -7,7 +7,6 @@ import { MyProvider } from '../../../assets/services/provider';
 import { DialogsComponent } from '../../../assets/pg/dialogs/dialogs.component';
 import { ReportDictionory } from '../../../../../assets/service/interfaces';
 import { v4 as uuidv4 } from 'uuid'
-import { ReceiptObj, acc00300Obj, recApproveObj, acc00301Obj } from '../../../assets/datatypests/receiptchild'
 import { FormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { DssInputComponent } from '../../../assets/mydirective/dss-input/dss-input.component';
@@ -17,10 +16,9 @@ import { NavactionsComponent } from '../../../assets/pg/navactions/navactions.co
 import { CurrencyMaskDirective } from "../../../assets/mydirective/currencyMask/currency-mask.directive";
 import { DTFormatDirective } from '../../../assets/mydirective/mydirective.directive';
 import { ArraySortPipe } from '../../../assets/pipes/inrcrdr.pipe';
-import { ActBtnComponent } from '../../../assets/pg/btn-cell-renderer/btn-cell-renderer.component';
 import {PdfReaderComponent} from '../../../assets/pdf-reader/pdf-reader.component';
 import { PdfViewerComponent, PdfViewerModule } from 'ng2-pdf-viewer';
-import { GridApi,ColDef } from 'ag-grid-community';
+import { ColDef } from 'ag-grid-community';
 import { AgGridAngular, AgGridModule } from 'ag-grid-angular';
 declare var bootstrap:any;
 
@@ -48,7 +46,6 @@ export class DayBookComponent {
   myServiceUrl: string;
   myReportDictionory: ReportDictionory = <ReportDictionory>{};
   gridColumnApi: any;
-  private gridApi: GridApi;
 
 
   constructor(
@@ -67,7 +64,6 @@ export class DayBookComponent {
   @HostListener('window:resize', ['$event'])
   onResize(event) {
     this.innerWidth = window.innerWidth;
-    // this.gridApi.sizeColumnsToFit();
   }
 
   ngOnInit(): void {

@@ -45,19 +45,17 @@ export class SubgroupComponent {
   innerWidth: any;
   private gridApi: GridApi;
   constructor(private http: http,
-    private httpclient: HttpClient,
     private spinner: NgxSpinnerService,
-    private provider: MyProvider,
     private dialog: DialogsComponent,
     private location: Location,
     public gridOption: gridOptions,
     public master: Master,
-    private router: Router,) { }
+    ) { }
 
   @HostListener('window:resize', ['$event'])
   onResize(event) {
     this.innerWidth = window.innerWidth;
-    // this.gridApi.sizeColumnsToFit();
+  
 
   }
   ngOnInit(): void {
@@ -102,11 +100,9 @@ export class SubgroupComponent {
       flex: 1
     },
     ]
-    this.Init();
+    
   }
-  Init() {
-
-  }
+  
   addNew() {
     this.entity = {};
     this.entity.srNo = 0;

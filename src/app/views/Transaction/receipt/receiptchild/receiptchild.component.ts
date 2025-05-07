@@ -10,7 +10,6 @@ import { ReceiptObj, acc00300Obj, recApproveObj, acc00301Obj } from '../../../..
 import { FormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { DssInputComponent } from '../../../../assets/mydirective/dss-input/dss-input.component';
-import { MydirectiveModule } from '../../../../assets/mydirective/mydirective.module';
 import { ngselectComponent } from '../../../../assets/pg/ngselect/ngselect.component';
 import { NavactionsComponent } from '../../../../assets/pg/navactions/navactions.component';
 import { CurrencyMaskDirective } from "../../../../assets/mydirective/currencyMask/currency-mask.directive";

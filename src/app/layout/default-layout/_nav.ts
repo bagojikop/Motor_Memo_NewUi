@@ -255,6 +255,7 @@ export const navItems = ({
         { name: 'Day Book', iconComponent: { name: 'cil-list' }, url: 'daybook' },
         { name: 'Ledger', iconComponent: { name: 'cil-list' }, url: 'Ledger' },
         { name: 'Group List', iconComponent: { name: 'cil-list' }, url: 'SubGroupreport' },
+        { name: 'Trial Balance', iconComponent: { name: 'cil-list' }, url: 'Trialbalance' },
       ]
     }
   ];

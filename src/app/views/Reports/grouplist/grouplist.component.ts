@@ -1,4 +1,4 @@
-import { Component, HostListener, NO_ERRORS_SCHEMA,ViewChild } from '@angular/core';
+import { Component} from '@angular/core';
 import { CommonModule, DatePipe, Location,DecimalPipe } from '@angular/common';
 import { http, Master, NavbarActions } from '../../../assets/services/services';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
@@ -7,21 +7,18 @@ import { MyProvider } from '../../../assets/services/provider';
 import { DialogsComponent } from '../../../assets/pg/dialogs/dialogs.component';
 import { ReportDictionory } from '../../../../../assets/service/interfaces';
 import { v4 as uuidv4 } from 'uuid'
-import { ReceiptObj, acc00300Obj, recApproveObj, acc00301Obj } from '../../../assets/datatypests/receiptchild'
 import { FormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { DssInputComponent } from '../../../assets/mydirective/dss-input/dss-input.component';
-import { MydirectiveModule } from '../../../assets/mydirective/mydirective.module';
 import { ngselectComponent } from '../../../assets/pg/ngselect/ngselect.component';
 import { NavactionsComponent } from '../../../assets/pg/navactions/navactions.component';
 import { CurrencyMaskDirective } from "../../../assets/mydirective/currencyMask/currency-mask.directive";
 import { DTFormatDirective } from '../../../assets/mydirective/mydirective.directive';
 import { ArraySortPipe } from '../../../assets/pipes/inrcrdr.pipe';
-import { ActBtnComponent } from '../../../assets/pg/btn-cell-renderer/btn-cell-renderer.component';
 import {PdfReaderComponent} from '../../../assets/pdf-reader/pdf-reader.component';
 import { PdfViewerComponent, PdfViewerModule } from 'ng2-pdf-viewer';
 import { GridApi,ColDef } from 'ag-grid-community';
-import { AgGridAngular, AgGridModule } from 'ag-grid-angular';
+import {  AgGridModule } from 'ag-grid-angular';
 import { UiSwitchModule } from 'ngx-ui-switch';
 import { Router } from '@angular/router';
 declare var bootstrap:any;
@@ -74,14 +71,7 @@ export class GrouplistComponent {
       this.innerWidth = window.innerWidth;
       this.entity.accSubGroups = { 'sgCode': '', sgName: "[ALL]" };
       
-    
-    
-      // setTimeout(() => {
-      //   if (this.gridApi) {
-      //     this.gridApi.sizeColumnsToFit();
-      //   }
-      // }, 1000);
-  
+     
       this.defaultColDef = {
         sortable: true,
         floatingFilter: true,
@@ -94,7 +84,7 @@ export class GrouplistComponent {
           headerName: 'Account Name',
           filter: "agTextColumnFilter",
           flex: 2,
-          minWidth:200,           // Set minimum width for "Account Name" column
+          minWidth:200,           
           headerClass: "text-left",
         },
         {
@@ -102,7 +92,7 @@ export class GrouplistComponent {
           headerName: 'City',
           filter: "agTextColumnFilter",
           flex: 1,
-          minWidth: 100,               // Set minimum width for "City" column
+          minWidth: 100,               
           headerClass: "text-left",
           
         },
@@ -111,7 +101,7 @@ export class GrouplistComponent {
           headerName: 'Mobile No',
           filter: "agTextColumnFilter",
           flex: 1,
-          minWidth: 100,               // Set minimum width for "Mobile No" column
+          minWidth: 100,               
           headerClass: "text-left",
         },
         {
@@ -119,7 +109,7 @@ export class GrouplistComponent {
           headerName: 'Opening',
           filter: "agTextColumnFilter",
           flex: 1,
-          minWidth: 100,               // Set minimum width for "Opening" column
+          minWidth: 100,              
           aggFunc: "sum",
           valueParser: "Number(newValue)",
           cellStyle: { textAlign: 'end' },
@@ -134,7 +124,6 @@ export class GrouplistComponent {
           filter: "agTextColumnFilter",
           minWidth: 100, 
           flex: 1,
-                // Set minimum width for "Current" column
           aggFunc: "sum",
           cellStyle: { textAlign: 'end' },
           headerClass: "ag-right-aligned-header",
@@ -147,7 +136,7 @@ export class GrouplistComponent {
           headerName: 'Closing',
           filter: "agTextColumnFilter",
           flex: 1,
-          minWidth: 100,               // Set minimum width for "Closing" column
+          minWidth: 100,               
           aggFunc: "sum",
           cellStyle: { textAlign: 'end' },
           headerClass: "ag-right-aligned-header",
@@ -157,11 +146,8 @@ export class GrouplistComponent {
         },
       ];
     
-    
-    
       setTimeout(() => {
         if (this.gridApi) {
-          // this.gridApi.sizeColumnsToFit();
           this.generatePinnedBottomData();
         }
       }, 100);

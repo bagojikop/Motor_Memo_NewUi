@@ -36,20 +36,16 @@ export class HomemasterComponent {
   innerWidth: any;
   private gridApi: GridApi;
   constructor(private http: http,
-    private spinner: NgxSpinnerService,
-    private provider: MyProvider,
     private dialog: DialogsComponent,
     private location: Location,
     public router: Router,
-    private decimalpipe: DecimalPipe,
     public gridOption: gridOptions,
-    private sharedata: share_data) { }
+   ) { }
 
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
     this.innerWidth = window.innerWidth;
-    if (this.gridApi) {  // Only call if gridApi is defined
-      // this.gridApi.sizeColumnsToFit();
+    if (this.gridApi) {  
     }
 
   }
@@ -65,16 +61,10 @@ export class HomemasterComponent {
     this.stateParams = this.location.getState();
     this.mode = this.stateParams.action;
     this.innerWidth = window.innerWidth;
-    // setTimeout(() => {
-    //   if (this.gridApi) {
-    //     this.gridApi.sizeColumnsToFit();
-    //   }
-    // }, 1000);
-
-    //Routing Page
+   
     if (!this.stateParams.mode) {
       this.product = false;
-      // this.submit();
+    
     } else {
       this.product = true;
     }
@@ -92,12 +82,7 @@ export class HomemasterComponent {
         filter: "agTextColumnFilter",
         flex: 3
       },
-      // {
-      //   field: 'iHsnDescription',
-      //   headerName: 'Item Description',
-      //   filter: "agTextColumnFilter",
-      //   flex: 5
-      // },
+    
       {
         field: 'iUnitNavigation.unitName',
         headerName: 'Unit',
@@ -190,37 +175,7 @@ export class HomemasterComponent {
       }
     });
   }
-  // close() {
-  //   $("#product").modal('hide');
-  // }
-  // submit() {
-  //   var params = {
-  //     IMfgr: this.entity.iMfgr || '',
-  //     SubCatId: this.entity.subCatName || '',
-  //     ITech: this.entity.iTech || '',
-  //     iType: this.entity.iType || '',
-  //   }
-  //   this.spinner.show();
-
-  //   this.http.get('ProductInfo/list', params).subscribe({
-  //     next: (res: any) => {
-  //       if (res.status_cd == 1) {
-  //         $("#product").modal('hide');
-  //         this.product = false;
-  //         this.router.navigate(['homemaster/1']);
-  //         this.list = res.data;
-  //         this.gdParams();
-  //         this.spinner.hide();
-  //       } else {
-  //         this.spinner.hide();
-  //         this.dialog.swal({ dialog: 'error', title: 'Error', message: res.errors.exception.Message });
-  //       }
-  //     }, error: (err: any) => {
-  //       this.spinner.hide();
-  //       this.dialog.swal({ dialog: 'error', title: 'Error', message: err.message });
-  //     }
-  //   })
-  // }
+  
   gdParams() {
     this.gridParams = {
       IMfgr: this.entity.iMfgr || '',

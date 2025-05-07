@@ -13,10 +13,6 @@ import { MydirectiveModule } from '../../../../../assets/mydirective/mydirective
 import { MasternavComponent } from '../../../../../assets/pg/masternav/masternav.component';
 import { NumberOnlyDirective } from '../../../../../assets/mydirective/mydirective.directive';
 
-declare var bootstrap: any;
-declare var $: any;
-
-
 
 @Component({
   selector: 'app-productchild',
@@ -61,9 +57,6 @@ export class ProductchildComponent {
   ngOnInit(): void {
 
     this.entity = <mst010>{};
-
-
-
     let paramss: any = this.location.getState();
     this.navactions.navaction(paramss.action);
 
@@ -165,11 +158,7 @@ export class ProductchildComponent {
           if (res.status_cd == 1) {
 
             this.entity.iId = res.data.iId;
-            // if (!this.entity.invItemlocation) {
-            //   this.entity.invItemlocation = <invItemlocation>{};
-            // }
-
-
+          
             this.pastentity = Object.assign({}, this.entity);
             this.dialog.swal({ dialog: "success", title: "Success", message: "Record is saved sucessfully" });
             this.navactions.navaction("OK");

@@ -41,16 +41,15 @@ export class GroupmasterComponent {
   private gridApi: GridApi;
   constructor(private http: http,
     private spinner: NgxSpinnerService,
-    private provider: MyProvider,
     private dialog: DialogsComponent,
     private location: Location,
     public gridOption: gridOptions,
-    private router: Router,) { }
+    ) { }
 
   @HostListener('window:resize', ['$event'])
   onResize(event) {
     this.innerWidth = window.innerWidth;
-    // this.gridApi.sizeColumnsToFit();
+  
 
   }
   ngOnInit(): void {
@@ -94,8 +93,7 @@ export class GroupmasterComponent {
       },
       minWidth: 100,
       flex: 1
-      // cellStyle: { textAlign: 'end' },
-      // headerClass: "ag-right-aligned-header"
+     
     },
     ]
     this.Init();

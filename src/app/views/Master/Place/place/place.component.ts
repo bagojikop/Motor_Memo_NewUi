@@ -42,21 +42,20 @@ export class PlaceComponent {
   mode: any;
   private gridApi: GridApi;
   constructor(private http: http,
-    private httpClient: HttpClient,
+   
     private spinner: NgxSpinnerService,
-    private provider: MyProvider,
+    
     private dialog: DialogsComponent,
     private location: Location,
     public gridOption: gridOptions,
     public master: Master,
-    private router: Router,) { }
+    ) { }
 
 
   @HostListener('window:resize', ['$event'])
   onResize(event) {
     this.innerWidth = window.innerWidth;
-    // this.gridApi.sizeColumnsToFit();
-
+   
   }
   ngOnInit(): void {
     this.entity = {};
@@ -66,9 +65,7 @@ export class PlaceComponent {
     this.stateParams = this.location.getState();
     this.mode = this.stateParams.action;
     this.innerWidth = window.innerWidth;
-    // setTimeout(() => {
-    //   this.gridApi.sizeColumnsToFit();
-    // }, 1000);
+  
 
     this.defaultColDef = {
       sortable: true,
@@ -148,7 +145,7 @@ export class PlaceComponent {
     if (s) {
       this.entity = s;
       this.entity.taluka = s.taluka;
-      // this.cd.detectChanges()
+      
     }
     $("#place").modal('show');
 

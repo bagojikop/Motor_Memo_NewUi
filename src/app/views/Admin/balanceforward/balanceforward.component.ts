@@ -15,10 +15,7 @@ declare var $: any;
 
 interface BalanceForwardObj {
 
-
 }
-
-
 
 @Component({
   selector: 'app-balanceforward',
@@ -42,11 +39,7 @@ export class BalanceforwardComponent {
   constructor(private http: http,
     private spinner: NgxSpinnerService,
     private provider: MyProvider,
-    private datepipe: DatePipe,
     private dialog: DialogsComponent,
-    private location: Location,
-    private router: Router,
-    private Master: Master,
     public navactions: NavbarActions,) {
 
   }
@@ -61,32 +54,8 @@ export class BalanceforwardComponent {
     // this.Init();
 
   }
-  Init() {
-
-    this.loading = true;
-    this.http.get('Firm/list').subscribe({
-      next: (res: any) => {
-        if (res.status_cd == 1) {
-          this.firms = res.data;
-          this.entity.firmCode = res.data[0].firmCode
-          this.loading = false;
-        } else {
-          this.loading = false;
-          this.dialog.swal({ dialog: 'error', title: 'Error', message: res.errors.exception.Message });
-        }
-
-
-        this.spinner.hide();
-      }, error: (err: any) => {
-        this.spinner.hide();
-        this.dialog.swal({ dialog: 'error', title: 'Error', message: err.message });
-      }
-    })
-  }
-
-  save() {
-
-  }
+ 
+  
   check() {
 
     if (this.entity.account == true) {

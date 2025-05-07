@@ -207,6 +207,10 @@ export const routes: Routes = [
         loadComponent: () => import('./views/Reports/grouplist/grouplist.component').then((m) => m.GrouplistComponent)
       },
       {
+        path: 'Trialbalance',
+        loadComponent: () => import('./views/Reports/trial-balance/trial-balance.component').then((m) => m.TrialBalanceComponent)
+      },
+      {
         path: 'Roleinfochild',
         loadComponent: () => import('./views/Admin/RoleInfo/roleinfochild/roleinfochild.component').then((m) => m.RoleinfochildComponent)
       },

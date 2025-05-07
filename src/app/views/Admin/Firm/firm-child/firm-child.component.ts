@@ -42,16 +42,12 @@ export class FirmChildComponent {
   isactive: boolean;
   disabledata: boolean = false;
   constructor(private http: http,
-    private httpClient: HttpClient,
     private spinner: NgxSpinnerService,
     private navaction: NavbarActions,
     private provider: MyProvider,
     public valid: validation,
     private dialog: DialogsComponent,
     private location: Location,
-    private router: Router,
-    private Master: Master,
-    private datepipe: DatePipe,
     public navactions: NavbarActions,) { }
   ngOnInit(): void {
     this.entity = <FirmObj>{};
@@ -77,8 +73,6 @@ export class FirmChildComponent {
     if (paramss.id) {
       this.callbackEdit();
     };
-
-
 
     this.Init();
   }
@@ -134,7 +128,6 @@ export class FirmChildComponent {
         break;
 
       case 'print':
-        this.print();
         break;
 
 
@@ -178,8 +171,6 @@ export class FirmChildComponent {
     this.navactions.navaction("view");
   }
 
-  print() { }
-
   callbackedit() {
     this.spinner.show();
     var url = "Firm/FirmEdit"
@@ -219,19 +210,12 @@ export class FirmChildComponent {
   save() {
 
     this.entity.createdUser = this.provider.companyinfo.company.userinfo.username;
-    // if (!this.entity.createdUser)
-    //   this.entity.createdUser=this.provider.companyinfo.userinfo.username;
-    //   else
-    //   this.entity.modifiedUser = this.provider.companyinfo.userinfo.username;
 
-    // if (this.FirmInfo.valid) {
     this.spinner.show();
 
 
     if (this.entity.firmCode) {
 
-
-      // this.Master.cleanObject(
       this.http.put('Firm/update', this.entity, { firm_code: this.entity.firmCode }).subscribe({
         next: (res: any) => {
           if (res.status_cd == 1) {
@@ -253,12 +237,7 @@ export class FirmChildComponent {
       })
 
     }
-    // }
-    // else {
-
-
-    //   this.dialog.swal({ dialog: 'Warning', title: 'Warning!', message: "Please fill all required Fields..." })
-    // }
+   
   }
 
 

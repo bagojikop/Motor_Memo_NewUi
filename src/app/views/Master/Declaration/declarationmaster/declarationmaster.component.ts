@@ -37,8 +37,6 @@ export class DeclarationmasterComponent {
   innerWidth: any;
   private gridApi: GridApi;
   constructor(private http: http,
-    private spinner: NgxSpinnerService,
-    private provider: MyProvider,
     private dialog: DialogsComponent,
     private location: Location,
     public gridOption: gridOptions,
@@ -47,8 +45,7 @@ export class DeclarationmasterComponent {
   @HostListener('window:resize', ['$event'])
   onResize(event) {
     this.innerWidth = window.innerWidth;
-    // this.gridApi.sizeColumnsToFit();
-
+   
   }
   ngOnInit(): void {
     this.entity = {};
@@ -58,11 +55,7 @@ export class DeclarationmasterComponent {
     this.stateParams = this.location.getState();
     this.mode = this.stateParams.action;
     this.innerWidth = window.innerWidth;
-    // setTimeout(() => {
-    //   this.gridApi.sizeColumnsToFit();
-    // }, 1000);
-
-
+   
     this.defaultColDef = {
       sortable: true,
       floatingFilter: true,
@@ -105,11 +98,9 @@ export class DeclarationmasterComponent {
         flex: 1
       },
     ]
-    this.Init();
+    
   }
-  Init() {
-
-  }
+ 
   addNew() {
     var params = {
       action: 'new'

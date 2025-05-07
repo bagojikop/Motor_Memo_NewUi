@@ -1,5 +1,5 @@
-import { ChangeDetectorRef, Component, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA, OnInit, ViewChild } from '@angular/core';
-import { CommonModule, DatePipe, DecimalPipe, Location } from '@angular/common';
+import { ChangeDetectorRef, Component, CUSTOM_ELEMENTS_SCHEMA, OnInit, ViewChild } from '@angular/core';
+import { CommonModule, DatePipe,  Location } from '@angular/common';
 import { NavbarActions, http, ngselectpagination, Master } from '../../../../assets/services/services';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MyProvider } from '../../../../assets/services/provider';
@@ -15,7 +15,6 @@ import { MasternavComponent } from '../../../../assets/pg/masternav/masternav.co
 import { NumberOnlyDirective, } from '../../../../assets/mydirective/mydirective.directive';
 import { CurrencyMaskDirective } from "../../../../assets/mydirective/currencyMask/currency-mask.directive";
 
-declare var $: any;
 
 @Component({
 
@@ -23,7 +22,7 @@ declare var $: any;
   templateUrl: './accountinfochild.component.html',
   styleUrls: ['./accountinfochild.component.scss'],
   imports: [FormsModule, CommonModule, ngselectComponent, CurrencyMaskDirective, NumberOnlyDirective, NgSelectModule, DssInputComponent, MydirectiveModule, MasternavComponent,],
-  // providers: [,],
+ 
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AccountinfochildComponent implements OnInit {
@@ -50,7 +49,6 @@ export class AccountinfochildComponent implements OnInit {
   gstininfo: any = {};
   constructor(public location: Location,
     public http: http,
-    private httpclient: HttpClient,
     private datepipe: DatePipe,
     private dialog: DialogsComponent,
     private spinner: NgxSpinnerService,
@@ -101,9 +99,6 @@ export class AccountinfochildComponent implements OnInit {
   windowrespo() {
     if (window.innerWidth <= 767) {
       this.status = true;
-
-
-
     } else {
       this.status = false;
     }
@@ -182,23 +177,7 @@ export class AccountinfochildComponent implements OnInit {
 
   }
 
-  // addFirm() {
-  //   if (this.reference.firmCode) {
-  //     // const existingFirm = this.entity.mst01110s.find(
-  //     //   (firm: any) => firm.firmCode === this.reference
-  //     // );
-  //     // if (!existingFirm) {
-  //       this.entity.mst01110s.push(this.reference);
-  //     // } else {
-  //     //   alert('Firm already added!');
-  //     // }
-
-  //     this.reference={};
-  //   } else {
-  //     alert('Please select a firm to add.');
-  //   }
-  // }
-
+ 
   idx = null;
   addFirm() {
 
@@ -220,18 +199,12 @@ export class AccountinfochildComponent implements OnInit {
     }
   }
 
-  // toggleSelect(): void {
-  //   this.entity.isDisabled = !this.entity.isDisabled;
-  //   // console.log(this.entity.isDisabled);
-  //   this.entity.mst01110s = [];
-  //   this.reference.firmCode = {}
-  // }
+ 
   toggleSelect(ev): void {
     this.entity.isDisabled = ev.target.checked === true ? 1 : 0;
     this.entity.mst01110s = [];
     this.reference.firmCode = {}
   }
-
 
   isInvalidPan: boolean = false;
   isInvalidWebsite: boolean = false;
@@ -278,8 +251,6 @@ export class AccountinfochildComponent implements OnInit {
 
           this.entity.isDisabled = this.entity.isDisabled || 0;
 
-
-          //this.onSelectGroup(this.entity);
           this.cd.detectChanges();
         }
         this.spinner.hide();
@@ -322,9 +293,6 @@ export class AccountinfochildComponent implements OnInit {
                 this.entity.mst01109 = <mst01109Obj>{};
               }
 
-              // if (!this.entity.accPanDetail) {
-              //   this.entity.accPanDetail = <accPanDetailObj>{};
-              // }
 
               this.dialog.swal({ dialog: "success", title: "Success", message: "Record is saved sucessfully" });
               this.navactions.navaction("OK");
@@ -343,9 +311,7 @@ export class AccountinfochildComponent implements OnInit {
         })
       }
       else {
-        // this.entity.modifiedUser = this.provider.companyinfo.userinfo.username;
-
-
+       
         this.entity.modifiedUser = this.provider.companyinfo.company.username;
         this.http.put('Account/update', this.master.cleanObject(this.entity, 2), { id: this.entity.accCode }).subscribe({
           next: (res: any) => {
@@ -361,9 +327,7 @@ export class AccountinfochildComponent implements OnInit {
               if (!this.entity.mst01109) {
                 this.entity.mst01109 = <mst01109Obj>{};
               }
-              // if (!this.entity.accPanDetail) {
-              //   this.entity.accPanDetail = <accPanDetailObj>{};
-              // }
+          
 
               this.dialog.swal({ dialog: "success", title: "Success", message: "Record is Update sucessfully" });
               this.navactions.navaction("OK");

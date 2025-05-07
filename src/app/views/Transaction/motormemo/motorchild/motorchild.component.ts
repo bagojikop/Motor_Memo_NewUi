@@ -8,7 +8,6 @@ import { ReportDictionory } from '../../../../../../assets/service/interfaces';
 import { v4 as uuidv4 } from 'uuid'
 import { FormsModule, NgForm } from '@angular/forms';
 import { SubconsigneeObj, MotormemoAuditObj, MotormemoDetailsObj, Acc003sObj } from '../../../../assets/datatypests/motorchild';
-declare var bootstrap: any;
 declare var $: any;
 import "../../../../../app/assets/services/datePrototype";
 import { NgSelectModule } from '@ng-select/ng-select';
@@ -16,10 +15,9 @@ import { DssInputComponent } from '../../../../assets/mydirective/dss-input/dss-
 import { MydirectiveModule } from '../../../../assets/mydirective/mydirective.module';
 import { ngselectComponent } from '../../../../assets/pg/ngselect/ngselect.component';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { prototype } from 'events';
 import { NavactionsComponent } from '../../../../assets/pg/navactions/navactions.component';
 import { CurrencyMaskDirective } from '../../../../assets/mydirective/currencyMask/currency-mask.directive';
-import { NumberOnlyDirective, DTFormatDirective, UppercaseDirective } from '../../../../assets/mydirective/mydirective.directive';
+import { NumberOnlyDirective, DTFormatDirective} from '../../../../assets/mydirective/mydirective.directive';
 import { finDateDirective } from '../../../../assets/mydirective/findate/findate.directive';
 import { ArraySortPipe } from '../../../../assets/pipes/inrcrdr.pipe';
 import {PdfReaderComponent} from '../../../../assets/pdf-reader/pdf-reader.component';
@@ -57,7 +55,7 @@ export class MotorchildComponent {
   selectedVehicle: string = '';
   Orderlist: any;
 
-  canEdit: boolean = false; // Set to true to enable checkbox
+  canEdit: boolean = false; 
 
   isReceiverClicked: boolean = true;
 
@@ -287,7 +285,7 @@ export class MotorchildComponent {
   }
 
   onSelectAcc(ev) {
-    // this.exp.accName = ev.accName;
+    
     this.exp.accName = ev.accCodeNavigation.accName;
     this.cd.detectChanges();
   }
@@ -296,15 +294,14 @@ export class MotorchildComponent {
     this.other.sundries = {}
 
     this.other.sundries.sundryName = ev.sundryName;
-    // this.other.accCode = this.other.accCodeNavigation.accCode;
+   
     this.other.accCodeNavigation = ev.accCodeNavigation;
 
 
   }
 
   onSelecotheracc(ev) {
-    // this.exp.accName = ev.accName;
-
+   
     this.other.accCodeNavigation.accName = ev.accCodeNavigation.accName;
   }
 
@@ -324,11 +321,11 @@ export class MotorchildComponent {
           this.entity.motormemoAudit.createdDt = this.entity.motormemoAudit.createdDt ?? this.datepipe.transform(this.entity.motormemoAudit.createdDt, 'yyyy-MM-dd')
           this.entity.motormemoAudit.modifiedDt = this.entity.motormemoAudit.modifiedDt ?? this.datepipe.transform(this.entity.motormemoAudit.modifiedDt, 'yyyy-MM-dd');
 
-          // this.entity.dt = this.entity.dt ?? this.datepipe.transform(this.entity.dt, 'yyyy-MM-dd');
+     
 
           this.pastentity = Object.assign({}, this.entity);
 
-          // this.entity.dt = new Date().toShortString();
+        
         }
         this.spinner.hide();
         this.additinOfFreight();
@@ -463,7 +460,7 @@ export class MotorchildComponent {
   }
 
   getSelectOptionLabel(value: number): string {
-    // return value == 0 ? 'Deduct' : 'Add';
+   
     if (value == 0) {
       return 'Deduct';
     } else if (value == 1) {
@@ -471,21 +468,12 @@ export class MotorchildComponent {
     } else if (value == 2) {
       return 'Build';
     } else {
-      return 'Unknown'; // Handle any unexpected values
+      return 'Unknown'; 
     }
 
   }
 
-  // calculateBuildCharges() {
-  //   let total = 0;
-
-  //   this.entity.motormemoExpenses.forEach((expense: any) => {
-  //     if (expense.action === 2) {
-  //       total += expense.charges;
-  //     }
-  //   });
-
-  // }
+  
 
   getVehicles() {
     if (!this.entity.vehicleNo || this.entity.vehicleNo.length < 4) {
@@ -603,7 +591,7 @@ export class MotorchildComponent {
     this.entity.advanceAmount = this.entity.motormemoExpenses
       .filter(exp => !exp.expensesisChecked)
       .reduce((sum, exp) => sum + Number(exp.charges), 0);
-    // this.entity.advanceAmount = this.uncheckedTotalCharges
+   
   }
 
   freightAmountsum() {
@@ -753,8 +741,6 @@ export class MotorchildComponent {
             this.SenderisClicked = true
             this.isSenderClicked = true;
 
-            // this.entity.motormemoDetails.senderGstin = "";
-            // this.entity.motormemoDetails.senderMobileNo = 0
 
           }
         } else {
@@ -855,13 +841,13 @@ export class MotorchildComponent {
 
 
   ReceiverSavefun() {
-    // Show confirmation dialog
+  
     this.dialog.swal({
       dialog: 'confirm',
       title: 'Confirm Save',
       message: 'Do you want to save this record?',
     }).then((result: any) => {
-      // If the user confirms
+      
       if (result) {
         const venderData = {
           name: this.entity.motormemoDetails.receiverName,
@@ -879,14 +865,14 @@ export class MotorchildComponent {
         this.http.post('Vendor/insert', venderData).subscribe({
           next: (res: any) => {
             if (res.status_cd == 1) {
-              // Show success dialog
+              
               this.dialog.swal({ dialog: "success", title: "Success", message: "Record is saved successfully" });
               this.ReceiverisClicked = false
             }
             this.spinner.hide();
           },
           error: (err: any) => {
-            // Handle error
+            
             this.spinner.hide();
             this.dialog.swal({
               dialog: 'error',
@@ -927,7 +913,7 @@ export class MotorchildComponent {
     this.dialog.swal(params).then(data => {
       if (data == true) {
         this.entity.motormemoOtherCharges.splice(index, 1);
-        // this.totalRecAmt();
+       
         this.additinOftotalchages()
       }
     })
@@ -1016,7 +1002,7 @@ export class MotorchildComponent {
 
   moveToNext(event: any, nextElement: HTMLButtonElement) {
     if (event) {
-      setTimeout(() => nextElement?.focus(), 10); // Ensure DOM update before focusing
+      setTimeout(() => nextElement?.focus(), 10); 
     }
   }
 

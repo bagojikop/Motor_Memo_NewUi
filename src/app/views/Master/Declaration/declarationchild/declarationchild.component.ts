@@ -61,7 +61,7 @@ export class DeclarationchildComponent {
 
     this.entity = <AccountObj>{};
 
-    this.entity.fromDt = new Date().toISOString().split('T')[0]; // Format to YYYY-MM-DD
+    this.entity.fromDt = new Date().toISOString().split('T')[0]; 
 
     let paramss: any = this.location.getState();
     this.navactions.navaction(paramss.action);
@@ -74,7 +74,7 @@ export class DeclarationchildComponent {
       this.navactions.fieldset = false;
       this.newRecord();
     }
-    this.Init();
+   
   }
 
   windowrespo() {
@@ -87,9 +87,7 @@ export class DeclarationchildComponent {
       this.status = false;
     }
   }
-  Init() {
-
-  }
+ 
   navbar(s) {
     switch (s) {
       case 'new':
@@ -203,9 +201,7 @@ export class DeclarationchildComponent {
 
   }
 
-  // account(index) {
-  //   this.reference.subdealars.accName = index.accName;
-  // }
+ 
 
   close() {
     this.location.back();
@@ -281,12 +277,6 @@ export class DeclarationchildComponent {
         this.dialog.swal({ dialog: 'Warning', title: 'Warning!', message: "Please fill all required Fields." })
       }
     })
-
-
-
-
-
-
   }
 
   getTotalVehicles(): number {

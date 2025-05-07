@@ -41,11 +41,10 @@ export class UnitmasterComponent implements AfterViewInit {
   private gridApi: GridApi;
   constructor(private http: http,
     private spinner: NgxSpinnerService,
-    private provider: MyProvider,
     private dialog: DialogsComponent,
     public gridOption: gridOptions,
     private location: Location,
-    private router: Router, private cd: ChangeDetectorRef) { }
+     private cd: ChangeDetectorRef) { }
 
   ngAfterViewInit(): void {
     this.Init()
@@ -55,7 +54,7 @@ export class UnitmasterComponent implements AfterViewInit {
   @HostListener('window:resize', ['$event'])
   onResize(event) {
     this.innerWidth = window.innerWidth;
-    // this.gridApi.sizeColumnsToFit();
+  
 
   }
   ngOnInit(): void {
@@ -65,9 +64,7 @@ export class UnitmasterComponent implements AfterViewInit {
     this.stateParams = this.location.getState();
     this.mode = this.stateParams.action;
     this.innerWidth = window.innerWidth;
-    // setTimeout(() => {
-    //   this.gridApi.sizeColumnsToFit();
-    // }, 1000);
+   
 
 
     this.defaultColDef = {

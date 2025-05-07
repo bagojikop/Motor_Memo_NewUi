@@ -35,8 +35,6 @@ export class FirmMasterComponent {
   mode: any;
   private gridApi: GridApi;
   constructor(private http: http,
-    private spinner: NgxSpinnerService,
-    private provider: MyProvider,
     private dialog: DialogsComponent,
     private location: Location,
     public gridOption: gridOptions,
@@ -127,11 +125,9 @@ export class FirmMasterComponent {
 
     },
     ]
-    this.Init();
+    
   }
-  Init() {
-
-  }
+ 
   addNew() {
     var params = {
       action: 'new'
