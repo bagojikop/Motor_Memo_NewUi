@@ -211,6 +211,18 @@ export const routes: Routes = [
         loadComponent: () => import('./views/Reports/trial-balance/trial-balance.component').then((m) => m.TrialBalanceComponent)
       },
       {
+        path: 'balancesheet',
+        loadComponent: () => import('./views/Reports/balance-sheet/balance-sheet.component').then((m) => m.BalanceSheetComponent)
+      },
+      {
+        path: 'profitloss',
+        loadComponent: () => import('./views/Reports/profit-loss/profit-loss.component').then((m) => m.ProfitLossComponent)
+      },
+      {
+        path: 'profit-loss-child',
+        loadComponent: () => import('./views/Reports/profit-loss/profit-loss-child/profit-loss-child.component').then((m) => m.ProfitLossChildComponent)
+      },
+      {
         path: 'Roleinfochild',
         loadComponent: () => import('./views/Admin/RoleInfo/roleinfochild/roleinfochild.component').then((m) => m.RoleinfochildComponent)
       },

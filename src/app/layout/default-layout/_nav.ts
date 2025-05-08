@@ -256,6 +256,8 @@ export const navItems = ({
         { name: 'Ledger', iconComponent: { name: 'cil-list' }, url: 'Ledger' },
         { name: 'Group List', iconComponent: { name: 'cil-list' }, url: 'SubGroupreport' },
         { name: 'Trial Balance', iconComponent: { name: 'cil-list' }, url: 'Trialbalance' },
+        { name: 'Balance Sheet', iconComponent: { name: 'cil-list' }, url: 'balancesheet' },
+        { name: 'Profit Loss', iconComponent: { name: 'cil-list' }, url: 'profitloss' },
       ]
     }
   ];
