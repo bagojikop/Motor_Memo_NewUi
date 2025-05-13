@@ -442,7 +442,7 @@ export class MotorchildComponent {
     this.entity.motormemoExpenses = [];
     this.entity.motormemoOtherCharges = [];
     this.entity.memoNo = 0;
-    this.entity.selectfreightType = 0;
+    this.entity.freightType = 0;
     this.entity.totalcharges = 0;
     this.entity.dt = new Date().toShortString();
   }
@@ -466,7 +466,7 @@ export class MotorchildComponent {
     } else if (value == 1) {
       return 'Add';
     } else if (value == 2) {
-      return 'Build';
+      return 'Billed';
     } else {
       return 'Unknown'; 
     }
@@ -549,7 +549,7 @@ export class MotorchildComponent {
 
   updateTotalCharges(): void {
 
-    if (this.exp.expaccCode && this.exp.accCode && this.exp.charges) {
+    if (this.exp.s_Id && this.exp.accCode && this.exp.charges) {
 
       const chargeValue = Number(this.exp.charges) || 0;
 
@@ -558,7 +558,7 @@ export class MotorchildComponent {
       } else if (this.exp.action == 0) {
         this.entity.totalcharges -= chargeValue;
       } else if (this.exp.action == 2) {
-        this.entity.buildtotalamt = (this.entity.buildtotalamt || 0) + chargeValue;
+        this.entity.billAmt = (this.entity.billAmt || 0) + chargeValue;
       }
 
       if (this.rowIndex == null) {
@@ -581,21 +581,21 @@ export class MotorchildComponent {
   totalCharges: number = 0;
   calculateTotalCharges() {
     this.totalCharges = this.entity.motormemoExpenses
-      .filter(exp => exp.expensesisChecked)
+      .filter(exp => exp.isChecked)
       .reduce((sum, exp) => sum + Number(exp.charges), 0);
     this.freightAmountsum()
     this.calculateUncheckedTotalCharges()
   }
   uncheckedTotalCharges: number = 0
   calculateUncheckedTotalCharges() {
-    this.entity.advanceAmount = this.entity.motormemoExpenses
-      .filter(exp => !exp.expensesisChecked)
+    this.entity.advAmount = this.entity.motormemoExpenses
+      .filter(exp => !exp.isChecked)
       .reduce((sum, exp) => sum + Number(exp.charges), 0);
    
   }
 
   freightAmountsum() {
-    this.entity.freightdeductAmount = this.entity.TotalFreight - this.totalCharges
+    this.entity.totalFreight = this.entity.TotalFreight - this.totalCharges
   }
 
   totalAmt(): void {
@@ -888,7 +888,7 @@ export class MotorchildComponent {
   }
 
   otherdataAdd() {
-    if (this.other.accCode && this.other.otherchag && this.other.expaccCode) {
+    if (this.other.accCode && this.other.otherchag && this.other.s_Id) {
       if (this.rowIndex == null) {
         this.entity.motormemoOtherCharges.push(this.other);
         this.additinOftotalchages()
@@ -954,11 +954,11 @@ export class MotorchildComponent {
     let total = this.entity.totaldebitadd || 0;
 
 
-    if (this.entity.selectfreightType == 0 || this.entity.selectfreightType == 2) {
+    if (this.entity.freightType == 0 || this.entity.freightType == 2) {
 
       this.entity.motormemoDetails.senderAmount = total;
       this.entity.motormemoDetails.receiverAmount = 0;
-    } else if (this.entity.selectfreightType == 1) {
+    } else if (this.entity.freightType == 1) {
 
       this.entity.motormemoDetails.receiverAmount = total;
       this.entity.motormemoDetails.senderAmount = 0;
@@ -970,8 +970,8 @@ export class MotorchildComponent {
 
   totalcreditamount() {
     setTimeout(() => {
-      this.entity.ownerCreditAmout = 0;
-      this.entity.ownerCreditAmout = (this.entity.freightdeductAmount - this.entity.advanceAmount).round(2);
+      this.entity.leftAmount = 0;
+      this.entity.leftAmount = (this.entity.totalFreight - this.entity.advAmount).round(2);
     }, 100);
 
   }

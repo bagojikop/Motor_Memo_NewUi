@@ -75,8 +75,8 @@ export class MotormasterComponent implements OnInit {
     this.columns = [
       { field: 'memoNo', headerName: 'LR Number', filter: "agTextColumnFilter", flex: 1 },
       { field: 'vehicleNo', headerName: 'Vehical No', filter: "agTextColumnFilter", flex: 1 },
-      { field: 'from', headerName: 'Form', filter: "agTextColumnFilter", flex: 1 },
-      { field: 'to', headerName: 'To', filter: "agTextColumnFilter", flex: 1 },
+      { field: 'from_Dstn', headerName: 'Form', filter: "agTextColumnFilter", flex: 1 },
+      { field: 'to_Dstn', headerName: 'To', filter: "agTextColumnFilter", flex: 1 },
       { field: 'motormemoDetails.senderName', headerName: 'Sender Name', filter: "agTextColumnFilter", flex: 1 },
       { field: 'motormemoDetails.receiverName', headerName: 'Reciver Name', filter: "agTextColumnFilter", flex: 1 },
       {

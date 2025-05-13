@@ -47,13 +47,13 @@
                                 <div class="d-flex w-50 w-md-100">
                                     <div class="d-flex-width">
                                         <app-ngselect apiUrl="Place/getPlace" label="from" bindLabel="cityName"
-                                            bindValue="cityName" name="place" [(ngModel)]="entity.from"
+                                            bindValue="cityName" name="place" [(ngModel)]="entity.from_Dstn"
                                             autocomplete="off" [required]="true" [addNewText]="true"
                                             [disabled]="navactions.fieldset"></app-ngselect>
                                     </div>
                                     <div class="gapInputFields">
                                         <app-ngselect apiUrl="Place/getPlace" label="To" bindLabel="cityName"
-                                            bindValue="cityName" name="memoto" [(ngModel)]="entity.to"
+                                            bindValue="cityName" name="memoto" [(ngModel)]="entity.to_Dstn"
                                             autocomplete="off" [required]="true" [addNewText]="true"
                                             [disabled]="navactions.fieldset"></app-ngselect>
 
@@ -418,8 +418,8 @@
                                             <th>
                                                 <div>
                                                     <app-ngselect apiUrl="Sundry/getExpAcclist" class="p-0 text-start"
-                                                        bindLabel="sundryName" bindValue="sId" name="otherExpensName"
-                                                        [(ngModel)]="other.expaccCode"
+                                                        bindLabel="sundryName" bindValue="s_Id" name="otherExpensName"
+                                                        [(ngModel)]="other.s_Id"
                                                         (change)="onSelectotherExpacc($event)"
                                                         [disabled]="navactions.fieldset" autocomplete="off" #f="ngModel"
                                                         [applyMargins]="false"></app-ngselect>
@@ -492,7 +492,7 @@
                                 <div style="width: 10rem;">
                                     <label for="">Freight Type</label>
                                     <select class="form-select select-wrapper" name="selectfreightType"
-                                        [(ngModel)]="entity.selectfreightType" (change)="calculateAmounts()">
+                                        [(ngModel)]="entity.freightType" (change)="calculateAmounts()">
                                         <option [value]=0>FOR</option>
                                         <option [value]=1>EX</option>
                                         <option [value]=2>To be Billed</option>
@@ -572,8 +572,8 @@
                                         <th style="width: 24%;">
 
                                             <app-ngselect apiUrl="Sundry/getExpAcclist" class="p-0 text-start"
-                                                bindLabel="sundryName" bindValue="sId" name="ExpensName"
-                                                [(ngModel)]="exp.expaccCode" (change)="onSelectExp($event)"
+                                                bindLabel="sundryName" bindValue="s_Id" name="ExpensName"
+                                                [(ngModel)]="exp.s_Id" (change)="onSelectExp($event)"
                                                 [disabled]="navactions.fieldset" autocomplete="off" #f="ngModel"
                                                 [applyMargins]="false"></app-ngselect>
 
@@ -606,7 +606,7 @@
                                         </th>
                                         <th style="width: 8%;">
                                             <input type="checkbox" name="expensesisChecked"
-                                                [(ngModel)]="exp.expensesisChecked" />
+                                                [(ngModel)]="exp.isChecked" />
                                         </th>
                                         <th class="text-center" style="width: 12%;">
                                             <button class="btn btn-light btn-sm text-center"
@@ -631,8 +631,8 @@
                                         </td>
                                         <td style="width: 12%;">{{ getSelectOptionLabel(v.action) }}</td>
                                         <td style="width: 8%;">
-                                            <input type="checkbox" [checked]="v.expensesisChecked" tabindex="-1"
-                                                [(ngModel)]="v.expensesisChecked" name="expensesisChecked" disabled>
+                                            <input type="checkbox" [checked]="v.isChecked" tabindex="-1"
+                                                [(ngModel)]="v.isChecked" name="expensesisChecked" disabled>
                                         </td>
 
                                         <td class="text-center" style="width: 12%;">
@@ -676,27 +676,27 @@
                             <div style="width: 10rem;" class="ms-4">
                                 <label for="">Freight Amount</label>
                                 <input type="text" class="form-control" name="FreightAmount" digitOnly CurrencyMask
-                                    fraction="2" [(ngModel)]="entity.freightdeductAmount" [disabled]="true"
+                                    fraction="2" [(ngModel)]="entity.totalFreight" [disabled]="true"
                                     autocomplete="off" (change)="freightAmountsum()">
                             </div>
                             <div style="width: 10rem;" class="ms-4">
                                 <label for="">Advance Amount</label>
-                                <input type="text" class="form-control" name="advanceAmount" digitOnly CurrencyMask
-                                    fraction="2" [(ngModel)]="entity.advanceAmount" [disabled]="true"
+                                <input type="text" class="form-control" name="advAmount" digitOnly CurrencyMask
+                                    fraction="2" [(ngModel)]="entity.advAmount" [disabled]="true"
                                     autocomplete="off">
                             </div>
 
                             <div style="width: 10rem;" class="ms-4">
                                 <label for="">Left Amount</label>
-                                <input type="text" class="form-control" name="ownerCreditAmout" digitOnly CurrencyMask
-                                    fraction="2" [(ngModel)]="entity.ownerCreditAmout" [disabled]="true"
+                                <input type="text" class="form-control" name="leftAmout" digitOnly CurrencyMask
+                                    fraction="2" [(ngModel)]="entity.leftAmount" [disabled]="true"
                                     autocomplete="off" (Change)="totalcreditamount()">
                             </div>
 
                             <div style="width: 10rem;" class="ms-4">
                                 <label for="">Billed Amount</label>
-                                <input type="text" class="form-control" name="buildtotalamt" digitOnly CurrencyMask
-                                    fraction="2" [(ngModel)]="entity.buildtotalamt" [disabled]="true"
+                                <input type="text" class="form-control" name="billamt" digitOnly CurrencyMask
+                                    fraction="2" [(ngModel)]="entity.billAmt" [disabled]="true"
                                     autocomplete="off">
                             </div>
                         </div>

@@ -223,6 +223,10 @@ export const routes: Routes = [
         loadComponent: () => import('./views/Reports/profit-loss/profit-loss-child/profit-loss-child.component').then((m) => m.ProfitLossChildComponent)
       },
       {
+        path: 'motor-memo-register',
+        loadComponent: () => import('./views/Reports/motormemo-register/motormemo-register.component').then((m) => m.MotormemoRegisterComponent)
+      },
+      {
         path: 'Roleinfochild',
         loadComponent: () => import('./views/Admin/RoleInfo/roleinfochild/roleinfochild.component').then((m) => m.RoleinfochildComponent)
       },
