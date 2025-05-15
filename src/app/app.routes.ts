@@ -226,6 +226,10 @@ export const routes: Routes = [
         path: 'motor-memo-register',
         loadComponent: () => import('./views/Reports/motormemo-register/motormemo-register.component').then((m) => m.MotormemoRegisterComponent)
       },
+       {
+        path: 'sundry-wise',
+        loadComponent: () => import('./views/Reports/sundry-wise/sundry-wise.component').then((m) => m.SundryWiseComponent)
+      },
       {
         path: 'Roleinfochild',
         loadComponent: () => import('./views/Admin/RoleInfo/roleinfochild/roleinfochild.component').then((m) => m.RoleinfochildComponent)

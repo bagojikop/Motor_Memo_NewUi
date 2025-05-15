@@ -258,7 +258,8 @@ export const navItems = ({
         { name: 'Trial Balance', iconComponent: { name: 'cil-list' }, url: 'Trialbalance' },
         { name: 'Balance Sheet', iconComponent: { name: 'cil-list' }, url: 'balancesheet' },
         { name: 'Profit Loss', iconComponent: { name: 'cil-list' }, url: 'profitloss' },
-         { name: 'Motormemo Register', iconComponent: { name: 'cil-list' }, url: 'motor-memo-register' },
+        { name: 'Motormemo Register', iconComponent: { name: 'cil-list' }, url: 'motor-memo-register' },
+        { name: 'Sundry Wise Expenses', iconComponent: { name: 'cil-list' }, url: 'sundry-wise' },
       ]
     }
   ];
