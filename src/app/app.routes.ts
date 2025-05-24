@@ -150,6 +150,14 @@ export const routes: Routes = [
         path: 'Receiptmaster',
         loadComponent: () => import('./views/Transaction/receipt/receiptmaster/receiptmaster.component').then((m) => m.ReceiptmasterComponent)
       },
+       {
+        path: 'BiltyMaster',
+        loadComponent: () => import('./views/Transaction/Bilty/biltymaster/biltymaster.component').then((m) => m.BiltymasterComponent)
+      },
+       {
+        path: 'biltychild',
+        loadComponent: () => import('./views/Transaction/Bilty/biltychild/biltychild.component').then((m) => m.BiltychildComponent)
+      },
       {
         path: 'Summary',
         loadComponent: () => import('./views/Transaction/summary/summary.component').then((m) => m.SummaryComponent)

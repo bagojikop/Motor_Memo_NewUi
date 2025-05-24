@@ -272,17 +272,20 @@ export class ContrachildComponent {
   }
 
   AddDebited() {
-    if (this.rowIndex == null) {
-      this.entity.acc00601s.push(this.rec.contraItems);
-    } else {
-
-      this.entity.acc00601s[this.rowIndex] = this.rec.contraItems;
-    }
-
-    this.rec.contraItems = <contraItemsObj>{};
-    this.totalRecAmt();
-    this.rowIndex = null;
+  if (!this.entity.acc00601s) {
+    this.entity.acc00601s = [];
   }
+
+  if (this.rowIndex == null) {
+    this.entity.acc00601s.push(this.rec.contraItems);
+  } else {
+    this.entity.acc00601s[this.rowIndex] = this.rec.contraItems;
+  }
+
+  this.rec.contraItems = <contraItemsObj>{};
+  this.totalRecAmt();
+  this.rowIndex = null;
+}
 
   ContraEdit(s) {
     this.rowIndex = this.entity.acc00601s.indexOf(s);

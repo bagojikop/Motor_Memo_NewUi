@@ -220,7 +220,8 @@ export const navItems = ({
         { name: 'Contra Entry', iconComponent: { name: 'cil-credit-card' }, url: 'Contramaster' },
         { name: 'Journal Entry', iconComponent: { name: 'cil-notes' }, url: 'Journalmaster' },
         { name: 'Receipt', iconComponent: { name: 'cil-credit-card' }, url: 'Receiptmaster' },
-        { name: 'Payment', iconComponent: { name: 'cil-credit-card' }, url: 'Paymentmaster' }
+        { name: 'Payment', iconComponent: { name: 'cil-credit-card' }, url: 'Paymentmaster' },
+        { name: 'Bilty', iconComponent: { name: 'cil-credit-card' }, url: 'BiltyMaster' }
       ]
     },
     {
