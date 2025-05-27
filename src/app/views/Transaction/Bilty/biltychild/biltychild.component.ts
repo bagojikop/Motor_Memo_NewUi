@@ -17,22 +17,22 @@ import { ngselectComponent } from '../../../../assets/pg/ngselect/ngselect.compo
 import { NgxPaginationModule } from 'ngx-pagination';
 import { NavactionsComponent } from '../../../../assets/pg/navactions/navactions.component';
 import { CurrencyMaskDirective } from '../../../../assets/mydirective/currencyMask/currency-mask.directive';
-import { NumberOnlyDirective, DTFormatDirective} from '../../../../assets/mydirective/mydirective.directive';
+import { NumberOnlyDirective, DTFormatDirective } from '../../../../assets/mydirective/mydirective.directive';
 import { finDateDirective } from '../../../../assets/mydirective/findate/findate.directive';
 import { ArraySortPipe } from '../../../../assets/pipes/inrcrdr.pipe';
-import {PdfReaderComponent} from '../../../../assets/pdf-reader/pdf-reader.component';
+import { PdfReaderComponent } from '../../../../assets/pdf-reader/pdf-reader.component';
 
 @Component({
   selector: 'app-biltychild',
   templateUrl: './biltychild.component.html',
   styleUrl: './biltychild.component.scss',
-   imports: [FormsModule, CommonModule, DTFormatDirective, finDateDirective, NumberOnlyDirective,PdfReaderComponent, CurrencyMaskDirective, ngselectComponent, NgSelectModule, DssInputComponent, MydirectiveModule, NgxPaginationModule, NavactionsComponent],
-  providers: [DatePipe, DialogsComponent,PdfReaderComponent, Master,ArraySortPipe ],
+  imports: [FormsModule, CommonModule, DTFormatDirective, finDateDirective, NumberOnlyDirective, PdfReaderComponent, CurrencyMaskDirective, ngselectComponent, NgSelectModule, DssInputComponent, MydirectiveModule, NgxPaginationModule, NavactionsComponent],
+  providers: [DatePipe, DialogsComponent, PdfReaderComponent, Master, ArraySortPipe],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class BiltychildComponent {
- @ViewChild("biltychild") biltychild: NgForm;
- entity:any={};
+  @ViewChild("biltychild") biltychild: NgForm;
+  entity: any = {};
 
   page: number = 1;
   pageSize: number = 2;
@@ -54,19 +54,19 @@ export class BiltychildComponent {
   selectedVehicle: string = '';
   Orderlist: any;
 
-  canEdit: boolean = false; 
+  canEdit: boolean = false;
 
   isReceiverClicked: boolean = true;
 
   isSenderClicked: boolean = true;
   SenderisClicked: boolean = true
   ReceiverisClicked: boolean = true
-    parameters: any[] = [];
-    rptMode: boolean = false;
-    pdfSrc: string;
-    myServiceUrl: string;
-    myReportDictionory: ReportDictionory = <ReportDictionory>{};
-  
+  parameters: any[] = [];
+  rptMode: boolean = false;
+  pdfSrc: string;
+  myServiceUrl: string;
+  myReportDictionory: ReportDictionory = <ReportDictionory>{};
+
   private cd = inject(ChangeDetectorRef);
 
   constructor(
@@ -80,17 +80,17 @@ export class BiltychildComponent {
     public master: Master
   ) {
     this.entity = {};
-    this.entity.biltyAudit={}
-    this.entity.biltyDetails={}
-    this.entity.biltyCommodities={}
-    this.entity.biltyGstDetails={}
+    this.entity.biltyAudit = {}
+    this.entity.biltyDetails = {}
+    this.entity.biltyCommodities = {}
+    this.entity.biltyGstDetails = {}
     this.stateParams = this.location.getState();
     this.mode = this.stateParams.action;
     this.entity.vchId = this.stateParams.id;
   }
-
-   cmod: any = {};
-   gst:any={}
+ 
+  cmod: any = {};
+  gst: any = {}
   exp: any = {};
   other: any = {};
 
@@ -102,13 +102,13 @@ export class BiltychildComponent {
     }, 1000)
 
     this.entity = {};
-    this.gst={}
+    this.gst = {}
     this.entity.biltyAudit = {};
     this.entity.biltyDetails = {};
-    this.entity.biltyGstDetails=[]
+    this.entity.biltyGstDetails = {}
     this.entity.biltyCommodities = []
     this.entity.totalcharges = 0;
-   
+
     this.exp = { action: 0 };
 
 
@@ -141,8 +141,69 @@ export class BiltychildComponent {
       this.navactions.fieldset = false;
       this.newRecord();
     }
-    
+
   }
+  disableFields = {
+  iGST: false,
+  cGST: false,
+  sGST: false,
+  cESS: false
+};
+
+checkChange() {
+  const gstDetails = this.entity.biltyGstDetails;
+
+  const iGSTSet = gstDetails.iGST != null && gstDetails.iGST !== 0 &&
+                  gstDetails.iGSTAmt != null && gstDetails.iGSTAmt !== 0;
+
+  const cGSTSet = gstDetails.cGST != null && gstDetails.cGST !== 0 &&
+                  gstDetails.cGSTAmt != null && gstDetails.cGSTAmt !== 0;
+
+  const sGSTSet = gstDetails.sGST != null && gstDetails.sGST !== 0 &&
+                  gstDetails.sGSTAmt != null && gstDetails.sGSTAmt !== 0;
+
+  const cESSSet = gstDetails.cESS != null && gstDetails.cESS !== 0 &&
+                  gstDetails.cESSAmt != null && gstDetails.cESSAmt !== 0;
+
+  if (iGSTSet) {
+    this.disableFields = {
+      iGST: false,
+      cGST: true,
+      sGST: true,
+      cESS: true
+    };
+  } else if (cGSTSet) {
+    this.disableFields = {
+      iGST: true,
+      cGST: false,
+      sGST: true,
+      cESS: true
+    };
+  } else if (sGSTSet) {
+    this.disableFields = {
+      iGST: true,
+      cGST: true,
+      sGST: false,
+      cESS: true
+    };
+  } else if (cESSSet) {
+    this.disableFields = {
+      iGST: true,
+      cGST: true,
+      sGST: true,
+      cESS: false
+    };
+  } else {
+    // If nothing is set, enable all
+    this.disableFields = {
+      iGST: false,
+      cGST: false,
+      sGST: false,
+      cESS: false
+    };
+  }
+  this.gstamt();
+}
 
   navbar(s) {
     switch (s) {
@@ -176,54 +237,44 @@ export class BiltychildComponent {
 
   }
 
-   gstdefault() {
-    this.gst.iGST = this.gst.cGST = this.gst.sGST = this.gst.cESS = 0;
+  gstdefault() {
+    this.entity.biltyGstDetails.igst = this.entity.biltyGstDetails.cgst = this.entity.biltyGstDetails.sgst = this.entity.biltyGstDetails.cess = 0;
   }
 
-  IGST() {
-    this.gst.cGST = Number(this.gst.iGST || 0) / 2;
-    this.gst.sGST = Number(this.gst.iGST || 0) / 2;
-  }
-ainIndex: any;
-   addGst() {
-    if (this.ainIndex == null) {
-      this.entity.biltyGstDetails.push(this.gst);
-    } else {
-      this.entity.biltyGstDetails[this.ainIndex] = this.gst;
+  
+
+  igstAmont: number = 0
+  gstamt() {
+    if (Number(this.entity.biltyGstDetails.igst)) {
+      this.entity.biltyGstDetails.igstAmt = (this.entity.TotalFreight * Number(this.entity.biltyGstDetails.igst)) / 100
+      this.entity.biltyGstDetails.totalAmt=this.entity.TotalFreight+this.entity.biltyGstDetails.igstAmt;
     }
-    this.gst = {};
-    this.ainIndex = null;
-    this.gstdefault();
-  }
-
-   editGst(s) {
-    this.ainIndex = this.entity.biltyGstDetails.indexOf(s);
-    this.gst = Object.assign({}, s);
-  }
-  deleteGst(s) {
-    var params = {
-      dialog: 'confirm',
-      title: "warning",
-      message: "Do You Want Delete Row",
+    else if (Number(this.entity.biltyGstDetails.cgst)) {
+      this.entity.biltyGstDetails.cgstAmt = (this.entity.TotalFreight * Number(this.entity.biltyGstDetails.cgst)) / 100
+      this.entity.biltyGstDetails.totalAmt=this.entity.TotalFreight+this.entity.biltyGstDetails.cgstAmt;
     }
-    this.dialog.swal(params).then(data => {
-      if (data == true) {
-        const gstRowIndex = this.entity.biltyGstDetails.indexOf(s);
-        this.entity.biltyGstDetails.splice(gstRowIndex, 1);
-
-
-      }
+    else if (Number(this.entity.biltyGstDetails.sgst)) {
+      this.entity.biltyGstDetails.sgstAmt = (this.entity.TotalFreight * Number(this.entity.biltyGstDetails.sgst)) / 100
+      this.entity.biltyGstDetails.totalAmt=this.entity.TotalFreight+this.entity.biltyGstDetails.sgstAmt;
     }
-    )
+    else {
+      this.entity.biltyGstDetails.cessAmt = (this.entity.TotalFreight * Number(this.entity.biltyGstDetails.cess)) / 100
+      this.entity.biltyGstDetails.totalAmt=this.entity.TotalFreight+this.entity.biltyGstDetails.cessAmt;
+    }
   }
 
-  edit(){
+ 
+
+
+
+
+  edit() {
     this.navactions.navaction("view");
 
     this.callbackedit();
   }
 
-  save(){
+  save() {
     Object.keys(this.biltychild.form.controls).forEach(key => {
       const control = this.biltychild.form.controls[key];
       if (control.invalid) {
@@ -236,9 +287,9 @@ ainIndex: any;
       if (!this.entity.vchId) {
         if (!this.entity.biltyAudit.createdUser)
           this.entity.biltyAudit.createdUser = this.provider.companyinfo.company.username;
-        
 
-          this.entity.firmId = this.provider.companyinfo.company?.firm.firmCode,
+
+        this.entity.firmId = this.provider.companyinfo.company?.firm.firmCode,
           this.entity.divId = this.provider.companyinfo.company.divId;
 
         this.http.post('Bilty/insert', this.master.cleanObject(this.entity, 2)).subscribe({
@@ -248,7 +299,7 @@ ainIndex: any;
               this.entity.vchId = res.data.vchId;
 
               if (!this.entity.biltyAudit) {
-                this.entity.biltyAudit ={};
+                this.entity.biltyAudit = {};
               }
               if (!this.entity.biltyDetails) {
                 this.entity.biltyDetails = {};
@@ -281,6 +332,9 @@ ainIndex: any;
               if (!this.entity.biltyDetails) {
                 this.entity.biltyDetails = {};
               }
+               if (!this.entity.biltyGstDetails) {
+                this.entity.biltyGstDetails = {};
+              }
 
               this.dialog.swal({ dialog: "success", title: "Success", message: "Record is Update sucessfully" });
               this.navactions.navaction("OK");
@@ -301,24 +355,59 @@ ainIndex: any;
       this.dialog.swal({ dialog: 'error', title: 'Error', message: "Please Fill All The Required Fields.." })
     }
   }
-  undo(){
+  undo() {
     this.entity = this.pastentity;
 
     this.callbackedit();
   }
-motormemoprint(){}
-close(){
-   this.location.back();
-}
-  callbackedit(){}
-  newRecord(){
+  motormemoprint() { }
+  close() {
+    this.location.back();
+  }
+  callbackedit() {
+    this.spinner.show();
+    var url = "Bilty/edit"
+    this.http.get(url, { id: this.entity.vchId }).subscribe({
+      next: (res: any) => {
+        if (res.status_cd == 1) {
+          this.entity = res.data;
+
+          this.entity.biltyAudit = this.entity.biltyAudit || {};
+          this.entity.biltyGstDetails = this.entity.biltyGstDetails || {};
+          this.entity.biltyDetails = this.entity.biltyDetails || {};
+
+          this.entity.biltyAudit.createdDt = this.entity.biltyAudit.createdDt ?? this.datepipe.transform(this.entity.biltyAudit.createdDt, 'yyyy-MM-dd')
+          this.entity.biltyAudit.modifiedDt = this.entity.biltyAudit.modifiedDt ?? this.datepipe.transform(this.entity.biltyAudit.modifiedDt, 'yyyy-MM-dd');
+
+     
+
+          this.pastentity = Object.assign({}, this.entity);
+
+        
+        }
+        this.spinner.hide();
+        this.additinOfFreight();
+        //this.gstamt();
+
+        this.totalDebit();
+        this.isReceiverClicked = false;
+        this.isSenderClicked = false;
+        this.SenderisClicked = false
+        this.ReceiverisClicked = false
+      }, error: (err: any) => {
+        this.spinner.hide();
+        this.dialog.swal({ dialog: 'error', title: 'Error', message: err });
+      }
+    })
+   }
+  newRecord() {
     this.pastentity = JSON.parse(JSON.stringify(this.entity))
 
     this.entity = {};
     this.entity.biltyAudit = {};
     this.entity.biltyDetails = {};
     this.entity.biltyCommodities = []
-    this.entity.biltyGstDetails=[]
+    this.entity.biltyGstDetails = {}
     this.entity.biltyNo = 0;
     this.entity.freightType = 0;
     this.entity.totalcharges = 0;
@@ -326,7 +415,7 @@ close(){
     this.gstdefault();
   }
 
-   getVehicles() {
+  getVehicles() {
     if (!this.entity.vehicleNo || this.entity.vehicleNo.length < 4) {
       return;
     }
@@ -336,7 +425,7 @@ close(){
       PageSize: 10,
       Keys: [{ key: 'vehicleNo', value: this.entity.vehicleNo || 0 }]
     }
-     this.http.post('Vehicle/vehiclelist', param).subscribe({
+    this.http.post('Vehicle/vehiclelist', param).subscribe({
       next: (res: any) => {
         if (res.status_cd == 1) {
           this.reference = res.data;
@@ -351,7 +440,7 @@ close(){
       }
     })
   }
-   windowrespo() {
+  windowrespo() {
     if (window.innerWidth <= 767) {
       this.status = true;
     } else {
@@ -359,7 +448,7 @@ close(){
     }
   }
 
-onPageChange(newPage?: number): void {
+  onPageChange(newPage?: number): void {
     if (newPage !== this.page) {
       //@ts-ignore
       this.page = newPage;
@@ -367,7 +456,7 @@ onPageChange(newPage?: number): void {
     }
   }
 
-   onserchvender() {
+  onserchvender() {
     var param = {
       PageNumber: this.page || 1,
       PageSize: this.pageSize,
@@ -399,7 +488,7 @@ onPageChange(newPage?: number): void {
     });
   }
 
-   receivclick(v) {
+  receivclick(v) {
     this.entity.biltyDetails.receiverName = v.name;
     this.entity.biltyDetails.receiverMobileNo = v.mobileNo
     this.entity.biltyDetails.receiverGstin = v.gstinNo
@@ -430,8 +519,8 @@ onPageChange(newPage?: number): void {
     $('#SenderModal').modal('hide');
   };
 
-  SenderSavefun(){
-     this.dialog.swal({
+  SenderSavefun() {
+    this.dialog.swal({
       dialog: 'confirm',
       title: 'Confirm Save',
       message: 'Do you want to save this record?',
@@ -465,8 +554,8 @@ onPageChange(newPage?: number): void {
       }
     });
   }
-sendergstinfun(){
-  this.http.get('Vendor/GstinbyInfo', {
+  sendergstinfun() {
+    this.http.get('Vendor/GstinbyInfo', {
       gstin: this.entity.biltyDetails.senderGstin || "",
       mobileno: this.entity.biltyDetails.senderMobileNo || "",
     }).subscribe({
@@ -501,17 +590,17 @@ sendergstinfun(){
 
       }
     })
-}
-Senderfuncion(){
+  }
+  Senderfuncion() {
     $('#SenderModal').modal('show');
     this.commanfunction();
-}
+  }
 
-onserchinput: string
-filteredSenders = [];
-totalCount: number = 0;
+  onserchinput: string
+  filteredSenders = [];
+  totalCount: number = 0;
 
-commanfunction() {
+  commanfunction() {
     var param = {
       PageNumber: this.page || 1,
       PageSize: this.pageSize,
@@ -540,14 +629,14 @@ commanfunction() {
       }
     });
   }
-ReceiverSavefun(){
-  
+  ReceiverSavefun() {
+
     this.dialog.swal({
       dialog: 'confirm',
       title: 'Confirm Save',
       message: 'Do you want to save this record?',
     }).then((result: any) => {
-      
+
       if (result) {
         const venderData = {
           name: this.entity.biltyDetails.receiverName,
@@ -565,14 +654,14 @@ ReceiverSavefun(){
         this.http.post('Vendor/insert', venderData).subscribe({
           next: (res: any) => {
             if (res.status_cd == 1) {
-              
+
               this.dialog.swal({ dialog: "success", title: "Success", message: "Record is saved successfully" });
               this.ReceiverisClicked = false
             }
             this.spinner.hide();
           },
           error: (err: any) => {
-            
+
             this.spinner.hide();
             this.dialog.swal({
               dialog: 'error',
@@ -585,9 +674,9 @@ ReceiverSavefun(){
     }).catch((error: any) => {
       console.error("Dialog error:", error);
     });
-}
-Recevergstin(){
-  
+  }
+  Recevergstin() {
+
 
     this.http.get('Vendor/GstinbyInfo', {
       gstin: this.entity.biltyDetails.receiverGstin || "",
@@ -623,17 +712,17 @@ Recevergstin(){
         this.dialog.swal({ dialog: 'error', title: 'Error', message: err.message });
       }
     })
-}
-receiverfuncion(){
+  }
+  receiverfuncion() {
     $('#Modal').modal('show');
     this.commanfunction();
-}
-calculateFreight(){
-   const weight = this.cmod.chrgWeight || 0;
+  }
+  calculateFreight() {
+    const weight = this.cmod.chrgWeight || 0;
     const rate = this.cmod.rate || 0;
     this.cmod.freight = weight * rate;
-}
-calculateAmounts() {
+  }
+  calculateAmounts() {
     let total = this.entity.totaldebitadd || 0;
 
 
@@ -648,13 +737,13 @@ calculateAmounts() {
     }
   }
 
- totalDebit() {
+  totalDebit() {
     this.entity.totaldebitadd = Number(this.entity.totalothercharges || 0) + Number(this.entity.TotalFreight);
     this.calculateAmounts()
   }
 
-addgstTablerow(){
-   if (this.cmod.commodity && this.cmod.uom && this.cmod.qty && this.cmod.chrgWeight && this.cmod.actWeight && this.cmod.rate && this.cmod.freight) {
+  addgstTablerow() {
+    if (this.cmod.commodity && this.cmod.uom && this.cmod.qty && this.cmod.chrgWeight && this.cmod.actWeight && this.cmod.rate && this.cmod.freight) {
 
       if (this.rowIndex == null) {
         this.entity.biltyCommodities.push(this.cmod);
@@ -667,9 +756,9 @@ addgstTablerow(){
       this.additinOfFreight()
       this.totalDebit()
     }
-}
+  }
 
- additinOfFreight() {
+  additinOfFreight() {
     var sumArray = this.entity.biltyCommodities
       .map(item => item.freight || 0);
 
@@ -682,11 +771,11 @@ addgstTablerow(){
     this.totalDebit()
   }
 
- editgstTablerow(obj, index) {
+  editgstTablerow(obj, index) {
     this.rowIndex = index;
     this.cmod = Object.assign({}, obj);
   }
-deletegstTablerow(index) {
+  deletegstTablerow(index) {
 
     var params = {
 

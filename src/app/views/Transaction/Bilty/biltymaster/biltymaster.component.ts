@@ -54,7 +54,11 @@ entity: any = {};
     this.stateParams = this.location.getState();
     this.mode = this.stateParams.action;
     this.innerWidth = window.innerWidth;
-
+   this.gridParams = { 
+      firm_id: this.provider.companyinfo.company?.firmCode,
+      div_id: this.provider.companyinfo.company.divId, 
+     
+    }
     
     fromEvent(window, 'resize')
       .pipe(debounceTime(100))
@@ -71,11 +75,11 @@ entity: any = {};
     };
 
     this.columns = [
-      { field: 'memoNo', headerName: 'LR Number', filter: "agTextColumnFilter", flex: 1 },
+      { field: 'biltyNo', headerName: 'LR Number', filter: "agTextColumnFilter", flex: 1 },
       { field: 'from_Dstn', headerName: 'Form', filter: "agTextColumnFilter", flex: 1 },
       { field: 'to_Dstn', headerName: 'To', filter: "agTextColumnFilter", flex: 1 },
-      { field: 'motormemoDetails.senderName', headerName: 'Sender Name', filter: "agTextColumnFilter", flex: 1 },
-      { field: 'motormemoDetails.receiverName', headerName: 'Reciver Name', filter: "agTextColumnFilter", flex: 1 },
+      { field: 'biltyDetails.senderName', headerName: 'Sender Name', filter: "agTextColumnFilter", flex: 1 },
+      { field: 'biltyDetails.receiverName', headerName: 'Reciver Name', filter: "agTextColumnFilter", flex: 1 },
       {
         headerName: 'Action',
         cellRenderer: ActBtnComponent,
