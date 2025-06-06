@@ -253,9 +253,9 @@ export class PaymentchildComponent {
       this.entity.divId = this.provider.companyinfo.company.divId
 
       if (!this.entity.acc00200.createdUser)
-        this.entity.acc00200.createdUser = this.provider.companyinfo.company.username;
+        this.entity.acc00200.createdUser = this.provider.companyinfo.userinfo.username;
       else
-        this.entity.acc00200.modifiedUser = this.provider.companyinfo.company.username;
+        this.entity.acc00200.modifiedUser = this.provider.companyinfo.userinfo.username;
 
 
       this.http.post('payment/insert', this.master.cleanObject(this.entity, 2)).subscribe({

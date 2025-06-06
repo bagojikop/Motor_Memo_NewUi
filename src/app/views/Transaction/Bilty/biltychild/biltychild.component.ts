@@ -53,7 +53,7 @@ export class BiltychildComponent {
   pastentity;
   selectedVehicle: string = '';
   Orderlist: any;
-
+  bilty:any={}
   canEdit: boolean = false;
 
   isReceiverClicked: boolean = true;
@@ -143,67 +143,9 @@ export class BiltychildComponent {
     }
 
   }
-  disableFields = {
-  iGST: false,
-  cGST: false,
-  sGST: false,
-  cESS: false
-};
 
-checkChange() {
-  const gstDetails = this.entity.biltyGstDetails;
 
-  const iGSTSet = gstDetails.iGST != null && gstDetails.iGST !== 0 &&
-                  gstDetails.iGSTAmt != null && gstDetails.iGSTAmt !== 0;
 
-  const cGSTSet = gstDetails.cGST != null && gstDetails.cGST !== 0 &&
-                  gstDetails.cGSTAmt != null && gstDetails.cGSTAmt !== 0;
-
-  const sGSTSet = gstDetails.sGST != null && gstDetails.sGST !== 0 &&
-                  gstDetails.sGSTAmt != null && gstDetails.sGSTAmt !== 0;
-
-  const cESSSet = gstDetails.cESS != null && gstDetails.cESS !== 0 &&
-                  gstDetails.cESSAmt != null && gstDetails.cESSAmt !== 0;
-
-  if (iGSTSet) {
-    this.disableFields = {
-      iGST: false,
-      cGST: true,
-      sGST: true,
-      cESS: true
-    };
-  } else if (cGSTSet) {
-    this.disableFields = {
-      iGST: true,
-      cGST: false,
-      sGST: true,
-      cESS: true
-    };
-  } else if (sGSTSet) {
-    this.disableFields = {
-      iGST: true,
-      cGST: true,
-      sGST: false,
-      cESS: true
-    };
-  } else if (cESSSet) {
-    this.disableFields = {
-      iGST: true,
-      cGST: true,
-      sGST: true,
-      cESS: false
-    };
-  } else {
-    // If nothing is set, enable all
-    this.disableFields = {
-      iGST: false,
-      cGST: false,
-      sGST: false,
-      cESS: false
-    };
-  }
-  this.gstamt();
-}
 
   navbar(s) {
     switch (s) {
@@ -286,13 +228,13 @@ checkChange() {
       this.spinner.show();
       if (!this.entity.vchId) {
         if (!this.entity.biltyAudit.createdUser)
-          this.entity.biltyAudit.createdUser = this.provider.companyinfo.company.username;
+          this.entity.biltyAudit.createdUser = this.provider.companyinfo.userinfo.username;
 
 
         this.entity.firmId = this.provider.companyinfo.company?.firm.firmCode,
           this.entity.divId = this.provider.companyinfo.company.divId;
-
-        this.http.post('Bilty/insert', this.master.cleanObject(this.entity, 2)).subscribe({
+        this.bilty=this.entity;
+        this.http.post('Bilty/insert', this.bilty, 2).subscribe({
           next: (res: any) => {
             if (res.status_cd == 1) {
 
@@ -320,7 +262,7 @@ checkChange() {
       else {
         this.entity.firmId = this.provider.companyinfo.company?.firm.firmCode,
           this.entity.divId = this.provider.companyinfo.company.divId;
-        this.entity.biltyAudit.modifiedUser = this.provider.companyinfo.company.username;
+        this.entity.biltyAudit.modifiedUser = this.provider.companyinfo.userinfo.username;
         this.http.put('Bilty/update', this.master.cleanObject(this.entity, 2), { id: this.entity.vchId }).subscribe({
           next: (res: any) => {
             this.spinner.hide()
@@ -411,7 +353,7 @@ checkChange() {
     this.entity.biltyNo = 0;
     this.entity.freightType = 0;
     this.entity.totalcharges = 0;
-    this.entity.dt = new Date().toShortString();
+    this.entity.vchDate = new Date().toShortString();
     this.gstdefault();
   }
 
@@ -535,7 +477,7 @@ checkChange() {
           StateCode: this.entity.biltyDetails.senderStateId,
           emailId: this.entity.biltyDetails.senderMail,
           accCode: null,
-          createdUser: this.provider.companyinfo.company.username,
+          createdUser: this.provider.companyinfo.userinfo.username,
           createdDt: new Date().toISOString(),
         };
 
@@ -647,7 +589,7 @@ checkChange() {
           stateCode: this.entity.biltyDetails.receiverStateId,
           emailId: this.entity.biltyDetails.receiverMail,
           ewayNo: this.entity.biltyDetails.ewayNo,
-          createdUser: this.provider.companyinfo.company.username,
+          createdUser: this.provider.companyinfo.userinfo.username,
           createdDt: new Date().toISOString(),
         };
 

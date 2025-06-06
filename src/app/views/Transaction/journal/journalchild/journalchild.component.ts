@@ -234,9 +234,9 @@ export class JournalchildComponent {
       this.entity.firmId = this.provider.companyinfo.company?.firmCode;
       this.entity.divId = this.provider.companyinfo.company.divId
       if (!this.entity.acc00500.createdUser)
-        this.entity.acc00500.createdUser = this.provider.companyinfo.company.userinfo.username;
+        this.entity.acc00500.createdUser = this.provider.companyinfo.userinfo.username;
       else
-        this.entity.acc00500.modifiedUser = this.provider.companyinfo.company.userinfo.username;
+        this.entity.acc00500.modifiedUser = this.provider.companyinfo.userinfo.username;
 
       this.http.post('journal/insert', this.master.cleanObject(this.entity, 2)).subscribe({
         next: (res: any) => {

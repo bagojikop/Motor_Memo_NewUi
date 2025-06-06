@@ -159,6 +159,14 @@ export const routes: Routes = [
         loadComponent: () => import('./views/Transaction/Bilty/biltychild/biltychild.component').then((m) => m.BiltychildComponent)
       },
       {
+        path: 'lorry-receipt2',
+        loadComponent: () => import('./views/Transaction/Lorryreceipt2/lorry-rece2-dash/lorry-rece2-dash.component').then((m) => m.LorryRece2DashComponent)
+      },
+      {
+        path: 'lorry-receipt2_child',
+        loadComponent: () => import('./views/Transaction/Lorryreceipt2/lorry-rece-child/lorry-rece-child.component').then((m) => m.LorryReceChildComponent)
+      },
+      {
         path: 'Summary',
         loadComponent: () => import('./views/Transaction/summary/summary.component').then((m) => m.SummaryComponent)
       },

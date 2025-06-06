@@ -213,7 +213,7 @@ export class BalanceSheetComponent implements AfterViewInit{
     var param = {
       firm_id: this.provider.companyinfo.company.firmCode,
       div_id: this.provider.companyinfo.company.divId,
-      username: this.provider.companyinfo.company.userinfo.username,
+      username: this.provider.companyinfo.userinfo.username,
       edt: this.entity.edt
 
     }

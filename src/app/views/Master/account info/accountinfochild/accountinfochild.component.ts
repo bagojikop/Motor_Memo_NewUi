@@ -274,7 +274,7 @@ export class AccountinfochildComponent implements OnInit {
       this.spinner.show();
       if (!this.entity.accCode) {
         if (!this.entity.createdUser)
-          this.entity.createdUser = this.provider.companyinfo.company.userinfo.username;
+          this.entity.createdUser = this.provider.companyinfo.userinfo.username;
 
         this.http.post('Account/insert', this.master.cleanObject(this.entity, 2)).subscribe({
           next: (res: any) => {
@@ -312,7 +312,7 @@ export class AccountinfochildComponent implements OnInit {
       }
       else {
        
-        this.entity.modifiedUser = this.provider.companyinfo.company.username;
+        this.entity.modifiedUser = this.provider.companyinfo.userinfo.username;
         this.http.put('Account/update', this.master.cleanObject(this.entity, 2), { id: this.entity.accCode }).subscribe({
           next: (res: any) => {
 

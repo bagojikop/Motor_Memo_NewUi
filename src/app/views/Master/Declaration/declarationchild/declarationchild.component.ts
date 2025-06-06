@@ -149,7 +149,7 @@ export class DeclarationchildComponent {
       this.spinner.show();
       if (!this.entity.declrId) {
         if (!this.entity.createdUser)
-          this.entity.createdUser = this.provider.companyinfo.company.username;
+          this.entity.createdUser = this.provider.companyinfo.userinfo.username;
         this.entity.sCode = 2;
         this.entity.declrNo = 10;
         this.entity.fyId = this.provider.companyinfo.company.divId
@@ -172,8 +172,8 @@ export class DeclarationchildComponent {
         })
       }
       else {
-        this.entity.modifiedUser = this.provider.companyinfo.company.userinfo.username;
-        this.entity.modifiedUser = this.provider.companyinfo.company.username;
+        this.entity.modifiedUser = this.provider.companyinfo.userinfo.username;
+        
         this.http.put('Declaration/update', this.master.cleanObject(this.entity, 2), { id: this.entity.declrId }).subscribe({
           next: (res: any) => {
             this.spinner.hide()

@@ -861,7 +861,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let v of reference | paginate: { itemsPerPage:pageSize,totalItems:this.totalCount,  currentPage: page }; let i = index"
+                        <tr *ngFor="let v of reference | paginate: { itemsPerPage:pageSize,totalItems:this.totalCount,currentPage: page }; let i = index"
                             (click)=" receivclick(v)">
                             <td style="width: 5rem;">{{ i + 1 }}</td>
                             <td style="text-align: left;">{{ v.name }}</td>

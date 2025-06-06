@@ -153,7 +153,7 @@ export class VehicleTypeChildComponent {
 
       if (!this.entity.createdUser)
 
-        this.entity.createdUser = this.provider.companyinfo.company.userinfo.username;
+        this.entity.createdUser = this.provider.companyinfo.userinfo.username;
 
 
       let body = this.master.cleanObject(this.entity, 2);
@@ -184,7 +184,7 @@ export class VehicleTypeChildComponent {
 
     else {
 
-      this.entity.modifiedUser = this.provider.companyinfo.company.userinfo.username;
+      this.entity.modifiedUser = this.provider.companyinfo.userinfo.username;
       this.http.put('VehicleType/update', this.master.cleanObject(this.entity, 2), { id: this.entity.vtypeId }).subscribe({
         next: (res: any) => {
           this.spinner.hide()

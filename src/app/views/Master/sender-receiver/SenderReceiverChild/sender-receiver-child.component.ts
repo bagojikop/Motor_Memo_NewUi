@@ -159,9 +159,9 @@ export class SenderReceiverChildComponent {
       this.spinner.show();
       if (!this.entity.id) {
         if (!this.entity.createdUser)
-          this.entity.createdUser = this.provider.companyinfo.company.username;
+          this.entity.createdUser = this.provider.companyinfo.userinfo.username;
 
-        this.entity.createdUser = this.provider.companyinfo.company.username;
+        this.entity.createdUser = this.provider.companyinfo.userinfo.username;
 
         this.http.post('Vendor/insert', this.entity).subscribe({
           next: (res: any) => {

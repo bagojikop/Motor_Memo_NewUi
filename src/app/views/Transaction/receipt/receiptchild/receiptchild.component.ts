@@ -269,10 +269,10 @@ export class ReceiptchildComponent {
 
 
       if (!this.entity.acc00300.createdUser) {
-        this.entity.acc00300.createdUser = this.provider.companyinfo.company.userinfo.username || '';
+        this.entity.acc00300.createdUser = this.provider.companyinfo.userinfo.username || '';
         this.entity.acc00300.createdDt = new Date().toISOString()
       } else {
-        this.entity.acc00300.modifiedUser = this.provider.companyinfo.company.userinfo.username || '';
+        this.entity.acc00300.modifiedUser = this.provider.companyinfo.userinfo.username || '';
         this.entity.acc00300.modifiedDt = new Date().toISOString()
 
       }

@@ -103,7 +103,6 @@ export class SummaryComponent {
   addNew() {
     this.entity = {};
     $("#district").modal('show');
-
   }
 
   onCellClicked(index) {
@@ -136,14 +135,13 @@ export class SummaryComponent {
     this.entity = s;
     this.entity.accCodeNavigation = s.accCodeNavigation;
     $("#district").modal('show');
-
   }
+
   Delete(s) {
     var params = {
       dialog: 'confirm',
       title: "warning",
       message: "Do You Want Delete Row",
-
     }
 
     this.dialog.swal(params).then(data => {
@@ -152,6 +150,8 @@ export class SummaryComponent {
       }
     })
   }
+
+  
   iConfirmFn(row) {
     var params = {
       id: row.sId

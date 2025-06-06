@@ -210,9 +210,9 @@ export class ContrachildComponent {
       this.entity.firmId = this.provider.companyinfo.company?.firmCode;
       this.entity.divId = this.provider.companyinfo.company.divId
       if (!this.entity.contraAudit.createdUser)
-        this.entity.contraAudit.createdUser = this.provider.companyinfo.company.userinfo.username;
+        this.entity.contraAudit.createdUser = this.provider.companyinfo.userinfo.username;
       else
-        this.entity.contraAudit.modifiedUser = this.provider.companyinfo.company.userinfo.username;
+        this.entity.contraAudit.modifiedUser = this.provider.companyinfo.userinfo.username;
 
       this.http.post('contra/post', this.master.cleanObject(this.entity, 2)).subscribe({
         next: (res: any) => {

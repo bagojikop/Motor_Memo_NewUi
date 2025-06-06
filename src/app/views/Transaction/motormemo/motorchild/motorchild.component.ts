@@ -357,8 +357,8 @@ export class MotorchildComponent {
       this.spinner.show();
       if (!this.entity.vchId) {
         if (!this.entity.motormemoAudit.createdUser)
-          this.entity.motormemoAudit.createdUser = this.provider.companyinfo.company.username;
-        this.entity.motormemoAudit.createdDt =
+          this.entity.motormemoAudit.createdUser = this.provider.companyinfo.userinfo.username;
+        
 
           this.entity.firmId = this.provider.companyinfo.company?.firm.firmCode,
           this.entity.divId = this.provider.companyinfo.company.divId;
@@ -391,7 +391,7 @@ export class MotorchildComponent {
       else {
         this.entity.firmId = this.provider.companyinfo.company?.firm.firmCode,
           this.entity.divId = this.provider.companyinfo.company.divId;
-        this.entity.motormemoAudit.modifiedUser = this.provider.companyinfo.company.username;
+        this.entity.motormemoAudit.modifiedUser = this.provider.companyinfo.userinfo.username;
         this.http.put('MotorMemo/update', this.master.cleanObject(this.entity, 2), { id: this.entity.vchId }).subscribe({
           next: (res: any) => {
             this.spinner.hide()
@@ -438,7 +438,7 @@ export class MotorchildComponent {
     this.entity = <SubconsigneeObj>{};
     this.entity.motormemoAudit = <MotormemoAuditObj>{};
     this.entity.motormemoDetails = <MotormemoDetailsObj>{};
-    this.entity.motormemoCommodities = []
+    this.entity.motormemoCommodities = [];
     this.entity.motormemoExpenses = [];
     this.entity.motormemoOtherCharges = [];
     this.entity.memoNo = 0;
@@ -446,21 +446,18 @@ export class MotorchildComponent {
     this.entity.totalcharges = 0;
     this.entity.dt = new Date().toShortString();
   }
+
   edit() {
     this.navactions.navaction("view");
-
     this.callbackedit();
-
   }
 
   undo() {
     this.entity = this.pastentity;
-
     this.callbackedit();
   }
 
   getSelectOptionLabel(value: number): string {
-   
     if (value == 0) {
       return 'Deduct';
     } else if (value == 1) {
@@ -470,7 +467,6 @@ export class MotorchildComponent {
     } else {
       return 'Unknown'; 
     }
-
   }
 
   
@@ -505,11 +501,8 @@ export class MotorchildComponent {
   }
 
   onRowClick(v) {
-
     this.entity.vehicleNo = v.vehicleNo;
     this.entity.oweraccount = v.accCodeNavigation;
-
-
     $('#exampleModal').modal('hide');
   }
 
@@ -818,7 +811,7 @@ export class MotorchildComponent {
           StateCode: this.entity.motormemoDetails.senderStateId,
           emailId: this.entity.motormemoDetails.senderMail,
           accCode: null,
-          createdUser: this.provider.companyinfo.company.username,
+          createdUser: this.provider.companyinfo.userinfo.username,
           createdDt: new Date().toISOString(),
         };
 
@@ -858,7 +851,7 @@ export class MotorchildComponent {
           stateCode: this.entity.motormemoDetails.receiverStateId,
           emailId: this.entity.motormemoDetails.receiverMail,
           ewayNo: this.entity.motormemoDetails.ewayNo,
-          createdUser: this.provider.companyinfo.company.username,
+          createdUser: this.provider.companyinfo.userinfo.username,
           createdDt: new Date().toISOString(),
         };
 

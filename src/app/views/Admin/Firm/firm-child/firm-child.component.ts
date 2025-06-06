@@ -209,7 +209,7 @@ export class FirmChildComponent {
   }
   save() {
 
-    this.entity.createdUser = this.provider.companyinfo.company.userinfo.username;
+    this.entity.createdUser = this.provider.companyinfo.userinfo.username;
 
     this.spinner.show();
 
