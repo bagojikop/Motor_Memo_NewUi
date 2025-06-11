@@ -444,7 +444,16 @@ export class MotorchildComponent {
     this.entity.memoNo = 0;
     this.entity.freightType = 0;
     this.entity.totalcharges = 0;
-    this.entity.dt = new Date().toShortString();
+    // this.entity.dt = new Date().toShortString();
+    const today = new Date();
+    const finYearEnd = new Date(this.provider.companyinfo.finyear.tdt);
+
+    // Compare today's date with financial year end
+    if (today >= finYearEnd) {
+      this.entity.dt = finYearEnd.toISOString().split('T')[0];
+    } else {
+      this.entity.dt = today.toISOString().split('T')[0];
+    }
   }
 
   edit() {
@@ -919,8 +928,6 @@ export class MotorchildComponent {
   }
 
   additinOftotalchages() {
-
-
     var sumArray = this.entity.motormemoOtherCharges.map(item => {
       return item.otherchag;
     });

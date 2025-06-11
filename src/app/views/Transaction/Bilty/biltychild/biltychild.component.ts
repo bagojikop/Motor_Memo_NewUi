@@ -353,7 +353,16 @@ export class BiltychildComponent {
     this.entity.biltyNo = 0;
     this.entity.freightType = 0;
     this.entity.totalcharges = 0;
-    this.entity.vchDate = new Date().toShortString();
+    const today = new Date();
+    const finYearEnd = new Date(this.provider.companyinfo.finyear.tdt);
+
+    // Compare today's date with financial year end
+    if (today >= finYearEnd) {
+      this.entity.vchDate = finYearEnd.toISOString().split('T')[0];
+    } else {
+      this.entity.vchDate = today.toISOString().split('T')[0];
+    }
+    
     this.gstdefault();
   }
 

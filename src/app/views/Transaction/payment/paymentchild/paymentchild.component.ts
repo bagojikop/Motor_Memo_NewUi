@@ -134,7 +134,15 @@ export class PaymentchildComponent {
     this.entity.paySellerBuyer.supplierType = 1;
     this.entity.paySellerBuyer.partyType = 1;
     this.entity.paySellerBuyer.stateType = "1";
-    this.entity.vchDate = new Date().toShortString()
+    const today = new Date();
+    const finYearEnd = new Date(this.provider.companyinfo.finyear.tdt);
+
+    // Compare today's date with financial year end
+    if (today >= finYearEnd) {
+      this.entity.vchDate = finYearEnd.toISOString().split('T')[0];
+    } else {
+      this.entity.vchDate = today.toISOString().split('T')[0];
+    }
     this.entity.sdt = this.provider.companyinfo.finyear.fdt ? this.provider.companyinfo.finyear.fdt.toShortString() : '';
     this.entity.edt = this.provider.companyinfo.finyear.tdt ? this.provider.companyinfo.finyear.tdt.toShortString() : '';
     this.entity.currdt = new Date().toShortString()
