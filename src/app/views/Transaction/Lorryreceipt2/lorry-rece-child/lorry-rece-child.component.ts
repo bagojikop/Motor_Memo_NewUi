@@ -156,7 +156,7 @@ export class LorryReceChildComponent {
         break;
 
       case 'print':
-
+        this.motormemo2print()
         this.ngview = true;
         break;
 
@@ -173,6 +173,24 @@ export class LorryReceChildComponent {
       this.page = newPage;
       this.getbiltylist();
     }
+  }
+
+
+  motormemo2print() {
+    this.myServiceUrl = "Motormemo2Report";
+
+    this.myReportDictionory = {
+      reportCacheId: uuidv4(),
+      reportParams: [
+        {
+          key: "vch_id", value: this.entity.vchId,
+        },
+        {
+          key: "firm_id", value: this.provider.companyinfo.company?.firmCode,
+
+        }]
+    };
+    this.rptMode = true;
   }
 
 

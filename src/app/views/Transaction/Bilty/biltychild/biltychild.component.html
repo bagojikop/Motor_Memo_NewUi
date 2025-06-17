@@ -113,6 +113,14 @@
                                                     [maxlength]="6" [minlength]="6">
                                             </div>
                                             <div class="gapInputFields">
+                                                <label>Place</label>
+                                                <input class="form-control" type="text" autocomplete="off"
+                                                    [(ngModel)]="entity.biltyDetails.senderPlace" name="sendplace">
+                                            </div>
+
+                                        </div>
+                                        <div class="d-flex">
+                                            <div class="d-flex-width">
                                                 <app-ngselect apiUrl="state/getStates" label="State"
                                                     bindLabel="stateName" bindValue="stateCode" name="senderStateId"
                                                     [(ngModel)]="entity.biltyDetails.senderStateId"
@@ -120,11 +128,15 @@
                                                     [defaultProperty]="entity.senderStateId" #senderStateId="ngModel"
                                                     [required]="true"></app-ngselect>
                                             </div>
+                                            <div class="gapInputFields">
+                                                <dss-input label="Email" type="email" name="senderemail"
+                                                    autocomplete="off" [(ngModel)]="entity.biltyDetails.senderMail"
+                                                    [maxlength]="50"
+                                                    (input)="entity.biltyDetails.senderMail = entity.biltyDetails.senderMail.toLowerCase()">
+                                                </dss-input>
+                                            </div>
                                         </div>
-                                        <dss-input label="Email" type="email" name="senderemail" autocomplete="off"
-                                            [(ngModel)]="entity.biltyDetails.senderMail" [maxlength]="50"
-                                            (input)="entity.biltyDetails.senderMail = entity.biltyDetails.senderMail.toLowerCase()">
-                                        </dss-input>
+
                                         <div class="d-flex">
                                             <div class="d-flex-width">
                                                 <label for=""
@@ -214,6 +226,14 @@
                                                     [maxlength]="6" [minlength]="6">
                                             </div>
                                             <div class="gapInputFields">
+                                                <label>Place</label>
+                                                <input class="form-control" type="text" autocomplete="off"
+                                                    [(ngModel)]="entity.biltyDetails.receiverPlace"
+                                                    name="receiverPlace">
+                                            </div>
+                                        </div>
+                                        <div class="d-flex">
+                                            <div class="d-flex-width">
                                                 <app-ngselect apiUrl="state/getStates" label="State"
                                                     bindLabel="stateName" bindValue="stateCode" name="receivStateId"
                                                     [(ngModel)]="entity.biltyDetails.receiverStateId"
@@ -221,11 +241,14 @@
                                                     [disabled]="navactions.fieldset" #receivStateId="ngModel"
                                                     [required]="true"></app-ngselect>
                                             </div>
+                                            <div class="gapInputFields">
+                                                <dss-input label="Email" type="email" name="email" autocomplete="off"
+                                                    [(ngModel)]="entity.biltyDetails.receiverMail" [maxlength]="50"
+                                                    (input)="entity.biltyDetails.receiverMail = entity.biltyDetails.receiverMail.toLowerCase()">
+                                                </dss-input>
+                                            </div>
                                         </div>
-                                        <dss-input label="Email" type="email" name="email" autocomplete="off"
-                                            [(ngModel)]="entity.biltyDetails.receiverMail" [maxlength]="50"
-                                            (input)="entity.biltyDetails.receiverMail = entity.biltyDetails.receiverMail.toLowerCase()">
-                                        </dss-input>
+
                                         <div class="d-flex">
                                             <div class="d-flex-width">
                                                 <dss-input label="E-Way No" type="text" autocomplete="off"
@@ -543,93 +566,101 @@
             </div>
         </div>
     </div>
+</div>
 
 
-    <div class="modal fade" id="SenderModal" tabindex="-1" data-bs-backdrop="static" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-            <div class="modal-content">
-                <div class="modal-header d-flex justify-content-between">
-                    <h5 class="modal-title" id="exampleModalLabel">Sender List</h5>
 
-                    <div class="d-flex align-items-center me-3">
-                        <input type="text" class="form-control me-5" placeholder="Search Sender..."
-                            [(ngModel)]="onserchinput" name="onserchinput" (input)="onserchvender()">
+<div class="modal fade" id="SenderModal" tabindex="-1" data-bs-backdrop="static" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header d-flex justify-content-between">
+                <h5 class="modal-title" id="exampleModalLabel">Sender List</h5>
 
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
+                <div class="d-flex align-items-center me-3">
+                    <input type="text" class="form-control me-5" placeholder="Search Sender..."
+                        [(ngModel)]="onserchinput" name="onserchinput" (input)="onserchvender()">
+
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body p-0" style="height: calc(100vh - 250px);">
-                    <table class="table border table-hover">
-                        <thead>
-                            <tr>
-                                <th style="width: 20px;">#</th>
-                                <th scope="col">Sender Name</th>
-                                <th scope="col">Sender State</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let v of filteredSenders | paginate: { itemsPerPage:pageSize,totalItems:this.totalCount,  currentPage: page }; let i = index"
-                                (click)="Senderclick(v)">
-                                <td style="width: 5rem;">{{ (page - 1) * pageSize +
-                                    i + 1 }}</td>
-                                <td style="text-align: left;">{{ v.name }}</td>
-                                <td style="text-align: left;">{{
-                                    v.state?.stateName}}</td>
-                            </tr>
-                        </tbody>
-                    </table>
+            </div>
+            <div class="modal-body p-0" style="height: calc(100vh - 250px);">
+                <table class="table border table-hover">
+                    <thead>
+                        <tr>
+                            <th style="width: 20px;">#</th>
+                            <th scope="col">Sender Name</th>
+                            <th scope="col">Sender State</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let v of filteredSenders | paginate: { itemsPerPage:pageSize,totalItems:this.totalCount,  currentPage: page }; let i = index"
+                            (click)="Senderclick(v)">
+                            <td style="width: 5rem;">{{ (page - 1) * pageSize +
+                                i + 1 }}</td>
+                            <td style="text-align: left;">{{ v.name }}</td>
+                            <td style="text-align: left;">{{
+                                v.state?.stateName}}</td>
+                        </tr>
+                    </tbody>
+                </table>
 
-                </div>
-                <div class="modal-footer">
-                    <pagination-controls (pageChange)="onPageChange($event)"></pagination-controls>
+            </div>
+            <div class="modal-footer">
+                <pagination-controls (pageChange)="onPageChange($event)"></pagination-controls>
 
-                </div>
             </div>
         </div>
     </div>
+</div>
 
 
-    <!--Receiver Modal -->
-    <div class="modal fade" id="Modal" tabindex="-1" data-bs-backdrop="static" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-            <div class="modal-content">
-                <div class="modal-header d-flex justify-content-between">
-                    <h5 class="modal-title" id="exampleModalLabel">Receiver list
-                    </h5>
+<!--Receiver Modal -->
+<div class="modal fade" id="Modal" tabindex="-1" data-bs-backdrop="static" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header d-flex justify-content-between">
+                <h5 class="modal-title" id="exampleModalLabel">Receiver list
+                </h5>
 
-                    <div class="d-flex align-items-center me-3">
-                        <input type="text" name="onserchinput" class="form-control me-5" placeholder="Search Sender..."
-                            [(ngModel)]="onserchinput" (input)="onserchvender()">
+                <div class="d-flex align-items-center me-3">
+                    <input type="text" name="onserchinput" class="form-control me-5" placeholder="Search Sender..."
+                        [(ngModel)]="onserchinput" (input)="onserchvender()">
 
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body p-0" style="height: calc(100vh - 250px);">
-                    <table class="table border table-hover">
-                        <thead>
-                            <tr>
-                                <th style="width: 20px;">#</th>
-                                <th scope="col">Receiver Name</th>
-                                <th scope="col">State Name</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let v of reference | paginate: { itemsPerPage:pageSize,totalItems:this.totalCount,  currentPage: page }; let i = index"
-                                (click)=" receivclick(v)">
-                                <td style="width: 5rem;">{{ i + 1 }}</td>
-                                <td style="text-align: left;">{{ v.name }}</td>
-                                <td style="text-align: left;">{{
-                                    v.state?.stateName}}</td>
+            </div>
+            <div class="modal-body p-0" style="height: calc(100vh - 250px);">
+                <table class="table border table-hover">
+                    <thead>
+                        <tr>
+                            <th style="width: 20px;">#</th>
+                            <th scope="col">Receiver Name</th>
+                            <th scope="col">State Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let v of reference | paginate: { itemsPerPage:pageSize,totalItems:this.totalCount,  currentPage: page }; let i = index"
+                            (click)=" receivclick(v)">
+                            <td style="width: 5rem;">{{ i + 1 }}</td>
+                            <td style="text-align: left;">{{ v.name }}</td>
+                            <td style="text-align: left;">{{
+                                v.state?.stateName}}</td>
 
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="modal-footer">
-                    <pagination-controls (pageChange)="onPageChange($event)"></pagination-controls>
-                </div>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <pagination-controls (pageChange)="onPageChange($event)"></pagination-controls>
             </div>
         </div>
     </div>
+</div>
+
+<div *ngIf="rptMode">
+    <dss-report-viewer [(isShow)]="rptMode" [dictionory]="myReportDictionory" [serviceUrl]="myServiceUrl"
+        docName="Bilty" [mail]="" [wapp]="" ReportTitle="Bilty Entry">
+    </dss-report-viewer>
+</div>

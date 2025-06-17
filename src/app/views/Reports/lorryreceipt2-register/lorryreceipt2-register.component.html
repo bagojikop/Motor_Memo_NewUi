@@ -3,20 +3,11 @@
         <div class="row m-0 pt-2">
             <div class="col col-sm-6">
                 <div class="d-flex justify-content-start align-items-center">
-                    <span style="font-size:20px;">Motormemo Register</span>
+                    <span style="font-size:20px;">Lorry Receipt 2 Register</span>
                 </div>
             </div>
             <div class="col-sm-6 text-end">
-                <!-- <button class="btn btn-sm btn-outline-success me-1" type="button" (click)="printparam()"><svg
-                        xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                        class="bi bi-printer-fill" viewBox="0 0 16 16">
-                        <path
-                            d="M5 1a2 2 0 0 0-2 2v1h10V3a2 2 0 0 0-2-2zm6 8H5a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1">
-                        </path>
-                        <path
-                            d="M0 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-1v-2a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v2H2a2 2 0 0 1-2-2zm2.5 1a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1">
-                        </path>
-                    </svg></button> -->
+               
                 <button class="btn btn-outline-danger btn-sm" (click)="close()"><svg xmlns="http://www.w3.org/2000/svg"
                         width="16" height="16" fill="currentColor" class="bi bi-x-square-fill" viewBox="0 0 16 16">
                         <path
@@ -41,16 +32,7 @@
     </div>
 
     <hr />
-    <!-- 
-    <div class="card-body">
-        <ag-grid-angular #agGrid class="ag-theme-balham heightMasterPage1"
-            [rowData]="list" [columnDefs]="columns" [paginationAutoPageSize]="true" [defaultColDef]="defaultColDef"
-            [pagination]="true" (filterModified)="generatePinnedBottomData()" (gridReady)="onGridReady($event)">
-        </ag-grid-angular>
-    </div> -->
-
-
-
+    
     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
         <div class="offcanvas-header border-bottom divcard">
             <h5 class="offcanvas-title" id="offcanvasRightLabel">Print</h5>
@@ -74,6 +56,6 @@
 
 <div *ngIf="rptMode">
     <dss-report-viewer [(isShow)]="rptMode" [dictionory]="myReportDictionory" [serviceUrl]="myServiceUrl"
-        docName="Trial_Balance2" [mail]="" [wapp]="" ReportTitle="Trial Balance Entry">
+        docName="lorryreceipt2reg" [mail]="" [wapp]="" ReportTitle="Lorry Receipt 2 Register">
     </dss-report-viewer>
 </div>

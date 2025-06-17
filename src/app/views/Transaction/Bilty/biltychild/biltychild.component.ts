@@ -168,7 +168,7 @@ export class BiltychildComponent {
         break;
 
       case 'print':
-        this.motormemoprint();
+        this.biltyprint();
         this.ngview = true;
         break;
 
@@ -183,6 +183,24 @@ export class BiltychildComponent {
     this.entity.biltyGstDetails.igst = this.entity.biltyGstDetails.cgst = this.entity.biltyGstDetails.sgst = this.entity.biltyGstDetails.cess = 0;
   }
 
+  
+    
+      biltyprint() {
+        this.myServiceUrl = "BiltyReport";
+        
+        this.myReportDictionory = {
+          reportCacheId: uuidv4(),
+          reportParams: [
+            {
+              key: "vch_id", value: this.entity.vchId,
+            },
+            {
+              key: "firm_id", value: this.provider.companyinfo.company?.firmCode,
+    
+            }]
+        };
+        this.rptMode = true;
+      }
   
 
   igstAmont: number = 0
@@ -302,7 +320,7 @@ export class BiltychildComponent {
 
     this.callbackedit();
   }
-  motormemoprint() { }
+  
   close() {
     this.location.back();
   }
@@ -706,6 +724,7 @@ export class BiltychildComponent {
       this.rowIndex = null;
       this.additinOfFreight()
       this.totalDebit()
+      this.gstamt();
     }
   }
 
@@ -720,11 +739,13 @@ export class BiltychildComponent {
     });
     this.entity.TotalFreight = sumValue;
     this.totalDebit()
+    this.gstamt()
   }
 
   editgstTablerow(obj, index) {
     this.rowIndex = index;
     this.cmod = Object.assign({}, obj);
+    //this.gstamt();
   }
   deletegstTablerow(index) {
 
@@ -736,7 +757,9 @@ export class BiltychildComponent {
     }
     this.dialog.swal(params).then(data => {
       if (data == true) {
-        this.entity.biltyCommodities.splice(index, 1);
+        this.entity.biltyCommodities.splice(index, 1); 
+        this.additinOfFreight()
+        this.gstamt();
       }
     })
   }
