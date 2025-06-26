@@ -170,6 +170,14 @@ export const routes: Routes = [
         path: 'lorry-receipt2_Register',
         loadComponent: () => import('./views/Reports/lorryreceipt2-register/lorryreceipt2-register.component').then((m) => m.Lorryreceipt2RegisterComponent)
       },
+       {
+        path: 'Aknowledgment1',
+        loadComponent: () => import('./views/Transaction/aknowledgmemnt1/aknowledgmemnt1.component').then((m) => m.Aknowledgmemnt1Component)
+      },
+      {
+        path: 'Aknowledgment2',
+        loadComponent: () => import('./views/Transaction/aknowledgmemnt2/aknowledgmemnt2.component').then((m) => m.Aknowledgmemnt2Component)
+      },
       {
         path: 'Summary',
         loadComponent: () => import('./views/Transaction/summary/summary.component').then((m) => m.SummaryComponent)

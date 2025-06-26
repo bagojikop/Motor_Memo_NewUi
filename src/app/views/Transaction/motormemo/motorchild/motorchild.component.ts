@@ -286,7 +286,7 @@ export class MotorchildComponent {
 
   onSelectAcc(ev) {
     
-    this.exp.accName = ev.accCodeNavigation.accName;
+    this.exp.accName = ev.accName;
     this.cd.detectChanges();
   }
 
@@ -302,7 +302,7 @@ export class MotorchildComponent {
 
   onSelecotheracc(ev) {
    
-    this.other.accCodeNavigation.accName = ev.accCodeNavigation.accName;
+    this.other.accCodeNavigation.accName = ev.accName;
   }
 
 
@@ -343,7 +343,7 @@ export class MotorchildComponent {
       }
     })
   }
-
+data:any={}
   save() {
 
     Object.keys(this.motorchild.form.controls).forEach(key => {
@@ -392,6 +392,7 @@ export class MotorchildComponent {
         this.entity.firmId = this.provider.companyinfo.company?.firm.firmCode,
           this.entity.divId = this.provider.companyinfo.company.divId;
         this.entity.motormemoAudit.modifiedUser = this.provider.companyinfo.userinfo.username;
+        // this.data =this.entity;
         this.http.put('MotorMemo/update', this.master.cleanObject(this.entity, 2), { id: this.entity.vchId }).subscribe({
           next: (res: any) => {
             this.spinner.hide()
