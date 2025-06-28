@@ -179,6 +179,10 @@ export const routes: Routes = [
         loadComponent: () => import('./views/Transaction/aknowledgmemnt2/aknowledgmemnt2.component').then((m) => m.Aknowledgmemnt2Component)
       },
       {
+        path: 'Expenses',
+        loadComponent: () => import('./views/Reports/expenses/expenses.component').then((m) => m.ExpensesComponent)
+      },
+      {
         path: 'Summary',
         loadComponent: () => import('./views/Transaction/summary/summary.component').then((m) => m.SummaryComponent)
       },
