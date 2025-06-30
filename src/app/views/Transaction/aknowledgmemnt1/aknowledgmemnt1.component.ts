@@ -223,13 +223,6 @@ export class Aknowledgmemnt1Component {
     const sumValue = sumArray.reduce((p, c) => Number(p) + Number(c), 0);
     this.entity.totalcharges = sumValue;
 
-    // if (this.entity.totalcharges < this.entity.leftAmount) {
-    //   Swal.fire({
-    //     icon: 'warning',
-    //     title: 'Warning',
-    //     text: 'Total amount is less than Left Amount. Please check the values.',
-    //   });
-    // }
   }
 
   totalCharges: number = 0;
@@ -253,7 +246,7 @@ export class Aknowledgmemnt1Component {
 
   isAddButtonDisabled(): boolean {
     if (!this.entity) {
-      return true; // Disable button if entity not loaded yet
+      return true; 
     }
 
     const totalCharges = +this.entity.totalcharges || 0;
@@ -322,9 +315,7 @@ export class Aknowledgmemnt1Component {
 
         }
         this.spinner.hide();
-        // this.additinOfWeight();
-        // this.additinOfAdv()
-        // this.calculateRemAmt()
+      
       }, error: (err: any) => {
         this.spinner.hide();
         this.dialog.swal({ dialog: 'error', title: 'Error', message: err });
@@ -363,7 +354,7 @@ export class Aknowledgmemnt1Component {
     this.api = params.api;
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
-    // this.gridApi.sizeColumnsToFit();
+    
   }
   save() {
 
@@ -376,7 +367,7 @@ export class Aknowledgmemnt1Component {
         this.entity.firmId = this.provider.companyinfo.company?.firm.firmCode,
           this.entity.divId = this.provider.companyinfo.company.divId;
         this.entity.motormemoAudit.modifiedUser = this.provider.companyinfo.userinfo.username;
-        // this.data =this.entity;
+      
         this.http.put('MotorMemo/updatepayment', this.master.cleanObject(this.entity, 2), { id: this.entity.vchId }).subscribe({
           next: (res: any) => {
             this.spinner.hide()

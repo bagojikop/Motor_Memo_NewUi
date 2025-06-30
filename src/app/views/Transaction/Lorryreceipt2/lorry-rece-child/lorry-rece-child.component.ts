@@ -120,19 +120,7 @@ export class LorryReceChildComponent {
 
   }
 
-  // ngAfterViewInit(): void {
-  //   var x = this.datepipe.transform(new Date(), 'yyyy-MM-dd')?? '';
-  //   const savedDate = this.savedDataService.getSavedDate();
-  //   if (savedDate) {
-  //     this.entity.edt = savedDate;
-  //     this.savedDataService.clearSavedDate(); // Clear it after setting
-
-  //   } else {
-
-
-
-  //   }
-  // }
+ 
   hoveredRow?: any;
 
   navbar(s) {
@@ -253,7 +241,7 @@ export class LorryReceChildComponent {
     const today = new Date();
     const finYearEnd = new Date(this.provider.companyinfo.finyear.tdt);
 
-    // Compare today's date with financial year end
+   
     if (today >= finYearEnd) {
       this.entity.vchDate = finYearEnd.toISOString().split('T')[0];
     } else {
@@ -377,7 +365,7 @@ export class LorryReceChildComponent {
           this.entity.divId = this.provider.companyinfo.company.divId;
         this.entity.motormemo2Audit.createdUser = this.provider.companyinfo.userinfo.username;
 
-        // this.motormemo2=this.entity;
+        
         this.http.post('Motormemo2/insert', this.entity).subscribe({
           next: (res: any) => {
             if (res.status_cd == 1) {
@@ -438,18 +426,6 @@ export class LorryReceChildComponent {
   }
 
 
-  // additinOfAdv() {
-  //   var sumArray = this.entity.motormemo2AdvDetails
-  //     .map(item => item.amount || 0);
-
-
-  //   var sumValue = sumArray.reduce(function (pValue, cValue) {
-  //     return Number(pValue) + Number(cValue)
-
-  //   });
-  //   this.entity.totalAdv = sumValue;
-
-  // }
 
   additinOfAdv() {
     const sumArray = this.entity.motormemo2AdvDetails.map(item => item.amount || 0);

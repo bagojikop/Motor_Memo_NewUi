@@ -34,8 +34,7 @@
                                                         placeholder=" Enter Last 4  Digits " name="Vehiclenumb"
                                                         [(ngModel)]="entity.vehicleNo" required autocomplete="off"
                                                         (input)="entity.vehicleNo = entity.vehicleNo.toUpperCase()">
-                                                    <!-- (blur)="Vehiclenotab()" -->
-
+                                                  
                                                     <button type="button" class="btn btn-light" tabindex="-1"
                                                         (click)="getVehicles()">
                                                         <i class="bi bi-arrow-return-left"></i>
@@ -326,7 +325,7 @@
                                                     style="text-align: right;" [(ngModel)]="cmod.rate"
                                                     (ngModelChange)="calculateFreight();" digitOnly CurrencyMask
                                                     fraction="2" autocomplete="off" #rateInput />
-                                                <!-- moveToNext($event, addButton) -->
+                                               
                                             </th>
 
                                             <th>
@@ -503,7 +502,7 @@
                                             <option [value]=1>EX</option>
                                             <option [value]=2>To be Billed</option>
                                         </select>
-                                        <!-- {{entity.selectfreightType}} -->
+                                       
                                     </div>
                                     <div style="width: 15rem;" class="ms-3">
                                         <label for="">Sender Account</label>
@@ -599,7 +598,7 @@
                                                 <input class="form-control" type="text" name="charges" digitOnly
                                                     CurrencyMask fraction="2" #f="ngModel" [(ngModel)]="exp.charges"
                                                     [maxlength]="12" autocomplete="off">
-                                                <!-- (ngModelChange)="moveToNext($event, addButton)" -->
+                                               
                                             </th>
                                             <th style="width: 12%;">
                                                 <div class="select-dropdown">

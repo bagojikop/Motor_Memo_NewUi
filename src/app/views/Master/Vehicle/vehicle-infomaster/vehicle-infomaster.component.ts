@@ -56,12 +56,12 @@ export class VehicleInfomasterComponent implements OnInit {
     this.mode = this.stateParams.action;
     this.innerWidth = window.innerWidth;
 
-    // Debounce resize event and only call `sizeColumnsToFit` if `gridApi` is defined
+    
     fromEvent(window, 'resize')
       .pipe(debounceTime(100))
       .subscribe(() => {
         if (this.gridApi) {
-          // this.gridApi.sizeColumnsToFit();
+         
         }
       });
 
@@ -76,7 +76,7 @@ export class VehicleInfomasterComponent implements OnInit {
       { field: 'driverName', headerName: 'Driver Name', filter: "agTextColumnFilter", flex: 3 },
       { field: 'enginno', headerName: 'Engin no', filter: "agTextColumnFilter", flex: 2 },
       { field: 'capacityMts', headerName: 'Capacity', filter: "agTextColumnFilter", flex: 2 },
-      // { field: 'accAlias', headerName: 'Alias/Account ID', filter: "agTextColumnFilter", flex: 2 },
+     
       {
         headerName: 'Action',
         cellRenderer: ActBtnComponent,
@@ -103,7 +103,7 @@ export class VehicleInfomasterComponent implements OnInit {
   onGridReady(params: any) {
     this.gridApi = params;
     if (this.gridApi) {
-      // this.gridApi.sizeColumnsToFit();
+     
       this.Init();
     }
   }

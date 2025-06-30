@@ -105,9 +105,7 @@ export class SummaryComponent {
     $("#district").modal('show');
   }
 
-  onCellClicked(index) {
-
-  }
+  
   onGridReady(params) {
 
     this.gridApi = params;

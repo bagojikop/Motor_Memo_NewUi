@@ -161,7 +161,7 @@ export class GrouplistComponent {
       this.api = params.api;
       this.gridApi = params.api;
       this.gridColumnApi = params.columnApi;
-      // this.gridApi.sizeColumnsToFit();
+      
     }
     getGroupObj(obj) {
       this.entity.groupCodeObj = obj;

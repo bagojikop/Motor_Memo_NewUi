@@ -7,16 +7,7 @@
                 </div>
             </div>
             <div class="col-sm-6 text-end">
-                <!-- <button class="btn btn-sm btn-outline-success me-1" type="button" (click)="printparam()"><svg
-                        xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                        class="bi bi-printer-fill" viewBox="0 0 16 16">
-                        <path
-                            d="M5 1a2 2 0 0 0-2 2v1h10V3a2 2 0 0 0-2-2zm6 8H5a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1">
-                        </path>
-                        <path
-                            d="M0 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-1v-2a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v2H2a2 2 0 0 1-2-2zm2.5 1a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1">
-                        </path>
-                    </svg></button> -->
+               
                 <button class="btn btn-outline-danger btn-sm" (click)="close()"><svg xmlns="http://www.w3.org/2000/svg"
                         width="16" height="16" fill="currentColor" class="bi bi-x-square-fill" viewBox="0 0 16 16">
                         <path
@@ -27,31 +18,31 @@
         </div>
     </div>
     <hr />
-    <div class="ms-2 d-flex d-flex-column">
-        <div class="ms-3 d-flex-width">
+    <div class="ms-3">
+        <div class="d-flex-width">
             <app-ngselect label="Sundry" apiUrl="Sundry/getExpAcclist" class="p-0 text-start" bindLabel="sundryName"
                 bindValue="s_Id" name="ExpensName" [(ngModel)]="entity.s_Id" (change)="onSelectExp($event)"
                 autocomplete="off" #f="ngModel" [applyMargins]="false"></app-ngselect>
         </div>
-        <div class="gapInputFields d-flex">
-            <div>
+        <div class="d-flex d-flex-width">
+            <div class="d-flex-width">
                 <dss-input label="From" name="from" type="date" [(ngModel)]="entity.sdt" />
             </div>
-            <div class="ms-3">
+            <div class="gapInputFields">
                 <dss-input label="To" name="to" type="date" [(ngModel)]="entity.edt" />
             </div>
 
-
-            <div class="ms-3">
-                <button class="btn btn-sm btn-primary" style="margin-top: 24px;" (click)="TrialBalprint()"><i
-                        class="fa fa-eye me-1" aria-hidden="true"></i>Show</button>
-            </div>
         </div>
+        <div class="d-flex-width">
+            <button class="btn btn-sm btn-primary" style="margin-top: 24px;" (click)="TrialBalprint()"><i
+                    class="fa fa-eye me-1" aria-hidden="true"></i>Show</button>
+        </div>
+
 
     </div>
 
 </div>
-<hr/>
+<hr />
 <div *ngIf="rptMode">
     <dss-report-viewer [(isShow)]="rptMode" [dictionory]="myReportDictionory" [serviceUrl]="myServiceUrl"
         docName="daybook" [mail]="" [wapp]="" ReportTitle="Day Book">

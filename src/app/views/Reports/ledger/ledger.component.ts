@@ -196,7 +196,7 @@ export class LedgerComponent {
           next: (res: any) => {
             if (res.status_cd == 1) {
               this.list = res.data || [];
-              // this.generatePinnedBottomData();
+             
               this.OnIntCalculateRunningTotal();
             } else {
               this.dialog.swal({ dialog: 'error', title: 'Error', message: res.errors.exception.Message });
@@ -227,12 +227,12 @@ export class LedgerComponent {
         let runningTotal = 0;
         this.gridResult.cramt = 0;
         this.gridResult.dramt = 0;
-        // Iterate over filtered rows
+       
         this.gridApi?.forEachNodeAfterFilter(node => {
           const rowData = node.data;
           rowData.balance = (rowData.cramt || 0) - (rowData.dramt || 0) + runningTotal;
           runningTotal = rowData.balance;
-          node.setData(rowData); // Update node data
+          node.setData(rowData); 
           this.gridResult.cramt += rowData.cramt;
           this.gridResult.dramt += rowData.dramt;
     
@@ -242,7 +242,7 @@ export class LedgerComponent {
       onGridReady(params) {
         this.gridApi = params.api;
         this.gridColumnApi = params.columnApi;
-        // this.generatePinnedBottomData();
+        
     
       }
 
@@ -314,7 +314,7 @@ export class LedgerComponent {
         this.referance.groupCodeObj = event.sgCodeNavigation;
         this.referance.grpByaccount = event;
         this.entity.accCodeNavigation = event
-        //console.log(this.entity);
+       
     
       }
       trackByIndex(index: number, item: any): number {

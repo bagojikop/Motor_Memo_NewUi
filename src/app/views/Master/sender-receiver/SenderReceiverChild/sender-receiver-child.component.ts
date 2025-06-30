@@ -75,7 +75,7 @@ export class SenderReceiverChildComponent {
     if (this.entity.sCode) {
       this.navactions.fieldset = true;
       this.callbackedit();
-      // this.navactions.navaction("view");
+     
     } else {
       this.navactions.fieldset = false;
       this.newRecord();
@@ -136,7 +136,7 @@ export class SenderReceiverChildComponent {
           this.entity = res.data;
           this.entity.id = res.data.id;
           this.getState(this.entity);
-          //  this.pastentity = Object.assign({}, this.entity);
+          
           this.cd.detectChanges();
         }
         this.spinner.hide();
@@ -239,8 +239,7 @@ export class SenderReceiverChildComponent {
       this.http.get('Account/getvender', { no: this.entity.gstinNo }).subscribe({
         next: (res: any) => {
           if (res.status_cd == 1) {
-            // this.entity = res.data;
-            // this.entity.gstinNo = res.data.accGstn;
+          
             this.entity.name = res.data.accName;
             this.entity.accCodeNavigation = res.data;
             this.entity.emailId = res.data.emailId;

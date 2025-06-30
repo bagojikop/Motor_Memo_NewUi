@@ -28,7 +28,7 @@
     </div>
     <hr />
     <div class="ms-2">
-        <div class="d-flex">
+        <div class="d-flex d-flex-width">
             <div class="d-flex-width">
                 <app-ngselect apiUrl="Account/getAcclistbyMgCode" label="Account" bindLabel="accName"
                     [width]="'clamp(400px, 0px, 0px)'" bindValue="accCode" name="acc" [(ngModel)]="entity.accCode"
@@ -37,18 +37,11 @@
                     [nullableProperty]="{ 'accName': '[All]', 'accCode': '' }"></app-ngselect>
             </div>
 
-
-            <!-- <div class="col-sm-2">
-                <div class="form-group">
-                    <label>From</label>
-                    <input class="form-control form-control-sm" name="from" type="date" [(ngModel)]="entity.sdt" >
-                </div>
-            </div> -->
-            <div class="gapInputFields d-flex">
-                <div class="d-flex-width">
+            <div class="gapInputFields">
+               
                     <dss-input label="To" name="to" type="date" [(ngModel)]="entity.edt"
                         [width]="'clamp(130px, 0px, 0px)'" />
-                </div>
+               
             </div>
             <div class="gapInputFields ms-3">
                 <button class="btn btn-sm btn-primary" style="margin-top: 24px;" (click)="Listshow()"><i

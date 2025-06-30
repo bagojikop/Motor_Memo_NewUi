@@ -1,4 +1,3 @@
-
 <div [hidden]="rptMode">
     <div class="mastersHeading m-0">
         <div class="row m-0 pt-2">
@@ -29,13 +28,13 @@
     </div>
     <hr />
 
-    <div class="d-flex ms-2 d-flex-column">
-
-        <dss-input label="As on" name="to" type="date" [(ngModel)]="entity.edt" />
-
+    <div class="d-flex ms-2">
+        <div class="d-flex-width">
+            <dss-input label="As on" name="to" type="date" [(ngModel)]="entity.edt" />
+        </div>
         <div class="gapInputFields">
-            <button class="btn btn-outline-primary" style="margin-top: 21px;" type="button"
-                (click)="Listshow()"><i class="fa fa-eye me-1"></i> show</button>
+            <button class="btn btn-outline-primary" style="margin-top: 21px;" type="button" (click)="Listshow()"><i
+                    class="fa fa-eye me-1"></i> show</button>
         </div>
     </div>
 

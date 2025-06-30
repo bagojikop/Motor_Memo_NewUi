@@ -48,8 +48,7 @@ export class FirmtypemasterComponent {
   @HostListener('window:resize', ['$event'])
   onResize(event) {
     this.innerWidth = window.innerWidth;
-    // this.gridApi.sizeColumnsToFit();
-
+   
   }
   ngOnInit(): void {
     this.entity = {};

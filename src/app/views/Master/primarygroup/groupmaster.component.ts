@@ -96,11 +96,9 @@ export class GroupmasterComponent {
      
     },
     ]
-    this.Init();
+   
   }
-  Init() {
-
-  }
+ 
   addNew() {
     this.entity = {};
     this.entity.srNo = 0

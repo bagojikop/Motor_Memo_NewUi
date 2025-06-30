@@ -48,7 +48,7 @@ export class PaymentmasterComponent {
   @HostListener('window:resize', ['$event'])
   onResize(event) {
     this.innerWidth = window.innerWidth;
-    // this.gridApi.sizeColumnsToFit();
+ 
 
   }
   ngOnInit(): void {
@@ -101,7 +101,7 @@ export class PaymentmasterComponent {
       flex: 2,
       type: "rightAligned",
       cellRenderer: (data) => {
-        return data.value ? this.decimalpipe.transform(data.value, '1.2-2') : '';    //moment(data.value).format('DD/MM/YYYY')
+        return data.value ? this.decimalpipe.transform(data.value, '1.2-2') : '';   
       }
     },
 

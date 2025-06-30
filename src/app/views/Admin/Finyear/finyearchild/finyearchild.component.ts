@@ -184,15 +184,12 @@ export class FinyearchildComponent {
       next: (res: any) => {
         if (res.status_cd == 1) {
           this.entity = res.data;
-          // this.branch();
+     
           this.isChecked = this.entity.isPrevYr == 1 ? true : false;
 
 
           this.disabledata = true;
 
-          // this.entity.fdt = this.datepipe.transform(this.entity.fdt, 'yyyy-dd-MM');
-          // this.entity.tdt = this.datepipe.transform(this.entity.tdt, 'yyyy-dd-MM');
-          // this.previousyear = this.entity.active == 0 ? false : true;
           this.pastentity = Object.assign({}, res.data);
           this.navaction.navaction('OK');
         }
@@ -250,8 +247,7 @@ export class FinyearchildComponent {
     this.entity = <FinYearObj>{};
     this.disabledata = false;
     this.reference = {};
-    // let paramss: any = this.location.getState();
-    // this.entity.divId = paramss.id;
+    
   }
 
   mainedit() {
@@ -282,8 +278,7 @@ export class FinyearchildComponent {
       var paramss = {
 
         firmCode: this.entity.firmCode,
-        // branchCode: this.entity.branchCode
-
+    
       }
       this.http.get(url, paramss).subscribe({
         next: (res: any) => {

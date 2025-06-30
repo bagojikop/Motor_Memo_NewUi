@@ -152,14 +152,14 @@ export class FirmChildComponent {
   validateNumber(event: KeyboardEvent): void {
     const charCode = event.which ? event.which : event.keyCode;
     if (charCode < 48 || charCode > 57) {
-      event.preventDefault(); // Block non-numeric input
+      event.preventDefault(); 
     }
   }
   validateRange(): void {
     const value = Number(this.entity.firmPinCode);
-    // Ensure it's a valid 6-digit PIN code
+   
     if (value < 100000 || value > 999999) {
-      this.entity.firmPinCode = ''; // Clear input if not valid
+      this.entity.firmPinCode = ''; 
     }
   }
   validateEmail(email: string): void {
@@ -255,7 +255,7 @@ export class FirmChildComponent {
     this.entity.active = 1;
     this.isactive = true;
     this.disabledata = false;
-    //  this.entity.Stateinfo = {}; -----------------------forhelper
+   
     this.cancellogo();
 
   }

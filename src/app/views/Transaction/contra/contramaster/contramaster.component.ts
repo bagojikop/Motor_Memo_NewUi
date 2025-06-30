@@ -93,7 +93,7 @@ export class ContramasterComponent {
       flex: 2,
       type: "rightAligned",
       cellRenderer: (data) => {
-        return data.value ? this.decimalpipe.transform(data.value, '1.2-2') : '';    //moment(data.value).format('DD/MM/YYYY')
+        return data.value ? this.decimalpipe.transform(data.value, '1.2-2') : '';    
       }
     },
 

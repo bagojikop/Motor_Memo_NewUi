@@ -93,7 +93,7 @@ entity: any = {};
       
     ];
   
-    this.Init();
+  
     this.gridParams = { 
       firm_id: this.provider.companyinfo.company?.firmCode,
       div_id: this.provider.companyinfo.company.divId, 
@@ -101,10 +101,7 @@ entity: any = {};
     }
   }
 
-  Init() {
-
-  }
-
+ 
   addNew() {
     const params = { action: 'new' };
     this.router.navigate(['lorry-receipt2_child'], { state: params });
@@ -152,7 +149,7 @@ entity: any = {};
           message: "Record Deleted Successfully",
         };
         this.dialog.swal(params);
-        this.Init();
+      
       } else {
         const error = res.error?.message || "An Error has occurred while deleting the record!";
         const errorParams = {

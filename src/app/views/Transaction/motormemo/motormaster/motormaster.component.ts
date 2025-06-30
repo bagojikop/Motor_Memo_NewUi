@@ -91,7 +91,7 @@ export class MotormasterComponent implements OnInit {
       
     ];
   
-    this.Init();
+  
     this.gridParams = { 
       firm_id: this.provider.companyinfo.company?.firmCode,
       div_id: this.provider.companyinfo.company.divId, 
@@ -99,9 +99,7 @@ export class MotormasterComponent implements OnInit {
     }
   }
 
-  Init() {
-
-  }
+ 
 
   addNew() {
     const params = { action: 'new' };
@@ -150,7 +148,7 @@ export class MotormasterComponent implements OnInit {
           message: "Record Deleted Successfully",
         };
         this.dialog.swal(params);
-        this.Init();
+     
       } else {
         const error = res.error?.message || "An Error has occurred while deleting the record!";
         const errorParams = {

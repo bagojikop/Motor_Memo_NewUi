@@ -27,12 +27,13 @@
         </div>
     </div>
     <hr />
-    <div class="d-flex d-flex-column ms-2">
-        <dss-input label="As on" name="to" type="date" [(ngModel)]="entity.edt" />
-
+    <div class="d-flex ms-2">
+        <div class="d-flex-width">
+            <dss-input label="As on" name="to" type="date" [(ngModel)]="entity.edt" />
+        </div>
         <div class="ms-3">
-            <button class="btn btn-outline-primary" style="margin-top: 22px;"
-                (click)="Listshow()"><i class="fa fa-eye me-1"></i> Show</button>
+            <button class="btn btn-outline-primary" style="margin-top: 22px;" (click)="Listshow()"><i
+                    class="fa fa-eye me-1"></i> Show</button>
         </div>
     </div>
 

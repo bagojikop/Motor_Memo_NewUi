@@ -7,7 +7,6 @@ import { CommonModule, DatePipe, Location } from '@angular/common';
 import { http, Master, NavbarActions } from '../../../../assets/services/services';
 import { FormsModule } from '@angular/forms';
 import { ArraySortPipe } from '../../../pipes/inrcrdr.pipe';
-import { DssInputComponent } from '../../../mydirective/dss-input/dss-input.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 
 
@@ -26,20 +25,14 @@ export class SelectFirmComponent {
   reference: any = {};
   branchFirm: any;
   yearFirm: any;
-
   loading: boolean = false;
   Firms = []; 
   FinYears = [];
   constructor(private http: http,
     private spinner: NgxSpinnerService,
-    private navaction: NavbarActions,
     private provider: MyProvider,
-
     private dialog: DialogsComponent,
-    private location: Location,
     private router: Router,
-    private Master: Master,
-    private datepipe: DatePipe,
     public navactions: NavbarActions,) {
 
   }
@@ -94,8 +87,7 @@ export class SelectFirmComponent {
         next: (res: any) => {
           if (res.status_cd == 1) {
             this.Firms = res.data;
-            // this.entity.firmCode = res.data[0].firmCode;
-            // this.entity.firm = res.data[0];
+           
             this.loading = false;
             resolve();
           } else {
@@ -179,7 +171,7 @@ export class SelectFirmComponent {
       tdt: years[1] + '-03-31'
     }
     this.provider.companyinfo.company.userinfo = {}
-    // this.entity.username = "Gaurav"
+    
     this.provider.companyinfo.company.userinfo.username = this.entity.username;
     this.router.navigate(['home']);
   }

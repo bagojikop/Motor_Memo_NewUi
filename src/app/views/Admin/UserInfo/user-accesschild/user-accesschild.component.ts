@@ -70,8 +70,7 @@ export class UserAccesschildComponent {
 
   ngOnInit(): void {
     this.list = [];
-    // this.entity = <userAccessObj>{}
-    // this.entity.userinfo = <userInfo[]>{};
+ 
     this.Init();
 
   }
@@ -111,7 +110,7 @@ export class UserAccesschildComponent {
           x.o = b.o;
           x.d = b.d;
           x.p = b.p;
-//          x.j = b.j;
+
           this.userAccess.setInfo(x);
           this.dialog.swal({ dialog: "success", title: "Success", message: "Record is saved sucessfully" });
         }

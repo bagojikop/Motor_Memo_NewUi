@@ -347,7 +347,7 @@ export class BiltychildComponent {
         }
         this.spinner.hide();
         this.additinOfFreight();
-        //this.gstamt();
+       
 
         this.totalDebit();
         this.isReceiverClicked = false;
@@ -374,7 +374,7 @@ export class BiltychildComponent {
     const today = new Date();
     const finYearEnd = new Date(this.provider.companyinfo.finyear.tdt);
 
-    // Compare today's date with financial year end
+   
     if (today >= finYearEnd) {
       this.entity.vchDate = finYearEnd.toISOString().split('T')[0];
     } else {
@@ -745,7 +745,7 @@ export class BiltychildComponent {
   editgstTablerow(obj, index) {
     this.rowIndex = index;
     this.cmod = Object.assign({}, obj);
-    //this.gstamt();
+  
   }
   deletegstTablerow(index) {
 

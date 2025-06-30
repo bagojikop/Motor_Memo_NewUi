@@ -66,8 +66,7 @@ export class ProfitLossChildComponent {
       this.stateParams = this.location.getState();
       this.mode = this.stateParams.action;
       this.innerWidth = window.innerWidth;
-    
-      // Define column configurations
+  
       this.columns = [
         {
           field: 'acc_name',

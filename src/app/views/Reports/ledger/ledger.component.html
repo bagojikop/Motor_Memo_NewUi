@@ -67,10 +67,6 @@
         </ag-grid-angular>
     </div>
 
-    <!-- <ag-grid-angular   #agGrid [columnDefs]="columnDefs" class="ag-theme-alpine" [rowData]="rowData" 
- [gridOptions]="gridOptions" style="width: 100%; height:calc(100vh - 130px)" [pinnedBottomRowData]="pinnedBottomRowData" 
- (filterChanged)="onFilterChanged()"
-[defaultColDef]="defaultColDef" (gridReady)="onGridReady($event)"></ag-grid-angular> -->
 
     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
         <div class="offcanvas-header border-bottom divcard">
@@ -98,9 +94,8 @@
                     [nullableProperty]="{ 'sgName': '[All]', 'sgCode': '' }" (change)="OnGroupSelected($event)">
 
                 </app-ngselect>
-                <!-- (onSelect)="OnGroupSelected($event)" -->
-            </div>
-            <div>
+               
+            </div>            <div>
                 <app-ngselect label="Account Name" bindLabel="accName" bindValue="accCode" name="accName"
                     [(ngModel)]="referance.accCode" apiUrl="account/getAcclistbySgCode"
                     [apiParams]="this.referance.groupParams" [defaultProperty]="referance.grpByaccount"

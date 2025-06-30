@@ -81,7 +81,7 @@ export class ProfitLossComponent implements AfterViewInit{
       if (savedDate) {
         this.entity.edt = savedDate;
         this.savedDataService.setNavigatedFromCellClick(false)
-        //this.savedDataService.clearSavedDate(); // Clear it after setting
+      
         this.Listshow();
       }
     }

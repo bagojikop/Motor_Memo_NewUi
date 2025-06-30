@@ -73,7 +73,7 @@ export class VehicleTypeMasterComponent {
 
     if (!this.stateParams.mode) {
       this.product = false;
-      // this.submit();
+      
     } else {
       this.product = true;
     }

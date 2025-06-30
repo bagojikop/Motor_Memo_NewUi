@@ -27,17 +27,20 @@
         </div>
     </div>
     <hr />
-    <div class="ms-2 d-flex d-flex-column">
-        <div>
-            <dss-input label="From" name="from" type="date" [(ngModel)]="entity.sdt" />
-        </div>
-        <div class="ms-3">
-            <dss-input label="To" name="to" type="date" [(ngModel)]="entity.edt" />
-        </div>
-        <div class="ms-3">
+    <div class="ms-2">
+        <div class="d-flex d-flex-width">
+            <div class="d-flex-width">
+                <dss-input label="From" name="from" type="date" [(ngModel)]="entity.sdt" />
+            </div>
+            <div class="gapInputFields">
+                <dss-input label="To" name="to" type="date" [(ngModel)]="entity.edt" />
+            </div>
+             <div class="gapInputFields ms-3">
             <button class="btn btn-sm btn-primary" style="margin-top: 24px;" (click)="Listshow()"><i
                     class="fa fa-eye me-1" aria-hidden="true"></i>Show</button>
         </div>
+        </div>
+       
 
     </div>
     <div class="card-body">

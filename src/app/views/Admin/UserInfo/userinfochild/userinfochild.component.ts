@@ -231,8 +231,7 @@ export class UserinfochildComponent {
     this.entity.credential = <credential>{};
     this.disabledata = false;
     this.reference = {};
-    // let paramss: any = this.location.getState();
-    // this.entity.divId = paramss.id;
+   
   }
 
 

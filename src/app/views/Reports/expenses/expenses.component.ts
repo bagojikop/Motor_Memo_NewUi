@@ -86,12 +86,12 @@ export class ExpensesComponent {
     this.entity.sundries.sundryName = ev.sundryName;
     this.entity.accCodeNavigation = ev.accCodeNavigation;
   }
-  printparam(){}
+ 
 
   close() {
     this.location.back();
   }
-  Listshow(){}
+ 
   daybookprint() {
 
 

@@ -115,7 +115,7 @@ export class ReceiptmasterComponent {
       flex: 1
     },
     ]
-    this.Init();
+   
     this.gridParams = { 
       firmId: this.provider.companyinfo.company?.firmCode,
       divId: this.provider.companyinfo.company.divId,
@@ -123,9 +123,7 @@ export class ReceiptmasterComponent {
       isApproval: "false",
     }
   }
-  Init() {
-
-  }
+ 
   addNew() {
     var params = {
       action: 'new',

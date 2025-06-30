@@ -392,7 +392,7 @@ data:any={}
         this.entity.firmId = this.provider.companyinfo.company?.firm.firmCode,
           this.entity.divId = this.provider.companyinfo.company.divId;
         this.entity.motormemoAudit.modifiedUser = this.provider.companyinfo.userinfo.username;
-        // this.data =this.entity;
+       
         this.http.put('MotorMemo/update', this.master.cleanObject(this.entity, 2), { id: this.entity.vchId }).subscribe({
           next: (res: any) => {
             this.spinner.hide()
@@ -445,11 +445,11 @@ data:any={}
     this.entity.memoNo = 0;
     this.entity.freightType = 0;
     this.entity.totalcharges = 0;
-    // this.entity.dt = new Date().toShortString();
+   
     const today = new Date();
     const finYearEnd = new Date(this.provider.companyinfo.finyear.tdt);
 
-    // Compare today's date with financial year end
+   
     if (today >= finYearEnd) {
       this.entity.dt = finYearEnd.toISOString().split('T')[0];
     } else {

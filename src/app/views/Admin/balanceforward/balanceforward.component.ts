@@ -50,9 +50,6 @@ export class BalanceforwardComponent {
 
     this.entity.finyear = this.provider.companyinfo.company.divId;
 
-
-    // this.Init();
-
   }
  
   

@@ -142,7 +142,7 @@ export class BalanceSheetComponent implements AfterViewInit{
     this.api = params.api;
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
-    // this.gridApi.sizeColumnsToFit();
+   
   }
 
   close() {

@@ -225,7 +225,7 @@ export class JournalchildComponent {
    const today = new Date();
     const finYearEnd = new Date(this.provider.companyinfo.finyear.tdt);
 
-    // Compare today's date with financial year end
+    
     if (today >= finYearEnd) {
       this.entity.vchDate = finYearEnd.toISOString().split('T')[0];
     } else {

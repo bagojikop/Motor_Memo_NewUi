@@ -77,7 +77,7 @@ export class PaymentchildComponent {
     this.stateparams = this.location.getState();
     this.mode = this.stateparams.action;
     this.isDoc = this.stateparams.isDoc;
-    // this.entity = this.stateparams.list;
+  
     this.entity.vchId = this.stateparams.id;
   }
   ngOnInit(): void {
@@ -118,10 +118,6 @@ export class PaymentchildComponent {
   }
  
 
-  // getAccountDetl(obj) {
-  //   this.entity.acc00201.accCodeNavigation = obj;
-  // }
-
   newRecord() {
     this.entity = <PaymentObj>{};
     this.entity.acc00200 = <acc00200Obj>{};
@@ -137,7 +133,6 @@ export class PaymentchildComponent {
     const today = new Date();
     const finYearEnd = new Date(this.provider.companyinfo.finyear.tdt);
 
-    // Compare today's date with financial year end
     if (today >= finYearEnd) {
       this.entity.vchDate = finYearEnd.toISOString().split('T')[0];
     } else {
@@ -158,7 +153,6 @@ export class PaymentchildComponent {
       next: (res: any) => {
         if (res.status_cd == 1) {
           this.entity = res.data;
-         // this.entity.accCodeNavigation = res.data.accCodeNavigation;
 
           this.entity.paySellerBuyer = this.entity.paySellerBuyer || <paySellerBuyerObj>{};
           this.entity.acc00200 = this.entity.acc00200 || <acc00200Obj>{};
@@ -171,7 +165,7 @@ export class PaymentchildComponent {
           this.pastentity = Object.assign({}, this.entity);
         }
         this.spinner.hide();
-        // this.navactions.navaction("OK");
+      
       }, error: (err: any) => {
         this.spinner.hide();
         this.dialog.swal({ dialog: 'error', title: 'Error', message: err });
@@ -273,7 +267,7 @@ export class PaymentchildComponent {
             this.entity.vchId = res.data.vchId;
             this.entity.vchNo = res.data.vchNo;
             this.entity.challanNo = res.data.challanNo;
-            //this.provider.ShareData.Acclist.push(this.entity.accCode);
+         
             this.dialog.swal({ dialog: "success", title: "Success", message: "Record is saved sucessfully" });
             this.navactions.navaction("OK");
           }
@@ -314,7 +308,7 @@ export class PaymentchildComponent {
     let tdsRate = Number(this.entity.acc00201.tdsRate) || 0;
 
     let tdsAmt = (amount * tdsRate) / 100;
-    this.entity.acc00201.tdsAmt = parseFloat(tdsAmt.toFixed(2));  // Rounds to 2 decimal places
+    this.entity.acc00201.tdsAmt = parseFloat(tdsAmt.toFixed(2));  
 
     let recAmt = amount - tdsAmt;
     this.entity.acc00201.recAmt = parseFloat(recAmt.toFixed(2));

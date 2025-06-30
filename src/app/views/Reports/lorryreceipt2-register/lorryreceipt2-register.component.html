@@ -7,7 +7,7 @@
                 </div>
             </div>
             <div class="col-sm-6 text-end">
-               
+
                 <button class="btn btn-outline-danger btn-sm" (click)="close()"><svg xmlns="http://www.w3.org/2000/svg"
                         width="16" height="16" fill="currentColor" class="bi bi-x-square-fill" viewBox="0 0 16 16">
                         <path
@@ -19,38 +19,22 @@
     </div>
     <hr />
 
-    <div class="ms-2 d-flex">
-        <div>
+    <div class="ms-3">
+
+        <div class="d-flex-width">
             <dss-input label="From" name="from" type="date" [(ngModel)]="entity.sdt" />
         </div>
-
-        <dss-input label="As on" name="to" type="date" [(ngModel)]="entity.edt" />
-
-        <button class="btn btn-outline-primary ms-2" style="margin-bottom: 10px; margin-top: 22px;" type="button"
-            (click)="TrialBalprint()"><i class="fas fa-eye me-1"></i> show</button>
-
+        <div class="d-flex-width">
+            <dss-input label="As on" name="to" type="date" [(ngModel)]="entity.edt" />
+        </div>
+        <div class="d-flex-width">
+            <button class="btn btn-outline-primary" style="margin-bottom: 10px; margin-top: 22px;" type="button"
+                (click)="TrialBalprint()"><i class="fas fa-eye me-1"></i> show</button>
+        </div>
     </div>
 
     <hr />
-    
-    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
-        <div class="offcanvas-header border-bottom divcard">
-            <h5 class="offcanvas-title" id="offcanvasRightLabel">Print</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-        </div>
-        <div class="offcanvas-body">
 
-
-            <dss-input label="From" name="fDate" type="date" [(ngModel)]="referance.sdt" />
-
-            <dss-input label="To" name="EDate" type="date" [(ngModel)]="referance.edt" />
-
-            <div class="col-sm-1 ">
-                <button class="btn btn-sm btn-primary " style="margin-top: 29px; margin-left:80px; width: 80px;"
-                    (click)="TrialBalprint()">Show</button>
-            </div>
-        </div>
-    </div>
 
 </div>
 

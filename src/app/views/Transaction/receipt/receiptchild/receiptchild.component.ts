@@ -167,7 +167,6 @@ export class ReceiptchildComponent {
     const today = new Date();
     const finYearEnd = new Date(this.provider.companyinfo.finyear.tdt);
 
-    // Compare today's date with financial year end
     if (today >= finYearEnd) {
       this.entity.vchDate = finYearEnd.toISOString().split('T')[0];
     } else {
@@ -189,7 +188,7 @@ export class ReceiptchildComponent {
           this.entity.recApprove = this.entity.recApprove || <recApproveObj>{};
           this.entity.acc00300 = this.entity.acc00300 || <acc00300Obj>{};
 
-          //this.entity.vchDate =  new Date(this.entity.vchDate);
+        
           this.entity.txnDate = this.entity.txnDate ?? this.datepipe.transform(this.entity.txnDate, 'yyyy-MM-dd')
           this.entity.refDate = this.entity.refDate ?? this.datepipe.transform(this.entity.refDate, 'yyyy-MM-dd')
           this.entity.acc00300.createdDt = this.entity.acc00300.createdDt ?? this.datepipe.transform(this.entity.acc00300.createdDt, 'yyyy-MM-dd')
@@ -371,6 +370,6 @@ export class ReceiptchildComponent {
     })
   }
   getAccountDetl(obj) {
-    // this.acc00301.accCodeNavigation = obj;
+   
   }
 }

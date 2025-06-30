@@ -25,9 +25,7 @@
                                 [(ngModel)]="entity.emailId">
                             </dss-input>
                             <div *ngIf="emailid.invalid && (emailid.dirty || emailid.touched)" class="invalid-feedback">
-                                <!-- <span *ngIf="emailid.errors?.required">Email is required.</span> -->
-                                <!-- <span *ngIf="emailid.errors?.pattern">Invalid email format. Please enter a valid
-                                    email.</span> -->
+                               
                             </div>
                         </div>
 
@@ -42,14 +40,12 @@
                                     </ng-select>
                          
 
-                            <!-- <app-ngselect apiUrl="RoleInfo/getList" class="form-control p-0" bindLabel="roleName"
-                                bindValue="roleId" name="rolenm" [(ngModel)]="entity.roleId"
-                                [defaultProperty]="entity.role" [disabled]="navactions.fieldset"></app-ngselect> -->
+                            
 
                         </div>
 
                     </div>
-                    <!-- <div class="border-start mx-3" style="height: 300px;"></div> -->
+                   
 
                     <div class="ms-5" *ngIf="entity.userId==null">
                         <h5>Set Password</h5>

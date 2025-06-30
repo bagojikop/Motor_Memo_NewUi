@@ -182,10 +182,6 @@ export class VehicleInfochildComponent {
     }
   }
 
-  // editgstTablerow(v, i) {
-  //   this.rowIndex = this.entity.mst10805s.indexOf(i);
-  //   this.info.reference = Object.assign({}, i);
-  // }
   editgstTablerow(obj, index) {
     this.rowIndex = index;
     this.info.reference = Object.assign({}, obj);

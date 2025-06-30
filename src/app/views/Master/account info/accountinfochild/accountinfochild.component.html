@@ -120,8 +120,7 @@
                             <div class="bg-light mb-2  d-flex align-items-center">
                                 <h5 class="m-0 p-2 me-3">Affiliation</h5>
                                 <div>
-                                    <!-- <input class="me-2" type="checkbox" id="checkselect" (click)="toggleSelect()"
-                                        name="checkselect" value="selectbox" [checked]="entity.isDisabled" /> -->
+                                    
                                     <input class="me-2" type="checkbox" id="checkselect" [(ngModel)]="entity.isDisabled"
                                         (change)="toggleSelect($event)" name="checkselect" value="selectbox" />
 

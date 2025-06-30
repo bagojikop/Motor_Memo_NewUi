@@ -238,7 +238,7 @@ export class Aknowledgmemnt2Component {
   
   isAddButtonDisabled(): boolean {
     if (!this.entity) {
-      return true; // Disable button if entity not loaded yet
+      return true; 
     }
 
     const totalCharges = +this.totalAdvAmt || 0;
@@ -306,9 +306,7 @@ export class Aknowledgmemnt2Component {
 
         }
         this.spinner.hide();
-        // this.additinOfWeight();
-        // this.additinOfAdv()
-        // this.calculateRemAmt()
+     
       }, error: (err: any) => {
         this.spinner.hide();
         this.dialog.swal({ dialog: 'error', title: 'Error', message: err });
@@ -347,7 +345,7 @@ export class Aknowledgmemnt2Component {
     this.api = params.api;
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
-    // this.gridApi.sizeColumnsToFit();
+   
   }
   save() {
 
@@ -360,7 +358,7 @@ export class Aknowledgmemnt2Component {
       this.entity.firmId = this.provider.companyinfo.company?.firm.firmCode,
         this.entity.divId = this.provider.companyinfo.company.divId;
       
-      // this.data =this.entity;
+     
       this.http.put('Motormemo2/updatepayment', this.master.cleanObject(this.entity, 2), { id: this.entity.vchId }).subscribe({
         next: (res: any) => {
           this.spinner.hide()
