@@ -1,10 +1,9 @@
 import { CommonModule, DatePipe, Location } from '@angular/common';
-import { http, imgResize, Master, NavbarActions, toNumber } from '../../../../assets/services/services';
-import { Component, NgZone, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { http, imgResize, Master, NavbarActions } from '../../../../assets/services/services';
+import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MyProvider } from '../../../../assets/services/provider';
 import { DialogsComponent } from '../../../../assets/pg/dialogs/dialogs.component';
-import { NgxImageCompressService } from 'ngx-image-compress';
 import { castFromArrayBuffer } from '../../../../assets/services/services';
 import { ReportDictionory } from '../../../../../../assets/service/interfaces';
 import { JournalObj, acc00500Obj, acc00501sObj, jrnApproveObj, accCodeNavigationObj } from '../../../../assets/datatypests/Journalchild'
@@ -62,7 +61,6 @@ export class JournalchildComponent {
     private spinner: NgxSpinnerService,
     private provider: MyProvider,
     public navactions: NavbarActions,
-    private casting: castFromArrayBuffer,
     public imgResize: imgResize,
     public master: Master) {
 

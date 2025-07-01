@@ -46,13 +46,11 @@ export class SundryWiseComponent {
   myReportDictionory: ReportDictionory = <ReportDictionory>{};
   gridColumnApi: any;
 
-  constructor(private http: http,
-    private spinner: NgxSpinnerService,
+  constructor(
     private provider: MyProvider,
-    private dialog: DialogsComponent,
     private location: Location,
     private datepipe: DatePipe,
-    private decimalpipe: DecimalPipe,
+  
    
   ) { }
 

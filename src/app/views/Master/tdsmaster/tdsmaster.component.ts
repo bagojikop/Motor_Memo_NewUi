@@ -42,11 +42,9 @@ export class TdsmasterComponent {
   private gridApi: GridApi;
   constructor(private http: http,
     private spinner: NgxSpinnerService,
-
     private dialog: DialogsComponent,
-
     public gridOption: gridOptions,
-    private router: Router,) { }
+   ) { }
 
   @HostListener('window:resize', ['$event'])
   onResize(event) {

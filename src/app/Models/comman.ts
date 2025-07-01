@@ -63,9 +63,6 @@ export interface lineItem {
     totalFreeQuantity:number
     checked1:any
     includeingGST:string
-    //iStockUnitNavigation:any,
-    // invItemFactors:any
-    // invItemGsts:any
     totalSaleValue:number,
     poDetlId:number
     soDetlId:number
@@ -78,7 +75,6 @@ export interface lineItem {
     salesInvoiceBatchs?:invBatch
     purcahseOrderItem:purchaseOrderItem
     salesOrderItem:salesOrderItem
-    //purchaseInvoiceItem:invBatch
     purchaseReturnItem:invBatch
     purchaseInvoiceItem:purchaseInvoiceItem
     salesInvoiceItem:salesInvoiceItem
@@ -120,8 +116,6 @@ export interface lineItem {
     GO:string
     stateType: number
     itm?: lineItem
-    //piBatchs: invBatch[]
-    //salesInvoiceBatchs:invBatch[]
     discTypes:any[]
     isBth:boolean
     bth?:invBatch[]
@@ -137,11 +131,6 @@ export interface lineItem {
     checked1:any
     totalSaleValue:number
     accCode:number
-    
-    
-    
-  
-  
   }
   export interface docAttach {
     detlId: number

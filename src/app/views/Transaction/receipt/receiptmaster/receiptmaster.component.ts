@@ -35,7 +35,6 @@ export class ReceiptmasterComponent {
   private gridApi: GridApi;
   gridParams: any = {};
   constructor(private http: http,
-    private spinner: NgxSpinnerService,
     private provider: MyProvider,
     private dialog: DialogsComponent,
     private location: Location,

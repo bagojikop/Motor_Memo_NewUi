@@ -47,7 +47,6 @@ export class SenderReceiverChildComponent {
     public http: http,
     private cd: ChangeDetectorRef,
     public httpclient: HttpClient,
-    private datepipe: DatePipe,
     private dialog: DialogsComponent,
     private spinner: NgxSpinnerService,
     private provider: MyProvider,

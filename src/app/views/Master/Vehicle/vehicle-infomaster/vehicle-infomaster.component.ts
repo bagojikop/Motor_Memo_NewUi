@@ -40,8 +40,6 @@ export class VehicleInfomasterComponent implements OnInit {
 
   constructor(
     private http: http,
-    private spinner: NgxSpinnerService,
-    private provider: MyProvider,
     private dialog: DialogsComponent,
     private location: Location,
     public gridOption: gridOptions,

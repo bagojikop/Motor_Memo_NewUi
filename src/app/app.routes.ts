@@ -8,11 +8,7 @@ export const routes: Routes = [
     redirectTo: 'login',
     pathMatch: 'full'
   },
-  // {
-  //   path: '',
-  //   redirectTo: 'dashboard',
-  //   pathMatch: 'full'
-  // },
+ 
   {
     path: 'selectfirm',
     loadComponent: () => import('./assets/pg/Login/select-firm/select-firm.component').then(m => m.SelectFirmComponent),
@@ -114,10 +110,7 @@ export const routes: Routes = [
         path: 'Contramaster',
         loadComponent: () => import('./views/Transaction/contra/contramaster/contramaster.component').then((m) => m.ContramasterComponent)
       },
-      // {
-      //   path: 'Expense',
-      //   loadComponent: () => import('./views/Transaction/expense/expense.component').then((m) => m.ExpenseComponent)
-      // },
+    
       {
         path: 'Journalchild',
         loadComponent: () => import('./views/Transaction/journal/journalchild/journalchild.component').then((m) => m.JournalchildComponent)

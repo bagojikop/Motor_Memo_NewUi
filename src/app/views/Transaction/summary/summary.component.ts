@@ -1,7 +1,6 @@
 import { Component, HostListener, NO_ERRORS_SCHEMA } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { DialogsComponent } from '../../../../app/assets/pg/dialogs/dialogs.component';
-import { MyProvider } from '../../../../app/assets/services/provider';
 import { CommonModule, Location } from '@angular/common';
 import { gridOptions, http } from '../../../../app/assets/services/services';
 import { ActBtnComponent } from '../../../../app/assets/pg/btn-cell-renderer/btn-cell-renderer.component';
@@ -40,7 +39,6 @@ export class SummaryComponent {
   private gridApi: GridApi;
   constructor(private http: http,
     private spinner: NgxSpinnerService,
-    private provider: MyProvider,
     private dialog: DialogsComponent,
     private location: Location,
     public gridOption: gridOptions,

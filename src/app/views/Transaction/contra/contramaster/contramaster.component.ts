@@ -1,6 +1,5 @@
 import { Component, HostListener, NO_ERRORS_SCHEMA } from '@angular/core';
 import { Router } from '@angular/router';
-import { NgxSpinnerService } from 'ngx-spinner';
 import { DialogsComponent } from '../../../../assets/pg/dialogs/dialogs.component';
 import { MyProvider } from '../../../../assets/services/provider';
 import { DatePipe, DecimalPipe, Location } from '@angular/common';

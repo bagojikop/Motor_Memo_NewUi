@@ -7,7 +7,6 @@ import { DialogsComponent } from '../../../../assets/pg/dialogs/dialogs.componen
 import { ReportDictionory } from '../../../../../../assets/service/interfaces';
 import { v4 as uuidv4 } from 'uuid'
 import { FormsModule, NgForm } from '@angular/forms';
-import { SubconsigneeObj, MotormemoAuditObj, MotormemoDetailsObj, Acc003sObj } from '../../../../assets/datatypests/motorchild';
 declare var $: any;
 import { NgSelectModule } from '@ng-select/ng-select';
 import { DssInputComponent } from '../../../../assets/mydirective/dss-input/dss-input.component';
@@ -77,14 +76,11 @@ export class LorryReceChildComponent {
   constructor(
     public location: Location,
     public http: http,
-    private datepipe: DatePipe,
     private dialog: DialogsComponent,
     private spinner: NgxSpinnerService,
     public provider: MyProvider,
     public navactions: NavbarActions,
     public master: Master,
-    private transactionValidService: transactionValid,
-    private savedDataService: SavedDataService
   ) {
     this.entity = {};
     this.entity.motormemo2Childe = []

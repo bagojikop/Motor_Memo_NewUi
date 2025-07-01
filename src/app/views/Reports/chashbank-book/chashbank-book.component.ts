@@ -17,7 +17,7 @@ import { DTFormatDirective } from '../../../assets/mydirective/mydirective.direc
 import { ArraySortPipe } from '../../../assets/pipes/inrcrdr.pipe';
 import {PdfReaderComponent} from '../../../assets/pdf-reader/pdf-reader.component';
 import { PdfViewerComponent, PdfViewerModule } from 'ng2-pdf-viewer';
-import { GridApi,ColDef } from 'ag-grid-community';
+import { ColDef } from 'ag-grid-community';
 import { AgGridAngular, AgGridModule } from 'ag-grid-angular';
 declare var bootstrap:any;
 @Component({

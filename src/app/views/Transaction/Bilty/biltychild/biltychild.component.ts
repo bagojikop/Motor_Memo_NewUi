@@ -7,7 +7,6 @@ import { DialogsComponent } from '../../../../assets/pg/dialogs/dialogs.componen
 import { ReportDictionory } from '../../../../../../assets/service/interfaces';
 import { v4 as uuidv4 } from 'uuid'
 import { FormsModule, NgForm } from '@angular/forms';
-import { SubconsigneeObj, MotormemoAuditObj, MotormemoDetailsObj, Acc003sObj } from '../../../../assets/datatypests/motorchild';
 declare var $: any;
 import "../../../../../app/assets/services/datePrototype";
 import { NgSelectModule } from '@ng-select/ng-select';

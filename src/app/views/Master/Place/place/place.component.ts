@@ -1,13 +1,10 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA, HostListener } from '@angular/core';
-import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { DialogsComponent } from '../../../../assets/pg/dialogs/dialogs.component';
-import { MyProvider } from '../../../../assets/services/provider';
 import { CommonModule, Location } from '@angular/common';
 import { gridOptions, http, Master } from '../../../../assets/services/services';
 import { ActBtnComponent } from '../../../../assets/pg/btn-cell-renderer/btn-cell-renderer.component';
 import { GridApi } from 'ag-grid-community';
-import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { DssInputComponent } from '../../../../assets/mydirective/dss-input/dss-input.component';
@@ -42,9 +39,7 @@ export class PlaceComponent {
   mode: any;
   private gridApi: GridApi;
   constructor(private http: http,
-   
     private spinner: NgxSpinnerService,
-    
     private dialog: DialogsComponent,
     private location: Location,
     public gridOption: gridOptions,

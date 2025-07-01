@@ -1,9 +1,8 @@
 import { Component, NO_ERRORS_SCHEMA } from '@angular/core';
-import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { DialogsComponent } from '../../../assets/pg/dialogs/dialogs.component';
 import { MyProvider } from '../../../assets/services/provider';
-import { DatePipe, Location } from '@angular/common';
+import { DatePipe} from '@angular/common';
 import { http, Master, NavbarActions } from '../../../assets/services/services';
 import { HttpClient } from '@angular/common/http';
 import { ActBtnComponent } from '../../../assets/pg/btn-cell-renderer/btn-cell-renderer.component';

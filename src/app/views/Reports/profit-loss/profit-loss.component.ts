@@ -1,6 +1,6 @@
 import { Component,AfterViewInit,} from '@angular/core';
 import { CommonModule, DatePipe, Location,DecimalPipe } from '@angular/common';
-import { http, Master, NavbarActions } from '../../../assets/services/services';
+import { http, Master} from '../../../assets/services/services';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MyProvider } from '../../../assets/services/provider';

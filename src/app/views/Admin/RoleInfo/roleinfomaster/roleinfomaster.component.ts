@@ -1,4 +1,4 @@
-import { Component, HostListener, NO_ERRORS_SCHEMA } from '@angular/core';
+import { Component,  NO_ERRORS_SCHEMA } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { DialogsComponent } from '../../../../assets/pg/dialogs/dialogs.component';
@@ -37,8 +37,6 @@ export class RoleinfomasterComponent {
   mode: any;
   private gridApi: GridApi;
   constructor(private http: http,
-    private spinner: NgxSpinnerService,
-    private provider: MyProvider,
     private dialog: DialogsComponent,
     private location: Location,
     public gridOption: gridOptions,
