@@ -10,7 +10,6 @@ import { FormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { DssInputComponent } from '../../../../assets/mydirective/dss-input/dss-input.component';
 import { MydirectiveModule } from '../../../../assets/mydirective/mydirective.module'; 
-import { ngselectComponent } from '../../../../assets/pg/ngselect/ngselect.component';
 import { NavactionsComponent } from '../../../../assets/pg/navactions/navactions.component';
  
 declare var $: any;
@@ -43,13 +42,9 @@ export class RoleinfochildComponent {
   constructor(private http: http,
     private spinner: NgxSpinnerService,
     private navaction: NavbarActions,
-    private provider: MyProvider,
     public valid: validation,
-    private datepipe: DatePipe,
     private dialog: DialogsComponent,
     private location: Location,
-    private router: Router,
-    private Master: Master,
     public navactions: NavbarActions,) {
 
   }

@@ -10,11 +10,14 @@ import { ReceiptObj, acc00300Obj, recApproveObj, acc00301Obj } from '../../../..
 import { FormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { DssInputComponent } from '../../../../assets/mydirective/dss-input/dss-input.component';
-import { MydirectiveModule } from '../../../../assets/mydirective/mydirective.module';
 import { ngselectComponent } from '../../../../assets/pg/ngselect/ngselect.component';
 import { NavactionsComponent } from '../../../../assets/pg/navactions/navactions.component';
 import { CurrencyMaskDirective } from "../../../../assets/mydirective/currencyMask/currency-mask.directive";
 import { DTFormatDirective } from '../../../../assets/mydirective/mydirective.directive';
+import { ArraySortPipe } from '../../../../assets/pipes/inrcrdr.pipe';
+import {PdfReaderComponent} from '../../../../assets/pdf-reader/pdf-reader.component';
+import { PdfViewerComponent, PdfViewerModule } from 'ng2-pdf-viewer';
+
 
 declare var bootstrap: any;
 declare var $: any;
@@ -25,8 +28,9 @@ declare var $: any;
   selector: 'app-receiptchild',
   templateUrl: './receiptchild.component.html',
   styleUrls: ['./receiptchild.component.scss'],
-  imports: [FormsModule, CommonModule, DTFormatDirective, CurrencyMaskDirective, ngselectComponent, NgSelectModule, DssInputComponent, MydirectiveModule, NavactionsComponent],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  imports: [FormsModule, CommonModule, DTFormatDirective,PdfViewerModule, CurrencyMaskDirective,PdfReaderComponent, ngselectComponent, NgSelectModule, DssInputComponent,  NavactionsComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  providers: [DatePipe, DialogsComponent,PdfReaderComponent, Master, ArraySortPipe,PdfViewerComponent,PdfViewerModule]
 })
 export class ReceiptchildComponent {
   entity: ReceiptObj;
@@ -105,7 +109,7 @@ export class ReceiptchildComponent {
       this.newRecord();
     }
 
-    this.Init();
+   
     this.docInfo = {
       typ: "Receipt",
       vch_id: this.entity.vchId,
@@ -140,16 +144,11 @@ export class ReceiptchildComponent {
     }
   }
 
-  Init() {
-
-  }
+  
 
   windowrespo() {
     if (window.innerWidth <= 767) {
       this.status = true;
-
-
-
     } else {
       this.status = false;
     }
@@ -165,7 +164,14 @@ export class ReceiptchildComponent {
     this.entity.amount = 0;
     this.entity.txnType = 2;
     this.entity.against = 1;
-    this.entity.vchDate = new Date().toISOString()
+    const today = new Date();
+    const finYearEnd = new Date(this.provider.companyinfo.finyear.tdt);
+
+    if (today >= finYearEnd) {
+      this.entity.vchDate = finYearEnd.toISOString().split('T')[0];
+    } else {
+      this.entity.vchDate = today.toISOString().split('T')[0];
+    }
     this.entity.sdt = this.provider.companyinfo.finyear.fdt ? this.provider.companyinfo.finyear.fdt.toShortString() : '';
     this.entity.edt = this.provider.companyinfo.finyear.tdt ? this.provider.companyinfo.finyear.tdt.toShortString() : '';
     this.entity.currdt = new Date().toISOString()
@@ -182,7 +188,7 @@ export class ReceiptchildComponent {
           this.entity.recApprove = this.entity.recApprove || <recApproveObj>{};
           this.entity.acc00300 = this.entity.acc00300 || <acc00300Obj>{};
 
-          this.entity.vchDate = this.entity.vchDate ?? this.datepipe.transform(this.entity.vchDate, 'yyyy-MM-dd')
+        
           this.entity.txnDate = this.entity.txnDate ?? this.datepipe.transform(this.entity.txnDate, 'yyyy-MM-dd')
           this.entity.refDate = this.entity.refDate ?? this.datepipe.transform(this.entity.refDate, 'yyyy-MM-dd')
           this.entity.acc00300.createdDt = this.entity.acc00300.createdDt ?? this.datepipe.transform(this.entity.acc00300.createdDt, 'yyyy-MM-dd')
@@ -232,7 +238,7 @@ export class ReceiptchildComponent {
 
   receiptprint() {
     this.myServiceUrl = "ReceiptReport";
-
+    
     this.myReportDictionory = {
       reportCacheId: uuidv4(),
       reportParams: [
@@ -270,10 +276,10 @@ export class ReceiptchildComponent {
 
 
       if (!this.entity.acc00300.createdUser) {
-        this.entity.acc00300.createdUser = this.provider.companyinfo.company.username || '';
+        this.entity.acc00300.createdUser = this.provider.companyinfo.userinfo.username || '';
         this.entity.acc00300.createdDt = new Date().toISOString()
       } else {
-        this.entity.acc00300.modifiedUser = this.provider.companyinfo.company.username || '';
+        this.entity.acc00300.modifiedUser = this.provider.companyinfo.userinfo.username || '';
         this.entity.acc00300.modifiedDt = new Date().toISOString()
 
       }
@@ -364,6 +370,6 @@ export class ReceiptchildComponent {
     })
   }
   getAccountDetl(obj) {
-    // this.acc00301.accCodeNavigation = obj;
+   
   }
 }

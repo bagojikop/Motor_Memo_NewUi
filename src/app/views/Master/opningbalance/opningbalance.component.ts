@@ -1,5 +1,4 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA, HostListener } from '@angular/core';
-import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { DialogsComponent } from '../../../assets/pg/dialogs/dialogs.component';
 import { MyProvider } from '../../../assets/services/provider';
@@ -50,12 +49,12 @@ export class OpningbalanceComponent {
     private location: Location,
     public gridOption: gridOptions,
     private decimalpipe: DecimalPipe,
-    private router: Router,) { }
+   ) { }
 
   @HostListener('window:resize', ['$event'])
   onResize(event) {
     this.innerWidth = window.innerWidth;
-    // this.gridApi.sizeColumnsToFit();
+   
   }
 
   ngOnInit(): void {

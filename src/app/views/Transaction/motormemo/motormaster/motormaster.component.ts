@@ -1,6 +1,5 @@
-import { Component, HostListener, NO_ERRORS_SCHEMA, OnInit } from '@angular/core';
+import { Component, NO_ERRORS_SCHEMA, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { NgxSpinnerService } from 'ngx-spinner';
 import { DialogsComponent } from '../../../../assets/pg/dialogs/dialogs.component';
 import { MyProvider } from '../../../../assets/services/provider';
 import { Location } from '@angular/common';
@@ -12,7 +11,7 @@ import { fromEvent } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { DssGridComponent } from '../../../../assets/pg/dss-grid/dss-grid.component';
 
-declare var $: any;
+
 
 @Component({
   selector: 'app-motormaster',
@@ -41,7 +40,6 @@ export class MotormasterComponent implements OnInit {
 
   constructor(
     private http: http,
-    private spinner: NgxSpinnerService,
     private provider: MyProvider,
     private dialog: DialogsComponent,
     private location: Location,
@@ -57,12 +55,12 @@ export class MotormasterComponent implements OnInit {
     this.mode = this.stateParams.action;
     this.innerWidth = window.innerWidth;
 
-    // Debounce resize event and only call `sizeColumnsToFit` if `gridApi` is defined
+    
     fromEvent(window, 'resize')
       .pipe(debounceTime(100))
       .subscribe(() => {
         if (this.gridApi) {
-          // this.gridApi.sizeColumnsToFit();
+          
         }
       });
 
@@ -75,8 +73,8 @@ export class MotormasterComponent implements OnInit {
     this.columns = [
       { field: 'memoNo', headerName: 'LR Number', filter: "agTextColumnFilter", flex: 1 },
       { field: 'vehicleNo', headerName: 'Vehical No', filter: "agTextColumnFilter", flex: 1 },
-      { field: 'from', headerName: 'Form', filter: "agTextColumnFilter", flex: 1 },
-      { field: 'to', headerName: 'To', filter: "agTextColumnFilter", flex: 1 },
+      { field: 'from_Dstn', headerName: 'Form', filter: "agTextColumnFilter", flex: 1 },
+      { field: 'to_Dstn', headerName: 'To', filter: "agTextColumnFilter", flex: 1 },
       { field: 'motormemoDetails.senderName', headerName: 'Sender Name', filter: "agTextColumnFilter", flex: 1 },
       { field: 'motormemoDetails.receiverName', headerName: 'Reciver Name', filter: "agTextColumnFilter", flex: 1 },
       {
@@ -91,17 +89,15 @@ export class MotormasterComponent implements OnInit {
       
     ];
   
-    this.Init();
+  
     this.gridParams = { 
       firm_id: this.provider.companyinfo.company?.firmCode,
       div_id: this.provider.companyinfo.company.divId, 
-      // isApproval: "false",
+     
     }
   }
 
-  Init() {
-
-  }
+ 
 
   addNew() {
     const params = { action: 'new' };
@@ -110,9 +106,7 @@ export class MotormasterComponent implements OnInit {
 
   onGridReady(params: any) {
     this.gridApi = params;
-    // if (this.gridApi) { 
-    //   this.Init();
-    // }
+   
   }
 
   onBtnClick1(e: any) {
@@ -152,7 +146,7 @@ export class MotormasterComponent implements OnInit {
           message: "Record Deleted Successfully",
         };
         this.dialog.swal(params);
-        this.Init();
+     
       } else {
         const error = res.error?.message || "An Error has occurred while deleting the record!";
         const errorParams = {

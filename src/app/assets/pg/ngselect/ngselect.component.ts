@@ -1,7 +1,7 @@
 
 import {
   HttpClient,
-  HttpParams
+
 } from '@angular/common/http';
 import {
   CUSTOM_ELEMENTS_SCHEMA,
@@ -10,7 +10,7 @@ import {
   ElementRef,
   EventEmitter,
   Input,
-  OnInit,
+
   Output,
   Renderer2,
   SimpleChanges,

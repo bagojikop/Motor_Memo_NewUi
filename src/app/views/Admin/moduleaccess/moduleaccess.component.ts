@@ -1,8 +1,6 @@
 import { Component, NO_ERRORS_SCHEMA } from '@angular/core';
-import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { DialogsComponent } from '../../../assets/pg/dialogs/dialogs.component';
-import { MyProvider } from '../../../assets/services/provider';
 import { CommonModule, DatePipe, Location } from '@angular/common';
 import { http, Master, NavbarActions } from '../../../assets/services/services';
 import { validation } from '../../../assets/services/services';
@@ -61,14 +59,9 @@ export class ModuleaccessComponent {
 
   constructor(private http: http,
     private spinner: NgxSpinnerService,
-    private navaction: NavbarActions,
-    private provider: MyProvider,
     public valid: validation,
-    private datepipe: DatePipe,
     private dialog: DialogsComponent,
     private location: Location,
-    private router: Router,
-    private Master: Master,
     public navactions: NavbarActions,) {
 
   }
@@ -89,7 +82,7 @@ export class ModuleaccessComponent {
       next: (res: any) => {
         if (res.status_cd == 1) {
           this.degignations = res.data;
-          //   this.placebuffer = this.reference.places.slice(0, 50);
+        
           this.loading = false;
         } else {
           this.loading = false;
@@ -137,7 +130,7 @@ export class ModuleaccessComponent {
       next: (res: any) => {
         if (res.status_cd == 1) {
           this.users = res.data;
-          //   this.placebuffer = this.reference.places.slice(0, 50);
+        
           this.loading = false;
         } else {
           this.loading = false;

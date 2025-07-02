@@ -61,8 +61,12 @@ export class LoginComponent implements OnInit {
       this.http.get("login/usergrants", this.entity).subscribe({
         next: (res) => {
           if (res.status_cd == 1) {
-            this.userAccessCtrl.setInfo(res.data);
+            
+            this.provider.companyinfo.userinfo = res.data
+             this.userAccessCtrl.setInfo(res.data);
             this.router.navigate(['selectfirm']);
+            
+          
           } else {
           this.dialog.swal({ dialog: 'error', title: 'Error', message: "Plese Check Username and Password" });
           }

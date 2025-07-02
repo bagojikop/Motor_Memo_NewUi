@@ -9,10 +9,6 @@ import { FormsModule } from '@angular/forms';
 declare var $: any;
 
 
-// export interface reportViewrModel {
-//   trustedUrl: string;
-//   params: [];
-// }
 
 
 @Component({

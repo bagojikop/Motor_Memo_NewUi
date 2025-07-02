@@ -26,8 +26,9 @@
                             <label>Account</label>
                             <app-ngselect apiUrl="Account/getAcclist" class="p-0" bindLabel="accName"
                                 bindValue="accCode" name="account" [(ngModel)]="entity.accCode"
-                                [defaultProperty]="entity.accCodeNavigation || entity.acc00301?.lraccount" [disabled]="navactions.fieldset"
-                                #account="ngModel" [ngClass]="{'is-invalid': account.errors?.['required']}"
+                                [defaultProperty]="entity.accCodeNavigation || entity.acc00301?.lraccount"
+                                [disabled]="navactions.fieldset" #account="ngModel"
+                                [ngClass]="{'is-invalid': account.errors?.['required']}"
                                 [required]="true"></app-ngselect>
 
 
@@ -82,8 +83,9 @@
                             <div class="d-flex">
                                 <div style="width: 10rem; margin-right: 15px;">
                                     <label for="">Year</label>
-                                    <ng-select [items]="yearsList" name="year" bindLabel="divId" bindValue="divId"  
-                                        [(ngModel)]="entity.divId" (open)="getLastTwoYrearList()" [disabled]="LRandyearisDisabled || navactions.fieldset">
+                                    <ng-select [items]="yearsList" name="year" bindLabel="divId" bindValue="divId"
+                                        [(ngModel)]="entity.divId" (open)="getLastTwoYrearList()"
+                                        [disabled]="LRandyearisDisabled || navactions.fieldset">
                                     </ng-select>
                                 </div>
                                 <div style="width: 10rem;">
@@ -98,7 +100,6 @@
                                     [rows]="3" [(ngModel)]="entity.nar" [maxlength]="100" [cols]="50"
                                     [styleCase]="'c'" />
                             </div>
-
                         </div>
                     </div>
                     <hr />
@@ -116,7 +117,7 @@
                                         <div class="form-group d-flex-width">
                                             <app-ngselect apiUrl="Account/getAcclist" label="Account"
                                                 bindLabel="accName" bindValue="accCode" name="recaccount"
-                                                [(ngModel)]="entity.acc00301.accCode" #recaccount="ngModel" 
+                                                [(ngModel)]="entity.acc00301.accCode" #recaccount="ngModel"
                                                 [defaultProperty]="entity.acc00301.accCodeNavigation"
                                                 [disabled]="navactions.fieldset"></app-ngselect>
                                         </div>
@@ -190,4 +191,9 @@
             </div>
         </div>
     </form>
+</div>
+<div *ngIf="rptMode">
+    <dss-report-viewer [(isShow)]="rptMode" [dictionory]="myReportDictionory" [serviceUrl]="myServiceUrl"
+        docName="Receipt" [mail]="" [wapp]="" ReportTitle="Receipt Entry">
+    </dss-report-viewer>
 </div>

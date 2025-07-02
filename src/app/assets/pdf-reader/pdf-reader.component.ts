@@ -1,22 +1,22 @@
-import { Component, ElementRef, OnInit, ViewChild, EventEmitter, Input, OnChanges, Output, SimpleChanges, AfterViewInit, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { PDFDocumentProxy, PdfViewerComponent } from 'ng2-pdf-viewer';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Component, ElementRef, OnInit, ViewChild, EventEmitter, Input, OnChanges, Output, SimpleChanges, NO_ERRORS_SCHEMA } from '@angular/core';
+import { PDFDocumentProxy,PdfViewerModule, PdfViewerComponent } from 'ng2-pdf-viewer';
+
 import { saveAs } from 'file-saver';
-import { ReportDictionory, MailNav, WappNav } from '../../../assets/services/interfaces';
-import { http } from '../../services/services';
+import { ReportDictionory, MailNav, WappNav } from '../../../../assets/service/interfaces';
+import { http } from '../../../../assets/service/services';
 import Swal from 'sweetalert2';
 import { NgxSpinner, NgxSpinnerService } from 'ngx-spinner';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { QuillModule } from 'ngx-quill'; 
 
 declare var $: any;
 @Component({
-  selector: 'app-pdf-reader',
-  standalone:true,
-   imports:[FormsModule,CommonModule],
+  selector: 'dss-report-viewer',
+  imports:[FormsModule,CommonModule,PdfViewerModule,QuillModule],
   templateUrl: './pdf-reader.component.html',
   styleUrls: ['./pdf-reader.component.scss'],
-  schemas:[CUSTOM_ELEMENTS_SCHEMA]
+  schemas:[NO_ERRORS_SCHEMA]
 })
 export class PdfReaderComponent implements OnInit {
   @ViewChild(PdfViewerComponent) private pdfComponent: any = PdfViewerComponent;
@@ -132,8 +132,7 @@ export class PdfReaderComponent implements OnInit {
       iframe.style.display = 'none';
       iframe.src = blobUrl;
       document.body.appendChild(iframe);
-      //@ts-ignore
-      iframe.contentWindow.print();
+      iframe.contentWindow?.print();
     });
   }
 
@@ -310,5 +309,6 @@ export class PdfReaderComponent implements OnInit {
   closeForm() {
     this.isShowChange.emit(false);
   }
+
 
 }

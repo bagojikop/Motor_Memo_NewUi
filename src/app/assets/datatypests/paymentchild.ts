@@ -54,7 +54,6 @@ export interface acc00201Obj {
     costId: number
     acDate: string
     nar: string
-    accName: string
     accCodeNavigation: any
 
 }

@@ -47,7 +47,6 @@ export class SenderReceiverChildComponent {
     public http: http,
     private cd: ChangeDetectorRef,
     public httpclient: HttpClient,
-    private datepipe: DatePipe,
     private dialog: DialogsComponent,
     private spinner: NgxSpinnerService,
     private provider: MyProvider,
@@ -75,7 +74,7 @@ export class SenderReceiverChildComponent {
     if (this.entity.sCode) {
       this.navactions.fieldset = true;
       this.callbackedit();
-      // this.navactions.navaction("view");
+     
     } else {
       this.navactions.fieldset = false;
       this.newRecord();
@@ -136,7 +135,7 @@ export class SenderReceiverChildComponent {
           this.entity = res.data;
           this.entity.id = res.data.id;
           this.getState(this.entity);
-          //  this.pastentity = Object.assign({}, this.entity);
+          
           this.cd.detectChanges();
         }
         this.spinner.hide();
@@ -159,9 +158,9 @@ export class SenderReceiverChildComponent {
       this.spinner.show();
       if (!this.entity.id) {
         if (!this.entity.createdUser)
-          this.entity.createdUser = this.provider.companyinfo.company.username;
+          this.entity.createdUser = this.provider.companyinfo.userinfo.username;
 
-        this.entity.createdUser = this.provider.companyinfo.company.username;
+        this.entity.createdUser = this.provider.companyinfo.userinfo.username;
 
         this.http.post('Vendor/insert', this.entity).subscribe({
           next: (res: any) => {
@@ -239,8 +238,7 @@ export class SenderReceiverChildComponent {
       this.http.get('Account/getvender', { no: this.entity.gstinNo }).subscribe({
         next: (res: any) => {
           if (res.status_cd == 1) {
-            // this.entity = res.data;
-            // this.entity.gstinNo = res.data.accGstn;
+          
             this.entity.name = res.data.accName;
             this.entity.accCodeNavigation = res.data;
             this.entity.emailId = res.data.emailId;

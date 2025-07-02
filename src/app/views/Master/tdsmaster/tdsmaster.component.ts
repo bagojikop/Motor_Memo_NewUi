@@ -42,16 +42,14 @@ export class TdsmasterComponent {
   private gridApi: GridApi;
   constructor(private http: http,
     private spinner: NgxSpinnerService,
-
     private dialog: DialogsComponent,
-
     public gridOption: gridOptions,
-    private router: Router,) { }
+   ) { }
 
   @HostListener('window:resize', ['$event'])
   onResize(event) {
     this.innerWidth = window.innerWidth;
-    // this.gridApi.sizeColumnsToFit();
+    
 
   }
   ngOnInit(): void {
@@ -61,9 +59,7 @@ export class TdsmasterComponent {
 
 
     this.innerWidth = window.innerWidth;
-    // setTimeout(() => {
-    //   this.gridApi.sizeColumnsToFit();
-    // }, 1000);
+  
 
 
     this.defaultColDef = {
@@ -85,18 +81,7 @@ export class TdsmasterComponent {
       filter: "agTextColumnFilter",
       flex: 3
     },
-    // {
-    //   field: '',
-    //   headerName: 'Rate',
-    //   filter: "agTextColumnFilter",
-    //   flex: 2
-    // },
-    // {
-    //   field: 'mgCodeNavigation.mgName',
-    //   headerName: 'Surcharge',
-    //   filter: "agTextColumnFilter",
-    //   flex: 1
-    // },
+    
     {
       field: 'tds',
       headerName: 'Tds',
@@ -131,30 +116,9 @@ export class TdsmasterComponent {
       flex: 1
     },
     ]
-    //this.Init();
+    
   }
-  Init() {
-    //   this.spinner.show();
-    //   this.http.get("tds/getList").subscribe(res => {
-    //     this.spinner.hide();
-    //     if (res.status_cd == 1) {
-    //       this.list = res.data;
-    //       this.gridApi.setRowData(this.list);
-    //     } else {
-    //       // Swal.fire({
-    //       //   icon: 'error',
-    //       //   text: res.errors.message
-    //       // })
-    //     }
-    //   }, err => {
-    //     this.spinner.hide();
-    //     // Swal.fire({
-    //     //   icon: 'error',
-    //     //   text: err.message
-    //     // })
-    //   })
-
-  }
+ 
   addNew() {
     this.entity = {};
     this.entity.srNo = 0
@@ -286,4 +250,3 @@ export class TdsmasterComponent {
   }
 }
 
-// this.gridApi.setRowData(this.list);

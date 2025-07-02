@@ -70,26 +70,11 @@ export class VehicleTypeChildComponent {
     if (this.stateParams.Id) {
       this.callbackedit()
     }
-    this.Init();
+   
   }
 
 
-  Init() {
-    //unit
-    // this.http.get('Unit/list').subscribe({
-    //   next: (res: any) => {
-    //     if (res.status_cd == 1) {
-    //       this.reference.iUnit = res.data;
-    //     } else {
-    //       this.dialog.swal({ dialog: 'error', title: 'Error', message: res.errors.exception.Message });
-    //     }
-    //     this.spinner.hide();
-    //   }, error: (err: any) => {
-    //     this.spinner.hide();
-    //     this.dialog.swal({ dialog: 'error', title: 'Error', message: err.message });
-    //   }
-    // })
-  }
+ 
   navbar(s) {
     switch (s) {
       case 'new':
@@ -153,7 +138,7 @@ export class VehicleTypeChildComponent {
 
       if (!this.entity.createdUser)
 
-        this.entity.createdUser = this.provider.companyinfo.company.userinfo.username;
+        this.entity.createdUser = this.provider.companyinfo.userinfo.username;
 
 
       let body = this.master.cleanObject(this.entity, 2);
@@ -184,7 +169,7 @@ export class VehicleTypeChildComponent {
 
     else {
 
-      this.entity.modifiedUser = this.provider.companyinfo.company.userinfo.username;
+      this.entity.modifiedUser = this.provider.companyinfo.userinfo.username;
       this.http.put('VehicleType/update', this.master.cleanObject(this.entity, 2), { id: this.entity.vtypeId }).subscribe({
         next: (res: any) => {
           this.spinner.hide()

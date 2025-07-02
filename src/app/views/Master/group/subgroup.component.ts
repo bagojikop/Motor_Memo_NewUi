@@ -1,20 +1,18 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA, HostListener } from '@angular/core';
-import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { DialogsComponent } from '../../../assets/pg/dialogs/dialogs.component';
-import { MyProvider } from '../../../assets/services/provider';
 import { CommonModule, DatePipe, Location } from '@angular/common';
 import { gridOptions, http, Master } from '../../../assets/services/services';
 import { ActBtnComponent } from '../../../assets/pg/btn-cell-renderer/btn-cell-renderer.component';
 import { GridApi } from 'ag-grid-community';
-import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { ngselectComponent } from '../../../assets/pg/ngselect/ngselect.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { DssInputComponent } from '../../../assets/mydirective/dss-input/dss-input.component';
 import { DssGridComponent } from '../../../assets/pg/dss-grid/dss-grid.component';
 import { ArraySortPipe } from '../../../assets/pipes/inrcrdr.pipe';
-declare const $: any;
+ 
+ declare var $:any;
 
 @Component({
   selector: 'app-subgroup',
@@ -30,7 +28,6 @@ export class SubgroupComponent {
   reference: any = {};
   frameworkComponents: any;
 
-
   list = [];
   natures;
   param: any;
@@ -44,20 +41,16 @@ export class SubgroupComponent {
   innerWidth: any;
   private gridApi: GridApi;
   constructor(private http: http,
-    private httpclient: HttpClient,
     private spinner: NgxSpinnerService,
-    private provider: MyProvider,
     private dialog: DialogsComponent,
     private location: Location,
     public gridOption: gridOptions,
     public master: Master,
-    private router: Router,) { }
+    ) { }
 
   @HostListener('window:resize', ['$event'])
   onResize(event) {
     this.innerWidth = window.innerWidth;
-    // this.gridApi.sizeColumnsToFit();
-
   }
   ngOnInit(): void {
     this.entity = {};
@@ -101,16 +94,14 @@ export class SubgroupComponent {
       flex: 1
     },
     ]
-    this.Init();
+    
   }
-  Init() {
-
-  }
+  
   addNew() {
     this.entity = {};
     this.entity.srNo = 0;
+    
     $("#group").modal('show');
-
   }
   onGridReady(params) {
 
@@ -128,6 +119,7 @@ export class SubgroupComponent {
     this.entity = s;
     this.entity.grpCodeNavigation = s.grpCodeNavigation;
     $("#group").modal('show');
+     
   }
   Delete(s) {
     var params = {

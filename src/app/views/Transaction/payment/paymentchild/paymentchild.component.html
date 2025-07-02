@@ -44,13 +44,9 @@
                                             <label class="mb-0">Txn Type</label>
                                             <select class="form-select" aria-label="Default select example"
                                                 name="transactiontype" [(ngModel)]="entity.txnType">
-                                                <!-- <option value="1">Cheque</option> -->
+                                               
                                                 <option value="2">Cash</option>
-                                                <!-- <option value="3">RTGS</option>
-                                            <option value="4">NEFT</option>
-                                            <option value="5">Debit Card</option>
-                                            <option value="6">Credit Card</option>
-                                            <option value="7">Other</option> -->
+                                               
                                             </select>
 
                                         </div>
@@ -59,7 +55,7 @@
                                             <select class="form-select" aria-label="Default select example"
                                                 name="transactiontype" [(ngModel)]="entity.txnType">
                                                 <option value="1">Cheque</option>
-                                                <!-- <option value="2">Cash</option> -->
+                                                
                                                 <option value="3">RTGS</option>
                                                 <option value="4">NEFT</option>
                                                 <option value="5">Debit Card</option>
@@ -101,8 +97,8 @@
                                 <div class="form-group d-flex-width">
                                     <app-ngselect apiUrl="Account/getWithOutBankCash" label="Account" bindLabel="accName"
                                         bindValue="accCode" name="recpayeeaccount" [(ngModel)]="entity.acc00201.accCode"
-                                        [defaultProperty]="entity.accCodeNavigation"
-                                        (change)="getAccountDetl($event)" [disabled]="navactions.fieldset"></app-ngselect>
+                                        [defaultProperty]="entity.acc00201.accCodeNavigation"
+                                        [disabled]="navactions.fieldset"></app-ngselect>
     
                                 </div>
     
@@ -172,12 +168,8 @@
     </form>
 </div>
 
-
-
-
-
-<div>
-    <dss-report-viewer [dictionory]="myReportDictionory" [serviceUrl]="myServiceUrl" docName="Payment" [mail]=""
-        [wapp]="" ReportTitle="Payment Entry">
+<div *ngIf="rptMode">
+    <dss-report-viewer [(isShow)]="rptMode" [dictionory]="myReportDictionory" [serviceUrl]="myServiceUrl"
+        docName="Payment" [mail]="" [wapp]="" ReportTitle="Payment Entry">
     </dss-report-viewer>
 </div>

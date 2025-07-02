@@ -1,16 +1,13 @@
 import { CommonModule, DatePipe, Location } from '@angular/common';
-import { http, imgResize, Master, NavbarActions, toNumber } from '../../../../assets/services/services';
-import { Component, NgZone, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { http, imgResize, Master, NavbarActions } from '../../../../assets/services/services';
+import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MyProvider } from '../../../../assets/services/provider';
 import { DialogsComponent } from '../../../../assets/pg/dialogs/dialogs.component';
-import { NgxImageCompressService } from 'ngx-image-compress';
 import { castFromArrayBuffer } from '../../../../assets/services/services';
 import { ReportDictionory } from '../../../../../../assets/service/interfaces';
 import { JournalObj, acc00500Obj, acc00501sObj, jrnApproveObj, accCodeNavigationObj } from '../../../../assets/datatypests/Journalchild'
 import { v4 as uuidv4 } from 'uuid'
-declare var bootstrap: any;
-declare var $: any;
 import "../../../../../app/assets/services/datePrototype"
 import { FormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
@@ -64,11 +61,7 @@ export class JournalchildComponent {
     private spinner: NgxSpinnerService,
     private provider: MyProvider,
     public navactions: NavbarActions,
-    private casting: castFromArrayBuffer,
     public imgResize: imgResize,
-    private toNumber: toNumber,
-    private imageCompress: NgxImageCompressService,
-    private zone: NgZone,
     public master: Master) {
 
     this.entity = <JournalObj>{};
@@ -119,13 +112,11 @@ export class JournalchildComponent {
   windowrespo() {
     if (window.innerWidth <= 767) {
       this.status = true;
-
-
-
     } else {
       this.status = false;
     }
   }
+
   navbar(s) {
     switch (s) {
       case 'new':
@@ -171,6 +162,7 @@ export class JournalchildComponent {
     };
     this.rptMode = true;
   }
+
   edit() {
     this.docInfo = null;
     this.docInfo = {
@@ -183,12 +175,15 @@ export class JournalchildComponent {
     this.navactions.navaction("view");
     this.callbackedit();
   }
+
   undo() {
     this.entity = this.pastentity;
   }
+
   close() {
     this.location.back();
   }
+
   callbackedit() {
     this.spinner.show();
     var url = "journal/journal"
@@ -196,8 +191,6 @@ export class JournalchildComponent {
       next: (res: any) => {
         if (res.status_cd == 1) {
           this.entity = res.data;
-
-
           this.entity.jrnApprove = this.entity.jrnApprove || <jrnApproveObj>{};
           this.entity.acc00500 = this.entity.acc00500 || <acc00500Obj>{};
           this.entity.vchDate = this.entity.vchDate ?? this.datepipe.transform(this.entity.vchDate, 'yyyy-MM-dd')
@@ -214,14 +207,9 @@ export class JournalchildComponent {
       }
     })
   }
+
   type(value: number) {
     return value === 1 ? 'Debit' : 'Credit';
-    // if (value == 0) {
-    //   this.viewing1 = 2;
-    // } else{
-    //   this.viewing1 = 1;
-    // }
-
   }
 
   newRecord() {
@@ -232,21 +220,29 @@ export class JournalchildComponent {
     this.entity.amount = 0;
 
     this.entity.against = 1;
-    this.entity.vchDate = new Date().toShortString();
+   const today = new Date();
+    const finYearEnd = new Date(this.provider.companyinfo.finyear.tdt);
+
+    
+    if (today >= finYearEnd) {
+      this.entity.vchDate = finYearEnd.toISOString().split('T')[0];
+    } else {
+      this.entity.vchDate = today.toISOString().split('T')[0];
+    }
     this.entity.sdt = this.provider.companyinfo.finyear.fdt ? this.provider.companyinfo.finyear.fdt.toShortString() : '';
     this.entity.edt = this.provider.companyinfo.finyear.tdt ? this.provider.companyinfo.finyear.tdt.toShortString() : '';
     this.entity.currdt = new Date().toShortString();
   }
+
   save() {
     this.spinner.show();
-    //var a = JSON.stringify(this.master.cleanObject(this.entity,2));
     if (!this.entity.vchId) {
       this.entity.firmId = this.provider.companyinfo.company?.firmCode;
       this.entity.divId = this.provider.companyinfo.company.divId
       if (!this.entity.acc00500.createdUser)
-        this.entity.acc00500.createdUser = this.provider.companyinfo.company.userinfo.username;
+        this.entity.acc00500.createdUser = this.provider.companyinfo.userinfo.username;
       else
-        this.entity.acc00500.modifiedUser = this.provider.companyinfo.company.userinfo.username;
+        this.entity.acc00500.modifiedUser = this.provider.companyinfo.userinfo.username;
 
       this.http.post('journal/insert', this.master.cleanObject(this.entity, 2)).subscribe({
         next: (res: any) => {
@@ -255,7 +251,6 @@ export class JournalchildComponent {
             this.entity.vchId = res.data.vchId;
             this.entity.vchNo = res.data.vchNo;
             this.entity.challanNo = res.data.challanNo;
-            //this.provider.ShareData.Acclist.push(this.entity.accCode);
             this.dialog.swal({ dialog: "success", title: "Success", message: "Record is saved sucessfully" });
             this.navactions.navaction("OK");
           }
@@ -290,9 +285,11 @@ export class JournalchildComponent {
       })
     }
   }
+
   getAccountDetl(obj) {
     this.rec.jrnItems.accCodeNavigation = obj;
   }
+
   totalRecAmt() {
     var sumArray = this.entity.acc00501s.map(item => {
       return item.amount;
@@ -318,10 +315,12 @@ export class JournalchildComponent {
     this.totalRecAmt();
     this.rowIndex = null;
   }
+
   journalEdit(s) {
     this.rowIndex = this.entity.acc00501s.indexOf(s);
     this.rec.jrnItems = Object.assign({}, s);
   }
+
   journalDelete(s) {
     var params = {
       dialog: 'confirm',
@@ -336,6 +335,7 @@ export class JournalchildComponent {
       }
     })
   }
+  
   iConfirmFn3() {
     if (this.param != undefined) {
       this.entity.acc00501s.splice(this.param, 1);

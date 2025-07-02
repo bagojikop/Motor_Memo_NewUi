@@ -1,8 +1,6 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA, HostListener } from '@angular/core';
-import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { DialogsComponent } from '../../../../assets/pg/dialogs/dialogs.component';
-import { MyProvider } from '../../../../assets/services/provider';
 import { CommonModule, Location } from '@angular/common';
 import { gridOptions, http } from '../../../../assets/services/services';
 import { ActBtnComponent } from '../../../../assets/pg/btn-cell-renderer/btn-cell-renderer.component';
@@ -42,16 +40,15 @@ export class TalukaComponent {
   private gridApi: GridApi;
   constructor(private http: http,
     private spinner: NgxSpinnerService,
-    private provider: MyProvider,
     private dialog: DialogsComponent,
     private location: Location,
     public gridOption: gridOptions,
-    private router: Router,) { }
+   ) { }
 
   @HostListener('window:resize', ['$event'])
   onResize(event) {
     this.innerWidth = window.innerWidth;
-    // this.gridApi.sizeColumnsToFit();
+  
 
   }
   ngOnInit(): void {
@@ -62,10 +59,7 @@ export class TalukaComponent {
     this.stateParams = this.location.getState();
     this.mode = this.stateParams.action;
     this.innerWidth = window.innerWidth;
-    // setTimeout(() => {
-    //   this.gridApi.sizeColumnsToFit();
-    // }, 1000);
-
+   
 
     this.defaultColDef = {
       sortable: true,
@@ -103,11 +97,9 @@ export class TalukaComponent {
       flex: 1
     },
     ]
-    this.Init();
+    
   }
-  Init() {
-
-  }
+  
   addNew() {
     this.entity = {};
     $("#taluka").modal('show');

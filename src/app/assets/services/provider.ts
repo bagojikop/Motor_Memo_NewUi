@@ -35,16 +35,16 @@ export class MyProvider implements OnInit {
   }
   
   ngOnInit(): void {
-    this.http.get('assets/app-config.json').subscribe({
-      next: (config:any) => {
-        this.token = config.tokenapi;
-        this.server = config.api;
-        this.serverapi = this.server;
-        this.reportserver = config.ssrs + "/";
-      }, error: err => {
-        alert("Something Went wrong");
-      }
-    });
+    // this.http.get('assets/app-config.json').subscribe({
+    //   next: (config:any) => {
+    //     this.token = config.tokenapi;
+    //     this.server = config.api;
+    //     this.serverapi = this.server;
+    //     this.reportserver = config.ssrs + "/";
+    //   }, error: err => {
+    //     alert("Something Went wrong");
+    //   }
+    // });
   }
   
 

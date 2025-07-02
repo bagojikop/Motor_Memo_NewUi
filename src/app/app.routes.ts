@@ -8,11 +8,7 @@ export const routes: Routes = [
     redirectTo: 'login',
     pathMatch: 'full'
   },
-  // {
-  //   path: '',
-  //   redirectTo: 'dashboard',
-  //   pathMatch: 'full'
-  // },
+ 
   {
     path: 'selectfirm',
     loadComponent: () => import('./assets/pg/Login/select-firm/select-firm.component').then(m => m.SelectFirmComponent),
@@ -114,10 +110,7 @@ export const routes: Routes = [
         path: 'Contramaster',
         loadComponent: () => import('./views/Transaction/contra/contramaster/contramaster.component').then((m) => m.ContramasterComponent)
       },
-      // {
-      //   path: 'Expense',
-      //   loadComponent: () => import('./views/Transaction/expense/expense.component').then((m) => m.ExpenseComponent)
-      // },
+    
       {
         path: 'Journalchild',
         loadComponent: () => import('./views/Transaction/journal/journalchild/journalchild.component').then((m) => m.JournalchildComponent)
@@ -149,6 +142,38 @@ export const routes: Routes = [
       {
         path: 'Receiptmaster',
         loadComponent: () => import('./views/Transaction/receipt/receiptmaster/receiptmaster.component').then((m) => m.ReceiptmasterComponent)
+      },
+       {
+        path: 'BiltyMaster',
+        loadComponent: () => import('./views/Transaction/Bilty/biltymaster/biltymaster.component').then((m) => m.BiltymasterComponent)
+      },
+       {
+        path: 'biltychild',
+        loadComponent: () => import('./views/Transaction/Bilty/biltychild/biltychild.component').then((m) => m.BiltychildComponent)
+      },
+      {
+        path: 'lorry-receipt2',
+        loadComponent: () => import('./views/Transaction/Lorryreceipt2/lorry-rece2-dash/lorry-rece2-dash.component').then((m) => m.LorryRece2DashComponent)
+      },
+      {
+        path: 'lorry-receipt2_child',
+        loadComponent: () => import('./views/Transaction/Lorryreceipt2/lorry-rece-child/lorry-rece-child.component').then((m) => m.LorryReceChildComponent)
+      },
+      {
+        path: 'lorry-receipt2_Register',
+        loadComponent: () => import('./views/Reports/lorryreceipt2-register/lorryreceipt2-register.component').then((m) => m.Lorryreceipt2RegisterComponent)
+      },
+       {
+        path: 'Aknowledgment1',
+        loadComponent: () => import('./views/Transaction/aknowledgmemnt1/aknowledgmemnt1.component').then((m) => m.Aknowledgmemnt1Component)
+      },
+      {
+        path: 'Aknowledgment2',
+        loadComponent: () => import('./views/Transaction/aknowledgmemnt2/aknowledgmemnt2.component').then((m) => m.Aknowledgmemnt2Component)
+      },
+      {
+        path: 'Expenses',
+        loadComponent: () => import('./views/Reports/expenses/expenses.component').then((m) => m.ExpensesComponent)
       },
       {
         path: 'Summary',
@@ -189,6 +214,46 @@ export const routes: Routes = [
       {
         path: 'Roleinfomaster',
         loadComponent: () => import('./views/Admin/RoleInfo/roleinfomaster/roleinfomaster.component').then((m) => m.RoleinfomasterComponent)
+      },
+      {
+        path: 'cashbankbook',
+        loadComponent: () => import('./views/Reports/chashbank-book/chashbank-book.component').then((m) => m.ChashbankBookComponent)
+      },
+      {
+        path: 'daybook',
+        loadComponent: () => import('./views/Reports/day-book/day-book.component').then((m) => m.DayBookComponent)
+      },
+      {
+        path: 'Ledger',
+        loadComponent: () => import('./views/Reports/ledger/ledger.component').then((m) => m.LedgerComponent)
+      },
+      {
+        path: 'SubGroupreport',
+        loadComponent: () => import('./views/Reports/grouplist/grouplist.component').then((m) => m.GrouplistComponent)
+      },
+      {
+        path: 'Trialbalance',
+        loadComponent: () => import('./views/Reports/trial-balance/trial-balance.component').then((m) => m.TrialBalanceComponent)
+      },
+      {
+        path: 'balancesheet',
+        loadComponent: () => import('./views/Reports/balance-sheet/balance-sheet.component').then((m) => m.BalanceSheetComponent)
+      },
+      {
+        path: 'profitloss',
+        loadComponent: () => import('./views/Reports/profit-loss/profit-loss.component').then((m) => m.ProfitLossComponent)
+      },
+      {
+        path: 'profit-loss-child',
+        loadComponent: () => import('./views/Reports/profit-loss/profit-loss-child/profit-loss-child.component').then((m) => m.ProfitLossChildComponent)
+      },
+      {
+        path: 'motor-memo-register',
+        loadComponent: () => import('./views/Reports/motormemo-register/motormemo-register.component').then((m) => m.MotormemoRegisterComponent)
+      },
+       {
+        path: 'sundry-wise',
+        loadComponent: () => import('./views/Reports/sundry-wise/sundry-wise.component').then((m) => m.SundryWiseComponent)
       },
       {
         path: 'Roleinfochild',

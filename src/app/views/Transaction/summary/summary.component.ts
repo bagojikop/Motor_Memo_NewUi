@@ -1,8 +1,6 @@
 import { Component, HostListener, NO_ERRORS_SCHEMA } from '@angular/core';
-import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { DialogsComponent } from '../../../../app/assets/pg/dialogs/dialogs.component';
-import { MyProvider } from '../../../../app/assets/services/provider';
 import { CommonModule, Location } from '@angular/common';
 import { gridOptions, http } from '../../../../app/assets/services/services';
 import { ActBtnComponent } from '../../../../app/assets/pg/btn-cell-renderer/btn-cell-renderer.component';
@@ -41,16 +39,15 @@ export class SummaryComponent {
   private gridApi: GridApi;
   constructor(private http: http,
     private spinner: NgxSpinnerService,
-    private provider: MyProvider,
     private dialog: DialogsComponent,
     private location: Location,
     public gridOption: gridOptions,
-    private router: Router,) { }
+    ) { }
 
   @HostListener('window:resize', ['$event'])
   onResize(event) {
     this.innerWidth = window.innerWidth;
-    // this.gridApi.sizeColumnsToFit();
+   
 
   }
   ngOnInit(): void {
@@ -61,9 +58,7 @@ export class SummaryComponent {
     this.stateParams = this.location.getState();
     this.mode = this.stateParams.action;
     this.innerWidth = window.innerWidth;
-    // setTimeout(() => {
-    //   this.gridApi.sizeColumnsToFit();
-    // }, 1000);
+    
 
     this.defaultColDef = {
       sortable: true,
@@ -79,12 +74,7 @@ export class SummaryComponent {
       filter: "agTextColumnFilter",
       flex: 4
     },
-    // {
-    //   field: 'accCodeNavigation.accName',
-    //   headerName: 'Account',
-    //   filter: "agTextColumnFilter",
-    //   flex: 4
-    // },
+   
     {
       field: 'operation',
       headerName: 'Operation',
@@ -105,20 +95,15 @@ export class SummaryComponent {
       flex: 2
     },
     ]
-    this.Init();
+  
   }
-  Init() {
-
-  }
+ 
   addNew() {
     this.entity = {};
     $("#district").modal('show');
-
   }
 
-  onCellClicked(index) {
-
-  }
+  
   onGridReady(params) {
 
     this.gridApi = params;
@@ -146,14 +131,13 @@ export class SummaryComponent {
     this.entity = s;
     this.entity.accCodeNavigation = s.accCodeNavigation;
     $("#district").modal('show');
-
   }
+
   Delete(s) {
     var params = {
       dialog: 'confirm',
       title: "warning",
       message: "Do You Want Delete Row",
-
     }
 
     this.dialog.swal(params).then(data => {
@@ -162,6 +146,8 @@ export class SummaryComponent {
       }
     })
   }
+
+  
   iConfirmFn(row) {
     var params = {
       id: row.sId

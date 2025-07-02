@@ -1,13 +1,10 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA, HostListener } from '@angular/core';
-import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { DialogsComponent } from '../../../../assets/pg/dialogs/dialogs.component';
-import { MyProvider } from '../../../../assets/services/provider';
 import { CommonModule, Location } from '@angular/common';
 import { gridOptions, http, Master } from '../../../../assets/services/services';
 import { ActBtnComponent } from '../../../../assets/pg/btn-cell-renderer/btn-cell-renderer.component';
 import { GridApi } from 'ag-grid-community';
-import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { DssInputComponent } from '../../../../assets/mydirective/dss-input/dss-input.component';
@@ -45,18 +42,16 @@ export class DistrictComponent {
 
   constructor(private http: http,
     private spinner: NgxSpinnerService,
-    private provider: MyProvider,
     private dialog: DialogsComponent,
     private location: Location,
-    private httpClient: HttpClient,
     public master: Master,
     public gridOption: gridOptions,
-    private router: Router,) { }
+   ) { }
 
   @HostListener('window:resize', ['$event'])
   onResize(event) {
     this.innerWidth = window.innerWidth;
-    // this.gridApi.sizeColumnsToFit();
+  
 
   }
   ngOnInit(): void {
@@ -67,9 +62,7 @@ export class DistrictComponent {
     this.stateParams = this.location.getState();
     this.mode = this.stateParams.action;
     this.innerWidth = window.innerWidth;
-    // setTimeout(() => {
-    //   this.gridApi.sizeColumnsToFit();
-    // }, 1000);
+    
 
     this.defaultColDef = {
       sortable: true,
@@ -102,20 +95,16 @@ export class DistrictComponent {
       flex: 1
     },
     ]
-    this.Init();
+    
   }
-  Init() {
-
-  }
+ 
   addNew() {
     this.entity = {};
     $("#district").modal('show');
 
   }
 
-  onCellClicked(index) {
-
-  }
+ 
   onGridReady(params) {
 
     this.gridApi = params;
@@ -188,32 +177,7 @@ export class DistrictComponent {
 
   }
 
-  // save() {
-
-  //   this.http.post('District/insert', this.entity).subscribe({
-  //     next: (res: any) => {
-  //       if (res.status_cd == 1) {
-
-  //         this.entity.districtId = res.data.districtId;
-  //         this.gridApi.applyTransaction({ add: [this.entity] });
-  //         this.dialog.swal({ dialog: "success", title: "Success", message: "Record is saved sucessfully" })
-  //           .then((res: any) => {
-  //             $("#district").modal('hide');
-  //           })
-
-  //       } else {
-  //         this.dialog.swal({ dialog: "error", message: "Duplicate District" });
-  //       }
-
-
-  //       this.spinner.hide()
-
-  //     }, error: (err: any) => {
-  //       this.spinner.hide()
-  //       this.dialog.swal({ dialog: 'error', title: 'Error', message: "Duplicate District" })
-  //     }
-  //   })
-  // }
+ 
   save() {
     this.spinner.show();
     if (!this.entity.districtId) {

@@ -39,7 +39,6 @@ export class AccountinfomasterComponent implements OnInit {
 
   constructor(
     private http: http,
-    private provider: MyProvider,
     private dialog: DialogsComponent,
     private location: Location,
     public gridOption: gridOptions,
@@ -55,14 +54,7 @@ export class AccountinfomasterComponent implements OnInit {
     this.mode = this.stateParams.action;
     this.innerWidth = window.innerWidth;
 
-    // Debounce resize event and only call `sizeColumnsToFit` if `gridApi` is defined
-    // fromEvent(window, 'resize')
-    //   .pipe(debounceTime(100))
-    //   .subscribe(() => {
-    //     if (this.gridApi) {
-    //       this.gridApi.sizeColumnsToFit();
-    //     }
-    //   });
+  
 
     this.defaultColDef = {
       sortable: true,
@@ -101,7 +93,7 @@ export class AccountinfomasterComponent implements OnInit {
   onGridReady(params: any) {
     this.gridApi = params;
     if (this.gridApi) {
-      // this.gridApi.sizeColumnsToFit();
+     
       this.Init();
     }
   }

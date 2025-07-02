@@ -1,4 +1,4 @@
-import { Component, Input, Output,EventEmitter, OnInit, OnChanges, SimpleChanges, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA, inject, AfterViewInit } from '@angular/core';
+import { Component, Input, Output,EventEmitter, OnInit, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA, inject, AfterViewInit } from '@angular/core';
 import { NavbarActions, UserPermissions } from '../../services/services';
 import { MyProvider } from '../../services/provider';
 import { Router } from '@angular/router';

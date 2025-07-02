@@ -1,5 +1,5 @@
 import { CommonModule, DatePipe, Location } from '@angular/common';
-import { http, Master, NavbarActions, toNumber } from '../../../../assets/services/services';
+import { http, Master, NavbarActions } from '../../../../assets/services/services';
 import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MyProvider } from '../../../../assets/services/provider';
@@ -13,19 +13,19 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { DssInputComponent } from '../../../../assets/mydirective/dss-input/dss-input.component';
 import { MydirectiveModule } from '../../../../assets/mydirective/mydirective.module';
  import { ngselectComponent } from '../../../../assets/pg/ngselect/ngselect.component';
-declare var bootstrap: any;
-declare var $: any;
 import '../../../../assets/services/datePrototype'
 import { NavactionsComponent } from '../../../../assets/pg/navactions/navactions.component';
 import { DTFormatDirective, NumberOnlyDirective } from '../../../../assets/mydirective/mydirective.directive';
 import {CurrencyMaskDirective} from "../../../../assets/mydirective/currencyMask/currency-mask.directive"; 
+import { ArraySortPipe } from '../../../../assets/pipes/inrcrdr.pipe';
+import {PdfReaderComponent} from '../../../../assets/pdf-reader/pdf-reader.component';
 
 @Component({
   selector: 'app-paymentchild',
   templateUrl: './paymentchild.component.html',
   styleUrls: ['./paymentchild.component.scss'],
-  imports: [FormsModule, CommonModule,DTFormatDirective,CurrencyMaskDirective, ngselectComponent,NumberOnlyDirective, NgSelectModule, NgxPaginationModule, DssInputComponent, MydirectiveModule, NavactionsComponent],
-  providers:[],
+  imports: [FormsModule, CommonModule,DTFormatDirective,CurrencyMaskDirective,PdfReaderComponent, ngselectComponent,NumberOnlyDirective, NgSelectModule, NgxPaginationModule, DssInputComponent, MydirectiveModule, NavactionsComponent],
+  providers:[DatePipe, DialogsComponent,PdfReaderComponent, Master, ArraySortPipe],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class PaymentchildComponent {
@@ -77,7 +77,7 @@ export class PaymentchildComponent {
     this.stateparams = this.location.getState();
     this.mode = this.stateparams.action;
     this.isDoc = this.stateparams.isDoc;
-    // this.entity = this.stateparams.list;
+  
     this.entity.vchId = this.stateparams.id;
   }
   ngOnInit(): void {
@@ -91,8 +91,8 @@ export class PaymentchildComponent {
 
 
     this.entity.payApprove = <payApproveObj>{};
-    this.rec.acc00201 = <acc00201Obj>{};
-    this.rec.acc00201.accCodeNavigation = <accCodeNavigationObj>{};
+    this.entity.acc00201 = <acc00201Obj>{};
+    this.entity.acc00201.accCodeNavigation = <accCodeNavigationObj>{};
 
     this.entity.paySellerBuyer = <paySellerBuyerObj>{};
     this.finyear = this.provider.companyinfo.finyear;
@@ -114,16 +114,9 @@ export class PaymentchildComponent {
       username: this.provider.companyinfo.userinfo.username,
       div_id: this.provider.companyinfo.company.divId
     }
-    this.Init();
+   
   }
-  Init() {
-
-
-  }
-
-  getAccountDetl(obj) {
-    this.rec.acc00201.accCodeNavigation = obj;
-  }
+ 
 
   newRecord() {
     this.entity = <PaymentObj>{};
@@ -137,7 +130,14 @@ export class PaymentchildComponent {
     this.entity.paySellerBuyer.supplierType = 1;
     this.entity.paySellerBuyer.partyType = 1;
     this.entity.paySellerBuyer.stateType = "1";
-    this.entity.vchDate = new Date().toShortString()
+    const today = new Date();
+    const finYearEnd = new Date(this.provider.companyinfo.finyear.tdt);
+
+    if (today >= finYearEnd) {
+      this.entity.vchDate = finYearEnd.toISOString().split('T')[0];
+    } else {
+      this.entity.vchDate = today.toISOString().split('T')[0];
+    }
     this.entity.sdt = this.provider.companyinfo.finyear.fdt ? this.provider.companyinfo.finyear.fdt.toShortString() : '';
     this.entity.edt = this.provider.companyinfo.finyear.tdt ? this.provider.companyinfo.finyear.tdt.toShortString() : '';
     this.entity.currdt = new Date().toShortString()
@@ -153,10 +153,10 @@ export class PaymentchildComponent {
       next: (res: any) => {
         if (res.status_cd == 1) {
           this.entity = res.data;
-         // this.entity.accCodeNavigation = res.data.accCodeNavigation;
 
           this.entity.paySellerBuyer = this.entity.paySellerBuyer || <paySellerBuyerObj>{};
           this.entity.acc00200 = this.entity.acc00200 || <acc00200Obj>{};
+          this.entity.acc00201 = this.entity.acc00201 || <acc00201Obj>{};
           this.entity.vchDate = this.entity.vchDate ?? this.datepipe.transform(this.entity.vchDate, 'yyyy-MM-dd')
           this.entity.txnDate = this.entity.txnDate ?? this.datepipe.transform(this.entity.txnDate, 'yyyy-MM-dd')
           this.entity.refDate = this.entity.refDate ?? this.datepipe.transform(this.entity.refDate, 'yyyy-MM-dd')
@@ -165,7 +165,7 @@ export class PaymentchildComponent {
           this.pastentity = Object.assign({}, this.entity);
         }
         this.spinner.hide();
-        // this.navactions.navaction("OK");
+      
       }, error: (err: any) => {
         this.spinner.hide();
         this.dialog.swal({ dialog: 'error', title: 'Error', message: err });
@@ -232,8 +232,6 @@ export class PaymentchildComponent {
   myReportDictionory: ReportDictionory = <ReportDictionory>{};
 
   paymentprint() {
-
-
     this.myServiceUrl = "PaymentReport";
 
     this.myReportDictionory = {
@@ -257,9 +255,9 @@ export class PaymentchildComponent {
       this.entity.divId = this.provider.companyinfo.company.divId
 
       if (!this.entity.acc00200.createdUser)
-        this.entity.acc00200.createdUser = this.provider.companyinfo.company.username;
+        this.entity.acc00200.createdUser = this.provider.companyinfo.userinfo.username;
       else
-        this.entity.acc00200.modifiedUser = this.provider.companyinfo.company.username;
+        this.entity.acc00200.modifiedUser = this.provider.companyinfo.userinfo.username;
 
 
       this.http.post('payment/insert', this.master.cleanObject(this.entity, 2)).subscribe({
@@ -269,7 +267,7 @@ export class PaymentchildComponent {
             this.entity.vchId = res.data.vchId;
             this.entity.vchNo = res.data.vchNo;
             this.entity.challanNo = res.data.challanNo;
-            //this.provider.ShareData.Acclist.push(this.entity.accCode);
+         
             this.dialog.swal({ dialog: "success", title: "Success", message: "Record is saved sucessfully" });
             this.navactions.navaction("OK");
           }
@@ -310,7 +308,7 @@ export class PaymentchildComponent {
     let tdsRate = Number(this.entity.acc00201.tdsRate) || 0;
 
     let tdsAmt = (amount * tdsRate) / 100;
-    this.entity.acc00201.tdsAmt = parseFloat(tdsAmt.toFixed(2));  // Rounds to 2 decimal places
+    this.entity.acc00201.tdsAmt = parseFloat(tdsAmt.toFixed(2));  
 
     let recAmt = amount - tdsAmt;
     this.entity.acc00201.recAmt = parseFloat(recAmt.toFixed(2));

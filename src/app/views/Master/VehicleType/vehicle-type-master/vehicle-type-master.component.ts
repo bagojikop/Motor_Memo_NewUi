@@ -2,7 +2,6 @@ import { Component, HostListener, NO_ERRORS_SCHEMA } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { DialogsComponent } from '../../../../assets/pg/dialogs/dialogs.component';
-import { MyProvider } from '../../../../assets/services/provider';
 import { DecimalPipe, Location } from '@angular/common';
 import { gridOptions, http, share_data } from '../../../../assets/services/services';
 import { ActBtnComponent } from '../../../../assets/pg/btn-cell-renderer/btn-cell-renderer.component';
@@ -37,13 +36,11 @@ export class VehicleTypeMasterComponent {
   private gridApi: GridApi;
   constructor(private http: http,
     private spinner: NgxSpinnerService,
-    private provider: MyProvider,
     private dialog: DialogsComponent,
     private location: Location,
     public router: Router,
-    private decimalpipe: DecimalPipe,
     public gridOption: gridOptions,
-    private sharedata: share_data) { }
+   ) { }
 
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
@@ -73,7 +70,7 @@ export class VehicleTypeMasterComponent {
 
     if (!this.stateParams.mode) {
       this.product = false;
-      // this.submit();
+      
     } else {
       this.product = true;
     }

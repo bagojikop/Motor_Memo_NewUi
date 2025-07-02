@@ -182,10 +182,6 @@ export class VehicleInfochildComponent {
     }
   }
 
-  // editgstTablerow(v, i) {
-  //   this.rowIndex = this.entity.mst10805s.indexOf(i);
-  //   this.info.reference = Object.assign({}, i);
-  // }
   editgstTablerow(obj, index) {
     this.rowIndex = index;
     this.info.reference = Object.assign({}, obj);
@@ -254,11 +250,9 @@ export class VehicleInfochildComponent {
 
     if (!this.entity.createdUser)
       this.entity.createdUser = this.provider.companyinfo.userinfo.username;
-
-    this.entity.createdUser = this.provider.companyinfo.company.username;
     this.entity.sCode = 2;
 
-    this.entity.modifiedUser = this.provider.companyinfo.company.userinfo.username;
+    this.entity.modifiedUser = this.provider.companyinfo.userinfo.username;
     this.http.put('Vehicle/update', this.master.cleanObject(this.entity, 2), { id: this.entity.vehicleNo }).subscribe({
       next: (res: any) => {
         this.spinner.hide()
@@ -346,7 +340,7 @@ export class VehicleInfochildComponent {
   submitModuledata() {
     if (!this.entity.accCode) {
       if (!this.entity.createdUser)
-        this.reference.createdUser = this.provider.companyinfo.company.userinfo.username;
+        this.reference.createdUser = this.provider.companyinfo.userinfo.username;
 
       this.entity.isDisabled = true
       this.http.post('Vehicle/insert', this.master.cleanObject(this.reference, 2)).subscribe({

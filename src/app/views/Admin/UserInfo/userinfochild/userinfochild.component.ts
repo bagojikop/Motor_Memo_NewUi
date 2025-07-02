@@ -64,13 +64,9 @@ export class UserinfochildComponent {
   constructor(private http: http,
     private spinner: NgxSpinnerService,
     private navaction: NavbarActions,
-    private provider: MyProvider,
     public valid: validation,
-    private datepipe: DatePipe,
     private dialog: DialogsComponent,
     private location: Location,
-    private router: Router,
-    private Master: Master,
     public navactions: NavbarActions,) {
 
   }
@@ -231,8 +227,7 @@ export class UserinfochildComponent {
     this.entity.credential = <credential>{};
     this.disabledata = false;
     this.reference = {};
-    // let paramss: any = this.location.getState();
-    // this.entity.divId = paramss.id;
+   
   }
 
 

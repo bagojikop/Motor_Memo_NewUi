@@ -38,11 +38,8 @@ export class SenderReceiverComponent implements OnInit {
 
   mode: any;
   private gridApi: GridApi;
-
   constructor(
     private http: http,
-    private spinner: NgxSpinnerService,
-    private provider: MyProvider,
     private dialog: DialogsComponent,
     private location: Location,
     public gridOption: gridOptions,
@@ -57,12 +54,12 @@ export class SenderReceiverComponent implements OnInit {
     this.mode = this.stateParams.action;
     this.innerWidth = window.innerWidth;
 
-    // Debounce resize event and only call `sizeColumnsToFit` if `gridApi` is defined
+    
     fromEvent(window, 'resize')
       .pipe(debounceTime(100))
       .subscribe(() => {
         if (this.gridApi) {
-          // this.gridApi.sizeColumnsToFit();
+         
         }
       });
 
@@ -77,7 +74,7 @@ export class SenderReceiverComponent implements OnInit {
       { field: 'accCodeNavigation.accName', headerName: 'Account Name', filter: "agTextColumnFilter", flex: 3 },
       { field: 'address', headerName: 'Address', filter: "agTextColumnFilter", flex: 2 },
       { field: 'mobileNo', headerName: 'Mobile No', filter: "agTextColumnFilter", flex: 2 },
-      // { field: 'sgCodeNavigation.sgName', headerName: 'State', filter: "agTextColumnFilter", flex: 2 },
+      
 
       {
         headerName: 'Action',
@@ -90,12 +87,9 @@ export class SenderReceiverComponent implements OnInit {
       },
     ];
 
-    this.Init();
+   
   }
 
-  Init() {
-
-  }
 
   addNew() {
     const params = { action: 'new' };
@@ -105,8 +99,7 @@ export class SenderReceiverComponent implements OnInit {
   onGridReady(params: any) {
     this.gridApi = params;
     if (this.gridApi) {
-      // this.gridApi.sizeColumnsToFit();
-      this.Init();
+    
     }
   }
 

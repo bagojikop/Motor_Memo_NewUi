@@ -1,4 +1,4 @@
-import { Component, HostListener, NO_ERRORS_SCHEMA } from '@angular/core';
+import { Component, NO_ERRORS_SCHEMA } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { DialogsComponent } from '../../../../assets/pg/dialogs/dialogs.component';
@@ -36,19 +36,12 @@ export class UserinfomasterComponent {
   mode: any;
   private gridApi: GridApi;
   constructor(private http: http,
-    private spinner: NgxSpinnerService,
-    private provider: MyProvider,
     private dialog: DialogsComponent,
     public gridOption: gridOptions,
     private location: Location,
     private router: Router,) { }
 
-  // @HostListener('window:resize', ['$event'])
-  // onResize(event) {
-  //   this.innerWidth = window.innerWidth;
-  //   this.gridApi.sizeColumnsToFit();
-
-  // }
+  
   ngOnInit(): void {
     this.entity = {};
     this.referance = {};
@@ -56,12 +49,7 @@ export class UserinfomasterComponent {
     this.stateParams = this.location.getState();
     this.mode = this.stateParams.action;
     this.innerWidth = window.innerWidth;
-    // setTimeout(() => {
-    //   this.gridApi.sizeColumnsToFit();
-    // }, 1000);
-    // this.frameworkComponents = {
-    //   buttonRenderer: ActBtnComponent,
-    // }
+   
     this.defaultColDef = {
       sortable: true,
       floatingFilter: true,
@@ -69,9 +57,7 @@ export class UserinfomasterComponent {
 
     };
 
-    // this.frameworkComponents = {
-    //   buttonRenderer: ActBtnComponent,
-    // }
+ 
 
     this.columns = [{
       field: 'userId',
@@ -111,26 +97,9 @@ export class UserinfomasterComponent {
 
     },
     ]
-    this.Init();
+    
   }
-  Init() {
-    // this.spinner.show();
-    // this.http.get('UserInfo/list').subscribe({
-    //   next: (res: any) => {
-    //     if (res.status_cd == 1) {
-    //       this.list = res.data;
-    //     } else {
-    //       this.dialog.swal({ dialog: 'error', title: 'Error', message: res.errors.exception.Message })
-    //     }
-
-    //     this.spinner.hide();
-    //   }, error: (err: any) => {
-
-    //     this.spinner.hide();
-    //     this.dialog.swal({ dialog: 'error', title: 'Error', message: err.message });
-    //   }
-    // })
-  }
+ 
   addNew() {
     var params = {
       action: 'new'

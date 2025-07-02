@@ -220,7 +220,11 @@ export const navItems = ({
         { name: 'Contra Entry', iconComponent: { name: 'cil-credit-card' }, url: 'Contramaster' },
         { name: 'Journal Entry', iconComponent: { name: 'cil-notes' }, url: 'Journalmaster' },
         { name: 'Receipt', iconComponent: { name: 'cil-credit-card' }, url: 'Receiptmaster' },
-        { name: 'Payment', iconComponent: { name: 'cil-credit-card' }, url: 'Paymentmaster' }
+        { name: 'Payment', iconComponent: { name: 'cil-credit-card' }, url: 'Paymentmaster' },
+        { name: 'Bilty', iconComponent: { name: 'cil-credit-card' }, url: 'BiltyMaster' },
+        { name: 'Lorry Receipt 2', iconComponent: { name: 'cil-credit-card' }, url: 'lorry-receipt2' },
+        { name: 'Aknowledgment 1', iconComponent: { name: 'cil-credit-card' }, url: 'Aknowledgment1' },
+        { name: 'Aknowledgment 2', iconComponent: { name: 'cil-credit-card' }, url: 'Aknowledgment2' }
       ]
     },
     {
@@ -244,6 +248,24 @@ export const navItems = ({
             { name: 'Module Access', iconComponent: { name: 'cil-layers' }, url: 'Moduleaccess' },
           ]
         },
+      ]
+    },
+    {
+      name: 'Report',
+      url: '/Reports',
+      iconComponent: { name: 'cil-puzzle' },
+      children: [
+        { name: 'Cash Bank Book', iconComponent: { name: 'cil-file' }, url: 'cashbankbook' },
+        { name: 'Day Book', iconComponent: { name: 'cil-list' }, url: 'daybook' },
+        { name: 'Ledger', iconComponent: { name: 'cil-list' }, url: 'Ledger' },
+        { name: 'Group List', iconComponent: { name: 'cil-list' }, url: 'SubGroupreport' },
+        { name: 'Trial Balance', iconComponent: { name: 'cil-list' }, url: 'Trialbalance' },
+        { name: 'Balance Sheet', iconComponent: { name: 'cil-list' }, url: 'balancesheet' },
+        { name: 'Profit Loss', iconComponent: { name: 'cil-list' }, url: 'profitloss' },
+        { name: 'Motormemo Register', iconComponent: { name: 'cil-list' }, url: 'motor-memo-register' },
+        { name: 'Sundry Wise Expenses', iconComponent: { name: 'cil-list' }, url: 'sundry-wise' },
+        { name: 'Lorry Receipt 2 Register', iconComponent: { name: 'cil-list' }, url: 'lorry-receipt2_Register' },
+        { name: 'Expenses', iconComponent: { name: 'cil-list' }, url: 'Expenses' },
       ]
     }
   ];

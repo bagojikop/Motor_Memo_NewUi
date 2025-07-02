@@ -1,9 +1,8 @@
 import { Component, NO_ERRORS_SCHEMA } from '@angular/core';
-import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { DialogsComponent } from '../../../assets/pg/dialogs/dialogs.component';
 import { MyProvider } from '../../../assets/services/provider';
-import { DatePipe, Location } from '@angular/common';
+import { DatePipe} from '@angular/common';
 import { http, Master, NavbarActions } from '../../../assets/services/services';
 import { HttpClient } from '@angular/common/http';
 import { ActBtnComponent } from '../../../assets/pg/btn-cell-renderer/btn-cell-renderer.component';
@@ -15,10 +14,7 @@ declare var $: any;
 
 interface BalanceForwardObj {
 
-
 }
-
-
 
 @Component({
   selector: 'app-balanceforward',
@@ -42,11 +38,7 @@ export class BalanceforwardComponent {
   constructor(private http: http,
     private spinner: NgxSpinnerService,
     private provider: MyProvider,
-    private datepipe: DatePipe,
     private dialog: DialogsComponent,
-    private location: Location,
-    private router: Router,
-    private Master: Master,
     public navactions: NavbarActions,) {
 
   }
@@ -57,36 +49,9 @@ export class BalanceforwardComponent {
 
     this.entity.finyear = this.provider.companyinfo.company.divId;
 
-
-    // this.Init();
-
   }
-  Init() {
-
-    this.loading = true;
-    this.http.get('Firm/list').subscribe({
-      next: (res: any) => {
-        if (res.status_cd == 1) {
-          this.firms = res.data;
-          this.entity.firmCode = res.data[0].firmCode
-          this.loading = false;
-        } else {
-          this.loading = false;
-          this.dialog.swal({ dialog: 'error', title: 'Error', message: res.errors.exception.Message });
-        }
-
-
-        this.spinner.hide();
-      }, error: (err: any) => {
-        this.spinner.hide();
-        this.dialog.swal({ dialog: 'error', title: 'Error', message: err.message });
-      }
-    })
-  }
-
-  save() {
-
-  }
+ 
+  
   check() {
 
     if (this.entity.account == true) {

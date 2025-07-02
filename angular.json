@@ -36,27 +36,34 @@
             "assets": [
               "src/favicon.ico",
               "src/assets"
+             
             ],
             "styles": [
               "src/scss/styles.scss",
               "src/scss/inputStyles.scss",
               "node_modules/bootstrap-icons/font/bootstrap-icons.css",
+              "node_modules/ngx-ui-switch/ui-switch.component.scss",
               "node_modules/@ng-select/ng-select/themes/default.theme.css",
               "node_modules/ngx-spinner/animations/ball-circus.css",
               "node_modules/bootstrap-icons/font/bootstrap-icons.css",
               "./node_modules/quill/dist/quill.core.css",
               "./node_modules/quill/dist/quill.bubble.css",
+              
               "./node_modules/ag-grid-community/styles/ag-grid.css",
               "./node_modules/ag-grid-community/styles/ag-theme-balham.css",
               "./node_modules/@fortawesome/fontawesome-free/css/all.css",
               "./node_modules/quill/dist/quill.snow.css"
+
             ],
             "scripts": [
-              "./node_modules/jquery/dist/jquery.min.js",
-              "./node_modules/@popperjs/core/dist/umd/popper.min.js",
-              "./node_modules/bootstrap/dist/js/bootstrap.min.js",
-              "./node_modules/ag-grid-community/dist/ag-grid-community.min.js",
-              "./node_modules/moment/min/moment.min.js"
+               
+              "node_modules/jquery/dist/jquery.js",
+              "node_modules/@popperjs/core/dist/umd/popper.min.js",
+              "node_modules/bootstrap/dist/js/bootstrap.min.js",
+              "node_modules/ag-grid-community/dist/ag-grid-community.min.js",
+              "node_modules/moment/min/moment.min.js"
+             
+              
             ],
             "allowedCommonJsDependencies": [],
             "stylePreprocessorOptions": {
@@ -131,4 +138,5 @@
       }
     }
   }
+  
 }

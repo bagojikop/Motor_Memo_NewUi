@@ -3,14 +3,14 @@ export interface SubconsigneeObj {
   Directpaid:boolean
   receiverName:string 
   totaldebitadd: number
-  buildtotalamt:number
+  billAmt:number
   senderaccount:any
   receiveraccout:any
   oweraccount:any
   divId:string
   firmId:number
-  freightdeductAmount: number
-  advanceAmount:number
+  totalFreight: number
+  advAmount:number
   Name: string
   sendernm:string
   totalcharges: number
@@ -23,8 +23,8 @@ export interface SubconsigneeObj {
   memoNo: number
   TotalFreight:number
   totalothercharges:number
-  from: Date
-  to: Date
+  from_Dstn: string
+  to_Dstn: string
   stateInfo: string
   AccountName: string
   selectedValue: string
@@ -35,16 +35,16 @@ export interface SubconsigneeObj {
   hsncode: number
   GstPer: number
 
-  ownerCreditAmout: number
+  leftAmount: number
   cityId: number
 
-  sCode: number
+  s_Id: number
   cityIdNavigation: any
 
   placeId: string
   mobileNo: number
   website: string
-  selectfreightType: number;  
+  freightType: number;  
 
   stateCodeNavigation: any
   expenses: any
@@ -75,7 +75,7 @@ export interface MotormemoExpensesObj {
   expenseName: string
   accName:string
   accCodeNavigation:any
-  expensesisChecked: boolean
+  isChecked: boolean
   sundries:any
   charges: number
   action: number 

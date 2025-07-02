@@ -35,7 +35,6 @@ export class ReceiptmasterComponent {
   private gridApi: GridApi;
   gridParams: any = {};
   constructor(private http: http,
-    private spinner: NgxSpinnerService,
     private provider: MyProvider,
     private dialog: DialogsComponent,
     private location: Location,
@@ -47,8 +46,7 @@ export class ReceiptmasterComponent {
   @HostListener('window:resize', ['$event'])
   onResize(event) {
     this.innerWidth = window.innerWidth;
-    // this.gridApi.sizeColumnsToFit();
-
+    
   }
   ngOnInit(): void {
     this.entity = {};
@@ -57,12 +55,7 @@ export class ReceiptmasterComponent {
     this.stateParams = this.location.getState();
     this.mode = this.stateParams.action;
     this.innerWidth = window.innerWidth;
-    // setTimeout(() => {
-    //   this.gridApi.sizeColumnsToFit();
-    // }, 1000);
-    // this.frameworkComponents = {
-    //   buttonRenderer: ActBtnComponent,
-    // }
+   
     this.defaultColDef = {
       sortable: true,
       floatingFilter: true,
@@ -70,9 +63,7 @@ export class ReceiptmasterComponent {
 
     };
 
-    // this.frameworkComponents = {
-    //   buttonRenderer: ActBtnComponent,
-    // }
+   
 
     this.columns = [{
       field: 'vchDate',
@@ -108,7 +99,7 @@ export class ReceiptmasterComponent {
       flex: 2,
       type: "rightAligned",
       cellRenderer: (data) => {
-        return data.value ? this.decimalpipe.transform(data.value, '1.2-2') : '';    //moment(data.value).format('DD/MM/YYYY')
+        return data.value ? this.decimalpipe.transform(data.value, '1.2-2') : '';    
       }
     },
 
@@ -123,19 +114,15 @@ export class ReceiptmasterComponent {
       flex: 1
     },
     ]
-    this.Init();
+   
     this.gridParams = { 
       firmId: this.provider.companyinfo.company?.firmCode,
       divId: this.provider.companyinfo.company.divId,
-      // username: this.provider.companyinfo.userinfo.username,
-      // from_date: "01-04-2022",
-      // to_date: "31-03-2023",
+     
       isApproval: "false",
     }
   }
-  Init() {
-
-  }
+ 
   addNew() {
     var params = {
       action: 'new',

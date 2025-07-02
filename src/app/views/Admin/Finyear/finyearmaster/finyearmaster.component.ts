@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { DialogsComponent } from '../../../../assets/pg/dialogs/dialogs.component';
 import { MyProvider } from '../../../../assets/services/provider';
-import { DatePipe, Location } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import { gridOptions, http } from '../../../../assets/services/services';
 import { ActBtnComponent } from '../../../../assets/pg/btn-cell-renderer/btn-cell-renderer.component';
 import { GridApi } from 'ag-grid-community';
@@ -39,27 +39,19 @@ export class FinyearmasterComponent {
     private dialog: DialogsComponent,
     private datepipe: DatePipe,
     public gridOption: gridOptions,
-    private location: Location,
     private router: Router,) { }
 
   @HostListener('window:resize', ['$event'])
   onResize(event) {
     this.innerWidth = window.innerWidth;
-    // this.gridApi.sizeColumnsToFit();
-
+  
   }
   ngOnInit(): void {
     this.entity = {};
     this.referance = {};
     this.defaultColDef = {};
     this.innerWidth = window.innerWidth;
-    // setTimeout(() => {
-    //   this.gridApi.sizeColumnsToFit();
-    // }, 1000);
-
-    // this.frameworkComponents = {
-    //   buttonRenderer: ActBtnComponent,
-    // }
+   
     this.defaultColDef = {
       sortable: true,
       floatingFilter: true,
@@ -67,9 +59,6 @@ export class FinyearmasterComponent {
 
     };
 
-    // this.frameworkComponents = {
-    //   buttonRenderer: ActBtnComponent,
-    // }
 
     this.columns = [{
       field: 'divId',
@@ -83,12 +72,7 @@ export class FinyearmasterComponent {
       filter: "agTextColumnFilter",
       flex: 3
     },
-    // {
-    //   field: 'branch.branchName',
-    //   headerName: 'Branch',
-    //   filter: "agTextColumnFilter",
-    //   flex: 3
-    // },
+ 
 
     {
       field: 'fdt',
@@ -127,7 +111,7 @@ export class FinyearmasterComponent {
     this.spinner.show();
     var param = {
       firmCode: this.provider.companyinfo.company.firmCode,
-      // branchCode: this.provider.companyinfo.company.branchCode
+    
 
     }
 
@@ -173,7 +157,7 @@ export class FinyearmasterComponent {
       action: 'view',
       id: s.divId,
       firmCode: s.firmCode,
-      // branchCode: s.branchCode
+   
 
     };
     this.router.navigate(['/Finyearchild'], { state: param });
@@ -200,7 +184,7 @@ export class FinyearmasterComponent {
     var params = {
       divId: row.divId,
       firmCode: row.firmCode,
-      // branchCode: row.branchCode
+    
     }
 
     this.http.delete('FinYears/delete', params).subscribe((res: any) => {
