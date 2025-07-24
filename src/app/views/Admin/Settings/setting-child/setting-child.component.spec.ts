@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { Aknowledgmemnt2Component } from './aknowledgmemnt2.component';
+import { SettingChildComponent } from './setting-child.component';
 
-describe('Aknowledgmemnt2Component', () => {
-  let component: Aknowledgmemnt2Component;
-  let fixture: ComponentFixture<Aknowledgmemnt2Component>;
+describe('SettingChildComponent', () => {
+  let component: SettingChildComponent;
+  let fixture: ComponentFixture<SettingChildComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Aknowledgmemnt2Component]
+      imports: [SettingChildComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(Aknowledgmemnt2Component);
+    fixture = TestBed.createComponent(SettingChildComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

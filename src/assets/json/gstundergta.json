@@ -1,0 +1,52 @@
+[
+    {
+        "transType": 1,
+        "transName": "RCM 5% with ITC",
+        "sac": 0,
+        "sRate": 0.00,
+        "cRate": 0.00,
+        "iRate": 0.00,
+        "rcm": true,
+        "itc": true
+    },
+    {
+        "transType": 2,
+        "transName": "5% No ITC  (paid by GTA)",
+        "sac": 0,
+        "sRate": 2.50,
+        "cRate": 2.50,
+        "iRate": 5.00,
+        "rcm": false,
+        "itc": false
+    },
+    {
+        "transType": 3,
+        "transName": "12% with ITC (paid by GTA)",
+        "sac": 0,
+        "sRate": 6.00,
+        "cRate": 6.00,
+        "iRate": 12.00,
+        "rcm": false,
+        "itc": true
+    },
+    {
+        "transType": 4,
+        "transName": "Hiring out vehicle to a GTA",
+        "sac": 0,
+        "sRate": 0.00,
+        "cRate": 0.00,
+        "iRate": 0.00,
+        "rcm": false,
+        "itc": false
+    },
+    {
+        "transType": 5,
+        "transName": "Carrying Exempted Goods",
+        "sac": 0,
+        "sRate": 0.00,
+        "cRate": 0.00,
+        "iRate": 0.00,
+        "rcm": false,
+        "itc": false
+    }
+]

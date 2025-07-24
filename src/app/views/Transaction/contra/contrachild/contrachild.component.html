@@ -24,10 +24,10 @@
                             </div>
                             <div class="d-flex flex-column gapInputFields">
                                 <label>Account</label>
-                                <app-ngselect apiUrl="Account/getAcclist" class="form-control-sm p-0"
+                                <app-ngselect apiUrl="Account/getAcclistbyMgCode" class="form-control-sm p-0"
                                     bindLabel="accName" bindValue="accCode" name="recpayeeaccount"
                                     [(ngModel)]="entity.accCode" [defaultProperty]="entity.accCodeNavigation"
-                                    [disabled]="navactions.fieldset"></app-ngselect>
+                                    [apiParams]="{mgCode:'3, 4, 25'}" [disabled]="navactions.fieldset"></app-ngselect>
                                 <div>
                                     <label>Transaction Type</label>
                                     <select class="form-select" aria-label="Default select example"
@@ -82,12 +82,12 @@
                                         </tr>
                                         <tr>
                                             <th class="p-1 " scope="col" style="width:35%">
-                                                <app-ngselect apiUrl="Account/getAcclist" bindLabel="accName"
+                                                <app-ngselect apiUrl="Account/getAcclistbyMgCode" bindLabel="accName"
                                                     bindValue="accCode" name="contraItemsaccount"
                                                     [(ngModel)]="rec.contraItems.accCode"
-                                                    (change)="getAccountDetl($event)"
+                                                    (change)="getAccountDetl($event)" 
                                                     [defaultProperty]="rec.contraItems.accCodeNavigation"
-                                                    [disabled]="navactions.fieldset"
+                                                    [apiParams]="{mgCode:'3, 4, 25'}" [disabled]="navactions.fieldset"
                                                     [applyMargins]="false"></app-ngselect>
                                             </th>
                                             <th class="text-center p-1 " scope="col" style="width:20%">

@@ -44,7 +44,7 @@ export class DeclarationchildComponent {
     private datepipe: DatePipe,
     private dialog: DialogsComponent,
     private spinner: NgxSpinnerService,
-    private provider: MyProvider,
+    public provider: MyProvider,
     public navactions: NavbarActions,
     public master: Master
   ) {
@@ -61,7 +61,7 @@ export class DeclarationchildComponent {
 
     this.entity = <AccountObj>{};
 
-    this.entity.fromDt = new Date().toISOString().split('T')[0]; 
+    this.entity.fromDt = new Date().toISOString().split('T')[0];
 
     let paramss: any = this.location.getState();
     this.navactions.navaction(paramss.action);
@@ -74,7 +74,7 @@ export class DeclarationchildComponent {
       this.navactions.fieldset = false;
       this.newRecord();
     }
-   
+
   }
 
   windowrespo() {
@@ -87,7 +87,7 @@ export class DeclarationchildComponent {
       this.status = false;
     }
   }
- 
+
   navbar(s) {
     switch (s) {
       case 'new':
@@ -173,7 +173,7 @@ export class DeclarationchildComponent {
       }
       else {
         this.entity.modifiedUser = this.provider.companyinfo.userinfo.username;
-        
+
         this.http.put('Declaration/update', this.master.cleanObject(this.entity, 2), { id: this.entity.declrId }).subscribe({
           next: (res: any) => {
             this.spinner.hide()
@@ -201,7 +201,7 @@ export class DeclarationchildComponent {
 
   }
 
- 
+
 
   close() {
     this.location.back();
@@ -284,6 +284,13 @@ export class DeclarationchildComponent {
   }
 
   getpandetails(item) {
+      if (this.entity.declrId) {
     this.entity.panNo = item.panNo;
+      }else{
+      this.entity.panNo = item.panNo;
+      this.entity.mst10301s = item.mst10806s;
+      this.entity.noOfVehicles = this.getTotalVehicles();
+    }
+
   }
 }

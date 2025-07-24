@@ -3,7 +3,8 @@ export interface SubconsigneeObj {
     Name: string
     stateInfo: string
     accCode: string
-    stateCode: string
+    stateCode: number
+    stateName:string
     ApproximateKg: string
     code: any
     iId: string
@@ -33,6 +34,6 @@ export interface SubconsigneeObj {
     website: string
     emailId: any
     stateCodeNavigation: any
-    place: any
+    placeIdNavigation: any
     accCodeNavigation: any
 }

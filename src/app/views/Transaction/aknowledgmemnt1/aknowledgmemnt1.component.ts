@@ -52,6 +52,7 @@ export class Aknowledgmemnt1Component {
   exp: any = {};
   pastentity;
   motormemoExpenses: any = []
+  motormemo2AdvDetl: any = {}
   private gridApi: GridApi;
 
   constructor(private http: http,
@@ -62,12 +63,14 @@ export class Aknowledgmemnt1Component {
     private datepipe: DatePipe,
     public master: Master,
     private decimalpipe: DecimalPipe,
-
   ) { }
+
   ngOnInit(): void {
     this.entity = {};
     this.exp = {}
     this.entity.motormemoExpenses = []
+    this.entity.motormemo2AdvDetails = []
+    this.motormemo2AdvDetl = {}
     this.referance = {}
     this.defaultColDef = {
       sortable: true,
@@ -77,8 +80,19 @@ export class Aknowledgmemnt1Component {
     this.stateParams = this.location.getState();
     this.mode = this.stateParams.action;
     this.innerWidth = window.innerWidth;
+    this.columns = this.getColumnsForType0();
+  }
 
-    this.columns = [
+  showgrid() {
+    if (this.referance.aknowlType === "0") {
+      this.columns = this.getColumnsForType0();
+    } else {
+      this.columns = this.getColumnsForType1();
+    }
+  }
+
+  getColumnsForType0() {
+    return [
       {
         field: 'memoNo',
         headerName: 'L.R.No',
@@ -173,54 +187,181 @@ export class Aknowledgmemnt1Component {
         flex: 1
       },
     ];
-
-
   }
 
-
+  getColumnsForType1() {
+    return [
+      {
+        field: 'vchNo',
+        headerName: 'L.R.No',
+        filter: "agTextColumnFilter",
+        flex: 1,
+        headerClass: "text-left",
+      },
+      {
+        field: 'vchDate',
+        headerName: 'Date',
+        filter: "agTextColumnFilter",
+        flex: 1,
+        headerClass: "text-left",
+        cellRenderer: (data) => {
+          return this.datepipe.transform(data.value, 'dd-MM-yyyy')
+        }
+      },
+      {
+        field: 'from_Dstn',
+        headerName: 'From',
+        filter: "agTextColumnFilter",
+        flex: 1,
+        headerClass: "text-left",
+      },
+      {
+        field: 'to_Dstn',
+        headerName: 'To',
+        filter: "agTextColumnFilter",
+        flex: 1,
+        headerClass: "text-left",
+      },
+      {
+        field: 'totalWet',
+        headerName: 'Weight',
+        filter: "agTextColumnFilter",
+        type: "rightAligned",
+        flex: 1,
+        minWidth: 100,
+        cellStyle: { textAlign: 'end' },
+        headerClass: "ag-right-aligned-header",
+        cellRenderer: (data) => {
+          return data.value ? this.decimalpipe.transform(data.value, '1.2-2') : '0.00';
+        },
+      },
+      {
+        field: 'freightperWet',
+        headerName: 'Freight/Weight',
+        filter: "agTextColumnFilter",
+        type: "rightAligned",
+        flex: 1,
+        minWidth: 100,
+        cellStyle: { textAlign: 'end' },
+        headerClass: "ag-right-aligned-header",
+        cellRenderer: (data) => {
+          return data.value ? this.decimalpipe.transform(data.value, '1.2-2') : '0.00';
+        },
+      },
+      {
+        field: 'freightTotal',
+        headerName: 'Freight Amount',
+        filter: "agTextColumnFilter",
+        type: "rightAligned",
+        flex: 1,
+        minWidth: 100,
+        cellStyle: { textAlign: 'end' },
+        headerClass: "ag-right-aligned-header",
+        cellRenderer: (data) => {
+          return data.value ? this.decimalpipe.transform(data.value, '1.2-2') : '0.00';
+        },
+      },
+      {
+        field: 'totalAdv',
+        headerName: 'Adv Amount',
+        filter: "agTextColumnFilter",
+        type: "rightAligned",
+        flex: 1,
+        minWidth: 100,
+        cellStyle: { textAlign: 'end' },
+        headerClass: "ag-right-aligned-header",
+        cellRenderer: (data) => {
+          return data.value ? this.decimalpipe.transform(data.value, '1.2-2') : '0.00';
+        },
+      },
+      {
+        field: 'remAmt',
+        headerName: 'Left Amount',
+        filter: "agTextColumnFilter",
+        type: "rightAligned",
+        flex: 1,
+        minWidth: 100,
+        cellStyle: { textAlign: 'end' },
+        headerClass: "ag-right-aligned-header",
+        cellRenderer: (data) => {
+          return data.value ? this.decimalpipe.transform(data.value, '1.2-2') : '0.00';
+        },
+      },
+      {
+        headerName: 'Action',
+        cellRenderer: ActBtnComponent,
+        filter: false,
+        cellRendererParams: {
+          onClick: this.onBtnClick2.bind(this),
+        },
+        flex: 1
+      },
+    ];
+  }
 
   updateTotalCharges(): void {
-
-
-    if (!this.entity.motormemoExpenses) {
-      this.entity.motormemoExpenses = [];
+    if (this.referance.aknowlType === "0") {
+      if (!this.entity.motormemoExpenses) {
+        this.entity.motormemoExpenses = [];
+      }
+      this.exp.action = 1;
+      if (this.rowIndex == null) {
+        this.entity.motormemoExpenses.push(this.exp);
+      }
+      else {
+        this.entity.motormemoExpenses[this.rowIndex] = this.exp;
+      }
+      this.exp = {};
+      this.rowIndex = null;
+      this.additintotlcharges();
+    } else {
+      if (!this.entity.motormemo2AdvDetails) {
+        this.entity.motormemo2AdvDetails = [];
+      }
+      if (this.rowIndex == null) {
+        this.entity.motormemo2AdvDetails.push(this.motormemo2AdvDetl);
+      } else {
+        this.entity.motormemo2AdvDetails[this.rowIndex] = this.motormemo2AdvDetl;
+      }
+      this.motormemo2AdvDetl = {};
+      this.rowIndex = null;
+      this.additintotlcharges();
     }
-
-    this.exp.action = 1;
-
-    if (this.rowIndex == null) {
-
-      this.entity.motormemoExpenses.push(this.exp);
-    }
-
-
-    else {
-      this.entity.motormemoExpenses[this.rowIndex] = this.exp;
-    }
-
-    this.exp = {};
-    this.rowIndex = null;
-    this.additintotlcharges();
-
-
   }
 
+  getAccountDetl(obj) {
+    this.motormemo2AdvDetl.accCodeNavigation = obj;
+  }
+
+  totalAdvAmt: any = 0
 
   leftAmt() {
-
-    this.entity.leftAmount = this.entity.leftAmount - this.entity.totalcharges;
-
+    if (this.referance.aknowlType === "0") {
+      this.entity.leftAmount = this.entity.leftAmount - this.entity.totalcharges;
+    } else {
+      this.entity.remAmt = this.entity.remAmt - this.totalAdvAmt
+    }
   }
 
   AdvAmount() {
-    this.entity.advAmount = this.entity.totalcharges + this.entity.advAmount
+    if (this.referance.aknowlType === "0") {
+      this.entity.advAmount = this.entity.totalcharges + this.entity.advAmount
+    } else {
+      this.entity.totalAdv = this.totalAdvAmt + this.entity.totalAdv
+    }
   }
 
   additintotlcharges() {
-    const sumArray = this.entity.motormemoExpenses.map(item => item.charges || 0);
-    const sumValue = sumArray.reduce((p, c) => Number(p) + Number(c), 0);
-    this.entity.totalcharges = sumValue;
-
+    if (this.referance.aknowlType === "0") {
+      const sumArray = this.entity.motormemoExpenses.map(item => item.charges || 0);
+      const sumValue = sumArray.reduce((p, c) => Number(p) + Number(c), 0);
+      this.entity.totalcharges = sumValue;
+    }
+    else {
+      const sumArray = this.entity.motormemo2AdvDetails.map(item => item.amount || 0);
+      const sumValue = sumArray.reduce((p, c) => Number(p) + Number(c), 0);
+      this.totalAdvAmt = sumValue;
+    }
   }
 
   totalCharges: number = 0;
@@ -240,138 +381,240 @@ export class Aknowledgmemnt1Component {
 
   }
 
-
-
   isAddButtonDisabled(): boolean {
-    if (!this.entity) {
-      return true; 
+    if (this.referance.aknowlType === "0") {
+      if (!this.entity) {
+        return true;
+      }
+      const totalCharges = +this.entity.totalcharges || 0;
+      const leftAmount = +this.entity.leftAmount || 0;
+      return totalCharges !== leftAmount;
+    } else {
+      if (!this.entity) {
+        return true;
+      }
+      const totalCharges = +this.totalAdvAmt || 0;
+      const leftAmount = +this.entity.remAmt || 0;
+      return totalCharges !== leftAmount;
     }
-
-    const totalCharges = +this.entity.totalcharges || 0;
-    const leftAmount = +this.entity.leftAmount || 0;
-
-    return totalCharges !== leftAmount;
   }
 
   editExpTablerow(obj, index) {
-    this.rowIndex = index;
-    this.exp = Object.assign({}, obj);
-    this.exp.charges = 0;
-
-  }
-  deleteExpTablerow(index) {
-    var params = {
-
-      dialog: 'confirm',
-      title: "warning",
-      message: "Do you want to delete record"
+    if (this.referance.aknowlType === "0") {
+      this.rowIndex = index;
+      this.exp = Object.assign({}, obj);
+      this.exp.charges = 0;
+    } else {
+      this.rowIndex = index;
+      this.motormemo2AdvDetl = Object.assign({}, obj);
     }
-    this.dialog.swal(params).then(data => {
-      if (data == true) {
-        this.entity.motormemoExpenses.splice(index, 1);
-
-      }
-    })
   }
 
-
+  deleteExpTablerow(index) {
+    if (this.referance.aknowlType === "0") {
+      var params = {
+        dialog: 'confirm',
+        title: "warning",
+        message: "Do you want to delete record"
+      }
+      this.dialog.swal(params).then(data => {
+        if (data == true) {
+          this.entity.motormemoExpenses.splice(index, 1);
+        }
+      })
+    } else {
+      var params = {
+        dialog: 'confirm',
+        title: "warning",
+        message: "Do you want to delete record"
+      }
+      this.dialog.swal(params).then(data => {
+        if (data == true) {
+          this.entity.motormemo2AdvDetails.splice(index, 1);
+        }
+      })
+    }
+  }
 
   onSelectExp(ev) {
     this.exp.sundries = {};
-
     this.exp.sundries.sundryName = ev.sundryName;
     this.exp.accCodeNavigation = ev.accCodeNavigation;
   }
 
   onSelectAcc(ev) {
-
     this.exp.accName = ev.accName;
-
   }
+
   onBtnClick1(e: any) {
     if (e.event.action === "edit") {
       this.edit(e.rowData);
-
     }
   }
 
+  onBtnClick2(e: any) {
+    if (e.event.action === "edit") {
+      this.edit(e.rowData);
+    }
+  }
+
+
   edit(s: any) {
-    const param = { action: 'view', id: s.vchId };
-
-    $('#exampleModal').modal('show');
-    var url = "MotorMemo/PendingAmountedit"
-    this.http.get(url, { id: s.vchId }).subscribe({
-      next: (res: any) => {
-        if (res.status_cd == 1) {
-          this.entity = res.data;
-          this.exp.charges = this.entity.leftAmount;
-          
-          if (!this.entity.confDate) {
-            this.entity.confDate = this.datepipe.transform(new Date(), 'yyyy-MM-dd');
+    if (this.referance.aknowlType === "0") {
+      const param = { action: 'view', id: s.vchId };
+      $('#exampleModal').modal('show');
+      var url = "MotorMemo/PendingAmountedit"
+      this.http.get(url, { id: s.vchId }).subscribe({
+        next: (res: any) => {
+          if (res.status_cd == 1) {
+            this.entity = res.data;
+            this.exp.charges = this.entity.leftAmount;
+            this.entity.dt = this.datepipe.transform(this.entity.dt, 'yyyy-MM-dd')
+            if (!this.entity.confDate) {
+              this.entity.confDate = this.datepipe.transform(new Date(), 'yyyy-MM-dd');
+            }
+            this.pastentity = Object.assign({}, this.entity);
           }
-          this.pastentity = Object.assign({}, this.entity);
-
+          this.spinner.hide();
+        }, error: (err: any) => {
+          this.spinner.hide();
+          this.dialog.swal({ dialog: 'error', title: 'Error', message: err });
         }
-        this.spinner.hide();
-      
-      }, error: (err: any) => {
-        this.spinner.hide();
-        this.dialog.swal({ dialog: 'error', title: 'Error', message: err });
-      }
-    })
-
-
+      })
+    } else {
+      const param = { action: 'view', id: s.vchId };
+      $('#exampleModal2').modal('show');
+      var url = "Motormemo2/PendingAmountedit"
+      this.http.get(url, { id: s.vchId }).subscribe({
+        next: (res: any) => {
+          if (res.status_cd == 1) {
+            this.entity = res.data;
+            this.entity.vchDate = this.datepipe.transform(this.entity.vchDate, 'yyyy-MM-dd')
+            if (!this.entity.confDate) {
+              this.entity.confDate = this.datepipe.transform(new Date(), 'yyyy-MM-dd');
+            }
+            this.pastentity = Object.assign({}, this.entity);
+          }
+          this.spinner.hide();
+        }, error: (err: any) => {
+          this.spinner.hide();
+          this.dialog.swal({ dialog: 'error', title: 'Error', message: err });
+        }
+      })
+    }
   }
 
   Listshow() {
-    var param = {
-      firm_id: this.provider.companyinfo.company.firmCode,
-      div_id: this.provider.companyinfo.company.divId,
-      veh_no: this.entity.vehicleNo,
-    }
-    this.http.get('MotorMemo/PendingLorryRec', param).subscribe({
-      next: (res: any) => {
-        if (res.status_cd == 1) {
-          this.list = res.data || [];
-        } else {
-
-          this.dialog.swal({ dialog: 'error', title: 'Error', message: res.errors.message });
-        }
-
-
-        this.spinner.hide();
-      },
-      error: (err: any) => {
-        this.spinner.hide();
-        this.dialog.swal({ dialog: 'error', title: 'Error', message: err.message });
+    if (this.referance.aknowlType === "0") {
+      var param = {
+        firm_id: this.provider.companyinfo.company.firmCode,
+        div_id: this.provider.companyinfo.company.divId,
+        veh_no: this.entity.vehicleNo,
       }
-    })
-  }
-  onGridReady(params) {
+      this.http.get('MotorMemo/PendingLorryRec', param).subscribe({
+        next: (res: any) => {
+          if (res.status_cd == 1) {
+            if (res.data.length == 0) {
+              this.dialog.swal({ dialog: 'Warning', title: "warning", message: "Record Not Found!" });
+            } else {
+              this.list = res.data || [];
+            }
+            this.entity.dt = this.datepipe.transform(this.entity.dt, 'yyyy-MM-dd')
+          } else {
 
+            this.dialog.swal({ dialog: 'error', title: 'Error', message: res.errors.message });
+          }
+          this.spinner.hide();
+        },
+        error: (err: any) => {
+          this.spinner.hide();
+          this.dialog.swal({ dialog: 'error', title: 'Error', message: err.message });
+        }
+      })
+    } else {
+      var param = {
+        firm_id: this.provider.companyinfo.company.firmCode,
+        div_id: this.provider.companyinfo.company.divId,
+        veh_no: this.entity.vehicleNo,
+      }
+      this.http.get('Motormemo2/PendingLorryRec', param).subscribe({
+        next: (res: any) => {
+          if (res.status_cd == 1) {
+            if (res.data.length == 0) {
+              this.dialog.swal({ dialog: 'Warning', title: "warning", message: "Record Not Found!" });
+            } else {
+              this.list = res.data || [];
+            }
+          } else {
+            this.dialog.swal({ dialog: 'error', title: 'Error', message: res.errors.message });
+          }
+          this.spinner.hide();
+        },
+        error: (err: any) => {
+          this.spinner.hide();
+          this.dialog.swal({ dialog: 'error', title: 'Error', message: err.message });
+        }
+      })
+    }
+  }
+
+  onGridReady(params) {
     this.api = params.api;
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
-    
   }
-  save() {
 
-    this.spinner.show();
-    const charges = Number(this.entity.totalcharges);
-    if (charges == this.entity.leftAmount) {
+  save() {
+    if (this.referance.aknowlType === "0") {
+      this.spinner.show();
+      const charges = Number(this.entity.totalcharges);
+      if (charges == this.entity.leftAmount) {
+        this.leftAmt();
+        this.AdvAmount();
+        if (this.entity.vchId) {
+          this.entity.firmId = this.provider.companyinfo.company?.firm.firmCode,
+            this.entity.divId = this.provider.companyinfo.company.divId;
+          this.entity.motormemoAudit.modifiedUser = this.provider.companyinfo.userinfo.username;
+
+          this.http.put('MotorMemo/updatepayment', this.master.cleanObject(this.entity, 2), { id: this.entity.vchId }).subscribe({
+            next: (res: any) => {
+              this.spinner.hide()
+              if (res.status_cd == 1) {
+                this.entity.vchId = res.data.vchId;
+                this.dialog.swal({ dialog: "success", title: "Success", message: "Record is Update sucessfully" });
+                $('#exampleModal').modal('hide');
+              } else {
+                this.dialog.swal({ dialog: 'error', title: 'Error', message: res.errors.exception.InnerException.message })
+              }
+
+            }, error: (err: any) => {
+              this.spinner.hide()
+              this.dialog.swal({ dialog: 'error', title: 'Error', message: err.message })
+            }
+          })
+        }
+
+        else {
+          this.dialog.swal({ dialog: 'error', title: 'Error', message: "Please Fill All The Required Fields.." })
+        }
+      } else {
+        this.dialog.swal({ dialog: 'error', title: 'Error', message: 'Please check Charges Amount' });
+        return;
+      }
+    } else {
+      this.spinner.show();
       this.leftAmt();
       this.AdvAmount();
       if (this.entity.vchId) {
+
         this.entity.firmId = this.provider.companyinfo.company?.firm.firmCode,
           this.entity.divId = this.provider.companyinfo.company.divId;
-        this.entity.motormemoAudit.modifiedUser = this.provider.companyinfo.userinfo.username;
-      
-        this.http.put('MotorMemo/updatepayment', this.master.cleanObject(this.entity, 2), { id: this.entity.vchId }).subscribe({
+
+        this.http.put('Motormemo2/updatepayment', this.master.cleanObject(this.entity, 2), { id: this.entity.vchId }).subscribe({
           next: (res: any) => {
             this.spinner.hide()
             if (res.status_cd == 1) {
               this.entity.vchId = res.data.vchId;
-
 
               this.dialog.swal({ dialog: "success", title: "Success", message: "Record is Update sucessfully" });
               $('#exampleModal').modal('hide');
@@ -379,22 +622,15 @@ export class Aknowledgmemnt1Component {
               this.dialog.swal({ dialog: 'error', title: 'Error', message: res.errors.exception.InnerException.message })
             }
 
-
           }, error: (err: any) => {
             this.spinner.hide()
             this.dialog.swal({ dialog: 'error', title: 'Error', message: err.message })
           }
         })
-
       }
-
-
       else {
         this.dialog.swal({ dialog: 'error', title: 'Error', message: "Please Fill All The Required Fields.." })
       }
-    } else {
-      this.dialog.swal({ dialog: 'error', title: 'Error', message: 'Please check Charges Amount' });
-      return;
     }
   }
 }

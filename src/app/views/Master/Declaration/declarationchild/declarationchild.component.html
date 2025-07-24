@@ -15,9 +15,10 @@
                             <input type="date" class="form-control" name="fromdt" DTpicker [(ngModel)]="entity.fromDt" > 
                         </div>
                         <div>
-                            <app-ngselect label="Account" apiUrl="Account/getAcclist" class="p-0" bindLabel="accName"
+                            <app-ngselect label="Account" apiUrl="Account/getAcclistbySgCode" class="p-0" bindLabel="accName"
                                 bindValue="accCode" name="ObalAccName" [defaultProperty]="entity.accCodeNavigation"
                                 [(ngModel)]="entity.accCode" #ObalAccName="ngModel" [disabled]="navactions.fieldset"
+                                [apiParams]="{sgCode:this.provider.companyinfo.company?.settings[2].setValue}"
                                 [ngClass]="{'is-invalid': ObalAccName.errors?.['required']}" (change)="getpandetails($event)"
                                 [required]="true"></app-ngselect>
                         </div>

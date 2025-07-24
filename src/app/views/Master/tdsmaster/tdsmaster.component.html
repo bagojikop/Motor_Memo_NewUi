@@ -17,7 +17,7 @@
         </div>
     </div>
 </div>
-<hr class="mt-0"/>
+<hr class="mt-0" />
 
 
 <dss-grid [columns]="columns" url="tds/getList" [gridOptions]="gridOption.gridOptions" class="heightMasterPage"
@@ -46,31 +46,37 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <app-ngselect label="Account" apiUrl="Account/getAcclist" class="p-0"
-                                    bindLabel="accName" bindValue="accCode" name="ObalAccName"
-                                    [(ngModel)]="entity.accCode" #ObalAccName="ngModel"
-                                    [ngClass]="{'is-invalid': ObalAccName.errors?.['required']}" [required]="true"
-                                    [defaultProperty]="entity.accCodeNavigation" (change)="getAccount($event)"
-                                     ></app-ngselect>
+                                    <app-ngselect label="Account" apiUrl="Account/getAcclistbyMgCode" class="p-0"
+                                        bindLabel="accName" bindValue="accCode" name="ObalAccName"
+                                        [(ngModel)]="entity.accCode" #ObalAccName="ngModel" [apiParams]="{mgCode:'7'}"
+                                        [ngClass]="{'is-invalid': ObalAccName.errors?.['required']}" [required]="true"
+                                        [defaultProperty]="entity.accCodeNavigation"
+                                        (change)="getAccount($event)"></app-ngselect>
                                 </div>
                             </div>
                             <div class="d-flex">
                                 <div class="me-2">
-                                    <label for="" >TDS</label>
-                                    <input class="form-control" name="tds" [(ngModel)]="entity.tds" numberOnly name="tds" [required]="true"
-                                        [maxlength]="5">
-                                </div> 
+                                    <label for="">TDS</label>
+                                    <input class="form-control form-control text-end" type="text" name="tds" [(ngModel)]="entity.tds"
+                                        CurrencyMask currency="INR" fraction="2" autocomplete="off" />
+                                </div>
                                 <div class="me-2">
                                     <label for="">E.cess</label>
-                                    <input name="Ecess" class="form-control input-sm"  [(ngModel)]="entity.eCess" numberOnly [maxlength]="5">
+                                    <input name="Ecess" type="text" class="form-control form-control text-end"
+                                        [(ngModel)]="entity.eCess" CurrencyMask currency="INR" fraction="2"
+                                        [maxlength]="5" autocomplete="off">
                                 </div>
                                 <div class="me-2">
                                     <label for="">H.E.cess</label>
-                                    <input name="hecess" class="form-control input-sm"  [(ngModel)]="entity.heCess" numberOnly [maxlength]="5">
+                                    <input name="hecess" type="text" class="form-control form-control text-end"
+                                        [(ngModel)]="entity.heCess" CurrencyMask currency="INR" fraction="2"
+                                        [maxlength]="5" autocomplete="off">
                                 </div>
                                 <div>
                                     <label for="">S.F.cess</label>
-                                    <input name="sfcess" class="form-control input-sm"  [(ngModel)]="entity.sfCess" numberOnly [maxlength]="5">
+                                    <input name="sfcess" type="text" class="form-control form-control text-end"
+                                        [(ngModel)]="entity.sfCess" CurrencyMask currency="INR" fraction="2"
+                                        [maxlength]="5" autocomplete="off">
                                 </div>
                             </div>
 

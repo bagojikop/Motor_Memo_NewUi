@@ -11,7 +11,7 @@
                             <dss-input label="Vehicle No" name="vehicleNo1" [(ngModel)]="entity.vehicleNo"
                                 [styleCase]="'u'" [maxlength]="10" [whiteSpace]="false"></dss-input>
                             <div class="">
-                                <label>Vehicle type</label>
+                                <label>Vehicle Group</label>
                                 <ng-select bindLabel="vtypeName" bindValue="vtypeId" name="vtypeName"
                                     [loading]="loading" [virtualScroll]="true" [disabled]="navactions.fieldset"
                                     (change)="getcityinmtr($event)" [items]="reference.vtypes"
@@ -23,31 +23,31 @@
 
                             <fieldset class="border border-1 p-2 border-light-subtle rounded-2 mb-2">
                                 <legend class="ms-1 px-1 float-none bg-white w-auto m-0 p-0" style="font-size: small;">
-                                    Vehicle</legend>
+                                    Vehicle Type</legend>
 
                                 <div class="d-flex">
                                     <div class="d-flex align-items-center me-4">
-                                        <input type="radio" id="contactChoice1" name="contact" value="Own"
-                                            (change)="onOptionChange(1)" [checked]="entity.isOwn === 1" />
-                                        <label class="ms-2" for="contactChoice2">Own</label>
+                                        <input type="radio" id="contactChoice1" name="contact" value="R"
+                                            (change)="onOptionChange('R')" [checked]="entity.isOwn === 'R'" />
+                                        <label class="ms-2" for="contactChoice2">Regular</label>
                                     </div>
                                     <div class="d-flex align-items-center">
-                                        <input type="radio" id="contactChoice2" name="contact" value="Hire"
-                                            (change)="onOptionChange(0)" [checked]="entity.isOwn === 0" />
-                                        <label class="ms-2" for="contactChoice1">Hire</label>
+                                        <input type="radio" id="contactChoice2" name="contact" value="O"
+                                            (change)="onOptionChange('O')" [checked]="entity.isOwn === 'O'" />
+                                        <label class="ms-2" for="contactChoice1">OWB</label>
                                     </div>
                                 </div>
                             </fieldset>
-
+                            <!-- 
                             <div>
                                 <label for="">Capacity In MTS</label>
                                 <input class="form-control" numberOnly [(ngModel)]="entity.capacityMts" autocomplete="off" name="Capacity"
                                     [maxlength]="10">
-                            </div>
+                            </div> -->
                         </div>
 
                         <div class="gapInputFields">
-                            <div>
+                            <!-- <div>
                                 <app-ngselect apiUrl="Account/getAcclist" label="Hire Account" name="AccountName"
                                     class="p-0" bindLabel="accName" bindValue="accCode" [(ngModel)]="entity.accCode"
                                     [defaultProperty]="entity.accCodeNavigation" [disabled]="navactions.fieldset"
@@ -58,27 +58,27 @@
                                     Create new Account
                                 </a>
 
-                            </div>
+                            </div> -->
                             <div class="">
-                                <dss-input label="PAN No" name="panno" [(ngModel)]="entity.panNo" [maxlength]="10"
+                                <!-- <dss-input label="PAN No" name="panno" [(ngModel)]="entity.panNo" [maxlength]="10"
                                     [styleCase]="'u'" [whiteSpace]="false" #panInput="ngModel"
                                     (ngModelChange)="validatePan(entity.panNo)">
                                 </dss-input>
                                 <div *ngIf="isInvalidPan" class="error">
                                     <p style="color: red; font-size: 10px;">A valid PAN must be in the format
                                         `AAAAA9999A`.</p>
-                                </div>
+                                </div> -->
 
                             </div>
                         </div>
-                     
+
                     </div>
                 </div>
             </div>
             <hr>
             <div class="container">
                 <div class="card">
-                   
+
                     <div class="card-body">
                         <div class="d-flex">
                             <div class="d-flex flex-column">
@@ -89,8 +89,8 @@
                                 </div>
                                 <div class="">
                                     <label for="">Chassis No</label>
-                                    <dss-input [(ngModel)]="entity.chassisno" [styleCase]="'u'"
-                                        name="Chassis" [maxlength]="20"></dss-input>
+                                    <dss-input [(ngModel)]="entity.chassisno" [styleCase]="'u'" name="Chassis"
+                                        [maxlength]="20"></dss-input>
                                 </div>
                             </div>
 
@@ -102,20 +102,22 @@
                                 <div class="d-flex">
                                     <div class="d-flex-width">
                                         <label for="">Driver Mobile No</label>
-                                        <input class="form-control" [(ngModel)]="entity.driverMobileNo" numberOnly autocomplete="off"
-                                            name="driverMobileNo" [maxlength]="13" autocomplete="off" [minlength]="10">
+                                        <input class="form-control" [(ngModel)]="entity.driverMobileNo" numberOnly
+                                            autocomplete="off" name="driverMobileNo" [maxlength]="13" autocomplete="off"
+                                            [minlength]="10">
                                     </div>
 
                                     <div class="gapInputFields">
-                                        <dss-input label="Driver Lic No" [(ngModel)]="entity.driverLicNo" autocomplete="off"
-                                            name="driverLicNo" [maxlength]="20"></dss-input>
+                                        <dss-input label="Driver Lic No" [(ngModel)]="entity.driverLicNo"
+                                            autocomplete="off" name="driverLicNo" [maxlength]="20"></dss-input>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="gapInputFields">
-                                <dss-input label="Driver Address" name="driverAddress" [maxlength]="100" autocomplete="off"
-                                    [(ngModel)]="entity.driverAddress" inputType='textarea' [rows]="4" [cols]="50">
+                                <dss-input label="Driver Address" name="driverAddress" [maxlength]="100"
+                                    autocomplete="off" [(ngModel)]="entity.driverAddress" inputType='textarea'
+                                    [rows]="4" [cols]="50">
                                 </dss-input>
                             </div>
                         </div>
@@ -131,11 +133,12 @@
                             <legend class="ms-1 px-1 float-none bg-white w-auto m-0 p-0" style="font-size: small;">
                                 Insurance
                             </legend>
-                            <dss-input label="Number" name="insuranceNo" [(ngModel)]="entity.mst10801s.insuranceNo" [maxlength]="20" autocomplete="off" />
+                            <dss-input label="Number" name="insuranceNo" [(ngModel)]="entity.mst10801s.insuranceNo"
+                                [maxlength]="20" autocomplete="off" />
                             <div class="d-flex align-items-center">
 
-                                <dss-input style="margin-right: 5px;" label="From" name="insuranceFrom" type="date" autocomplete="off"
-                                    [(ngModel)]="entity.mst10801s.insuranceFrom" />
+                                <dss-input style="margin-right: 5px;" label="From" name="insuranceFrom" type="date"
+                                    autocomplete="off" [(ngModel)]="entity.mst10801s.insuranceFrom" />
                                 <dss-input label="To" name="insuranceTo" type="date" autocomplete="off"
                                     [(ngModel)]="entity.mst10801s.insuranceTo" />
 
@@ -149,7 +152,8 @@
                             <legend class="ms-1 px-1 float-none bg-white w-auto m-0 p-0" style="font-size: small;">
                                 Fitness
                             </legend>
-                            <dss-input label="Number" name="fitnessNo" [(ngModel)]="entity.mst10801s.fitnessNo" [maxlength]="20"  autocomplete="off"/>
+                            <dss-input label="Number" name="fitnessNo" [(ngModel)]="entity.mst10801s.fitnessNo"
+                                [maxlength]="20" autocomplete="off" />
                             <div class="d-flex align-items-center">
 
                                 <dss-input style="margin-right: 5px;" label="From" name="fitnessFrom" type="date"
@@ -165,7 +169,8 @@
                             <legend class="ms-1 px-1 float-none bg-white w-auto m-0 p-0" style="font-size: small;">
                                 Permit
                             </legend>
-                            <dss-input label="Number" name="permitno" [(ngModel)]="entity.mst10801s.permitno" [maxlength]="20"/>
+                            <dss-input label="Number" name="permitno" [(ngModel)]="entity.mst10801s.permitno"
+                                [maxlength]="20" />
                             <div class="d-flex align-items-center">
 
                                 <dss-input style="margin-right: 5px;" label="From" name="permitFm" type="date"
@@ -181,28 +186,118 @@
             </div>
             <hr>
             <div class="container">
-                <div class="bg-light">
-                    <h5 class="m-0 p-2">Bank Details</h5>
-                </div>
-                <div class="d-flex">
-                    <div class="d-flex-width" style="width: 30%;">
-                        <dss-input name="Account Name" label="Account Name" [maxlength]="15" [styleCase]="'u'"
-                            [(ngModel)]="entity.mst10804.bankName" />
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="m-0 p-2">Owner Details</h5>
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th class="text-center" scope="col" style="width: 10%;">
+                                    <b>Eff Date</b>
+                                </th>
+                                <th class="text-center" scope="col" style="width: 15%;">
+                                    <b>Owner Name</b>
+                                </th>
+                                <th class="text-center" scope="col" style="width: 10%;">
+                                    <b>Pan No</b>
+                                </th>
+                                <th class="text-center" scope="col" style="width: 15%;">
+                                    <b>Bank Name</b>
+                                </th>
+                                <th class="text-center" scope="col" style="width: 10%;">
+                                    <b>Account No</b>
+                                </th>
+                                <th class="text-center" scope="col" style="width: 10%;">
+                                    <b>IFSC</b>
+                                </th>
+                                <th class="text-center" scope="col" style="width: 15%;">
+                                    <b>Account</b>
+                                </th>
+                                <th class="text-center" scope="col" style="width: 5%;">
+                                    <b>Is Transport</b>
+                                </th>
+                                <th class="text-center" scope="col" style="width: 10%;">
+                                    <b>Action</b>
+                                </th>
+                            </tr>
 
-                    </div>
-                    <div class="gapInputFields" style="width: 20%;">
-                        <dss-input name="Bank Address" label="Bank Address" [(ngModel)]="entity.mst10804.address" />
+                            <tr>
+                                <th>
+                                    <dss-input name="effdt" type="date" [(ngModel)]="info.mst10806.eff_Dt"
+                                        [applyMargins]="false" />
+                                </th>
+                                <th>
+                                    <dss-input name="ownnm" type="text" [styleCase]="'u'"
+                                        [(ngModel)]="info.mst10806.ownerName" [applyMargins]="false" />
+                                </th>
+                                <th>
+                                    <dss-input name="panno" type="text" [maxlength]="10"
+                                        [(ngModel)]="info.mst10806.panNo" [applyMargins]="false" />
+                                </th>
+                                <th>
+                                    <dss-input name="banknm" type="text" [(ngModel)]="info.mst10806.bankName"
+                                        [applyMargins]="false" />
+                                </th>
+                                <th>
+                                    <dss-input name="baccno" type="text" [(ngModel)]="info.mst10806.bankAccNo"
+                                        [styleCase]="'u'" [applyMargins]="false" />
+                                </th>
 
-                    </div>
-                    <div class="gapInputFields" style="width: 20%;">
-                        <dss-input name="Account No" label="Account No" [maxlength]="15" [styleCase]="'u'"
-                            [(ngModel)]="entity.mst10804.bankaccNo" />
+                                <th>
+                                    <dss-input name="ifsc" type="text" [(ngModel)]="info.mst10806.ifscCode"
+                                        [applyMargins]="false" />
+                                </th>
 
-                    </div>
-                    <div class="gapInputFields" style="width: 20%;">
-                        <dss-input name="IFSC Code" label="IFSC Code" [maxlength]="15" [styleCase]="'u'"
-                            [(ngModel)]="entity.mst10804.ifscCode" [applyMargins]="false" />
-                    </div>
+                                <th>
+                                    <app-ngselect apiUrl="Account/getWithOutBankCash" bindLabel="accName"
+                                        bindValue="accCode" name="contraItemsaccount"
+                                        [(ngModel)]="info.mst10806.accCode" (change)="getAccountDetl($event)"
+                                        [defaultProperty]="info.mst10806.accCodeNavigation"
+                                        [disabled]="navactions.fieldset"
+                                        [applyMargins]="false"></app-ngselect>
+                                </th>
+                                <th>
+                                    <select class="form-select select-wrapper" name="selectistrans"
+                                        [(ngModel)]="info.mst10806.isTransport">
+                                        <option [value]=0>Yes</option>
+                                        <option [value]=1>No</option>
+                                    </select>
+                                </th>
+                                <th class="text-center">
+                                    <button class="btn btn-light btn-sm" type="button" (click)="AddOwner()">
+                                        <i class="fas fa-plus"></i></button>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="actionTableHeight">
+                            <div *ngIf="!entity?.mst10806s || entity.mst10806s.length === 0" class="noDataImg">
+                                <img src="../../../../../../assets/IMG/noData.png" width="50">
+                                <p>Record is empty</p>
+                            </div>
+
+                            <tr *ngFor="let v of entity.mst10806s;let i=index;">
+                                <td style="width: 10%;">{{v.eff_Dt | date:'dd-MM-yyyy'}}</td>
+                                <td style="width: 15%;">{{v.ownerName}}</td>
+                                <td style="width: 10%">{{v.panNo}}</td>
+                                <td style="width: 15%;">{{v.bankName}}</td>
+                                <td style="width: 10%;">{{v.bankAccNo}}</td>
+                                <td style="width: 10%;">{{v.ifscCode}}</td>
+                                <td style="width: 15%;">{{v.accCodeNavigation?.accName}}</td>
+                                <td style="width: 5%;">{{v.isTransport == 0 ? 'Yes' : 'No'}}</td>
+
+                                <td class="text-center" style="width: 10%;">
+                                    <button class="btn btn-sm-custom-table me-1" type="button"
+                                        (click)="editownerrow(v,i)">
+                                        <i class="fas fa-edit"></i></button>
+                                    <button class="btn  btn-sm-custom-table" type="button"
+                                        (click)="deleteownerrow(i)">
+                                        <i class="fas fa-trash"></i></button>
+                                </td>
+                            </tr>
+                        </tbody>
+
+                    </table>
                 </div>
             </div>
 
@@ -313,7 +408,7 @@
             </div>
             <hr>
 
-            <div class="container" *ngIf="selectedOption === 'Own'">
+            <!-- <div class="container" *ngIf="selectedOption === 'Own'">
                 <div class="bg-light p-2">
                     <h5 class="m-0">Account</h5>
                 </div>
@@ -335,7 +430,7 @@
                     </div>
                 </div>
             </div>
-            <hr>
+            <hr> -->
 
             <div class="container">
                 <div class="bg-light mb-2">
@@ -389,7 +484,8 @@
                         </div>
                         <div class="gapInputFields">
                             <app-ngselect apiUrl="SubGroup/getGroup" label="Group" bindLabel="sgName" bindValue="sgCode"
-                                name="sgCode" [(ngModel)]="reference.sgCode" [disabled]="navactions.fieldset" [bindSubObj]="[{key:'Group',value:'grpName'},
+                                name="sgCode" [(ngModel)]="reference.sgCode" [disabled]="navactions.fieldset"
+                                [bindSubObj]="[{key:'Group',value:'grpName'},
                              {key:'Primary Group',value:'grpCodeNavigation?.mgCodeNavigation?.mgName'}]"
                                 [defaultProperty]="reference.sgCodeNavigation">
                             </app-ngselect>

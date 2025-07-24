@@ -1,11 +1,11 @@
 import { ChangeDetectorRef, Component, CUSTOM_ELEMENTS_SCHEMA, OnInit, ViewChild } from '@angular/core';
-import { CommonModule, DatePipe,  Location } from '@angular/common';
+import { CommonModule, DatePipe, Location } from '@angular/common';
 import { NavbarActions, http, ngselectpagination, Master } from '../../../../assets/services/services';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MyProvider } from '../../../../assets/services/provider';
 import { DialogsComponent } from '../../../../assets/pg/dialogs/dialogs.component';
 import { FormsModule, NgForm } from '@angular/forms';
-import { AccountObj, mst01110sObj, grpCodeNavigationObj, accBusinessLocationObj, mst01101Obj, mst01104Obj, mst01109Obj, cityObj } from '../../../../assets/datatypests/accontinfochild'
+import { AccountObj, mst01110sObj, grpCodeNavigationObj, accBusinessLocationObj, mst01101Obj, mst01104Obj, mst01109Obj, cityObj, mst01100Obj } from '../../../../assets/datatypests/accontinfochild'
 import { MydirectiveModule } from '../../../../assets/mydirective/mydirective.module';
 import { DssInputComponent } from '../../../../assets/mydirective/dss-input/dss-input.component';
 import { ngselectComponent } from '../../../../assets/pg/ngselect/ngselect.component';
@@ -21,7 +21,7 @@ import { CurrencyMaskDirective } from "../../../../assets/mydirective/currencyMa
   templateUrl: './accountinfochild.component.html',
   styleUrls: ['./accountinfochild.component.scss'],
   imports: [FormsModule, CommonModule, ngselectComponent, CurrencyMaskDirective, NumberOnlyDirective, NgSelectModule, DssInputComponent, MydirectiveModule, MasternavComponent,],
- 
+
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AccountinfochildComponent implements OnInit {
@@ -73,14 +73,18 @@ export class AccountinfochildComponent implements OnInit {
     this.acc.accBusinessLocations.city = <cityObj>{};
     this.reference.accLicenses = <mst01110sObj>{};
     this.entity.isDisabled = true;
-
+    this.entity.mst01100 = <mst01100Obj>{}
     this.entity.mst01109 = <mst01109Obj>{};
     this.entity.mst01101 = <mst01101Obj>{};
     this.entity.mst01104 = <mst01104Obj>{};
     this.entity.mst01110s = <mst01110sObj[]>[];
     this.entity.grpCodeNavigation = <grpCodeNavigationObj>{};
-
-
+   this.entity.mst01100 = {
+        firmId: this.provider.companyinfo?.company?.firmCode ?? null,
+        divId: this.provider.companyinfo?.company?.divId ?? null,
+        crbal:this.entity.mst01100.crbal,
+        drbal:this.entity.mst01100.drbal
+      } as mst01100Obj;
     let paramss: any = this.location.getState();
     this.navactions.navaction(paramss.action);
     this.entity.accCode = paramss.id;
@@ -176,7 +180,7 @@ export class AccountinfochildComponent implements OnInit {
 
   }
 
- 
+
   idx = null;
   addFirm() {
 
@@ -198,9 +202,9 @@ export class AccountinfochildComponent implements OnInit {
     }
   }
 
- 
+
   toggleSelect(ev): void {
-    this.entity.isDisabled = ev.target.checked === true ? 1 : 0;
+    this.entity.isDisabled = 1;
     this.entity.mst01110s = [];
     this.reference.firmCode = {}
   }
@@ -237,6 +241,9 @@ export class AccountinfochildComponent implements OnInit {
         if (res.status_cd == 1) {
           this.entity = res.data;
 
+          if (!this.entity.mst01100)
+            this.entity.mst01100 = <mst01100Obj>{};
+
           if (!this.entity.mst01109) this.entity.mst01109 = <mst01109Obj>{};
           this.entity.mst01109.gstur = Number(this.entity.mst01109.gstur);
           if (!this.entity.mst01101) this.entity.mst01101 = <mst01101Obj>{};
@@ -262,6 +269,7 @@ export class AccountinfochildComponent implements OnInit {
   }
 
   save() {
+
     Object.keys(this.account.form.controls).forEach(key => {
       const control = this.account.form.controls[key];
       if (control.invalid) {
@@ -271,6 +279,12 @@ export class AccountinfochildComponent implements OnInit {
 
     if (this.account.valid) {
       this.spinner.show();
+      this.entity.mst01100 = {
+        firmId: this.provider.companyinfo?.company?.firmCode ?? null,
+        divId: this.provider.companyinfo?.company?.divId ?? null,
+        crbal: this.entity.mst01100?.crbal ?? 0,
+        drbal: this.entity.mst01100?.drbal ?? 0,
+      } as mst01100Obj;
       if (!this.entity.accCode) {
         if (!this.entity.createdUser)
           this.entity.createdUser = this.provider.companyinfo.userinfo.username;
@@ -282,6 +296,10 @@ export class AccountinfochildComponent implements OnInit {
               this.entity.accCode = res.data.accCode;
               this.pastentity = JSON.parse(JSON.stringify(this.entity))
 
+              if (!this.entity.mst01100) {
+                this.entity.mst01100 = <mst01100Obj>{};
+              }
+
               if (!this.entity.mst01104) {
                 this.entity.mst01104 = <mst01104Obj>{};
               }
@@ -292,7 +310,6 @@ export class AccountinfochildComponent implements OnInit {
                 this.entity.mst01109 = <mst01109Obj>{};
               }
 
-
               this.dialog.swal({ dialog: "success", title: "Success", message: "Record is saved sucessfully" });
               this.navactions.navaction("OK");
             }
@@ -300,9 +317,6 @@ export class AccountinfochildComponent implements OnInit {
               this.dialog.swal({ dialog: 'error', title: 'Error', message: res.errors.exception.InnerException.message })
             }
             this.spinner.hide();
-
-
-
           }, error: (err: any) => {
             this.spinner.hide()
             this.dialog.swal({ dialog: 'error', title: 'Error', message: err.message })
@@ -310,7 +324,6 @@ export class AccountinfochildComponent implements OnInit {
         })
       }
       else {
-       
         this.entity.modifiedUser = this.provider.companyinfo.userinfo.username;
         this.http.put('Account/update', this.master.cleanObject(this.entity, 2), { id: this.entity.accCode }).subscribe({
           next: (res: any) => {
@@ -326,7 +339,6 @@ export class AccountinfochildComponent implements OnInit {
               if (!this.entity.mst01109) {
                 this.entity.mst01109 = <mst01109Obj>{};
               }
-          
 
               this.dialog.swal({ dialog: "success", title: "Success", message: "Record is Update sucessfully" });
               this.navactions.navaction("OK");
@@ -344,42 +356,34 @@ export class AccountinfochildComponent implements OnInit {
 
     }
   }
-
-
+  creditEnabled = false;
   onSelectGroup(event) {
     this.entity.sgCodeNavigation = event;
-    var grpCodes = [5, 14, 4, 25, 27]
-    if (grpCodes.findIndex(item => { return item == event?.grpCodeNavigation?.mgCode }) >= 0) {
-      this.viewing1 = 1;
-      this.viewing2 = 2;
-
-
-    } else {
-      this.viewing1 = 1;
-
-      this.viewing2 = null;
-
-    }
-
-
+    const mgCode = event?.grpCodeNavigation?.mgCode ?? null;
+    this.creditEnabled = [3, 4, 5, 14, 25].includes(mgCode);
   }
+
   close() {
     this.location.back();
   }
+
   newRecord() {
     this.pastentity = JSON.parse(JSON.stringify(this.entity))
     this.entity = <AccountObj>{};
+
+    this.entity.mst01100 = <mst01100Obj>{};
     this.entity.mst01101 = <mst01101Obj>{};
     this.entity.mst01104 = <mst01104Obj>{};
     this.entity.mst01109 = <mst01109Obj>{};
     this.entity.mst01110s = <mst01110sObj[]>[];
     this.entity.accBusinessLocations = <accBusinessLocationObj[]>[];
   }
+
   edit() {
     this.navactions.navaction("view");
     this.callbackedit();
-
   }
+
   getdata(index) {
     console.log(index);
   }
@@ -387,6 +391,7 @@ export class AccountinfochildComponent implements OnInit {
     this.entity = this.pastentity;
     this.callbackedit();
     this.entity = <AccountObj>{};
+    this.entity.mst01100 = <mst01100Obj>{};
     this.entity.mst01101 = <mst01101Obj>{};
     this.entity.mst01104 = <mst01104Obj>{};
     this.entity.mst01109 = <mst01109Obj>{};

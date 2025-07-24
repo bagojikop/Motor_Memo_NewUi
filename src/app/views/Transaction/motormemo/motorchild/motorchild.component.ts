@@ -352,14 +352,11 @@ data:any={}
         console.log(`Invalid Field: ${key}`, control.errors);
       }
     });
-
-    if (this.motorchild.valid) {
       this.spinner.show();
       if (!this.entity.vchId) {
         if (!this.entity.motormemoAudit.createdUser)
           this.entity.motormemoAudit.createdUser = this.provider.companyinfo.userinfo.username;
         
-
           this.entity.firmId = this.provider.companyinfo.company?.firm.firmCode,
           this.entity.divId = this.provider.companyinfo.company.divId;
 
@@ -420,9 +417,7 @@ data:any={}
       }
 
 
-    } else {
-      this.dialog.swal({ dialog: 'error', title: 'Error', message: "Please Fill All The Required Fields.." })
-    }
+    
   }
 
   account(index) {
@@ -988,7 +983,7 @@ data:any={}
         if (res.status_cd == 1) {
 
           this.entity.vehicleNo = res.data.vehicleNo;
-          this.entity.oweraccount = res.data.accCodeNavigation;
+          this.entity.vehAccCode = res.data.accCodeNavigation;
 
         } else {
           this.dialog.swal({ dialog: 'error', title: 'Error', message: res.errors.exception.Message });

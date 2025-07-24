@@ -20,6 +20,7 @@ export class MyProvider implements OnInit {
     user:{},
     userinfo: {},
     modules:{},
+    settings:[],
     database:'motormemo.db',
     id:null
   };

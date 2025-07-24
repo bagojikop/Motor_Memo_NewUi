@@ -6,7 +6,7 @@ import { MyProvider } from '../../../../assets/services/provider';
 import { DialogsComponent } from '../../../../assets/pg/dialogs/dialogs.component';
 import { FormsModule, NgForm } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { mst10804Obj, mst10801sObj, mst10805sObj, referenceObj, SubconsigneeObj } from '../../../../assets/datatypests/vehicleInfochild'
+import { mst10804Obj, mst10801sObj, mst10805sObj, referenceObj, SubconsigneeObj, mst10806sObj } from '../../../../assets/datatypests/vehicleInfochild'
 import { grpCodeNavigationObj, mst01101Obj, mst01104Obj, mst01109Obj } from '../../../../assets/datatypests/accontinfochild'
 import { NgSelectModule } from '@ng-select/ng-select';
 import { DssInputComponent } from '../../../../assets/mydirective/dss-input/dss-input.component';
@@ -63,7 +63,7 @@ export class VehicleInfochildComponent {
     this.mode = this.stateParams.action;
     this.entity.sCode = this.stateParams.id;
   }
-
+  freightTypeList: any = [];
 
   ngOnInit(): void {
 
@@ -90,7 +90,9 @@ export class VehicleInfochildComponent {
     this.entity.mst10804 = <mst10804Obj>{};
     this.entity.mst10801s = <mst10801sObj>{};
     this.entity.mst10805s = [];
-
+    this.entity.mst10806s = [];
+    this.info.mst10806 = {}
+    this.info.mst10806.isTransport = 0;
     this.reference.mst01104 = <mst01104Obj>{};
 
     if (this.entity.sCode) {
@@ -107,8 +109,6 @@ export class VehicleInfochildComponent {
   windowrespo() {
     if (window.innerWidth <= 767) {
       this.status = true;
-
-
 
     } else {
       this.status = false;
@@ -182,6 +182,54 @@ export class VehicleInfochildComponent {
     }
   }
 
+  AddOwner() {
+    if (this.info.mst10806.eff_Dt || this.info.mst10806.ownerName || this.info.mst10806.panNo || this.info.mst10806.accCode || this.info.mst10806.isTransport) {
+
+      if (this.rowIndex == null) {
+        this.entity.mst10806s.push(this.info.mst10806);
+
+      } else {
+
+        this.entity.mst10806s[this.rowIndex] = this.info.mst10806;
+      }
+      this.info.mst10806 = {}
+      this.rowIndex = null;
+
+    }
+  }
+
+  getAccountDetl(obj) {
+    this.info.mst10806.accCodeNavigation = obj;
+  }
+
+  editownerrow(obj, index){
+    this.rowIndex = index;
+    this.info.mst10806 = Object.assign({}, obj);
+  }
+
+  deleteownerrow(i){
+     var params = {
+      dialog: 'confirm',
+      title: "warning",
+      message: "Do You Want Delete Row",
+    }
+    this.dialog.swal(params).then(data => {
+      if (data == true) {
+        this.param = this.entity.mst10806s.indexOf(i);
+        this.iConfirmFn2();
+      }
+    })
+  }
+
+  iConfirmFn2() {
+    if (this.param != undefined) {
+      this.entity.mst10806s.splice(this.param, 1);
+      var params = {
+      }
+      this.dialog.swal(params);
+    }
+  }
+
   editgstTablerow(obj, index) {
     this.rowIndex = index;
     this.info.reference = Object.assign({}, obj);
@@ -227,7 +275,6 @@ export class VehicleInfochildComponent {
 
           this.entity.createdDt = this.entity.createdDt ?? this.datepipe.transform(this.entity.createdDt, 'yyyy-MM-dd');
           this.entity.modifiedDt = this.entity.modifiedDt ?? this.datepipe.transform(this.entity.modifiedDt, 'yyyy-MM-dd');
-
 
           this.pastentity = Object.assign({}, this.entity);
 
@@ -304,6 +351,7 @@ export class VehicleInfochildComponent {
     this.entity.mst10805s = <mst10805sObj[]>[];
     this.entity.mst10804 = <mst10804Obj>{};
     this.entity.mst10801s = <mst10801sObj>{};
+    this.entity.mst10806s = <mst10806sObj[]>[];
   }
   edit() {
     this.navactions.navaction("view");
@@ -321,7 +369,7 @@ export class VehicleInfochildComponent {
   }
 
 
-  onOptionChange(value: number): void {
+  onOptionChange(value: string): void {
     this.entity.isOwn = value;
     console.log('Selected Option:', this.entity.isOwn);
   }

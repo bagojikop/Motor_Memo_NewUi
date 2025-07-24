@@ -1,6 +1,6 @@
 <div [hidden]="rptMode">
     <div>
-        <app-navactions [title]="'Lorry Receipt'" (myfn)="navbar($event)"></app-navactions>
+        <app-navactions [title]="'Lorry Receipt Chargeble'" (myfn)="navbar($event)"></app-navactions>
 
         <div class="from-body">
             <div class="card-body mt-2">
@@ -34,7 +34,7 @@
                                                         placeholder=" Enter Last 4  Digits " name="Vehiclenumb"
                                                         [(ngModel)]="entity.vehicleNo" required autocomplete="off"
                                                         (input)="entity.vehicleNo = entity.vehicleNo.toUpperCase()">
-                                                  
+
                                                     <button type="button" class="btn btn-light" tabindex="-1"
                                                         (click)="getVehicles()">
                                                         <i class="bi bi-arrow-return-left"></i>
@@ -45,6 +45,12 @@
                                     </div>
                                     <div class="d-flex w-50 w-md-100">
                                         <div class="d-flex-width">
+                                            <label>Kilo Miters</label>
+                                            <input class="form-control" type="text" numberOnly autocomplete="off"
+                                                [(ngModel)]="entity.kiloMiter" name="km" [maxlength]="10"
+                                                [minlength]="10">
+                                        </div>
+                                        <div class="gapInputFields">
                                             <app-ngselect apiUrl="Place/getPlace" label="from" bindLabel="cityName"
                                                 bindValue="cityName" name="place" [(ngModel)]="entity.from_Dstn"
                                                 autocomplete="off" [required]="true" [addNewText]="true"
@@ -325,7 +331,7 @@
                                                     style="text-align: right;" [(ngModel)]="cmod.rate"
                                                     (ngModelChange)="calculateFreight();" digitOnly CurrencyMask
                                                     fraction="2" autocomplete="off" #rateInput />
-                                               
+
                                             </th>
 
                                             <th>
@@ -502,7 +508,7 @@
                                             <option [value]=1>EX</option>
                                             <option [value]=2>To be Billed</option>
                                         </select>
-                                       
+
                                     </div>
                                     <div style="width: 15rem;" class="ms-3">
                                         <label for="">Sender Account</label>
@@ -598,7 +604,7 @@
                                                 <input class="form-control" type="text" name="charges" digitOnly
                                                     CurrencyMask fraction="2" #f="ngModel" [(ngModel)]="exp.charges"
                                                     [maxlength]="12" autocomplete="off">
-                                               
+
                                             </th>
                                             <th style="width: 12%;">
                                                 <div class="select-dropdown">
@@ -673,12 +679,12 @@
                             <div class="d-flex ">
                                 <div style="width: 15rem;">
                                     <label for="">Vehicle Account</label>
-                                    <app-ngselect apiUrl="Account/getsupplier" class="p-0 text-start"
+                                    <app-ngselect apiUrl="Account/getAcclistbySgCode" class="p-0 text-start"
                                         bindLabel="accName" bindValue="accCode" name="ownerAccount"
-                                        (change)="entity.motormemoDetails.accCodeNavigation=$event"
-                                        [(ngModel)]="entity.motormemoDetails.ownerAccount"
+                                        [(ngModel)]="entity.vehAccCode"
+                                        [apiParams]="{sgCode:this.provider.companyinfo.company?.settings[2].setValue}"
                                         [disabled]="navactions.fieldset" autocomplete="off"
-                                        [defaultProperty]="entity.oweraccount" [applyMargins]="false"></app-ngselect>
+                                        [defaultProperty]="entity.vehicleAccNavigation" [applyMargins]="false"></app-ngselect>
                                 </div>
 
                                 <div style="width: 10rem;" class="ms-4">

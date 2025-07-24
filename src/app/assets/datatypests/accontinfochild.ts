@@ -26,7 +26,7 @@ export interface AccountObj {
     placeId: number
     blocked: boolean
     headOfficCode: string
-
+    mst01100?: mst01100Obj | null
     mst01101?: mst01101Obj | null
     mst01104?: mst01104Obj | null
     // accPanDetail?: accPanDetailObj | null
@@ -57,6 +57,15 @@ export interface accBusinessLocationObj {
     address1: string;
     address2: string;
     city: any;
+}
+
+export interface mst01100Obj{
+    accCode:number;
+    divId:string;
+    crbal:number;
+    drbal:number;
+    vchId:number;
+    firmId:any;
 }
 
 export interface mst01101Obj {

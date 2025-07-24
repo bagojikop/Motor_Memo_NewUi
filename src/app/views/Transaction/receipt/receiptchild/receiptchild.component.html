@@ -24,11 +24,11 @@
                         </div>
                         <div class="d-flex flex-column gapInputFields">
                             <label>Account</label>
-                            <app-ngselect apiUrl="Account/getAcclist" class="p-0" bindLabel="accName"
+                            <app-ngselect apiUrl="Account/getAcclistbyMgCode" class="p-0" bindLabel="accName"
                                 bindValue="accCode" name="account" [(ngModel)]="entity.accCode"
                                 [defaultProperty]="entity.accCodeNavigation || entity.acc00301?.lraccount"
                                 [disabled]="navactions.fieldset" #account="ngModel"
-                                [ngClass]="{'is-invalid': account.errors?.['required']}"
+                                [apiParams]="{mgCode:'3, 4, 25'}" [ngClass]="{'is-invalid': account.errors?.['required']}"
                                 [required]="true"></app-ngselect>
 
 
@@ -115,7 +115,7 @@
                                     <div class="d-flex">
 
                                         <div class="form-group d-flex-width">
-                                            <app-ngselect apiUrl="Account/getAcclist" label="Account"
+                                            <app-ngselect apiUrl="Account/getWithOutBankCash" label="Account"
                                                 bindLabel="accName" bindValue="accCode" name="recaccount"
                                                 [(ngModel)]="entity.acc00301.accCode" #recaccount="ngModel"
                                                 [defaultProperty]="entity.acc00301.accCodeNavigation"
