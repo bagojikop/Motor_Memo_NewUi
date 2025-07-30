@@ -134,7 +134,7 @@ export class TransportInvochildComponent {
         break;
 
       case 'print':
-        this.biltyprint();
+        this.Invoiceprint();
         this.ngview = true;
         break;
 
@@ -387,8 +387,26 @@ export class TransportInvochildComponent {
     }
     this.navactions.navaction('new');
   }
-  undo() { }
-  biltyprint() { }
+  undo() { 
+    this.entity = this.pastentity;
+    this.callbackedit();
+  }
+   Invoiceprint() { 
+this.myServiceUrl = "TransInvoiceReport";
+    
+    this.myReportDictionory = {
+      reportCacheId: uuidv4(),
+      reportParams: [
+        {
+          key: "vch_id", value: this.entity.vchId,
+        },
+        {
+          key: "firm_id", value: this.provider.companyinfo.company?.firmCode,
+        },
+      ]
+    };
+    this.rptMode = true;
+  }
   close() {
     this.location.back();
   }

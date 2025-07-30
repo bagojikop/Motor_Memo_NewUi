@@ -376,3 +376,8 @@
         </div>
     </div>
 </div>
+<div *ngIf="rptMode">
+    <dss-report-viewer [(isShow)]="rptMode" [dictionory]="myReportDictionory" [serviceUrl]="myServiceUrl"
+        docName="traninv" [mail]="" [wapp]="" ReportTitle="Transport Invoice">
+    </dss-report-viewer>
+</div>
