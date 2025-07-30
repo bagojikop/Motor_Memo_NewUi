@@ -288,6 +288,10 @@ export const routes: Routes = [
         path: 'masterinvoice',
         loadComponent: () => import('./views/Transaction/TransportInvoice/transport-inv-master/transport-inv-master.component').then((m) => m.TransportInvMAsterComponent)
       },
+       {
+        path: 'TransInvReg',
+        loadComponent: () => import('./views/Reports/trans-inv-reg/trans-inv-reg.component').then((m) => m.TransInvRegComponent)
+      },
       {
         path: 'Forgotpassword',
         loadComponent: () => import('./assets/pg/Login/forgotpassword/forgotpassword.component').then((m) => m.ForgotpasswordComponent)
