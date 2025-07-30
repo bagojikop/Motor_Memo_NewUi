@@ -167,10 +167,7 @@ export const routes: Routes = [
         path: 'Aknowledgment1',
         loadComponent: () => import('./views/Transaction/aknowledgmemnt1/aknowledgmemnt1.component').then((m) => m.Aknowledgmemnt1Component)
       },
-      {
-        path: 'Aknowledgment2',
-        loadComponent: () => import('./views/Transaction/aknowledgmemnt2/aknowledgmemnt2.component').then((m) => m.Aknowledgmemnt2Component)
-      },
+     
       {
         path: 'Expenses',
         loadComponent: () => import('./views/Reports/expenses/expenses.component').then((m) => m.ExpensesComponent)
@@ -278,6 +275,18 @@ export const routes: Routes = [
       {
         path: 'Moduleaccess',
         loadComponent: () => import('./views/Admin/moduleaccess/moduleaccess.component').then((m) => m.ModuleaccessComponent)
+      },
+       {
+        path: 'setting',
+        loadComponent: () => import('./views/Admin/Settings/setting-child/setting-child.component').then((m) => m.SettingChildComponent)
+      },
+      {
+        path: 'invoice',
+        loadComponent: () => import('./views/Transaction/TransportInvoice/transport-invochild/transport-invochild.component').then((m) => m.TransportInvochildComponent)
+      },
+       {
+        path: 'masterinvoice',
+        loadComponent: () => import('./views/Transaction/TransportInvoice/transport-inv-master/transport-inv-master.component').then((m) => m.TransportInvMAsterComponent)
       },
       {
         path: 'Forgotpassword',

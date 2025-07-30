@@ -52,7 +52,7 @@ export class BiltychildComponent {
   pastentity;
   selectedVehicle: string = '';
   Orderlist: any;
-  bilty:any={}
+  bilty: any = {}
   canEdit: boolean = false;
 
   isReceiverClicked: boolean = true;
@@ -87,11 +87,12 @@ export class BiltychildComponent {
     this.mode = this.stateParams.action;
     this.entity.vchId = this.stateParams.id;
   }
- 
+
   cmod: any = {};
   gst: any = {}
   exp: any = {};
   other: any = {};
+  gstType: 'INTRA' | 'INTER' = 'INTRA';
 
   freightTypeList: any = [];
   ngOnInit(): void {
@@ -127,6 +128,8 @@ export class BiltychildComponent {
     ]
 
 
+
+   
     let paramss: any = this.location.getState();
     this.navactions.navaction(paramss.action);
     this.entity.vchId = paramss.id;
@@ -143,8 +146,13 @@ export class BiltychildComponent {
 
   }
 
-
-
+statecoderelation(){
+ if (this.provider?.companyinfo?.company?.firm?.firmStateCode === this.entity?.biltyDetails?.senderStateId) {
+    this.gstType = 'INTRA'; // Same state → SGST & CGST
+  } else {
+    this.gstType = 'INTER'; // Different state → IGST
+  }
+}
 
   navbar(s) {
     switch (s) {
@@ -182,47 +190,47 @@ export class BiltychildComponent {
     this.entity.biltyGstDetails.igst = this.entity.biltyGstDetails.cgst = this.entity.biltyGstDetails.sgst = this.entity.biltyGstDetails.cess = 0;
   }
 
-  
-    
-      biltyprint() {
-        this.myServiceUrl = "BiltyReport";
-        
-        this.myReportDictionory = {
-          reportCacheId: uuidv4(),
-          reportParams: [
-            {
-              key: "vch_id", value: this.entity.vchId,
-            },
-            {
-              key: "firm_id", value: this.provider.companyinfo.company?.firmCode,
-    
-            }]
-        };
-        this.rptMode = true;
-      }
-  
+
+
+  biltyprint() {
+    this.myServiceUrl = "BiltyReport";
+
+    this.myReportDictionory = {
+      reportCacheId: uuidv4(),
+      reportParams: [
+        {
+          key: "vch_id", value: this.entity.vchId,
+        },
+        {
+          key: "firm_id", value: this.provider.companyinfo.company?.firmCode,
+
+        }]
+    };
+    this.rptMode = true;
+  }
+
 
   igstAmont: number = 0
   gstamt() {
     if (Number(this.entity.biltyGstDetails.igst)) {
       this.entity.biltyGstDetails.igstAmt = (this.entity.TotalFreight * Number(this.entity.biltyGstDetails.igst)) / 100
-      this.entity.biltyGstDetails.totalAmt=this.entity.TotalFreight+this.entity.biltyGstDetails.igstAmt;
+      this.entity.biltyGstDetails.totalAmt = this.entity.TotalFreight + this.entity.biltyGstDetails.igstAmt;
     }
     else if (Number(this.entity.biltyGstDetails.cgst)) {
       this.entity.biltyGstDetails.cgstAmt = (this.entity.TotalFreight * Number(this.entity.biltyGstDetails.cgst)) / 100
-      this.entity.biltyGstDetails.totalAmt=this.entity.TotalFreight+this.entity.biltyGstDetails.cgstAmt;
+      this.entity.biltyGstDetails.totalAmt = this.entity.TotalFreight + this.entity.biltyGstDetails.cgstAmt;
     }
     else if (Number(this.entity.biltyGstDetails.sgst)) {
       this.entity.biltyGstDetails.sgstAmt = (this.entity.TotalFreight * Number(this.entity.biltyGstDetails.sgst)) / 100
-      this.entity.biltyGstDetails.totalAmt=this.entity.TotalFreight+this.entity.biltyGstDetails.sgstAmt;
+      this.entity.biltyGstDetails.totalAmt = this.entity.TotalFreight + this.entity.biltyGstDetails.sgstAmt;
     }
     else {
       this.entity.biltyGstDetails.cessAmt = (this.entity.TotalFreight * Number(this.entity.biltyGstDetails.cess)) / 100
-      this.entity.biltyGstDetails.totalAmt=this.entity.TotalFreight+this.entity.biltyGstDetails.cessAmt;
+      this.entity.biltyGstDetails.totalAmt = this.entity.TotalFreight + this.entity.biltyGstDetails.cessAmt;
     }
   }
 
- 
+
 
 
 
@@ -250,7 +258,7 @@ export class BiltychildComponent {
 
         this.entity.firmId = this.provider.companyinfo.company?.firm.firmCode,
           this.entity.divId = this.provider.companyinfo.company.divId;
-        this.bilty=this.entity;
+        this.bilty = this.entity;
         this.http.post('Bilty/insert', this.bilty, 2).subscribe({
           next: (res: any) => {
             if (res.status_cd == 1) {
@@ -291,7 +299,7 @@ export class BiltychildComponent {
               if (!this.entity.biltyDetails) {
                 this.entity.biltyDetails = {};
               }
-               if (!this.entity.biltyGstDetails) {
+              if (!this.entity.biltyGstDetails) {
                 this.entity.biltyGstDetails = {};
               }
 
@@ -319,7 +327,7 @@ export class BiltychildComponent {
 
     this.callbackedit();
   }
-  
+
   close() {
     this.location.back();
   }
@@ -338,15 +346,15 @@ export class BiltychildComponent {
           this.entity.biltyAudit.createdDt = this.entity.biltyAudit.createdDt ?? this.datepipe.transform(this.entity.biltyAudit.createdDt, 'yyyy-MM-dd')
           this.entity.biltyAudit.modifiedDt = this.entity.biltyAudit.modifiedDt ?? this.datepipe.transform(this.entity.biltyAudit.modifiedDt, 'yyyy-MM-dd');
 
-     
+
 
           this.pastentity = Object.assign({}, this.entity);
 
-        
+
         }
         this.spinner.hide();
         this.additinOfFreight();
-       
+
 
         this.totalDebit();
         this.isReceiverClicked = false;
@@ -358,7 +366,7 @@ export class BiltychildComponent {
         this.dialog.swal({ dialog: 'error', title: 'Error', message: err });
       }
     })
-   }
+  }
   newRecord() {
     this.pastentity = JSON.parse(JSON.stringify(this.entity))
 
@@ -373,13 +381,13 @@ export class BiltychildComponent {
     const today = new Date();
     const finYearEnd = new Date(this.provider.companyinfo.finyear.tdt);
 
-   
+
     if (today >= finYearEnd) {
       this.entity.vchDate = finYearEnd.toISOString().split('T')[0];
     } else {
       this.entity.vchDate = today.toISOString().split('T')[0];
     }
-    
+
     this.gstdefault();
   }
 
@@ -744,7 +752,7 @@ export class BiltychildComponent {
   editgstTablerow(obj, index) {
     this.rowIndex = index;
     this.cmod = Object.assign({}, obj);
-  
+
   }
   deletegstTablerow(index) {
 
@@ -756,7 +764,7 @@ export class BiltychildComponent {
     }
     this.dialog.swal(params).then(data => {
       if (data == true) {
-        this.entity.biltyCommodities.splice(index, 1); 
+        this.entity.biltyCommodities.splice(index, 1);
         this.additinOfFreight()
         this.gstamt();
       }

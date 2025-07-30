@@ -1,0 +1,378 @@
+<div [hidden]="rptMode">
+    <div>
+        <app-navactions [title]="'Transport Invoice'" (myfn)="navbar($event)"></app-navactions>
+
+        <div class="from-body">
+            <div class="card-body mt-2">
+                <fieldset [disabled]="navactions.fieldset">
+                    <form #biltychild="ngForm" (keydown.enter)="$event.preventDefault()" novalidate>
+                        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                            <div class="container">
+                                <div class="d-flex w-100">
+                                    <div class="d-flex w-md-100 w-50 me-2">
+                                        <div class="d-flex-width">
+                                            <label>Voucher No</label>
+                                            <input class="form-control" type="text" numberOnly autocomplete="off"
+                                                [(ngModel)]="entity.vchNo" name="vchno" [maxlength]="10" disabled="true"
+                                                [minlength]="10">
+                                        </div>
+                                        <div class="gapInputFields">
+                                            <label for="" [ngClass]="{'text-danger': !entity.sac }">Account</label>
+                                            <app-ngselect apiUrl="Account/getAcclist" class="p-0 text-start"
+                                                bindLabel="accName" bindValue="accCode" name="ownerAccount"
+                                                [(ngModel)]="entity.accCode" [disabled]="navactions.fieldset"
+                                                (ngModelChange)="getstatefromAcc()" autocomplete="off"
+                                                [defaultProperty]="entity.accCodeNavigation" [applyMargins]="false"
+                                                [required]="true"></app-ngselect>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="gapInputFields d-flex w-50">
+                                        <div class="d-flex-width">
+                                            <label for="">State</label>
+                                            <input class="form-control" [(ngModel)]="entity.stateName"
+                                                autocomplete="off" name="state" disabled="true" />
+                                        </div>
+
+
+                                    </div>
+                                </div>
+
+                                <div class="d-flex w-100">
+                                    <div class="d-flex w-md-100 w-50 me-2">
+                                        <div class="d-flex-width">
+                                            <label>Bill No</label>
+                                            <input class="form-control" type="text" numberOnly autocomplete="off"
+                                                [(ngModel)]="entity.billNo" name="billno" [maxlength]="15"
+                                                [minlength]="15" disabled="true">
+                                        </div>
+                                        <div class="gapInputFields">
+                                            <label>From Date</label>
+                                            <input class="form-control" type="date" autocomplete="off"
+                                                [(ngModel)]="entity.fromDt" name="fromdt">
+                                        </div>
+                                    </div>
+                                    <div class="gapInputFields">
+                                        <div class="d-flex-width">
+                                            <div class="text-centre">
+                                                <button class="btn btn-primary" style="margin-top: 20px;"
+                                                    (click)="Listshow()"><i class="fa fa-eye me-1"
+                                                        aria-hidden="true"></i>Generate List</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="d-flex w-100">
+                                    <div class="d-flex w-md-100 w-50 me-2">
+                                        <div class="d-flex-width">
+                                            <label>Voucher Date</label>
+                                            <input class="form-control" type="date" autocomplete="off"
+                                                [(ngModel)]="entity.vchDt" name="vchdt">
+
+                                        </div>
+                                        <div class="gapInputFields">
+                                            <label>To Date</label>
+                                            <input class="form-control" type="date" autocomplete="off"
+                                                [(ngModel)]="entity.toDt" name="todt">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="d-flex w-100">
+                                    <div class="d-flex w-50 me-2">
+                                        <div class="d-flex-width">
+                                            <label [ngClass]="{'text-danger': !entity.sac }">SAC</label>
+                                            <dss-input name="sac"[(ngModel)]="entity.sac" [styleCase]="'u'"  [whiteSpace]="false"
+                                                autocomplete="off" [maxlength]="8" [required]="true"
+                                                >
+                                            </dss-input>
+                                            <!-- <input class="form-control" type="text" autocomplete="off" required
+                                                [(ngModel)]="entity.sac" name="sac" [styleCase]="'u'"
+                                                [whiteSpace]="false" [maxlength]="8" [minlength]="8"> -->
+                                        </div>
+                                        <div class="gapInputFields">
+                                            <label for="" [ngClass]="{'text-danger': !entity.isRcm }">Transport Bill By</label>
+                                            <select class="form-select select-wrapper" name="selectrcm"
+                                                [(ngModel)]="entity.isRcm" (ngModelChange)="onRcmChange($event)" required>
+                                                <option *ngFor="let option of rcmList" [value]="option.transType">{{
+                                                    option.transName }}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <hr />
+
+
+                        <div class="container mt-3">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="m-0 p-2">Transport Billed Lorry Receipts</h5>
+                                </div>
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center" scope="col" style="width: 10%;">
+                                                <b>L.R.No</b>
+                                            </th>
+                                            <th class="text-center" scope="col" style="width: 10%;">
+                                                <b>Date</b>
+                                            </th>
+                                            <th class="text-center" scope="col" style="width: 20%;">
+                                                <b>Vehicle No</b>
+                                            </th>
+                                            <th class="text-center" scope="col" style="width: 10%;">
+                                                <b>From</b>
+                                            </th>
+                                            <th class="text-center" scope="col" style="width: 10%;">
+                                                <b>To</b>
+                                            </th>
+                                            <th class="text-center" scope="col" style="width: 10%;">
+                                                <b>Kilo Miters</b>
+                                            </th>
+                                            <th class="text-center" scope="col" style="width: 10%;">
+                                                <b>Amount</b>
+                                            </th>
+                                            <th class="text-center" scope="col" style="width: 10%;">
+                                                <b>Action</b>
+                                            </th>
+                                        </tr>
+
+                                        <!-- <tr>
+                                            <th style="width: 20%;">
+                                                <div class="input-group ">
+                                                    <app-ngselect style="width: 100%;" apiUrl="productinfo/getList"
+                                                        bindLabel="iName" bindValue="iName" name="commodity1"
+                                                        [(ngModel)]="cmod.commodity" #unit="ngModel"
+                                                        [addNewText]="true"></app-ngselect>
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <app-ngselect style="width: 100%;" apiUrl="Unit/getUnit" name="uom1"
+                                                    bindLabel="unitName" bindValue="unitName" [(ngModel)]="cmod.uom"
+                                                    [addNewText]="true"></app-ngselect>
+
+                                            </th>
+                                            <th>
+                                                <input name="qty1" [maxlength]="7" [(ngModel)]="cmod.qty" numberOnly
+                                                    class="form-control" digitOnly autocomplete="off" />
+                                            </th>
+                                            <th>
+                                                <input name="chrgWeight1" class="form-control" [maxlength]="7"
+                                                    numberOnly digitOnly [(ngModel)]="cmod.chrgWeight"
+                                                    autocomplete="off" (ngModelChange)="calculateFreight()" />
+                                            </th>
+                                            <th>
+                                                <input class="form-control" name="actWeight1" [maxlength]="7" numberOnly
+                                                    digitOnly [(ngModel)]="cmod.actWeight" autocomplete="off" />
+                                            </th>
+                                            <th>
+                                                <input class="form-control" name="rate1" [maxlength]="7"
+                                                    style="text-align: right;" [(ngModel)]="cmod.rate"
+                                                    (ngModelChange)="calculateFreight();" digitOnly CurrencyMask
+                                                    fraction="2" autocomplete="off" #rateInput />
+                                               
+                                            </th>
+
+                                            <th>
+                                                <input class="form-control" name="freight1" [(ngModel)]="cmod.freight"
+                                                    digitOnly CurrencyMask fraction="2" style="text-align: right;"
+                                                    tabindex="-1" [readonly]="true" autocomplete="off" />
+                                            </th>
+                                            <th>
+                                                <button class="btn btn-light btn-sm" (click)="addgstTablerow()"
+                                                    type="button" tabindex="0" #addButton>
+                                                    <i class="fas fa-plus"></i>
+                                                </button>
+
+                                            </th>
+                                        </tr> -->
+
+                                    </thead>
+                                    <tbody class="actionTableHeight">
+                                        <div *ngIf="!entity?.tms01101s || entity.tms01101s.length === 0"
+                                            class="noDataImg">
+                                            <img src="../../../../../../assets/IMG/noData.png" width="50">
+                                            <p>Record is empty</p>
+                                        </div>
+
+                                        <tr *ngFor="let v of entity.tms01101s;let i=index;">
+                                            <td style="width: 10%;">{{v.memoNo}}</td>
+                                            <td style="width: 10%;">{{v.dt | date:'dd-MM-yyyy'}}</td>
+                                            <td style="width: 20%;">{{v.vehicleNo}}</td>
+                                            <td style="width: 10%;">{{v.from_Dstn}}</td>
+                                            <td style="width: 10%;">{{v.to_Dstn}}</td>
+                                            <td style="width: 10%;">{{v.kiloMiter }}</td>
+                                            <td style="text-align: right;width: 10%;">{{v.billAmt | number:'1.2-2'}}
+                                            </td>
+
+                                            <td class="text-center" style="width: 10%;">
+                                                <!-- <button class="btn btn-primary btn-sm-custom-table me-1" type="button"
+                                                    tabindex="-1" (click)="editgstTablerow(v,i)">
+                                                    <i class="fas fa-edit"></i></button> -->
+                                                <button class="btn btn-danger btn-sm-custom-table" type="button"
+                                                    tabindex="-1" (click)="deletegstTablerow(i)">
+                                                    <i class="fas fa-trash"></i></button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td class="p-1 text-end">Total</td>
+                                            <td style="text-align: right;"> ₹ {{entity.grossAmt |
+                                                number:'1.2-2'}}</td>
+                                            <td></td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+
+                        </div>
+                        <hr />
+                        <div class="container mt-3">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="m-0 p-2">Gst Details</h5>
+                                </div>
+                                <div class="d-flex" style="padding: 10px;">
+                                    <div class="d-flex-width">
+                                        <div class="card">
+                                            <div class="card-header"
+                                                style="text-align: center;background-color: #cae1ee;">
+                                                SGST
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="d-flex">
+                                                    <div class="d-flex-width">
+                                                        <label>Rate %</label>
+                                                        <input style="text-align: right;" name="sgst"
+                                                            [disabled]="gstType === 'INTER'"
+                                                            [(ngModel)]="entity.sgstRate" numberOnly
+                                                            class="form-control" (ngModelChange)="gstamt()" digitOnly
+                                                            autocomplete="off" />
+                                                    </div>
+                                                    <div class="gapInputFields">
+                                                        <label>Amount</label>
+                                                        <input style="text-align: right;" name="sgstamt"
+                                                            [readonly]="gstType === 'INTER'"
+                                                            [(ngModel)]="entity.sgstAmt" numberOnly class="form-control"
+                                                            CurrencyMask fraction="2" digitOnly autocomplete="off" />
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                    <div class="gapInputFields">
+                                        <div class="card">
+                                            <div class="card-header"
+                                                style="text-align: center;background-color: #cae1ee;">
+                                                CGST
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="d-flex">
+                                                    <div class="d-flex-width">
+                                                        <label>Rate %</label>
+                                                        <input style="text-align: right;" name="cgst"
+                                                            [disabled]="gstType === 'INTER'"
+                                                            [(ngModel)]="entity.cgstRate" numberOnly
+                                                            class="form-control" (ngModelChange)="gstamt()" digitOnly
+                                                            autocomplete="off" />
+                                                    </div>
+                                                    <div class="gapInputFields">
+                                                        <label>Amount</label>
+                                                        <input style="text-align: right;" name="cgstamt"
+                                                            [readonly]="gstType === 'INTER'"
+                                                            [(ngModel)]="entity.cgstAmt" numberOnly class="form-control"
+                                                            CurrencyMask fraction="2" digitOnly autocomplete="off" />
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="gapInputFields">
+                                        <div class="card">
+                                            <div class="card-header"
+                                                style="text-align: center;background-color: #cae1ee;">
+                                                IGST
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="d-flex">
+                                                    <div class="d-flex-width">
+                                                        <label>Rate %</label>
+                                                        <input style="text-align: right;" name="igst"
+                                                            [disabled]="gstType === 'INTRA'"
+                                                            [(ngModel)]="entity.igstRate" numberOnly
+                                                            class="form-control" (ngModelChange)="gstamt()" digitOnly
+                                                            autocomplete="off" />
+                                                    </div>
+                                                    <div class="gapInputFields">
+                                                        <label>Amount</label>
+                                                        <input style="text-align: right;" name="igstamt"
+                                                            [readonly]="gstType === 'INTRA'"
+                                                            [(ngModel)]="entity.igstAmt" numberOnly class="form-control"
+                                                            CurrencyMask fraction="2" digitOnly autocomplete="off" />
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="gapInputFields">
+                                        <div class="card">
+                                            <div class="card-header"
+                                                style="text-align: center;background-color: #cae1ee;">
+                                                Round Off
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="d-flex" style="margin-top: 20px;">
+                                                    <input style="text-align: right;" name="roundAmt"
+                                                        [(ngModel)]="entity.roundOff" numberOnly class="form-control"
+                                                        CurrencyMask fraction="2" digitOnly autocomplete="off" />
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="gapInputFields">
+                                        <div class="card">
+                                            <div class="card-header"
+                                                style="text-align: center;background-color: #cae1ee;">
+                                                Net Amount
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="d-flex" style="margin-top: 20px;">
+                                                    <input style="text-align: right;" name="totalAmt"
+                                                        [(ngModel)]="entity.netAmt" numberOnly class="form-control"
+                                                        CurrencyMask fraction="2" digitOnly autocomplete="off" />
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                        <hr />
+                    </form>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+</div>

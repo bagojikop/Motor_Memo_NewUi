@@ -46,7 +46,7 @@
                             <div class="col col-12 col-sm-6">
                                 <div class="form-group">
                                     <label for="">Unit Code</label>
-                                    <input class="form-control" name="code" [(ngModel)]="entity.unitCode" [disabled]="isUpdate" maxlength="8" numberOnly />
+                                    <input class="form-control" type="text" name="code" [(ngModel)]="entity.unitCode" [disabled]="isUpdate" maxlength="8"/>
                                 </div>
                                 <div class="form-group">
                                     <dss-input label="Unit Name" [maxlength]="50" name="unitName"

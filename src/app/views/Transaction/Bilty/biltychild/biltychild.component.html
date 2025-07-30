@@ -1,6 +1,6 @@
 <div [hidden]="rptMode">
     <div>
-        <app-navactions [title]="'Lorry Receipt'" (myfn)="navbar($event)"></app-navactions>
+        <app-navactions [title]="'Bilty'" (myfn)="navbar($event)"></app-navactions>
 
         <div class="from-body">
             <div class="card-body mt-2">
@@ -11,7 +11,7 @@
                                 <div class="d-flex w-100">
                                     <div class="d-flex w-md-100 w-50 me-2">
                                         <div class="d-flex-width">
-                                            <label>LR Number</label>
+                                            <label>Bilty Number</label>
                                             <input class="form-control" type="text" numberOnly autocomplete="off"
                                                 [(ngModel)]="entity.biltyNo" name="biltyno" [maxlength]="10"
                                                 disabled="true" [minlength]="10">
@@ -124,7 +124,7 @@
                                                 <app-ngselect apiUrl="state/getStates" label="State"
                                                     bindLabel="stateName" bindValue="stateCode" name="senderStateId"
                                                     [(ngModel)]="entity.biltyDetails.senderStateId"
-                                                    [disabled]="navactions.fieldset" autocomplete="off"
+                                                    [disabled]="navactions.fieldset" autocomplete="off" (ngModelChange)="statecoderelation()"
                                                     [defaultProperty]="entity.senderStateId" #senderStateId="ngModel"
                                                     [required]="true"></app-ngselect>
                                             </div>
@@ -404,21 +404,21 @@
                                         <div class="card">
                                             <div class="card-header"
                                                 style="text-align: center;background-color: #cae1ee;">
-                                                IGST
+                                                SGST
                                             </div>
                                             <div class="card-body">
                                                 <div class="d-flex">
                                                     <div class="d-flex-width">
                                                         <label>Rate %</label>
-                                                        <input style="text-align: right;" name="igst"
-                                                            [(ngModel)]="entity.biltyGstDetails.igst" numberOnly
+                                                        <input style="text-align: right;" name="sgst" [disabled]="gstType === 'INTER'"
+                                                            [(ngModel)]="entity.biltyGstDetails.sgst" numberOnly
                                                             class="form-control" digitOnly autocomplete="off"
                                                             (ngModelChange)="gstamt()" />
                                                     </div>
                                                     <div class="gapInputFields">
                                                         <label>Amount</label>
-                                                        <input style="text-align: right;" name="igstamt"
-                                                            [(ngModel)]="entity.biltyGstDetails.igstAmt" numberOnly
+                                                        <input style="text-align: right;" name="sgstamt" [readonly]="gstType === 'INTER'"
+                                                            [(ngModel)]="entity.biltyGstDetails.sgstAmt" numberOnly
                                                             class="form-control" CurrencyMask fraction="2" digitOnly
                                                             autocomplete="off" />
                                                     </div>
@@ -427,6 +427,7 @@
                                             </div>
 
                                         </div>
+                                        
                                     </div>
                                     <div class="gapInputFields">
                                         <div class="card">
@@ -438,14 +439,14 @@
                                                 <div class="d-flex">
                                                     <div class="d-flex-width">
                                                         <label>Rate %</label>
-                                                        <input style="text-align: right;" name="cgst"
+                                                        <input style="text-align: right;" name="cgst" [disabled]="gstType === 'INTER'"
                                                             [(ngModel)]="entity.biltyGstDetails.cgst" numberOnly
                                                             class="form-control" digitOnly autocomplete="off"
                                                             (ngModelChange)="gstamt()" />
                                                     </div>
                                                     <div class="gapInputFields">
                                                         <label>Amount</label>
-                                                        <input style="text-align: right;" name="cgstamt"
+                                                        <input style="text-align: right;" name="cgstamt" [readonly]="gstType === 'INTER'"
                                                             [(ngModel)]="entity.biltyGstDetails.cgstAmt" numberOnly
                                                             class="form-control" CurrencyMask fraction="2" digitOnly
                                                             autocomplete="off" />
@@ -460,21 +461,21 @@
                                         <div class="card">
                                             <div class="card-header"
                                                 style="text-align: center;background-color: #cae1ee;">
-                                                SGST
+                                                IGST
                                             </div>
                                             <div class="card-body">
                                                 <div class="d-flex">
                                                     <div class="d-flex-width">
                                                         <label>Rate %</label>
-                                                        <input style="text-align: right;" name="sgst"
-                                                            [(ngModel)]="entity.biltyGstDetails.sgst" numberOnly
+                                                        <input style="text-align: right;" name="igst" [disabled]="gstType === 'INTRA'"
+                                                            [(ngModel)]="entity.biltyGstDetails.igst" numberOnly
                                                             class="form-control" digitOnly autocomplete="off"
                                                             (ngModelChange)="gstamt()" />
                                                     </div>
                                                     <div class="gapInputFields">
                                                         <label>Amount</label>
-                                                        <input style="text-align: right;" name="sgstamt"
-                                                            [(ngModel)]="entity.biltyGstDetails.sgstAmt" numberOnly
+                                                        <input style="text-align: right;" name="igstamt" [readonly]="gstType === 'INTRA'"
+                                                            [(ngModel)]="entity.biltyGstDetails.igstAmt" numberOnly
                                                             class="form-control" CurrencyMask fraction="2" digitOnly
                                                             autocomplete="off" />
                                                     </div>

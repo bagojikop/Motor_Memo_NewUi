@@ -25,6 +25,8 @@ export interface SubconsigneeObj {
   totalothercharges:number
   from_Dstn: string
   to_Dstn: string
+  kiloMiter:number
+  vehAccCode:number
   stateInfo: string
   AccountName: string
   selectedValue: string
@@ -55,6 +57,7 @@ export interface SubconsigneeObj {
   motormemoCommodities: MotormemoCommoditiesObj[];
   motormemoExpenses: MotormemoExpensesObj[];
   motormemoOtherCharges: otherchargesObj[];
+  vehicleAccNavigation:any
 
 }
 
@@ -62,6 +65,7 @@ export interface Acc003sObj{
   txnNo:number
   txnDate:Date
 }
+
 
 export interface otherchargesObj{
   otherdiscription: string

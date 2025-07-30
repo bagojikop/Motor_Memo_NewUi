@@ -53,8 +53,8 @@
                                             <div class="d-flex-width">
                                                 <app-ngselect label="Place" apiUrl="Place/getPlace" class="p-0"
                                                     bindLabel="cityName" bindValue="cityId" name="pl"
-                                                    [(ngModel)]="entity.placeId" [defaultProperty]="entity.place"
-                                                    [disabled]="navactions.fieldset"></app-ngselect>
+                                                    [(ngModel)]="entity.placeId" [defaultProperty]="entity.placeIdNavigation"
+                                                    [disabled]="navactions.fieldset" (ngModelChange)="getstatefromplace()" ></app-ngselect>
                                             </div>
                                             <div class="gapInputFields">
                                                 <label for="">Pin Code</label>
@@ -64,11 +64,13 @@
                                         </div>
                                       
                                         <div>
-                                            <label>State</label>
-                                            <ng-select bindLabel="stateName" bindValue="stateCode" name="state"
-                                                [loading]="loading" [virtualScroll]="true" [disabled]="navactions.fieldset"
-                                                [items]="state" [(ngModel)]="entity.state"  (change)="getState($event)"    placeholder="Select state">
-                                            </ng-select>
+                                            <label for="">State</label>
+                                            <input class="form-control" [(ngModel)]="entity.stateName" 
+                                                autocomplete="off" name="state" >
+                                            <!-- <app-ngselect label="state" apiUrl="State/ListFromPlace" class="p-0"
+                                                    bindLabel="stateName" bindValue="stateCode" name="state"  
+                                                    [(ngModel)]="entity.stateCode" [apiParams]="reference.stateparam"
+                                                    [disabled]="true"  ></app-ngselect> -->
                                         </div>
                                     </div>
 

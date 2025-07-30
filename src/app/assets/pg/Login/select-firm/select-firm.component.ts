@@ -28,6 +28,7 @@ export class SelectFirmComponent {
   loading: boolean = false;
   Firms = []; 
   FinYears = [];
+  settings=[];
   constructor(private http: http,
     private spinner: NgxSpinnerService,
     private provider: MyProvider,
@@ -44,8 +45,10 @@ export class SelectFirmComponent {
     this.reference = {};
     this.Firms = [];
     this.FinYears = [];
-
+    this.settings =[]
     this.Init()
+     this.setting();
+    
   }
 
   async Init() {
@@ -71,8 +74,10 @@ export class SelectFirmComponent {
         }
       })
     })
-
+   
   }
+
+ 
 
 
   firm(index) {
@@ -141,6 +146,31 @@ export class SelectFirmComponent {
   }
 
 
+  setting(){
+    {
+      
+      this.loading = true;
+      this.http.get('Setting/list').subscribe({
+        next: (res: any) => {
+         
+
+            this.settings = res.data
+            this.loading = false;
+         
+            
+          this.spinner.hide();
+        },
+        error: (err: any) => {
+          this.spinner.hide();
+          this.dialog.swal({ dialog: 'error', title: 'Error', message: err.message });
+        }
+      });
+
+
+    }
+  }
+
+
   onClear(field: string): void {
     this.loading = false; // Ensure loader is turned off
     switch (field) {
@@ -171,6 +201,8 @@ export class SelectFirmComponent {
       tdt: years[1] + '-03-31'
     }
     this.provider.companyinfo.company.userinfo = {}
+
+    this.provider.companyinfo.company.settings = this.settings; 
     
     this.provider.companyinfo.company.userinfo.username = this.entity.username;
     this.router.navigate(['home']);

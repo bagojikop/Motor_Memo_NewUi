@@ -29,11 +29,11 @@
 
                                 <div>
                                     <label class="mb-0">Account</label>
-                                    <app-ngselect apiUrl="Account/getlist" class="form-control-sm p-0"
+                                    <app-ngselect apiUrl="Account/getAcclistbyMgCode" class="form-control-sm p-0"
                                         bindLabel="accName" bindValue="accCode" name="account"
                                         [(ngModel)]="entity.accCode"  
                                         [defaultProperty]="entity.accCodeNavigation"
-                                        [disabled]="navactions.fieldset" #account="ngModel"
+                                        [apiParams]="{mgCode:'3, 4, 25'}" [disabled]="navactions.fieldset" #account="ngModel"
                                         [ngClass]="{'is-invalid': account.errors?.['required']}"
                                         [required]="true"></app-ngselect>
                                </div>

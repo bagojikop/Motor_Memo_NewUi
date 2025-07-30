@@ -215,16 +215,16 @@ export const navItems = ({
       url: '/Transactions',
       iconComponent: { name: 'cil-puzzle' },
       children: [
-        { name: 'Motor Memo', iconComponent: { name: 'cil-file' }, url: 'Motormaster' },
+        { name: 'Lorry Receipt(Chargeable)', iconComponent: { name: 'cil-file' }, url: 'Motormaster' },
+         { name: 'Lorry Receipt (Direct)', iconComponent: { name: 'cil-credit-card' }, url: 'lorry-receipt2' },
         { name: 'Sundry', iconComponent: { name: 'cil-list' }, url: 'Summary' },
         { name: 'Contra Entry', iconComponent: { name: 'cil-credit-card' }, url: 'Contramaster' },
         { name: 'Journal Entry', iconComponent: { name: 'cil-notes' }, url: 'Journalmaster' },
         { name: 'Receipt', iconComponent: { name: 'cil-credit-card' }, url: 'Receiptmaster' },
         { name: 'Payment', iconComponent: { name: 'cil-credit-card' }, url: 'Paymentmaster' },
         { name: 'Bilty', iconComponent: { name: 'cil-credit-card' }, url: 'BiltyMaster' },
-        { name: 'Lorry Receipt 2', iconComponent: { name: 'cil-credit-card' }, url: 'lorry-receipt2' },
-        { name: 'Aknowledgment 1', iconComponent: { name: 'cil-credit-card' }, url: 'Aknowledgment1' },
-        { name: 'Aknowledgment 2', iconComponent: { name: 'cil-credit-card' }, url: 'Aknowledgment2' }
+        { name: 'Aknowledgment', iconComponent: { name: 'cil-credit-card' }, url: 'Aknowledgment1' },
+        { name: 'Transport Invoice', iconComponent: { name: 'cil-credit-card' }, url: 'masterinvoice' }
       ]
     },
     {
@@ -238,6 +238,7 @@ export const navItems = ({
         { name: 'Firm Type', iconComponent: { name: 'cil-layers' }, url: 'Firmtypemaster' },
         { name: 'UserInfo', iconComponent: { name: 'cil-layers' }, url: 'Userinfomaster' },
         { name: 'RoleInfo', iconComponent: { name: 'cil-layers' }, url: 'Roleinfomaster' },
+        { name: 'Setting', iconComponent: { name: 'cil-layers' }, url: 'setting' },
         {
           name: 'Permission',
           url: '/Permission',

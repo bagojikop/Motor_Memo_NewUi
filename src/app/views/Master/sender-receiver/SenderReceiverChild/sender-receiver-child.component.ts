@@ -60,8 +60,6 @@ export class SenderReceiverChildComponent {
   }
 
   ngOnInit(): void {
-
-
     this.entity = <SubconsigneeObj>{};
     this.reference.places = [];
     this.reference.suppliers = [];
@@ -69,7 +67,7 @@ export class SenderReceiverChildComponent {
     let paramss: any = this.location.getState();
     this.navactions.navaction(paramss.action);
     this.entity.sCode = paramss.id;
-    this.getstates();
+    //this.getstates();
 
     if (this.entity.sCode) {
       this.navactions.fieldset = true;
@@ -134,8 +132,8 @@ export class SenderReceiverChildComponent {
         if (res.status_cd == 1) {
           this.entity = res.data;
           this.entity.id = res.data.id;
-          this.getState(this.entity);
-          
+          this.getstatefromplace()
+         // this.entity.placeId=this.data.
           this.cd.detectChanges();
         }
         this.spinner.hide();
@@ -160,7 +158,7 @@ export class SenderReceiverChildComponent {
         if (!this.entity.createdUser)
           this.entity.createdUser = this.provider.companyinfo.userinfo.username;
 
-        this.entity.createdUser = this.provider.companyinfo.userinfo.username;
+          this.entity.createdUser = this.provider.companyinfo.userinfo.username;
 
         this.http.post('Vendor/insert', this.entity).subscribe({
           next: (res: any) => {
@@ -219,6 +217,7 @@ export class SenderReceiverChildComponent {
   newRecord() {
     this.pastentity = JSON.parse(JSON.stringify(this.entity))
     this.entity = <SubconsigneeObj>{};
+  
   }
   edit() {
 
@@ -263,28 +262,55 @@ export class SenderReceiverChildComponent {
 
 
   getState(event){
-    this.entity.state = event.stateCode;
+    this.entity.stateCode = event.stateCode;
+  }
+   Onplaceselected(x){
+    this.reference.stateparam = { placeId: x }
+
+
   }
 
-  getstates(){
-    this.loading = true;
-    this.http.get('state/list').subscribe({
-      next: (res: any) => {
+  getstatefromplace(){
+    this.http.get('state/ListFromPlace',{ placeId: this.entity.placeId }).subscribe({
+       next: (res: any) => {
         if (res.status_cd == 1) {
-          this.state = res.data;
-          this.entity.stateCode = res.data[0].firmCode
+        //  this.state = res.data;
+          this.entity.stateCode = res.data.stateCode || null;
+        this.entity.stateName = res.data.stateName || '';
           this.loading = false;
         } else {
           this.loading = false;
           this.dialog.swal({ dialog: 'error', title: 'Error', message: res.errors.exception.Message });
         }
 
-
         this.spinner.hide();
       }, error: (err: any) => {
         this.spinner.hide();
         this.dialog.swal({ dialog: 'error', title: 'Error', message: err.message });
       }
+    
     })
   }
+
+  // getstates(){
+  //   this.loading = true;
+  //   this.http.get('state/ListFromPlace',{ placeId: this.entity.placeId }).subscribe({
+  //     next: (res: any) => {
+  //       if (res.status_cd == 1) {
+  //       //  this.state = res.data;
+  //         this.entity.stateCode = res.data.stateCode || null;
+  //       this.entity.stateName = res.data.stateName || '';
+  //         this.loading = false;
+  //       } else {
+  //         this.loading = false;
+  //         this.dialog.swal({ dialog: 'error', title: 'Error', message: res.errors.exception.Message });
+  //       }
+
+  //       this.spinner.hide();
+  //     }, error: (err: any) => {
+  //       this.spinner.hide();
+  //       this.dialog.swal({ dialog: 'error', title: 'Error', message: err.message });
+  //     }
+  //   })
+  // }
 }

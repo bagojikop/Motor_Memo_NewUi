@@ -207,6 +207,12 @@ export class LorryReceChildComponent {
     })
   }
 
+  onRowClick(v) {
+    this.entity.vehicleNo = v.vehicleNo;
+  
+    $('#exampleModal').modal('hide');
+  }
+
   Submit() {
     const selectedRows = this.list.filter(item => item.selected);
 

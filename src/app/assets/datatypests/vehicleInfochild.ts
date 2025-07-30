@@ -1,3 +1,4 @@
+import { accCodeNavigation } from "../../Models/salesInvoice";
 
 export interface SubconsigneeObj {
     bankinfo: any;
@@ -5,7 +6,7 @@ export interface SubconsigneeObj {
     sCode: number
     accName:string
     vtypeId: number
-    isOwn:number
+    isOwn:string
     accCodeNavigation:any
     sgCode: number
     VtypeId:number
@@ -42,7 +43,7 @@ export interface SubconsigneeObj {
     mst10805s: mst10805sObj[]  
     mst10801s: mst10801sObj  
     sgCodeNavigation: any
-
+    mst10806s:mst10806sObj[]
     mst01101?: mst01101Obj | null
     mst01104?: mst01104Obj | null 
     mst01109?: mst01109Obj | null
@@ -61,6 +62,25 @@ export interface mst10805sObj {
     vehicleNo: string
     state: any 
 }
+export interface mst10806sObj {
+    detl_Id: number
+    vehicle_No: string
+    eff_Dt: string
+    ownerName: string
+    panNo: string
+    bankName: string
+    bankAccNo: string
+    ifscCode: string
+    accCode: number
+    isTransport: number 
+    accCodeNavigation:accCodeNavigationObj
+}
+
+export interface accCodeNavigationObj{
+    accName:string;
+    accCode:number;
+}
+
 
 export interface mst10804Obj {
     address: string

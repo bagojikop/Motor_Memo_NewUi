@@ -195,23 +195,29 @@ export class UnitmasterComponent implements AfterViewInit {
   }
   save() {
     this.spinner.show();
-    this.http.put('unit/update', this.entity, null).subscribe({
+    if(this.entity.unitCode){
+    this.http.put('unit/update', this.entity, {unitCode:this.entity.unitCode}).subscribe({
       next: (res: any) => {
         if (res.status_cd == 1) {
           this.entity = res.data;
 
-          if (this.rowIndex != null) {
-
-            this.list[this.rowIndex] = this.entity;
-
-            const rowNode: any = this.gridApi.getDisplayedRowAtIndex(this.rowIndex);
-
-            rowNode.setData(this.list[this.rowIndex]);
-
-          } else {
-
+          if(res.data.unitCode==this.entity.unitCode){
+          this.gridApi.applyTransaction({ update: [this.entity] });
+          }else{
             this.gridApi.applyTransaction({ add: [this.entity] });
           }
+          // if (this.rowIndex != null) {
+
+          //   this.list[this.rowIndex] = this.entity;
+
+          //   const rowNode: any = this.gridApi.getDisplayedRowAtIndex(this.rowIndex);
+
+          //   rowNode.setData(this.list[this.rowIndex]);
+
+          // } else {
+
+          //   this.gridApi.applyTransaction({ add: [this.entity] });
+          // }
           this.pastEntity = Object.assign({}, this.entity);
           this.dialog.swal({ dialog: "success", title: "Success", message: "Record is update sucessfully" })
             .then((res: any) => {
@@ -225,7 +231,7 @@ export class UnitmasterComponent implements AfterViewInit {
         this.dialog.swal({ dialog: 'error', title: 'Error', message: err })
       }
     })
-
+  }
   }
 
   close() {

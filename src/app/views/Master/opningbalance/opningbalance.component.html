@@ -41,12 +41,12 @@
                         <div class="row">
                             <div class="col col-12 col-sm-10">
                                 <div class="form-group">
-                                    <app-ngselect label="Account" apiUrl="Account/getAcclist" class="p-0"
+                                    <app-ngselect label="Account" apiUrl="Account/GetAcclistByMgbs" class="p-0"
                                         bindLabel="accName" bindValue="accCode" name="ObalAccName"
-                                        [(ngModel)]="entity.accCode" #ObalAccName="ngModel"
+                                        [(ngModel)]="entity.accCode" #ObalAccName="ngModel" 
                                         [ngClass]="{'is-invalid': ObalAccName.errors?.['required']}" [required]="true"
                                         [defaultProperty]="entity.accCodeNavigation"
-                                        (change)="selectaccName($event)"></app-ngselect>
+                                        (change)="selectaccName($event)" [apiParams]="{mgBs:'0, 1, 2'}"></app-ngselect>
                                 </div>
                                 <div class="form-group mt-2">
                                     <label class="mb-0">Credit</label>
