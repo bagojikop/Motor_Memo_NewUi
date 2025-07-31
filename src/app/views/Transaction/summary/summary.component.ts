@@ -117,16 +117,15 @@ export class SummaryComponent {
 
   }
 
-
   apiParams() {
     var x = {
       PageNumber: 1,
       PageSize: 10,
       Keys: []
     }
-
     return x;
   }
+
   edit(s) {
     this.entity = s;
     this.entity.accCodeNavigation = s.accCodeNavigation;
@@ -139,7 +138,6 @@ export class SummaryComponent {
       title: "warning",
       message: "Do You Want Delete Row",
     }
-
     this.dialog.swal(params).then(data => {
       if (data == true) {
         this.iConfirmFn(s);
@@ -147,12 +145,10 @@ export class SummaryComponent {
     })
   }
 
-  
   iConfirmFn(row) {
     var params = {
       id: row.sId
     }
-
     this.http.delete('Sundry/delete', params).subscribe((res: any) => {
       if (res.status_cd == 1) {
 
@@ -182,11 +178,12 @@ export class SummaryComponent {
 
     });
   }
+
   close() {
     this.entity = {};
     $("#district").modal('hide');
-
   }
+
   save() {
     this.spinner.show();
     if (!this.entity.sId) {
@@ -205,10 +202,7 @@ export class SummaryComponent {
           } else {
             this.dialog.swal({ dialog: "error", message: "Duplicate Sundry" });
           }
-
-
           this.spinner.hide()
-
         }, error: (err: any) => {
           this.spinner.hide()
           this.dialog.swal({ dialog: 'error', title: 'Error', message: "Duplicate Sundry" })
@@ -233,6 +227,7 @@ export class SummaryComponent {
       })
     }
   }
+  
   onOperationChange(value: string) {
     console.log('Selected Operation:', value);
   }

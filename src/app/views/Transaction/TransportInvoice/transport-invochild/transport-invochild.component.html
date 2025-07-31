@@ -17,7 +17,7 @@
                                                 [minlength]="10">
                                         </div>
                                         <div class="gapInputFields">
-                                            <label for="" [ngClass]="{'text-danger': !entity.sac }">Account</label>
+                                            <label for="" [ngClass]="{'text-danger': !entity.accCode }">Account</label>
                                             <app-ngselect apiUrl="Account/getAcclist" class="p-0 text-start"
                                                 bindLabel="accName" bindValue="accCode" name="ownerAccount"
                                                 [(ngModel)]="entity.accCode" [disabled]="navactions.fieldset"
@@ -82,22 +82,19 @@
                                 <div class="d-flex w-100">
                                     <div class="d-flex w-50 me-2">
                                         <div class="d-flex-width">
-                                            <label [ngClass]="{'text-danger': !entity.sac }">SAC</label>
-                                            <dss-input name="sac"[(ngModel)]="entity.sac" [styleCase]="'u'"  [whiteSpace]="false"
-                                                autocomplete="off" [maxlength]="8" [required]="true"
-                                                >
-                                            </dss-input>
-                                            <!-- <input class="form-control" type="text" autocomplete="off" required
-                                                [(ngModel)]="entity.sac" name="sac" [styleCase]="'u'"
-                                                [whiteSpace]="false" [maxlength]="8" [minlength]="8"> -->
-                                        </div>
-                                        <div class="gapInputFields">
-                                            <label for="" [ngClass]="{'text-danger': !entity.isRcm }">Transport Bill By</label>
+                                           
+                                           <label for="" [ngClass]="{'text-danger': !entity.isRcm }">Transport Bill By</label>
                                             <select class="form-select select-wrapper" name="selectrcm"
                                                 [(ngModel)]="entity.isRcm" (ngModelChange)="onRcmChange($event)" required>
                                                 <option *ngFor="let option of rcmList" [value]="option.transType">{{
                                                     option.transName }}</option>
                                             </select>
+                                        </div>
+                                        <div class="gapInputFields">
+                                             <label [ngClass]="{'text-danger': !entity.sac }">SAC</label>
+                                            <dss-input name="sac" [(ngModel)]="entity.sac" [whiteSpace]="false"
+                                                autocomplete="off" [maxlength]="8" [required]="true">
+                                            </dss-input>
                                         </div>
                                     </div>
                                 </div>

@@ -3,9 +3,9 @@
         "transType": 1,
         "transName": "RCM 5% with ITC",
         "sac": 0,
-        "sRate": 0.00,
-        "cRate": 0.00,
-        "iRate": 0.00,
+        "sRate": 2.50,
+        "cRate": 2.50,
+        "iRate": 5.00,
         "rcm": true,
         "itc": true
     },

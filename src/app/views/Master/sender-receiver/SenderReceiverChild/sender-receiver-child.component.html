@@ -26,12 +26,19 @@
                                             name="vendor"></dss-input>
 
                                         <div style="margin-bottom: 10px !important;">
-                                            <app-ngselect apiUrl="Account/getsupplier" label="Account"
+                                            <!-- <app-ngselect apiUrl="Account/getsupplier" label="Account"
                                                 name="AccountName" class="p-0" bindLabel="accName" bindValue="accCode"
                                                 [(ngModel)]="entity.accCode" [disabled]="navactions.fieldset"
                                                 [defaultProperty]="entity.accCodeNavigation"
-                                                #AccountName="ngModel"></app-ngselect>
-
+                                                #AccountName="ngModel"></app-ngselect> -->
+                                            <app-ngselect label="Account" apiUrl="Account/getAcclistbySgCode"
+                                                class="p-0" bindLabel="accName" bindValue="accCode" name="ObalAccName"
+                                                [defaultProperty]="entity.accCodeNavigation"
+                                                [(ngModel)]="entity.accCode" #ObalAccName="ngModel"
+                                                [disabled]="navactions.fieldset"
+                                                [apiParams]="{sgCode:this.provider.companyinfo.company?.settings[2].setValue}"
+                                                [ngClass]="{'is-invalid': ObalAccName.errors?.['required']}"
+                                                [required]="true"></app-ngselect>
                                         </div>
 
                                         <dss-input label="Email" type="email" name="email" [(ngModel)]="entity.emailId"
@@ -53,8 +60,10 @@
                                             <div class="d-flex-width">
                                                 <app-ngselect label="Place" apiUrl="Place/getPlace" class="p-0"
                                                     bindLabel="cityName" bindValue="cityId" name="pl"
-                                                    [(ngModel)]="entity.placeId" [defaultProperty]="entity.placeIdNavigation"
-                                                    [disabled]="navactions.fieldset" (ngModelChange)="getstatefromplace()" ></app-ngselect>
+                                                    [(ngModel)]="entity.placeId"
+                                                    [defaultProperty]="entity.placeIdNavigation"
+                                                    [disabled]="navactions.fieldset"
+                                                    (ngModelChange)="getstatefromplace()"></app-ngselect>
                                             </div>
                                             <div class="gapInputFields">
                                                 <label for="">Pin Code</label>
@@ -62,11 +71,11 @@
                                                     [(ngModel)]="entity.pincode" name="pincode" [maxlength]="6">
                                             </div>
                                         </div>
-                                      
+
                                         <div>
                                             <label for="">State</label>
-                                            <input class="form-control" [(ngModel)]="entity.stateName" 
-                                                autocomplete="off" name="state" >
+                                            <input class="form-control" [(ngModel)]="entity.stateName"
+                                                autocomplete="off" name="state">
                                             <!-- <app-ngselect label="state" apiUrl="State/ListFromPlace" class="p-0"
                                                     bindLabel="stateName" bindValue="stateCode" name="state"  
                                                     [(ngModel)]="entity.stateCode" [apiParams]="reference.stateparam"

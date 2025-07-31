@@ -64,6 +64,16 @@
                             </app-ngselect>
                         </ng-container>
                     </ng-container>
+
+
+                    <ng-container [ngSwitch]="item.setCode">
+                        <ng-container *ngSwitchCase="104">
+                           <app-ngselect apiUrl="SubGroup/getListbyMgcode" bindLabel="sgName" bindValue="sgCode"
+                                name="group2" [(ngModel)]="item.setValue"  [defaultProperty]="item.sgCodeNavigation"
+                                [apiParams]="{mgcode:'14'}" [applyMargins]="false">
+                            </app-ngselect>
+                        </ng-container>
+                    </ng-container>
                 </td>
             </tr>
         </tbody>

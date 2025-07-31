@@ -1,5 +1,5 @@
 import { CommonModule, DatePipe, Location } from '@angular/common';
-import { http, Master, NavbarActions,ngselectpagination } from '../../../../assets/services/services';
+import { http, Master, NavbarActions, ngselectpagination } from '../../../../assets/services/services';
 import { Component, ViewChild, inject, ChangeDetectorRef, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MyProvider } from '../../../../assets/services/provider';
@@ -74,7 +74,7 @@ export class TransportInvochildComponent {
     private dialog: DialogsComponent,
     private spinner: NgxSpinnerService,
     public provider: MyProvider,
-     public ngselect: ngselectpagination,
+    public ngselect: ngselectpagination,
     public navactions: NavbarActions,
     public master: Master
   ) {
@@ -91,7 +91,7 @@ export class TransportInvochildComponent {
       this.rcmList = data;
     });
 
-    this.entity.fromDt = this.datepipe.transform(this.provider.companyinfo.finyear.fdt,'yyyy-MM-dd') ?? '';
+    this.entity.fromDt = this.datepipe.transform(this.provider.companyinfo.finyear.fdt, 'yyyy-MM-dd') ?? '';
 
     var x = this.datepipe.transform(new Date(), 'yyyy-MM-dd') ?? '';
     this.entity.toDt = this.provider.companyinfo.finyear.tdt >= x ? x : this.provider.companyinfo.finyear.tdt;
@@ -181,9 +181,18 @@ export class TransportInvochildComponent {
     var selected = this.rcmList.find(item => item.transType === Number(selectedTransType));
     console.log("Selected RCM:", selected);
     if (selected) {
-      this.entity.sgstRate = selected.sRate;
-      this.entity.cgstRate = selected.cRate;
-      this.entity.igstRate = selected.iRate;
+      if (this.gstType === 'INTRA') {
+        this.entity.sgstRate = selected.sRate;
+        this.entity.cgstRate = selected.cRate;
+        this.entity.igstRate = 0;
+        this.entity.sac = selected.sac
+      } else {
+        this.entity.sgstRate = 0;
+        this.entity.cgstRate = 0;
+        this.entity.igstRate = selected.iRate;
+        this.entity.sac = selected.sac
+      }
+
     }
     this.gstamt();
   }
@@ -244,11 +253,11 @@ export class TransportInvochildComponent {
     this.httpp.get('MotorMemo/PendingBilled', param).subscribe({
       next: (res: any) => {
         if (res.status_cd == 1) {
-          if(res.data.length == 0){
-            this.dialog.swal({ dialog: 'Warning',title: "warning",message: "Record Not Found!" });
+          if (res.data.length == 0) {
+            this.dialog.swal({ dialog: 'Warning', title: "warning", message: "Record Not Found!" });
           }
-          else{
-          this.entity.tms01101s = res.data || [];
+          else {
+            this.entity.tms01101s = res.data || [];
           }
 
           this.additinOfFreight();
@@ -295,8 +304,8 @@ export class TransportInvochildComponent {
     })
   }
 
-  deletegstTablerow(i) { 
-  
+  deletegstTablerow(i) {
+
     var params = {
 
       dialog: 'confirm',
@@ -308,17 +317,17 @@ export class TransportInvochildComponent {
         this.entity.tms01101s.splice(i, 1);
 
         this.additinOfFreight()
-       
+
       }
     })
- 
+
   }
 
 
   newRecord() {
     this.entity = {};
     this.entity.tms01101s = []
-    this.entity.fromDt = this.datepipe.transform(this.provider.companyinfo.finyear.fdt,'yyyy-MM-dd') ?? '';
+    this.entity.fromDt = this.datepipe.transform(this.provider.companyinfo.finyear.fdt, 'yyyy-MM-dd') ?? '';
     const today = new Date();
     const finYearEnd = new Date(this.provider.companyinfo.finyear.tdt);
     if (today >= finYearEnd) {
@@ -387,13 +396,13 @@ export class TransportInvochildComponent {
     }
     this.navactions.navaction('new');
   }
-  undo() { 
+  undo() {
     this.entity = this.pastentity;
     this.callbackedit();
   }
-   Invoiceprint() { 
-this.myServiceUrl = "TransInvoiceReport";
-    
+  Invoiceprint() {
+    this.myServiceUrl = "TransInvoiceReport";
+
     this.myReportDictionory = {
       reportCacheId: uuidv4(),
       reportParams: [

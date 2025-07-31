@@ -49,7 +49,7 @@ export class SenderReceiverChildComponent {
     public httpclient: HttpClient,
     private dialog: DialogsComponent,
     private spinner: NgxSpinnerService,
-    private provider: MyProvider,
+    public provider: MyProvider,
     public navactions: NavbarActions,
     public master: Master
   ) {
