@@ -155,6 +155,7 @@ export class TransportInvochildComponent {
           this.entity.stateName = res.data.stateName || '';
           this.loading = false;
           this.statecoderelation()
+          this.onRcmChange(this.selectedTransType);
         } else {
           this.loading = false;
           this.dialog.swal({ dialog: 'error', title: 'Error', message: res.errors.exception.Message });
@@ -177,52 +178,57 @@ export class TransportInvochildComponent {
     }
   }
 
+  selectedTransType: number = 0; // add this property at the class level
+
   onRcmChange(selectedTransType: number): void {
-    var selected = this.rcmList.find(item => item.transType === Number(selectedTransType));
+    this.selectedTransType = selectedTransType;
+
+    const selected = this.rcmList.find(item => item.transType === Number(selectedTransType));
     console.log("Selected RCM:", selected);
+
     if (selected) {
       if (this.gstType === 'INTRA') {
         this.entity.sgstRate = selected.sRate;
         this.entity.cgstRate = selected.cRate;
         this.entity.igstRate = 0;
-        this.entity.sac = selected.sac
       } else {
         this.entity.sgstRate = 0;
         this.entity.cgstRate = 0;
         this.entity.igstRate = selected.iRate;
-        this.entity.sac = selected.sac
       }
 
+      this.entity.sac = selected.sac;
     }
+
     this.gstamt();
   }
 
   igstAmont: number = 0
   gstamt() {
-    // Reset all amounts before calculation
+    // Reset all amounts
     this.entity.sgstAmt = 0;
     this.entity.cgstAmt = 0;
     this.entity.igstAmt = 0;
     this.entity.roundOff = 0;
-    let totalAmt = 0
+    let totalAmt = 0;
 
-
-    if (this.gstType === 'INTRA') {
-      // Apply SGST + CGST
-
+    if (this.selectedTransType.toString() === "1") {
       this.entity.sgstAmt = (this.entity.grossAmt * this.entity.sgstRate) / 100;
-      this.entity.cgstAmt = (this.entity.grossAmt * this.entity.cgstRate) / 100;
-
-      totalAmt = this.entity.grossAmt + this.entity.sgstAmt + this.entity.cgstAmt;
-
-    } else if (this.gstType === 'INTER') {
-      // Apply IGST only
-
-      this.entity.igstAmt = (this.entity.grossAmt * this.entity.igstRate) / 100;
-
-      totalAmt = this.entity.grossAmt + this.entity.igstAmt;
+        this.entity.cgstAmt = (this.entity.grossAmt * this.entity.cgstRate) / 100;
+      totalAmt = this.entity.grossAmt; // Only gross, no GST
+    } else {
+      if (this.gstType === 'INTRA') {
+        this.entity.sgstAmt = (this.entity.grossAmt * this.entity.sgstRate) / 100;
+        this.entity.cgstAmt = (this.entity.grossAmt * this.entity.cgstRate) / 100;
+        totalAmt = this.entity.grossAmt + this.entity.sgstAmt + this.entity.cgstAmt;
+      } else if (this.gstType === 'INTER') {
+        this.entity.igstAmt = (this.entity.grossAmt * this.entity.igstRate) / 100;
+        totalAmt = this.entity.grossAmt + this.entity.igstAmt;
+      }
+      
     }
-    const roundedNetAmt = Math.round(totalAmt); // or use toFixed(0) + Number() for more control
+
+    const roundedNetAmt = Math.round(totalAmt);
     this.entity.roundOff = Number((roundedNetAmt - totalAmt).toFixed(2));
     this.entity.netAmt = roundedNetAmt;
     this.entity.totalAmt = totalAmt;
