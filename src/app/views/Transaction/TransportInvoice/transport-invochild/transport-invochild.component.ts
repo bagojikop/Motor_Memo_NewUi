@@ -209,23 +209,36 @@ export class TransportInvochildComponent {
     this.entity.sgstAmt = 0;
     this.entity.cgstAmt = 0;
     this.entity.igstAmt = 0;
+    this.entity.sgstRound = 0;
+    this.entity.cgstRound = 0;
+    this.entity.igstRound = 0;
     this.entity.roundOff = 0;
     let totalAmt = 0;
 
     if (this.selectedTransType.toString() === "1") {
-      this.entity.sgstAmt = (this.entity.grossAmt * this.entity.sgstRate) / 100;
-        this.entity.cgstAmt = (this.entity.grossAmt * this.entity.cgstRate) / 100;
+      this.entity.sgstRound = (this.entity.grossAmt * this.entity.sgstRate) / 100;
+      this.entity.cgstRound = (this.entity.grossAmt * this.entity.cgstRate) / 100;
+
+      this.entity.sgstAmt = Math.round(this.entity.sgstRound);
+      this.entity.cgstAmt = Math.round(this.entity.cgstRound);
+
       totalAmt = this.entity.grossAmt; // Only gross, no GST
     } else {
       if (this.gstType === 'INTRA') {
-        this.entity.sgstAmt = (this.entity.grossAmt * this.entity.sgstRate) / 100;
-        this.entity.cgstAmt = (this.entity.grossAmt * this.entity.cgstRate) / 100;
+        this.entity.sgstRound = (this.entity.grossAmt * this.entity.sgstRate) / 100;
+        this.entity.cgstRound = (this.entity.grossAmt * this.entity.cgstRate) / 100;
+
+        this.entity.sgstAmt = Math.round(this.entity.sgstRound);
+        this.entity.cgstAmt = Math.round(this.entity.cgstRound);
+
         totalAmt = this.entity.grossAmt + this.entity.sgstAmt + this.entity.cgstAmt;
       } else if (this.gstType === 'INTER') {
-        this.entity.igstAmt = (this.entity.grossAmt * this.entity.igstRate) / 100;
+        this.entity.igstRound = (this.entity.grossAmt * this.entity.igstRate) / 100;
+
+        this.entity.igstAmt = Math.round(this.entity.igstRound);
         totalAmt = this.entity.grossAmt + this.entity.igstAmt;
       }
-      
+
     }
 
     const roundedNetAmt = Math.round(totalAmt);
