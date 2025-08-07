@@ -18,8 +18,6 @@ import { NumberOnlyDirective } from '../../../../assets/mydirective/mydirective.
 declare var bootstrap: any;
 declare var $: any;
 
-
-
 @Component({
   selector: 'app-vehicle-infochild',
   templateUrl: './vehicle-infochild.component.html',

@@ -1,12 +1,9 @@
-import { Component, AfterViewInit, } from '@angular/core';
+import { Component} from '@angular/core';
 import { CommonModule, DatePipe, Location, DecimalPipe } from '@angular/common';
 import { http, Master } from '../../../../assets/services/services';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { MyProvider } from '../../../../assets/services/provider';
 import { DialogsComponent } from '../../../../assets/pg/dialogs/dialogs.component';
-import { ReportDictionory } from '../../../../../../assets/service/interfaces';
-import { v4 as uuidv4 } from 'uuid'
 import { FormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { DssInputComponent } from '../../../../assets/mydirective/dss-input/dss-input.component';
@@ -17,10 +14,9 @@ import { DTFormatDirective } from '../../../../assets/mydirective/mydirective.di
 import { ArraySortPipe } from '../../../../assets/pipes/inrcrdr.pipe';
 import { PdfReaderComponent } from '../../../../assets/pdf-reader/pdf-reader.component';
 import { PdfViewerComponent, PdfViewerModule } from 'ng2-pdf-viewer';
-import { GridApi, ColDef } from 'ag-grid-community';
 import { AgGridModule } from 'ag-grid-angular';
 import { UiSwitchModule } from 'ngx-ui-switch';
-import { Router } from '@angular/router';
+
 
 declare var bootstrap: any;
 

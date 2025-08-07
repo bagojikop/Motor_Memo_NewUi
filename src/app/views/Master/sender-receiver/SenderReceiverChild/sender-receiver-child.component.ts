@@ -14,9 +14,6 @@ import { MasternavComponent } from '../../../../assets/pg/masternav/masternav.co
 import { ngselectComponent } from '../../../../assets/pg/ngselect/ngselect.component';
 import { NumberOnlyDirective } from '../../../../assets/mydirective/mydirective.directive';
 
-
-
-
 @Component({
   selector: 'app-sender-receiver-child',
   templateUrl: './sender-receiver-child.component.html',
