@@ -20,7 +20,7 @@ import { NumberOnlyDirective, DTFormatDirective } from '../../../../assets/mydir
 import { finDateDirective } from '../../../../assets/mydirective/findate/findate.directive';
 import { ArraySortPipe } from '../../../../assets/pipes/inrcrdr.pipe';
 import { PdfReaderComponent } from '../../../../assets/pdf-reader/pdf-reader.component';
-
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-biltychild',
   templateUrl: './biltychild.component.html',
@@ -54,7 +54,8 @@ export class BiltychildComponent {
   Orderlist: any;
   bilty: any = {}
   canEdit: boolean = false;
-
+  biltyPay: any = {}
+ 
   isReceiverClicked: boolean = true;
 
   isSenderClicked: boolean = true;
@@ -83,6 +84,8 @@ export class BiltychildComponent {
     this.entity.biltyDetails = {}
     this.entity.biltyCommodities = {}
     this.entity.biltyGstDetails = {}
+    this.biltyPay = {}
+    this.entity.biltyPayments = []
     this.stateParams = this.location.getState();
     this.mode = this.stateParams.action;
     this.entity.vchId = this.stateParams.id;
@@ -107,6 +110,8 @@ export class BiltychildComponent {
     this.entity.biltyDetails = {};
     this.entity.biltyGstDetails = {}
     this.entity.biltyCommodities = []
+    this.biltyPay = {}
+    this.entity.biltyPayments = []
     this.entity.totalcharges = 0;
 
     this.exp = { action: 0 };
@@ -129,7 +134,7 @@ export class BiltychildComponent {
 
 
 
-   
+
     let paramss: any = this.location.getState();
     this.navactions.navaction(paramss.action);
     this.entity.vchId = paramss.id;
@@ -146,13 +151,13 @@ export class BiltychildComponent {
 
   }
 
-statecoderelation(){
- if (this.provider?.companyinfo?.company?.firm?.firmStateCode === this.entity?.biltyDetails?.senderStateId) {
-    this.gstType = 'INTRA'; // Same state → SGST & CGST
-  } else {
-    this.gstType = 'INTER'; // Different state → IGST
+  statecoderelation() {
+    if (this.provider?.companyinfo?.company?.firm?.firmStateCode === this.entity?.biltyDetails?.senderStateId) {
+      this.gstType = 'INTRA'; // Same state → SGST & CGST
+    } else {
+      this.gstType = 'INTER'; // Different state → IGST
+    }
   }
-}
 
   navbar(s) {
     switch (s) {
@@ -213,27 +218,23 @@ statecoderelation(){
   igstAmont: number = 0
   gstamt() {
     if (Number(this.entity.biltyGstDetails.igst)) {
-      this.entity.biltyGstDetails.igstAmt = (this.entity.TotalFreight * Number(this.entity.biltyGstDetails.igst)) / 100
-      this.entity.biltyGstDetails.totalAmt = this.entity.TotalFreight + this.entity.biltyGstDetails.igstAmt;
+      this.entity.biltyGstDetails.igstAmt = (this.entity.totalFreight * Number(this.entity.biltyGstDetails.igst)) / 100
+      this.entity.biltyGstDetails.totalAmt = this.entity.totalFreight + this.entity.biltyGstDetails.igstAmt;
     }
     else if (Number(this.entity.biltyGstDetails.cgst)) {
-      this.entity.biltyGstDetails.cgstAmt = (this.entity.TotalFreight * Number(this.entity.biltyGstDetails.cgst)) / 100
-      this.entity.biltyGstDetails.totalAmt = this.entity.TotalFreight + this.entity.biltyGstDetails.cgstAmt;
+      this.entity.biltyGstDetails.cgstAmt = (this.entity.totalFreight * Number(this.entity.biltyGstDetails.cgst)) / 100
+      this.entity.biltyGstDetails.totalAmt = this.entity.totalFreight + this.entity.biltyGstDetails.cgstAmt;
     }
     else if (Number(this.entity.biltyGstDetails.sgst)) {
-      this.entity.biltyGstDetails.sgstAmt = (this.entity.TotalFreight * Number(this.entity.biltyGstDetails.sgst)) / 100
-      this.entity.biltyGstDetails.totalAmt = this.entity.TotalFreight + this.entity.biltyGstDetails.sgstAmt;
+      this.entity.biltyGstDetails.sgstAmt = (this.entity.totalFreight * Number(this.entity.biltyGstDetails.sgst)) / 100
+      this.entity.biltyGstDetails.totalAmt = this.entity.totalFreight + this.entity.biltyGstDetails.sgstAmt;
     }
     else {
-      this.entity.biltyGstDetails.cessAmt = (this.entity.TotalFreight * Number(this.entity.biltyGstDetails.cess)) / 100
-      this.entity.biltyGstDetails.totalAmt = this.entity.TotalFreight + this.entity.biltyGstDetails.cessAmt;
+      this.entity.biltyGstDetails.cessAmt = (this.entity.totalFreight * Number(this.entity.biltyGstDetails.cess)) / 100
+      this.entity.biltyGstDetails.totalAmt = this.entity.totalFreight + this.entity.biltyGstDetails.cessAmt;
     }
+    this.entity.totalAmt=this.entity.biltyGstDetails.totalAmt;
   }
-
-
-
-
-
 
   edit() {
     this.navactions.navaction("view");
@@ -345,17 +346,10 @@ statecoderelation(){
 
           this.entity.biltyAudit.createdDt = this.entity.biltyAudit.createdDt ?? this.datepipe.transform(this.entity.biltyAudit.createdDt, 'yyyy-MM-dd')
           this.entity.biltyAudit.modifiedDt = this.entity.biltyAudit.modifiedDt ?? this.datepipe.transform(this.entity.biltyAudit.modifiedDt, 'yyyy-MM-dd');
-
-
-
           this.pastentity = Object.assign({}, this.entity);
-
-
         }
         this.spinner.hide();
         this.additinOfFreight();
-
-
         this.totalDebit();
         this.isReceiverClicked = false;
         this.isSenderClicked = false;
@@ -367,6 +361,7 @@ statecoderelation(){
       }
     })
   }
+
   newRecord() {
     this.pastentity = JSON.parse(JSON.stringify(this.entity))
 
@@ -375,6 +370,8 @@ statecoderelation(){
     this.entity.biltyDetails = {};
     this.entity.biltyCommodities = []
     this.entity.biltyGstDetails = {}
+    this.biltyPay = {}
+    this.entity.biltyPayments = []
     this.entity.biltyNo = 0;
     this.entity.freightType = 0;
     this.entity.totalcharges = 0;
@@ -389,6 +386,68 @@ statecoderelation(){
     }
 
     this.gstdefault();
+  }
+
+  getAccountDetl(obj) {
+    this.biltyPay.accCodeNavigation = obj;
+  }
+
+  AddAdvDetl() {
+    if (this.biltyPay.accCode && this.biltyPay.amount) {
+      if (this.rowIndex == null) {
+        this.entity.biltyPayments.push(this.biltyPay);
+        this.additinOfAdv()
+        this.calculateRemAmt()
+      }
+      else {
+        this.entity.biltyPayments[this.rowIndex] = this.biltyPay;
+        this.additinOfAdv()
+        this.calculateRemAmt()
+      }
+      this.rowIndex = null;
+      this.biltyPay = {}
+    }
+  }
+
+  deleteAdvDetail(i){
+    var params = {
+
+      dialog: 'confirm',
+      title: "warning",
+      message: "Do you want to delete record"
+    }
+    this.dialog.swal(params).then(data => {
+      if (data == true) {
+        this.entity.biltyPayments.splice(i, 1);
+
+        this.additinOfAdv()
+        this.calculateRemAmt()
+      }
+    })
+  }
+
+  calculateRemAmt() {
+    this.entity.remAmt = this.entity.totalAmt - this.entity.totalAdv;
+  }
+
+  additinOfAdv() {
+    const sumArray = this.entity.biltyPayments.map(item => item.amount || 0);
+    const sumValue = sumArray.reduce((p, c) => Number(p) + Number(c), 0);
+    this.entity.totalAdv = sumValue;
+
+    if (this.entity.totalAdv > this.entity.totalAmt) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Warning',
+        text: 'Total Advance amount is greater than Freight Total. Please check the values.',
+      });
+    }
+  }
+
+  editAdvDetailrow(v, i) {
+    this.rowIndex = i;
+    this.calculateRemAmt()
+    this.biltyPay = Object.assign({}, v);
   }
 
   getVehicles() {
@@ -714,7 +773,7 @@ statecoderelation(){
   }
 
   totalDebit() {
-    this.entity.totaldebitadd = Number(this.entity.totalothercharges || 0) + Number(this.entity.TotalFreight);
+    this.entity.totaldebitadd = Number(this.entity.totalothercharges || 0) + Number(this.entity.totalFreight);
     this.calculateAmounts()
   }
 
@@ -744,7 +803,7 @@ statecoderelation(){
       return Number(pValue) + Number(cValue)
 
     });
-    this.entity.TotalFreight = sumValue;
+    this.entity.totalFreight = sumValue;
     this.totalDebit()
     this.gstamt()
   }

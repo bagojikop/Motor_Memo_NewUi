@@ -239,6 +239,7 @@ export const navItems = ({
         { name: 'UserInfo', iconComponent: { name: 'cil-layers' }, url: 'Userinfomaster' },
         { name: 'RoleInfo', iconComponent: { name: 'cil-layers' }, url: 'Roleinfomaster' },
         { name: 'Setting', iconComponent: { name: 'cil-layers' }, url: 'setting' },
+        { name: 'Dueties And Taxes', iconComponent: { name: 'cil-layers' }, url: 'duetiestaxes' },
         {
           name: 'Permission',
           url: '/Permission',

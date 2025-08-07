@@ -41,23 +41,6 @@
                 <td>{{ item.setDesc }}</td>
                 <td><ng-container [ngSwitch]="item.setCode">
                         <ng-container *ngSwitchCase="101">
-                            <app-ngselect apiUrl="Account/GetAcclistByMgbs" bindLabel="accName" bindValue="accCode"
-                                name="account" [(ngModel)]="item.setValue"  [defaultProperty]="item.accCodeNavigation"
-                                [apiParams]="{mgbs:'3'}" [applyMargins]="false">
-                            </app-ngselect>
-                        </ng-container>
-                    </ng-container>
-                    <ng-container [ngSwitch]="item.setCode">
-                        <ng-container *ngSwitchCase="102">
-                            <app-ngselect apiUrl="Account/GetAcclistByMgbs" bindLabel="accName" bindValue="accCode"
-                                name="account1" [(ngModel)]="item.setValue"  [defaultProperty]="item.accCodeNavigation"
-                                [apiParams]="{mgbs:'4'}" [applyMargins]="false">
-                            </app-ngselect>
-                        </ng-container>
-                    </ng-container>
-
-                    <ng-container [ngSwitch]="item.setCode">
-                        <ng-container *ngSwitchCase="103">
                            <app-ngselect apiUrl="SubGroup/getListbyMgcode" bindLabel="sgName" bindValue="sgCode"
                                 name="group" [(ngModel)]="item.setValue"  [defaultProperty]="item.sgCodeNavigation"
                                 [apiParams]="{mgcode:'14'}" [applyMargins]="false">
@@ -65,9 +48,8 @@
                         </ng-container>
                     </ng-container>
 
-
                     <ng-container [ngSwitch]="item.setCode">
-                        <ng-container *ngSwitchCase="104">
+                        <ng-container *ngSwitchCase="102">
                            <app-ngselect apiUrl="SubGroup/getListbyMgcode" bindLabel="sgName" bindValue="sgCode"
                                 name="group2" [(ngModel)]="item.setValue"  [defaultProperty]="item.sgCodeNavigation"
                                 [apiParams]="{mgcode:'14'}" [applyMargins]="false">

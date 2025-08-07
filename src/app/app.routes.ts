@@ -281,6 +281,10 @@ export const routes: Routes = [
         loadComponent: () => import('./views/Admin/Settings/setting-child/setting-child.component').then((m) => m.SettingChildComponent)
       },
       {
+        path: 'duetiestaxes',
+        loadComponent: () => import('./views/Admin/DuetiesnTaxes/dueties-taxes/dueties-taxes.component').then((m) => m.DuetiesTaxesComponent)
+      },
+      {
         path: 'invoice',
         loadComponent: () => import('./views/Transaction/TransportInvoice/transport-invochild/transport-invochild.component').then((m) => m.TransportInvochildComponent)
       },
