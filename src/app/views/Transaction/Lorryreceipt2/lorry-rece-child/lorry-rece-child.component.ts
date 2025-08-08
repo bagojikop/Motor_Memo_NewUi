@@ -21,7 +21,7 @@ import { ArraySortPipe } from '../../../../assets/pipes/inrcrdr.pipe';
 import { PdfReaderComponent } from '../../../../assets/pdf-reader/pdf-reader.component';
 import Swal from 'sweetalert2';
 
-import { SavedDataService } from '../../../../views/Reports/balance-sheet/saved-data.service';
+
 @Component({
   selector: 'app-lorry-rece-child',
   templateUrl: './lorry-rece-child.component.html',

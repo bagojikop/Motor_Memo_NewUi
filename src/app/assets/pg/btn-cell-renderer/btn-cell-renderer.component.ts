@@ -1,6 +1,6 @@
 
 import { CommonModule } from '@angular/common';
-import { Component,AfterViewInit, CUSTOM_ELEMENTS_SCHEMA, inject  } from '@angular/core';
+import { Component,AfterViewInit, CUSTOM_ELEMENTS_SCHEMA, inject ,OnChanges, } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AgRendererComponent, ICellRendererAngularComp } from 'ag-grid-angular';
 import { IAfterGuiAttachedParams } from 'ag-grid-community';

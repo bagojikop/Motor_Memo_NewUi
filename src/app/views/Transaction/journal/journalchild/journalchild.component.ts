@@ -4,7 +4,6 @@ import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MyProvider } from '../../../../assets/services/provider';
 import { DialogsComponent } from '../../../../assets/pg/dialogs/dialogs.component';
-import { castFromArrayBuffer } from '../../../../assets/services/services';
 import { ReportDictionory } from '../../../../../../assets/service/interfaces';
 import { JournalObj, acc00500Obj, acc00501sObj, jrnApproveObj, accCodeNavigationObj } from '../../../../assets/datatypests/Journalchild'
 import { v4 as uuidv4 } from 'uuid'

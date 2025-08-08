@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { CommonModule, DatePipe, Location, DecimalPipe } from '@angular/common';
 import { http, Master } from '../../../assets/services/services';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { NgxSpinnerService } from 'ngx-spinner';
 import { MyProvider } from '../../../assets/services/provider';
 import { DialogsComponent } from '../../../assets/pg/dialogs/dialogs.component';
 import { ReportDictionory } from '../../../../../assets/service/interfaces';

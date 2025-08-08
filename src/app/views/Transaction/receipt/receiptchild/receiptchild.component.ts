@@ -357,7 +357,6 @@ export class ReceiptchildComponent {
           this.entity.acc00301.lraccount = res.data.accCodeNavigation;
           this.entity.acc00301.amount = res.data.buildtotalamt;
           this.entity.lrId = res.data.vchId;
-
         } else {
           this.dialog.swal({ dialog: 'error', title: 'Error', message: res.errors.exception.Message });
         }

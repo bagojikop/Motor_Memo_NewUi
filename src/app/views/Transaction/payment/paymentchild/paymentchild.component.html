@@ -106,13 +106,13 @@
                                     <label class="mb-0">Paid Amount</label>
                                     <input type="text" class="form-control p-1 text-end" autocomplete="off"
                                         name="recpayeeamount" [(ngModel)]="entity.acc00201.amount" CurrencyMask
-                                        currency="INR" fraction="2" (change)="tdsAmt()">
+                                        currency="INR" fraction="2" (ngModelChange)="tdsAmt()">
                                 </div>
     
                                 <div class="form-group gapInputFields">
                                     <label class="mb-0">TDS %</label>
                                     <input type="text" class="form-control p-1 text-end" autocomplete="off" name="tdsRate" numberOnly
-                                        [(ngModel)]="entity.acc00201.tdsRate" percentage (change)="tdsAmt()">
+                                        [(ngModel)]="entity.acc00201.tdsRate" percentage (ngModelChange)="tdsAmt()">
                                 </div>
     
                                 <div class="form-group gapInputFields">

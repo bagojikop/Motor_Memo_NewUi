@@ -1,4 +1,4 @@
-import { CommonModule, DatePipe, Location } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { http, Master, NavbarActions } from '../../../../assets/services/services';
 import { ChangeDetectorRef, Component, CUSTOM_ELEMENTS_SCHEMA, ViewChild } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';

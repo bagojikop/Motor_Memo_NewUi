@@ -19,10 +19,8 @@ import { PdfViewerComponent, PdfViewerModule } from 'ng2-pdf-viewer';
 import { GridApi, ColDef } from 'ag-grid-community';
 import { AgGridModule } from 'ag-grid-angular';
 import { UiSwitchModule } from 'ngx-ui-switch';
-import { Router } from '@angular/router';
 import { ActBtnComponent } from '../../../assets/pg/btn-cell-renderer/btn-cell-renderer.component';
-import Swal from 'sweetalert2';
-declare var bootstrap: any;
+
 declare var $: any;
 @Component({
   selector: 'app-aknowledgmemnt1',

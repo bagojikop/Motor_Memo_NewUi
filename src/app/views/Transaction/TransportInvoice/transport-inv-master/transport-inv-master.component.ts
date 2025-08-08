@@ -1,4 +1,4 @@
-import { Component, NO_ERRORS_SCHEMA, OnInit } from '@angular/core';
+import { Component, NO_ERRORS_SCHEMA } from '@angular/core';
 import { Router } from '@angular/router';
 import { DialogsComponent } from '../../../../assets/pg/dialogs/dialogs.component';
 import { MyProvider } from '../../../../assets/services/provider';

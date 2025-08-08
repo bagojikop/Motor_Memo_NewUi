@@ -1,6 +1,5 @@
 import { Component, HostListener, NO_ERRORS_SCHEMA } from '@angular/core';
 import { Router } from '@angular/router';
-import { NgxSpinnerService } from 'ngx-spinner';
 import { DialogsComponent } from '../../../../assets/pg/dialogs/dialogs.component';
 import { MyProvider } from '../../../../assets/services/provider';
 import { DatePipe, DecimalPipe, Location } from '@angular/common';
@@ -9,7 +8,7 @@ import { ActBtnComponent } from '../../../../assets/pg/btn-cell-renderer/btn-cel
 import { GridApi } from 'ag-grid-community';
 import { HttpClient } from '@angular/common/http';
 import { DssGridComponent } from '../../../../assets/pg/dss-grid/dss-grid.component';
-declare var $: any;
+
 @Component({
   selector: 'app-receiptmaster',
   templateUrl: './receiptmaster.component.html',

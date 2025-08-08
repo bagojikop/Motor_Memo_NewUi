@@ -1,6 +1,6 @@
 import { CommonModule, DatePipe, Location } from '@angular/common';
 import { http, Master, NavbarActions, ngselectpagination } from '../../../../assets/services/services';
-import { Component, ViewChild, inject, ChangeDetectorRef, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component, ViewChild, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MyProvider } from '../../../../assets/services/provider';
 import { DialogsComponent } from '../../../../assets/pg/dialogs/dialogs.component';

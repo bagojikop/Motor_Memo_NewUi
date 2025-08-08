@@ -1,10 +1,8 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { DialogsComponent } from '../../../../assets/pg/dialogs/dialogs.component';
-import { MyProvider } from '../../../../assets/services/provider';
-import { CommonModule, DatePipe, Location } from '@angular/common';
-import { http, Master, NavbarActions } from '../../../../assets/services/services';
+import { CommonModule, Location } from '@angular/common';
+import { http, NavbarActions } from '../../../../assets/services/services';
 import { validation } from '../../../../assets/services/services';
 import { FormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
