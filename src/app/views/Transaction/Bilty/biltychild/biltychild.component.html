@@ -417,8 +417,8 @@
                                                     </div>
                                                     <div class="gapInputFields">
                                                         <label>Amount</label>
-                                                        <input style="text-align: right;" name="sgstamt" [readonly]="gstType === 'INTER'"
-                                                            [(ngModel)]="entity.biltyGstDetails.sgstAmt" numberOnly
+                                                        <input style="text-align: right;" name="sgstamt" 
+                                                            [(ngModel)]="entity.biltyGstDetails.sgstAmt" [readonly]="true"
                                                             class="form-control" CurrencyMask fraction="2" digitOnly
                                                             autocomplete="off" />
                                                     </div>
@@ -446,8 +446,8 @@
                                                     </div>
                                                     <div class="gapInputFields">
                                                         <label>Amount</label>
-                                                        <input style="text-align: right;" name="cgstamt" [readonly]="gstType === 'INTER'"
-                                                            [(ngModel)]="entity.biltyGstDetails.cgstAmt" numberOnly
+                                                        <input style="text-align: right;" name="cgstamt" 
+                                                            [(ngModel)]="entity.biltyGstDetails.cgstAmt" [readonly]="true"
                                                             class="form-control" CurrencyMask fraction="2" digitOnly
                                                             autocomplete="off" />
                                                     </div>
@@ -474,7 +474,7 @@
                                                     </div>
                                                     <div class="gapInputFields">
                                                         <label>Amount</label>
-                                                        <input style="text-align: right;" name="igstamt" [readonly]="gstType === 'INTRA'"
+                                                        <input style="text-align: right;" name="igstamt" [readonly]="true"
                                                             [(ngModel)]="entity.biltyGstDetails.igstAmt" numberOnly
                                                             class="form-control" CurrencyMask fraction="2" digitOnly
                                                             autocomplete="off" />
@@ -517,11 +517,29 @@
                                         <div class="card">
                                             <div class="card-header"
                                                 style="text-align: center;background-color: #cae1ee;">
-                                                Total Amount
+                                                Round Off
                                             </div>
                                             <div class="card-body">
                                                 <div class="d-flex" style="margin-top: 20px;">
                                                     <input style="text-align: right;" name="totalAmt"
+                                                        [(ngModel)]="entity.biltyGstDetails.roundOff" numberOnly
+                                                        class="form-control" CurrencyMask fraction="2" digitOnly
+                                                        autocomplete="off" />
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                     <div class="gapInputFields">
+                                        <div class="card">
+                                            <div class="card-header"
+                                                style="text-align: center;background-color: #cae1ee;">
+                                                Net Amount
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="d-flex" style="margin-top: 20px;">
+                                                    <input style="text-align: right;" name="netAmt"
                                                         [(ngModel)]="entity.biltyGstDetails.totalAmt" numberOnly
                                                         class="form-control" CurrencyMask fraction="2" digitOnly
                                                         autocomplete="off" />
@@ -711,7 +729,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let v of filteredSenders | paginate: { itemsPerPage:pageSize,totalItems:this.totalCount,  currentPage: page }; let i = index"
+                        <tr *ngFor="let v of reference | paginate: { itemsPerPage:pageSize,totalItems:this.totalCount,  currentPage: page }; let i = index"
                             (click)="Senderclick(v)">
                             <td style="width: 5rem;">{{ (page - 1) * pageSize +
                                 i + 1 }}</td>

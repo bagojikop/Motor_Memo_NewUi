@@ -34,7 +34,7 @@ export class BiltychildComponent {
   entity: any = {};
 
   page: number = 1;
-  pageSize: number = 2;
+  pageSize: number = 15;
   totalItems: number = 0;
   sgCodeNavigation: string
   reference: any = {};
@@ -55,7 +55,7 @@ export class BiltychildComponent {
   bilty: any = {}
   canEdit: boolean = false;
   biltyPay: any = {}
- 
+
   isReceiverClicked: boolean = true;
 
   isSenderClicked: boolean = true;
@@ -216,25 +216,85 @@ export class BiltychildComponent {
 
 
   igstAmont: number = 0
+  // gstamt() {
+  //   this.entity.biltyGstDetails.sgstAmt = 0;
+  //   this.entity.biltyGstDetails.cgstAmt = 0;
+  //   this.entity.biltyGstDetails.igstAmt = 0;
+  //   this.entity.biltyGstDetails.cessAmt = 0;
+  //   this.entity.biltyGstDetails.sgstRound = 0;
+  //   this.entity.biltyGstDetails.cgstRound = 0;
+  //   this.entity.biltyGstDetails.igstRound = 0;
+  //   this.entity.biltyGstDetails.cessRound = 0;
+  //   this.entity.biltyGstDetails.roundOff = 0;
+  //   let totalAmt = 0;
+ 
+  //   if (Number(this.entity.biltyGstDetails.igst)) {
+  //     this.entity.biltyGstDetails.igstRound = (this.entity.totalFreight * Number(this.entity.biltyGstDetails.igst)) / 100
+  //     this.entity.biltyGstDetails.igstAmt = Math.round(this.entity.biltyGstDetails.igstRound)
+
+  //     this.entity.biltyGstDetails.totalAmt = this.entity.totalFreight + this.entity.biltyGstDetails.igstAmt;
+  //   }
+  //   else if (Number(this.entity.biltyGstDetails.cgst)) {
+  //     this.entity.biltyGstDetails.cgstRound = (this.entity.totalFreight * Number(this.entity.biltyGstDetails.cgst)) / 100
+  //     this.entity.biltyGstDetails.cgstAmt = Math.round(this.entity.biltyGstDetails.cgstRound)
+
+  //     this.entity.biltyGstDetails.totalAmt = this.entity.totalFreight + this.entity.biltyGstDetails.cgstAmt;
+  //   }
+  //   else if (Number(this.entity.biltyGstDetails.sgst)) {
+  //     this.entity.biltyGstDetails.sgstRound = (this.entity.totalFreight * Number(this.entity.biltyGstDetails.sgst)) / 100
+  //     this.entity.biltyGstDetails.sgstAmt = Math.round(this.entity.biltyGstDetails.sgstRound)
+
+  //     this.entity.biltyGstDetails.totalAmt = this.entity.totalFreight + this.entity.biltyGstDetails.sgstAmt;
+  //   }
+  //   else {
+  //     this.entity.biltyGstDetails.cessRound = (this.entity.totalFreight * Number(this.entity.biltyGstDetails.cess)) / 100
+  //     this.entity.biltyGstDetails.cessAmt = Math.round(this.entity.biltyGstDetails.cessRound)
+
+  //     this.entity.biltyGstDetails.totalAmt = this.entity.totalFreight + this.entity.biltyGstDetails.cessAmt;
+  //   }
+
+  //   const roundedNetAmt = Math.round(totalAmt);
+  //   this.entity.biltyGstDetails.roundOff = Number((roundedNetAmt - totalAmt).toFixed(2));
+  //   this.entity.biltyGstDetails.totalAmt = roundedNetAmt;
+  //   this.entity.totalAmt = this.entity.biltyGstDetails.totalAmt;
+  // }
+
   gstamt() {
-    if (Number(this.entity.biltyGstDetails.igst)) {
-      this.entity.biltyGstDetails.igstAmt = (this.entity.totalFreight * Number(this.entity.biltyGstDetails.igst)) / 100
-      this.entity.biltyGstDetails.totalAmt = this.entity.totalFreight + this.entity.biltyGstDetails.igstAmt;
+  //let d = this.entity.biltyGstDetails;
+
+  this.entity.biltyGstDetails.sgstAmt = this.entity.biltyGstDetails.cgstAmt = this.entity.biltyGstDetails.igstAmt = this.entity.biltyGstDetails.cessAmt = 0;
+  this.entity.biltyGstDetails.sgstRound = this.entity.biltyGstDetails.cgstRound = this.entity.biltyGstDetails.igstRound = this.entity.biltyGstDetails.cessRound = 0;
+  this.entity.biltyGstDetails.roundOff = 0;
+  let totalAmt = this.entity.totalFreight;
+
+  if (this.gstType === 'INTRA') {
+    if (Number(this.entity.biltyGstDetails.sgst)) {
+      this.entity.biltyGstDetails.sgstRound = (this.entity.totalFreight * Number(this.entity.biltyGstDetails.sgst)) / 100;
+      this.entity.biltyGstDetails.sgstAmt = Math.round(this.entity.biltyGstDetails.sgstRound);
     }
-    else if (Number(this.entity.biltyGstDetails.cgst)) {
-      this.entity.biltyGstDetails.cgstAmt = (this.entity.totalFreight * Number(this.entity.biltyGstDetails.cgst)) / 100
-      this.entity.biltyGstDetails.totalAmt = this.entity.totalFreight + this.entity.biltyGstDetails.cgstAmt;
+    if (Number(this.entity.biltyGstDetails.cgst)) {
+      this.entity.biltyGstDetails.cgstRound = (this.entity.totalFreight * Number(this.entity.biltyGstDetails.cgst)) / 100;
+      this.entity.biltyGstDetails.cgstAmt = Math.round(this.entity.biltyGstDetails.cgstRound);
     }
-    else if (Number(this.entity.biltyGstDetails.sgst)) {
-      this.entity.biltyGstDetails.sgstAmt = (this.entity.totalFreight * Number(this.entity.biltyGstDetails.sgst)) / 100
-      this.entity.biltyGstDetails.totalAmt = this.entity.totalFreight + this.entity.biltyGstDetails.sgstAmt;
-    }
-    else {
-      this.entity.biltyGstDetails.cessAmt = (this.entity.totalFreight * Number(this.entity.biltyGstDetails.cess)) / 100
-      this.entity.biltyGstDetails.totalAmt = this.entity.totalFreight + this.entity.biltyGstDetails.cessAmt;
-    }
-    this.entity.totalAmt=this.entity.biltyGstDetails.totalAmt;
   }
+
+  if (this.gstType === 'INTER') {
+    if (Number(this.entity.biltyGstDetails.igst)) {
+      this.entity.biltyGstDetails.igstRound = (this.entity.totalFreight * Number(this.entity.biltyGstDetails.igst)) / 100;
+      this.entity.biltyGstDetails.igstAmt = Math.round(this.entity.biltyGstDetails.igstRound);
+    }
+  }
+  if (Number(this.entity.biltyGstDetails.cess)) {
+    this.entity.biltyGstDetails.cessRound = (this.entity.totalFreight * Number(this.entity.biltyGstDetails.cess)) / 100;
+    this.entity.biltyGstDetails.cessAmt = Math.round(this.entity.biltyGstDetails.cessRound);
+  }
+  totalAmt += this.entity.biltyGstDetails.sgstAmt + this.entity.biltyGstDetails.cgstAmt + this.entity.biltyGstDetails.igstAmt + this.entity.biltyGstDetails.cessAmt;
+
+  const roundedNetAmt = Math.round(totalAmt);
+  this.entity.biltyGstDetails.roundOff = Number((roundedNetAmt - totalAmt).toFixed(2));
+  this.entity.biltyGstDetails.totalAmt = roundedNetAmt;
+  this.entity.totalAmt=roundedNetAmt;
+}
 
   edit() {
     this.navactions.navaction("view");
@@ -323,6 +383,7 @@ export class BiltychildComponent {
       this.dialog.swal({ dialog: 'error', title: 'Error', message: "Please Fill All The Required Fields.." })
     }
   }
+
   undo() {
     this.entity = this.pastentity;
 
@@ -332,6 +393,32 @@ export class BiltychildComponent {
   close() {
     this.location.back();
   }
+
+  newRecord() {
+    this.pastentity = JSON.parse(JSON.stringify(this.entity))
+    this.entity = {};
+    this.entity.biltyAudit = {};
+    this.entity.biltyDetails = {};
+    this.entity.biltyCommodities = []
+    this.entity.biltyGstDetails = {}
+    this.biltyPay = {}
+    this.entity.biltyPayments = []
+    this.entity.biltyNo = 0;
+    this.entity.freightType = 0;
+    this.entity.totalcharges = 0;
+  
+    const today = new Date();
+    const finYearEnd = new Date(this.provider.companyinfo.finyear.tdt);
+
+    if (today >= finYearEnd) {
+      this.entity.vchDate = finYearEnd.toISOString().split('T')[0];
+    } else {
+      this.entity.vchDate = today.toISOString().split('T')[0];
+    }
+    this.gstdefault();
+  }
+
+
   callbackedit() {
     this.spinner.show();
     var url = "Bilty/edit"
@@ -351,6 +438,7 @@ export class BiltychildComponent {
         this.spinner.hide();
         this.additinOfFreight();
         this.totalDebit();
+        this.calculateRemAmt()
         this.isReceiverClicked = false;
         this.isSenderClicked = false;
         this.SenderisClicked = false
@@ -362,32 +450,7 @@ export class BiltychildComponent {
     })
   }
 
-  newRecord() {
-    this.pastentity = JSON.parse(JSON.stringify(this.entity))
-
-    this.entity = {};
-    this.entity.biltyAudit = {};
-    this.entity.biltyDetails = {};
-    this.entity.biltyCommodities = []
-    this.entity.biltyGstDetails = {}
-    this.biltyPay = {}
-    this.entity.biltyPayments = []
-    this.entity.biltyNo = 0;
-    this.entity.freightType = 0;
-    this.entity.totalcharges = 0;
-    const today = new Date();
-    const finYearEnd = new Date(this.provider.companyinfo.finyear.tdt);
-
-
-    if (today >= finYearEnd) {
-      this.entity.vchDate = finYearEnd.toISOString().split('T')[0];
-    } else {
-      this.entity.vchDate = today.toISOString().split('T')[0];
-    }
-
-    this.gstdefault();
-  }
-
+  
   getAccountDetl(obj) {
     this.biltyPay.accCodeNavigation = obj;
   }
@@ -409,7 +472,7 @@ export class BiltychildComponent {
     }
   }
 
-  deleteAdvDetail(i){
+  deleteAdvDetail(i) {
     var params = {
 
       dialog: 'confirm',
@@ -475,6 +538,7 @@ export class BiltychildComponent {
       }
     })
   }
+
   windowrespo() {
     if (window.innerWidth <= 767) {
       this.status = true;
@@ -547,8 +611,6 @@ export class BiltychildComponent {
     this.entity.senderStateId = v.state
     this.entity.biltyDetails.senderPin = v.pincode
     this.entity.senderaccount = v?.accCodeNavigation
-
-
     this.isSenderClicked = false;
     this.SenderisClicked = false
     $('#SenderModal').modal('hide');
@@ -589,6 +651,7 @@ export class BiltychildComponent {
       }
     });
   }
+
   sendergstinfun() {
     this.http.get('Vendor/GstinbyInfo', {
       gstin: this.entity.biltyDetails.senderGstin || "",
@@ -596,7 +659,6 @@ export class BiltychildComponent {
     }).subscribe({
       next: (res: any) => {
         if (res.status_cd == 1) {
-
           if (res.data) {
             this.SenderisClicked = false
             this.isSenderClicked = false;
@@ -609,11 +671,8 @@ export class BiltychildComponent {
             this.entity.biltyDetails.senderMail = res.data.emailId;
             this.entity.senderaccount = res.data?.accCodeNavigation
           } else {
-
             this.SenderisClicked = true
             this.isSenderClicked = true;
-
-
           }
         } else {
           this.dialog.swal({ dialog: 'error', title: 'Error', message: res.errors.exception.Message });
@@ -626,6 +685,7 @@ export class BiltychildComponent {
       }
     })
   }
+
   Senderfuncion() {
     $('#SenderModal').modal('show');
     this.commanfunction();
@@ -641,8 +701,6 @@ export class BiltychildComponent {
       PageSize: this.pageSize,
       Keys: []
     };
-
-    this.reference = [];
 
     this.http.post('Vendor/getList', param).subscribe({
       next: (res: any) => {
@@ -664,8 +722,8 @@ export class BiltychildComponent {
       }
     });
   }
-  ReceiverSavefun() {
 
+  ReceiverSavefun() {
     this.dialog.swal({
       dialog: 'confirm',
       title: 'Confirm Save',
@@ -710,14 +768,11 @@ export class BiltychildComponent {
       console.error("Dialog error:", error);
     });
   }
+
   Recevergstin() {
-
-
     this.http.get('Vendor/GstinbyInfo', {
       gstin: this.entity.biltyDetails.receiverGstin || "",
       mobileno: this.entity.biltyDetails.receiverMobileNo || "",
-
-
     }).subscribe({
       next: (res: any) => {
         if (res.status_cd == 1) {
@@ -748,25 +803,24 @@ export class BiltychildComponent {
       }
     })
   }
+
   receiverfuncion() {
     $('#Modal').modal('show');
     this.commanfunction();
   }
+
   calculateFreight() {
     const weight = this.cmod.chrgWeight || 0;
     const rate = this.cmod.rate || 0;
     this.cmod.freight = weight * rate;
   }
+
   calculateAmounts() {
     let total = this.entity.totaldebitadd || 0;
-
-
     if (this.entity.freightType == 0 || this.entity.freightType == 2) {
-
       this.entity.biltyDetails.senderAmount = total;
       this.entity.biltyDetails.receiverAmount = 0;
     } else if (this.entity.freightType == 1) {
-
       this.entity.biltyDetails.receiverAmount = total;
       this.entity.biltyDetails.senderAmount = 0;
     }
@@ -779,7 +833,6 @@ export class BiltychildComponent {
 
   addgstTablerow() {
     if (this.cmod.commodity && this.cmod.uom && this.cmod.qty && this.cmod.chrgWeight && this.cmod.actWeight && this.cmod.rate && this.cmod.freight) {
-
       if (this.rowIndex == null) {
         this.entity.biltyCommodities.push(this.cmod);
       }
@@ -797,8 +850,6 @@ export class BiltychildComponent {
   additinOfFreight() {
     var sumArray = this.entity.biltyCommodities
       .map(item => item.freight || 0);
-
-
     var sumValue = sumArray.reduce(function (pValue, cValue) {
       return Number(pValue) + Number(cValue)
 
@@ -811,10 +862,9 @@ export class BiltychildComponent {
   editgstTablerow(obj, index) {
     this.rowIndex = index;
     this.cmod = Object.assign({}, obj);
-
   }
-  deletegstTablerow(index) {
 
+  deletegstTablerow(index) {
     var params = {
 
       dialog: 'confirm',

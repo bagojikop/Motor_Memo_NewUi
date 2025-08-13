@@ -36,7 +36,7 @@ export class MotorchildComponent {
   entity: SubconsigneeObj;
 
   page: number = 1;
-  pageSize: number = 2;
+  pageSize: number = 15;
   totalItems: number = 0;
   sgCodeNavigation: string
   reference: any = {};

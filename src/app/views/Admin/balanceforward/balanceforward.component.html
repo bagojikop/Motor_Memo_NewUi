@@ -1,7 +1,5 @@
 <div>
     <div>
-
-
         <div class="mastersHeading m-0">
             <div class="row m-0 pt-2">
                 <div class="col col-sm-6">
@@ -17,7 +15,6 @@
         </div>
         <hr />
         <div class="d-flex-width ms-4 mt-3">
-     
             <div class="mt-3 me-5">
                 <label [class]="!entity.firmCode?'text-danger':''">Firm</label>
                 <ng-select bindLabel="firmName" bindValue="firmCode" name="firmnm" [loading]="loading"
@@ -44,7 +41,6 @@
                         </label>
                     </div>
                 </div>
-
                 <div class="gapInputFields">
                     <div class="form-check">
                         <input class="form-check-input" name="isprevious" type="checkbox" [(ngModel)]="entity.inventory"
@@ -54,7 +50,6 @@
                         </label>
                     </div>
                 </div>
-               
             </div>
             <div class="me-5">
                 <div class="text-end mt-3">
