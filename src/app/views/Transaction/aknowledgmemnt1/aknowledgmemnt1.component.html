@@ -11,19 +11,32 @@
 
 <div class="d-flex ms-2 d-flex-column">
 
-    <div class="d-flex-width" style="width: 30%;">
-        <dss-input label="Vehicle No" name="vehno" type="text" [(ngModel)]="entity.vehicleNo" />
+    <div class="d-flex-width">
+        <!-- // <dss-input label="Vehicle No" name="vehno" type="text" [(ngModel)]="entity.vehicleNo" /> -->
+        <label for="search" [ngClass]="{'text-danger': !entity.vehicleNo }">
+            Vehicle No
+        </label>
+        <div class="search-box">
+            <input type="text" style="width: 100%;" id="search" class="form-control" placeholder=" Enter Last 4  Digits " name="Vehiclenumb"
+                [(ngModel)]="entity.vehicleNo" required autocomplete="off"
+                (input)="entity.vehicleNo = entity.vehicleNo.toUpperCase()">
+
+            <button type="button" class="btn btn-light" tabindex="-1" (click)="getVehicles()">
+                <i class="bi bi-arrow-return-left"></i>
+            </button>
+        </div>
     </div>
     <div class="gapInputFields" style="width: 30%;">
-   
+
         <label for="">Aknowledgment Type</label>
-        <select class="form-select select-wrapper" name="akntp" [(ngModel)]="referance.aknowlType" (change)="showgrid()">
-            <option [value]="0">Chargeable</option>
-            <option [value]="1">Direct</option>
+        <select class="form-select select-wrapper" name="akntp" [(ngModel)]="referance.aknowlType"
+            (change)="showgrid()">
+            <option [value]="0">Direct</option>
+            <option [value]="1">Chargeable</option>
 
         </select>
     </div>
-      
+
     <div class="gapInputFields">
         <button class="btn btn-outline-primary" style="margin-top: 21px;" type="button" (click)="Listshow()"><i
                 class="fa fa-eye me-1"></i> show</button>
@@ -216,7 +229,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                
+
                 <form>
                     <div class="d-flex">
                         <div class="d-flex-width">
@@ -238,15 +251,15 @@
                         <div class="gapInputFields">
                             <div class="mb-3">
                                 <label for="weight" class="form-label">Total Weight</label>
-                                <input type="text" class="form-control" id="weight" [(ngModel)]="entity.totalWet" digitOnly
-                                    CurrencyMask fraction="2" name="weight" disabled="true">
+                                <input type="text" class="form-control" id="weight" [(ngModel)]="entity.totalWet"
+                                    digitOnly CurrencyMask fraction="2" name="weight" disabled="true">
                             </div>
                         </div>
                         <div class="gapInputFields">
                             <div class="mb-3">
                                 <label for="fperrt" class="form-label">Freight per Rate</label>
                                 <input type="text" class="form-control" id="fperrt" [(ngModel)]="entity.freightperWet"
-                                  digitOnly CurrencyMask fraction="2" name="fperrt" disabled="true">
+                                    digitOnly CurrencyMask fraction="2" name="fperrt" disabled="true">
                             </div>
                         </div>
                     </div>
@@ -255,21 +268,21 @@
                             <div class="mb-3">
                                 <label for="advance" class="form-label">Advance Amount</label>
                                 <input type="text" class="form-control" id="advance" [(ngModel)]="entity.totalAdv"
-                                  digitOnly CurrencyMask fraction="2" name="advance" disabled="true">
+                                    digitOnly CurrencyMask fraction="2" name="advance" disabled="true">
                             </div>
                         </div>
                         <div class="gapInputFields">
                             <div class="mb-3">
                                 <label for="freight" class="form-label">Total Freight</label>
                                 <input type="text" class="form-control" id="freight" [(ngModel)]="entity.freightTotal"
-                                  digitOnly CurrencyMask fraction="2" name="freight" disabled="true">
+                                    digitOnly CurrencyMask fraction="2" name="freight" disabled="true">
                             </div>
                         </div>
                         <div class="gapInputFields">
                             <div class="mb-3">
                                 <label for="left" class="form-label">Left Amount</label>
-                                <input type="text" class="form-control" id="left" [(ngModel)]="entity.remAmt"
-                                  digitOnly CurrencyMask fraction="2" name="left" disabled="true">
+                                <input type="text" class="form-control" id="left" [(ngModel)]="entity.remAmt" digitOnly
+                                    CurrencyMask fraction="2" name="left" disabled="true">
                             </div>
                         </div>
                         <div class="gapInputFields">
@@ -318,9 +331,8 @@
 
                                             <input class="form-control" type="text" name="charges" digitOnly
                                                 CurrencyMask fraction="2" #f="ngModel"
-                                                [(ngModel)]="motormemo2AdvDetl.amount" 
-                                                autocomplete="off">
-                                            
+                                                [(ngModel)]="motormemo2AdvDetl.amount" autocomplete="off">
+
                                         </th>
                                         <th style="width: 30%;">
                                             <div>
@@ -330,7 +342,7 @@
                                         </th>
                                         <th class="text-center" style="width: 10%;">
                                             <button class="btn btn-light btn-sm text-center"
-                                                (click)="updateTotalCharges()" >
+                                                (click)="updateTotalCharges()">
                                                 <i class="fas fa-plus"></i>
                                             </button>
                                         </th>
@@ -379,6 +391,37 @@
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-primary" (click)="save()"
                     [disabled]="isAddButtonDisabled()">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="vehiclemodal" tabindex="-1" data-bs-backdrop="static" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Vehicle list</h5>
+            </div>
+            <div class="modal-body p-0" style="height: calc(100vh - 250px);">
+                <table class="table border table-hover">
+                    <thead>
+                        <tr>
+                            <th style="width: 20px;">#</th>
+                            <th scope="col">Vehicle Numbers</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let v of reference;let i=index;" (click)="onRowClick(v)">
+                            <td style="width: 5rem; text-align: center;">{{ i +
+                                1 }}</td>
+                            <td>{{ v.vehicleNo }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
     </div>

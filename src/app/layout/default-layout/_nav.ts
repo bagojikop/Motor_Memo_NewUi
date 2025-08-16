@@ -215,8 +215,8 @@ export const navItems = ({
       url: '/Transactions',
       iconComponent: { name: 'cil-puzzle' },
       children: [
-        { name: 'Lorry Receipt(Chargeable)', iconComponent: { name: 'cil-file' }, url: 'Motormaster' },
-         { name: 'Lorry Receipt (Direct)', iconComponent: { name: 'cil-credit-card' }, url: 'lorry-receipt2' },
+        { name: 'Lorry Receipt(Direct)', iconComponent: { name: 'cil-file' }, url: 'Motormaster' },
+        { name: 'Lorry Receipt(Chargeable) ', iconComponent: { name: 'cil-credit-card' }, url: 'lorry-receipt2' },
         { name: 'Sundry', iconComponent: { name: 'cil-list' }, url: 'Summary' },
         { name: 'Contra Entry', iconComponent: { name: 'cil-credit-card' }, url: 'Contramaster' },
         { name: 'Journal Entry', iconComponent: { name: 'cil-notes' }, url: 'Journalmaster' },

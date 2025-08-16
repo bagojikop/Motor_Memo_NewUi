@@ -31,7 +31,7 @@
                                                 [defaultProperty]="entity.accCodeNavigation"
                                                 [(ngModel)]="entity.accCode" #ObalAccName="ngModel"
                                                 [disabled]="navactions.fieldset"
-                                                [apiParams]="{sgCode:this.provider.companyinfo.company?.settings[0].setValue}"
+                                                [apiParams]="{sgCode:this.provider.companyinfo.company?.settings[1].setValue}"
                                                 [ngClass]="{'is-invalid': ObalAccName.errors?.['required']}"
                                                 [required]="true"></app-ngselect>
                                         </div>

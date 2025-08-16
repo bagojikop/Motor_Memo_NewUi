@@ -1,6 +1,6 @@
 export interface SubconsigneeObj {
   sgCodeNavigation: string
-  Directpaid:boolean
+  directPaid:boolean
   receiverName:string 
   totaldebitadd: number
   billAmt:number
@@ -15,7 +15,7 @@ export interface SubconsigneeObj {
   sendernm:string
   totalcharges: number
   receiverStateId:any
-  vehicleNo: string
+  vehicleNo: string 
   senderStateId:any
   createdUser:string
   dt: string
@@ -36,7 +36,7 @@ export interface SubconsigneeObj {
   vchId: string
   hsncode: number
   GstPer: number
-
+  totalAmt:number
   leftAmount: number
   cityId: number
 
@@ -57,6 +57,7 @@ export interface SubconsigneeObj {
   motormemoCommodities: MotormemoCommoditiesObj[];
   motormemoExpenses: MotormemoExpensesObj[];
   motormemoOtherCharges: otherchargesObj[];
+  motormemoPayments:motormemoPayment[];
   vehicleAccNavigation:any
 
 }
@@ -73,6 +74,16 @@ export interface otherchargesObj{
   
   otherchag: number
   sundries:any
+}
+
+export interface motormemoPayment{
+  detlId:number
+  vchId:number
+  accCode:number
+  amount:number
+  narration:string
+  motormemo:any
+  accCodeNavigation:any
 }
 
 export interface MotormemoExpensesObj { 

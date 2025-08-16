@@ -562,6 +562,41 @@ export class Aknowledgmemnt1Component {
     this.gridColumnApi = params.columnApi;
   }
 
+  reference:any=[]
+  getVehicles() {
+      if (!this.entity.vehicleNo || this.entity.vehicleNo.length < 4) {
+        return;
+      }
+  
+      $('#vehiclemodal').modal('show');
+  
+      var param = {
+        PageNumber: 1,
+        PageSize: 10,
+        Keys: [{ key: 'vehicleNo', value: this.entity.vehicleNo || 0 }]
+      }
+  
+      this.http.post('Vehicle/vehiclelist', param).subscribe({
+        next: (res: any) => {
+          if (res.status_cd == 1) {
+            this.reference = res.data;
+  
+          } else {
+            this.dialog.swal({ dialog: 'error', title: 'Error', message: res.errors.exception.Message });
+          }
+          this.spinner.hide();
+        }, error: (err: any) => {
+          this.spinner.hide();
+          this.dialog.swal({ dialog: 'error', title: 'Error', message: err.message });
+        }
+      })
+    }
+
+    onRowClick(v) {
+    this.entity.vehicleNo = v.vehicleNo;
+    $('#vehiclemodal').modal('hide');
+  }
+
   save() {
     if (this.referance.aknowlType === "0") {
       this.spinner.show();

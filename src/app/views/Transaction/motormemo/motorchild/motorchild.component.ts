@@ -17,24 +17,23 @@ import { ngselectComponent } from '../../../../assets/pg/ngselect/ngselect.compo
 import { NgxPaginationModule } from 'ngx-pagination';
 import { NavactionsComponent } from '../../../../assets/pg/navactions/navactions.component';
 import { CurrencyMaskDirective } from '../../../../assets/mydirective/currencyMask/currency-mask.directive';
-import { NumberOnlyDirective, DTFormatDirective} from '../../../../assets/mydirective/mydirective.directive';
+import { NumberOnlyDirective, DTFormatDirective } from '../../../../assets/mydirective/mydirective.directive';
 import { finDateDirective } from '../../../../assets/mydirective/findate/findate.directive';
 import { ArraySortPipe } from '../../../../assets/pipes/inrcrdr.pipe';
-import {PdfReaderComponent} from '../../../../assets/pdf-reader/pdf-reader.component';
-
+import { PdfReaderComponent } from '../../../../assets/pdf-reader/pdf-reader.component';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-motorchild',
   templateUrl: './motorchild.component.html',
   styleUrls: ['./motorchild.component.scss'],
-  imports: [FormsModule, CommonModule, DTFormatDirective, finDateDirective, NumberOnlyDirective,PdfReaderComponent, CurrencyMaskDirective, ngselectComponent, NgSelectModule, DssInputComponent, MydirectiveModule, NgxPaginationModule, NavactionsComponent],
-  providers: [DatePipe, DialogsComponent,PdfReaderComponent, Master,ArraySortPipe ],
+  imports: [FormsModule, CommonModule, DTFormatDirective, finDateDirective, NumberOnlyDirective, PdfReaderComponent, CurrencyMaskDirective, ngselectComponent, NgSelectModule, DssInputComponent, MydirectiveModule, NgxPaginationModule, NavactionsComponent],
+  providers: [DatePipe, DialogsComponent, PdfReaderComponent, Master, ArraySortPipe],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class MotorchildComponent {
   @ViewChild("motorchild") motorchild: NgForm;
   entity: SubconsigneeObj;
-
   page: number = 1;
   pageSize: number = 15;
   totalItems: number = 0;
@@ -54,11 +53,8 @@ export class MotorchildComponent {
   pastentity;
   selectedVehicle: string = '';
   Orderlist: any;
-
-  canEdit: boolean = false; 
-
+  canEdit: boolean = false;
   isReceiverClicked: boolean = true;
-
   isSenderClicked: boolean = true;
   SenderisClicked: boolean = true
   ReceiverisClicked: boolean = true
@@ -83,6 +79,7 @@ export class MotorchildComponent {
   cmod: any = {};
   exp: any = {};
   other: any = {};
+  payment: any = {};
 
   freightTypeList: any = [];
   ngOnInit(): void {
@@ -99,8 +96,8 @@ export class MotorchildComponent {
     this.entity.totalcharges = 0;
     this.entity.motormemoExpenses = [];
     this.entity.motormemoOtherCharges = [];
+    this.entity.motormemoPayments = [];
     this.exp = { action: 0 };
-
 
     this.freightTypeList = [
       {
@@ -122,7 +119,6 @@ export class MotorchildComponent {
     this.navactions.navaction(paramss.action);
     this.entity.vchId = paramss.id;
 
-
     this.reference = []
     if (this.entity.vchId) {
       this.navactions.fieldset = true;
@@ -132,16 +128,11 @@ export class MotorchildComponent {
       this.newRecord();
     }
     this.Init();
-
-
   }
 
   windowrespo() {
     if (window.innerWidth <= 767) {
       this.status = true;
-
-
-
     } else {
       this.status = false;
     }
@@ -150,8 +141,6 @@ export class MotorchildComponent {
   Init() {
     this.other = {}
   }
-
-   
 
   navbar(s) {
     switch (s) {
@@ -187,27 +176,27 @@ export class MotorchildComponent {
 
 
   parameters: any[] = [];
-    rptMode: boolean = false;
-    pdfSrc: string;
-    myServiceUrl: string;
-    myReportDictionory: ReportDictionory = <ReportDictionory>{};
-  
-    motormemoprint() {
-      this.myServiceUrl = "MetormemoReport";
-      
-      this.myReportDictionory = {
-        reportCacheId: uuidv4(),
-        reportParams: [
-          {
-            key: "vch_id", value: this.entity.vchId,
-          },
-          {
-            key: "firm_id", value: this.provider.companyinfo.company?.firmCode,
-  
-          }]
-      };
-      this.rptMode = true;
-    }
+  rptMode: boolean = false;
+  pdfSrc: string;
+  myServiceUrl: string;
+  myReportDictionory: ReportDictionory = <ReportDictionory>{};
+
+  motormemoprint() {
+    this.myServiceUrl = "MetormemoReport";
+
+    this.myReportDictionory = {
+      reportCacheId: uuidv4(),
+      reportParams: [
+        {
+          key: "vch_id", value: this.entity.vchId,
+        },
+        {
+          key: "firm_id", value: this.provider.companyinfo.company?.firmCode,
+
+        }]
+    };
+    this.rptMode = true;
+  }
   editgstTablerow(obj, index) {
     this.rowIndex = index;
     this.cmod = Object.assign({}, obj);
@@ -216,7 +205,65 @@ export class MotorchildComponent {
     this.rowIndex = index;
     this.exp = Object.assign({}, obj);
   }
+  getAccountDetl(obj) {
+    this.payment.accCodeNavigation = obj;
+  }
 
+  AddAdvDetl() {
+    if (this.payment.accCode && this.payment.amount) {
+      if (this.rowIndex == null) {
+        this.entity.motormemoPayments.push(this.payment);
+        this.additinOfpaymnet()
+        // this.calculateRemAmt()
+      }
+      else {
+        this.entity.motormemoPayments[this.rowIndex] = this.payment;
+        this.additinOfpaymnet()
+        // this.calculateRemAmt()
+      }
+      this.rowIndex = null;
+      this.payment = {}
+    }
+  }
+
+  editAdvDetailrow(v, i) {
+    this.rowIndex = i;
+    //this.calculateRemAmt()
+    this.payment = Object.assign({}, v);
+  }
+
+
+  deleteAdvDetail(i) {
+    var params = {
+
+      dialog: 'confirm',
+      title: "warning",
+      message: "Do you want to delete record"
+    }
+    this.dialog.swal(params).then(data => {
+      if (data == true) {
+        this.entity.motormemoPayments.splice(i, 1);
+
+        this.additinOfpaymnet()
+        // this.calculateRemAmt()
+      }
+    })
+  }
+
+
+  additinOfpaymnet() {
+    const sumArray = this.entity.motormemoPayments.map(item => item.amount || 0);
+    const sumValue = sumArray.reduce((p, c) => Number(p) + Number(c), 0);
+    this.entity.totalAmt = sumValue;
+
+    if (this.entity.totalAmt > this.entity.totalFreight) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Warning',
+        text: 'Total Advance amount is greater than Freight Total. Please check the values.',
+      });
+    }
+  }
   deletegstTablerow(index) {
 
     var params = {
@@ -285,7 +332,7 @@ export class MotorchildComponent {
   }
 
   onSelectAcc(ev) {
-    
+
     this.exp.accName = ev.accName;
     this.cd.detectChanges();
   }
@@ -294,14 +341,14 @@ export class MotorchildComponent {
     this.other.sundries = {}
 
     this.other.sundries.sundryName = ev.sundryName;
-   
+
     this.other.accCodeNavigation = ev.accCodeNavigation;
 
 
   }
 
   onSelecotheracc(ev) {
-   
+
     this.other.accCodeNavigation.accName = ev.accName;
   }
 
@@ -314,6 +361,11 @@ export class MotorchildComponent {
         if (res.status_cd == 1) {
           this.entity = res.data;
 
+          if (this.entity.directPaid == true) {
+            this.disablePaymentFields = true;
+
+          }
+
           this.entity.motormemoAudit = this.entity.motormemoAudit || <MotormemoAuditObj>{};
           this.entity.acc003s = this.entity.acc003s || <Acc003sObj>{};
           this.entity.motormemoDetails = this.entity.motormemoDetails || <MotormemoDetailsObj>{};
@@ -321,11 +373,7 @@ export class MotorchildComponent {
           this.entity.motormemoAudit.createdDt = this.entity.motormemoAudit.createdDt ?? this.datepipe.transform(this.entity.motormemoAudit.createdDt, 'yyyy-MM-dd')
           this.entity.motormemoAudit.modifiedDt = this.entity.motormemoAudit.modifiedDt ?? this.datepipe.transform(this.entity.motormemoAudit.modifiedDt, 'yyyy-MM-dd');
 
-     
-
           this.pastentity = Object.assign({}, this.entity);
-
-        
         }
         this.spinner.hide();
         this.additinOfFreight();
@@ -343,26 +391,32 @@ export class MotorchildComponent {
       }
     })
   }
-data:any={}
+  data: any = {}
   save() {
-
-    Object.keys(this.motorchild.form.controls).forEach(key => {
-      const control = this.motorchild.form.controls[key];
-      if (control.invalid) {
-        console.log(`Invalid Field: ${key}`, control.errors);
-      }
-    });
+    if (this.entity.motormemoPayments?.length > 0
+      && this.entity.totalAmt !== this.entity.totalFreight) {
+      this.dialog.swal({ dialog: "confirm", title: "Warning", message: "Please Check Total Payment Amount" });
+    } else {
+      Object.keys(this.motorchild.form.controls).forEach(key => {
+        const control = this.motorchild.form.controls[key];
+        if (control.invalid) {
+          console.log(`Invalid Field: ${key}`, control.errors);
+        }
+      });
+      this.additinOfpaymnet()
       this.spinner.show();
       if (!this.entity.vchId) {
         if (!this.entity.motormemoAudit.createdUser)
           this.entity.motormemoAudit.createdUser = this.provider.companyinfo.userinfo.username;
-        
-          this.entity.firmId = this.provider.companyinfo.company?.firm.firmCode,
+
+        this.entity.firmId = this.provider.companyinfo.company?.firm.firmCode,
           this.entity.divId = this.provider.companyinfo.company.divId;
 
         this.http.post('MotorMemo/insert', this.master.cleanObject(this.entity, 2)).subscribe({
           next: (res: any) => {
             if (res.status_cd == 1) {
+              this.additinOfpaymnet()
+              this.onFreightOrDirectPaidChange()
 
               this.entity.vchId = res.data.vchId;
 
@@ -374,6 +428,7 @@ data:any={}
               }
 
               this.dialog.swal({ dialog: "success", title: "Success", message: "Record is saved sucessfully" });
+
               this.navactions.navaction("OK");
             }
 
@@ -389,11 +444,12 @@ data:any={}
         this.entity.firmId = this.provider.companyinfo.company?.firm.firmCode,
           this.entity.divId = this.provider.companyinfo.company.divId;
         this.entity.motormemoAudit.modifiedUser = this.provider.companyinfo.userinfo.username;
-       
+
         this.http.put('MotorMemo/update', this.master.cleanObject(this.entity, 2), { id: this.entity.vchId }).subscribe({
           next: (res: any) => {
             this.spinner.hide()
             if (res.status_cd == 1) {
+               this.onFreightOrDirectPaidChange()
               this.entity.vchId = res.data.vchId;
               if (!this.entity.motormemoAudit) {
                 this.entity.motormemoAudit = <MotormemoAuditObj>{};
@@ -403,6 +459,8 @@ data:any={}
               }
 
               this.dialog.swal({ dialog: "success", title: "Success", message: "Record is Update sucessfully" });
+             
+
               this.navactions.navaction("OK");
             } else {
               this.dialog.swal({ dialog: 'error', title: 'Error', message: res.errors.exception.InnerException.message })
@@ -415,9 +473,9 @@ data:any={}
           }
         })
       }
+    }
 
 
-    
   }
 
   account(index) {
@@ -430,21 +488,21 @@ data:any={}
   newRecord() {
     this.pastentity = JSON.parse(JSON.stringify(this.entity))
 
-
     this.entity = <SubconsigneeObj>{};
     this.entity.motormemoAudit = <MotormemoAuditObj>{};
     this.entity.motormemoDetails = <MotormemoDetailsObj>{};
     this.entity.motormemoCommodities = [];
     this.entity.motormemoExpenses = [];
     this.entity.motormemoOtherCharges = [];
+    this.entity.motormemoPayments = [];
     this.entity.memoNo = 0;
     this.entity.freightType = 0;
     this.entity.totalcharges = 0;
-   
+    this.entity.directPaid = false;
     const today = new Date();
     const finYearEnd = new Date(this.provider.companyinfo.finyear.tdt);
 
-   
+
     if (today >= finYearEnd) {
       this.entity.dt = finYearEnd.toISOString().split('T')[0];
     } else {
@@ -470,11 +528,47 @@ data:any={}
     } else if (value == 2) {
       return 'Billed';
     } else {
-      return 'Unknown'; 
+      return 'Unknown';
     }
   }
 
-  
+  disablePaymentFields: boolean = false;
+
+  onFreightOrDirectPaidChange() {
+    if ((this.entity.freightType === 0 || this.entity.freightType === 1) && this.entity.directPaid) {
+      if (this.entity.motormemoPayments && this.entity.motormemoPayments.length > 0) {
+
+        const url = "MotorMemo/DeletePaymentsByVchId";
+
+        if (this.entity.motormemoPayments.some(p => p.vchId === Number(this.entity.vchId))) {
+          this.http.delete('MotorMemo/DeletePaymentsByVchId', { vchId: this.entity.vchId }).subscribe({
+            next: (res: any) => {
+              if (res.status_cd === 1) {
+
+                this.entity.motormemoPayments = [];
+                this.additinOfpaymnet()
+
+              } else {
+                this.dialog.swal({ dialog: 'error', title: 'Error', message: res.errors?.exception?.Message || "Delete failed" });
+              }
+            },
+            error: (err: any) => {
+              this.dialog.swal({ dialog: 'error', title: 'Error', message: err });
+            }
+          });
+        } else {
+          this.entity.motormemoPayments = [];
+          this.additinOfpaymnet()
+        }
+      } else {
+
+        this.disablePaymentFields = true;
+      }
+    } else {
+      // otherwise, keep fields enabled
+      this.disablePaymentFields = false;
+    }
+  }
 
   getVehicles() {
     if (!this.entity.vehicleNo || this.entity.vehicleNo.length < 4) {
@@ -589,7 +683,7 @@ data:any={}
     this.entity.advAmount = this.entity.motormemoExpenses
       .filter(exp => !exp.isChecked)
       .reduce((sum, exp) => sum + Number(exp.charges), 0);
-   
+
   }
 
   freightAmountsum() {
@@ -648,6 +742,8 @@ data:any={}
 
   onserchinput: string
   filteredSenders = [];
+
+
 
   onserchvender() {
     var param = {
@@ -839,13 +935,13 @@ data:any={}
 
 
   ReceiverSavefun() {
-  
+
     this.dialog.swal({
       dialog: 'confirm',
       title: 'Confirm Save',
       message: 'Do you want to save this record?',
     }).then((result: any) => {
-      
+
       if (result) {
         const venderData = {
           name: this.entity.motormemoDetails.receiverName,
@@ -863,14 +959,14 @@ data:any={}
         this.http.post('Vendor/insert', venderData).subscribe({
           next: (res: any) => {
             if (res.status_cd == 1) {
-              
+
               this.dialog.swal({ dialog: "success", title: "Success", message: "Record is saved successfully" });
               this.ReceiverisClicked = false
             }
             this.spinner.hide();
           },
           error: (err: any) => {
-            
+
             this.spinner.hide();
             this.dialog.swal({
               dialog: 'error',
@@ -911,7 +1007,7 @@ data:any={}
     this.dialog.swal(params).then(data => {
       if (data == true) {
         this.entity.motormemoOtherCharges.splice(index, 1);
-       
+
         this.additinOftotalchages()
       }
     })
@@ -959,6 +1055,7 @@ data:any={}
       this.entity.motormemoDetails.receiverAmount = total;
       this.entity.motormemoDetails.senderAmount = 0;
     }
+
   }
   OnchangeDebitAm() {
     this.entity.motormemoDetails.receiverAmount = (this.entity.totaldebitadd || 0) - this.entity.motormemoDetails.senderAmount
@@ -998,7 +1095,7 @@ data:any={}
 
   moveToNext(event: any, nextElement: HTMLButtonElement) {
     if (event) {
-      setTimeout(() => nextElement?.focus(), 10); 
+      setTimeout(() => nextElement?.focus(), 10);
     }
   }
 
@@ -1009,13 +1106,18 @@ data:any={}
     this.isDirectChecked = event.target.checked;
 
     if (this.isDirectChecked == true) {
+      this.disablePaymentFields = true;
       this.exp = { action: 2 };
       this.entity.motormemoExpenses = this.entity.motormemoExpenses.filter(exp => Number(exp.action) !== 1 && Number(exp.action) !== 0);
     } else if (this.isDirectChecked == false) {
+      this.disablePaymentFields = false;
       this.exp = { action: 0 };
     }
     this.calculateTotalCharges()
     this.totalRecAmt();
+
+
+
   }
 
 

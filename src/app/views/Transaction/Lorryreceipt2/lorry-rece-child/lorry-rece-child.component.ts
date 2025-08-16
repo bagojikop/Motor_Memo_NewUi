@@ -415,18 +415,14 @@ export class LorryReceChildComponent {
 
 
   additinOfWeight() {
-    var sumArray = this.entity.motormemo2Childe
-      .map(item => item.weight || 0);
+  const sumArray = (this.entity.motormemo2Childe || [])
+    .map(item => item.weight || 0);
 
+  const sumValue = sumArray.reduce((pValue, cValue) => 
+    Number(pValue) + Number(cValue), 0); // initial value = 0
 
-    var sumValue = sumArray.reduce(function (pValue, cValue) {
-      return Number(pValue) + Number(cValue)
-
-    });
-    this.entity.totalWet = sumValue;
-
-  }
-
+  this.entity.totalWet = sumValue;
+}
 
 
   additinOfAdv() {
