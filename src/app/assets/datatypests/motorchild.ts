@@ -36,6 +36,8 @@ export interface SubconsigneeObj {
   vchId: string
   hsncode: number
   GstPer: number
+  recTotalAmt:number
+  senderTotalAmt:number
   totalAmt:number
   leftAmount: number
   cityId: number
@@ -58,6 +60,7 @@ export interface SubconsigneeObj {
   motormemoExpenses: MotormemoExpensesObj[];
   motormemoOtherCharges: otherchargesObj[];
   motormemoPayments:motormemoPayment[];
+  motormemoRecPayments:motormemoRecPayment[];
   vehicleAccNavigation:any
 
 }
@@ -77,6 +80,16 @@ export interface otherchargesObj{
 }
 
 export interface motormemoPayment{
+  detlId:number
+  vchId:number
+  accCode:number
+  amount:number
+  narration:string
+  motormemo:any
+  accCodeNavigation:any
+}
+
+export interface motormemoRecPayment{
   detlId:number
   vchId:number
   accCode:number
