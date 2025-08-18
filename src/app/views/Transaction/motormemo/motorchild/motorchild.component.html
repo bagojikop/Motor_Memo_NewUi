@@ -11,7 +11,7 @@
                                 <div class="d-flex w-100">
                                     <div class="d-flex w-md-100 w-50 me-2">
                                         <div class="d-flex-width">
-                                            <label>LR Number</label>
+                                            <label>L.R.No</label>
                                             <input class="form-control" type="text" numberOnly autocomplete="off"
                                                 [(ngModel)]="entity.memoNo" name="memoNo" [maxlength]="10"
                                                 disabled="true" [minlength]="10">
@@ -399,7 +399,7 @@
                             <form #otherchages="ngForm" class="needs-validation">
                                 <div class="card">
                                     <div class="card-header d-flex justify-content-between">
-                                        <h5 class="m-0 p-2">Debited To</h5>
+                                        <h5 class="m-0 p-2">Other Charges[Sender/Receiver] </h5>
                                         <input type="text" style="width: 8rem;" class="form-control text-end"
                                             name="totaldebitadd" [(ngModel)]="entity.totaldebitadd" autocomplete="off"
                                             [disabled]="true" #totaldebitadd="ngModel" digitOnly CurrencyMask
@@ -409,7 +409,7 @@
                                         <thead>
                                             <tr>
                                                 <th class="text-center" scope="col" style="width: 30%;">
-                                                    <b>Other charges</b>
+                                                    <b>Description</b>
                                                 </th>
                                                 <th class="text-center" scope="col" style="width: 30%;">
                                                     <b>Account</b>
@@ -558,7 +558,7 @@
                         <div class="container  mt-3">
                             <div class="card">
                                 <div class="card-header">
-                                    <h5 class="m-0 p-2">Payment Details</h5>
+                                    <h5 class="m-0 p-2">Receipt [ Sender/Receiver ]</h5>
                                 </div>
                                 <table class="table">
                                     <thead>
@@ -682,13 +682,13 @@
                         <div class="container mt-3">
                             <div class="card">
                                 <div class="card-header">
-                                    <h5 class="m-0 p-2">Expenses</h5>
+                                    <h5 class="m-0 p-2">Charges [ Vehicle ]</h5>
                                 </div>
                                 <table class="table">
                                     <thead>
                                         <tr>
                                             <th class="text-center" scope="col" style="width: 24%;">
-                                                <b>Expense</b>
+                                                <b>Description</b>
                                             </th>
                                             <th class="text-center" scope="col" style="width: 26%;">
                                                 <b>Account</b>
