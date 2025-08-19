@@ -83,6 +83,7 @@ export class MotorchildComponent {
   recPayment: any = {}
 
   freightTypeList: any = [];
+  
   ngOnInit(): void {
 
     setInterval(() => {
@@ -115,7 +116,6 @@ export class MotorchildComponent {
         "name": "To Way Build"
       }
     ]
-
 
     let paramss: any = this.location.getState();
     this.navactions.navaction(paramss.action);
@@ -176,7 +176,6 @@ export class MotorchildComponent {
 
   }
 
-
   parameters: any[] = [];
   rptMode: boolean = false;
   pdfSrc: string;
@@ -199,14 +198,17 @@ export class MotorchildComponent {
     };
     this.rptMode = true;
   }
+
   editgstTablerow(obj, index) {
     this.rowIndex = index;
     this.cmod = Object.assign({}, obj);
   }
+
   editExpTablerow(obj, index) {
     this.rowIndex = index;
     this.exp = Object.assign({}, obj);
   }
+
   getAccountDetl(obj) {
     this.payment.accCodeNavigation = obj;
   }
@@ -248,8 +250,6 @@ export class MotorchildComponent {
       this.recPayment = {}
     }
   }
-
-
 
   editAdvDetailrow(v, i) {
     this.rowIndex = i;
@@ -298,7 +298,6 @@ export class MotorchildComponent {
     })
   }
 
-
   additinOfpaymnet() {
     const sumArray = this.entity.motormemoPayments.map(item => item.amount || 0);
     const sumValue = sumArray.reduce((p, c) => Number(p) + Number(c), 0);
@@ -333,7 +332,6 @@ export class MotorchildComponent {
   }
 
   deletegstTablerow(index) {
-
     var params = {
 
       dialog: 'confirm',
@@ -363,7 +361,6 @@ export class MotorchildComponent {
     })
   }
 
-
   addgstTablerow() {
     if (this.cmod.commodity && this.cmod.uom && this.cmod.qty && this.cmod.chrgWeight && this.cmod.actWeight && this.cmod.rate && this.cmod.freight) {
 
@@ -390,6 +387,7 @@ export class MotorchildComponent {
       }
     }
   }
+
   addExpTablerow() {
     if (this.rowIndex == null) {
       this.entity.motormemoExpenses.push(this.exp);
@@ -411,7 +409,6 @@ export class MotorchildComponent {
   }
 
   onSelectAcc(ev) {
-
     this.exp.accName = ev.accName;
     this.cd.detectChanges();
   }
@@ -422,56 +419,11 @@ export class MotorchildComponent {
     this.other.sundries.sundryName = ev.sundryName;
 
     this.other.accCodeNavigation = ev.accCodeNavigation;
-
-
   }
 
   onSelecotheracc(ev) {
-
     this.other.accCodeNavigation.accName = ev.accName;
   }
-
-
-  // callbackedit() {
-  //   this.spinner.show();
-  //   var url = "MotorMemo/edit"
-  //   this.http.get(url, { id: this.entity.vchId }).subscribe({
-  //     next: (res: any) => {
-  //       if (res.status_cd == 1) {
-  //         this.entity = res.data;
-
-  //         if (this.entity.directPaid == true) {
-  //           this.disablePaymentFields = true;
-
-  //         }
-
-
-
-  //         this.entity.motormemoAudit = this.entity.motormemoAudit || <MotormemoAuditObj>{};
-  //         this.entity.acc003s = this.entity.acc003s || <Acc003sObj>{};
-  //         this.entity.motormemoDetails = this.entity.motormemoDetails || <MotormemoDetailsObj>{};
-
-  //         this.entity.motormemoAudit.createdDt = this.entity.motormemoAudit.createdDt ?? this.datepipe.transform(this.entity.motormemoAudit.createdDt, 'yyyy-MM-dd')
-  //         this.entity.motormemoAudit.modifiedDt = this.entity.motormemoAudit.modifiedDt ?? this.datepipe.transform(this.entity.motormemoAudit.modifiedDt, 'yyyy-MM-dd');
-
-  //         this.pastentity = Object.assign({}, this.entity);
-  //       }
-  //       this.spinner.hide();
-  //       this.additinOfFreight();
-  //       this.totalRecAmt();
-  //       this.additinOftotalchages()
-
-
-  //       this.isReceiverClicked = false;
-  //       this.isSenderClicked = false;
-  //       this.SenderisClicked = false
-  //       this.ReceiverisClicked = false
-  //     }, error: (err: any) => {
-  //       this.spinner.hide();
-  //       this.dialog.swal({ dialog: 'error', title: 'Error', message: err });
-  //     }
-  //   })
-  // }
 
   isEditMode = false;
 
@@ -512,6 +464,7 @@ export class MotorchildComponent {
       }
     })
   }
+
   data: any = {}
   save() {
     this.totalAmtCalc()
@@ -591,7 +544,6 @@ export class MotorchildComponent {
               this.dialog.swal({ dialog: 'error', title: 'Error', message: res.errors.exception.InnerException.message })
             }
 
-
           }, error: (err: any) => {
             this.spinner.hide()
             this.dialog.swal({ dialog: 'error', title: 'Error', message: err.message })
@@ -599,8 +551,6 @@ export class MotorchildComponent {
         })
       }
     }
-
-
   }
 
   account(index) {
@@ -610,6 +560,7 @@ export class MotorchildComponent {
   close() {
     this.location.back();
   }
+
   newRecord() {
     this.pastentity = JSON.parse(JSON.stringify(this.entity))
 
@@ -627,8 +578,6 @@ export class MotorchildComponent {
     this.entity.directPaid = false;
     const today = new Date();
     const finYearEnd = new Date(this.provider.companyinfo.finyear.tdt);
-
-
     if (today >= finYearEnd) {
       this.entity.dt = finYearEnd.toISOString().split('T')[0];
     } else {
@@ -660,53 +609,6 @@ export class MotorchildComponent {
 
   disablePaymentFields: boolean = false;
   disableRecPaymentFields: boolean = false;
-
-  // onFreightOrDirectPaidChange() {
-  //   if ((this.entity.freightType === 0 || this.entity.freightType === 1) && this.entity.directPaid) {
-  //     if (this.entity.motormemoPayments && this.entity.motormemoPayments.length > 0) {
-  //       var url = "";
-  //       if (this.entity.motormemoDetails.senderAmount > 0 ) {
-  //         url = "MotorMemo/DeletePaymentsByVchId";
-  //         this.disableRecPaymentFields = true
-  //       } else if (this.entity.motormemoDetails.receiverAmount > 0) {
-  //         url = "MotorMemo/DeleteRecPayments";
-  //       } else {
-  //         this.disablePaymentFields = true;
-  //         this.disableRecPaymentFields = true;
-  //       }
-
-
-  //       if ((this.entity.motormemoPayments.some(p => p.vchId === Number(this.entity.vchId))) || this.entity.motormemoRecePayments.some(p => p.vchId === Number(this.entity.vchId))) {
-  //         this.http.delete(url, { vchId: this.entity.vchId }).subscribe({
-  //           next: (res: any) => {
-  //             if (res.status_cd === 1) {
-
-  //               this.entity.motormemoPayments = [];
-  //               this.additinOfpaymnet()
-  //               this.additinOfRecpaymnet();
-
-  //             } else {
-  //               this.dialog.swal({ dialog: 'error', title: 'Error', message: res.errors?.exception?.Message || "Delete failed" });
-  //             }
-  //           },
-  //           error: (err: any) => {
-  //             this.dialog.swal({ dialog: 'error', title: 'Error', message: err });
-  //           }
-  //         });
-  //       } else {
-  //         this.entity.motormemoPayments = [];
-  //         this.entity.motormemoRecePayments = [];
-  //         this.additinOfpaymnet()
-  //       }
-  //     } else
-  //       this.disablePaymentFields = true;
-  //     this.disableRecPaymentFields = true;
-  //   } else {
-
-  //     this.disablePaymentFields = false;
-  //     this.disableRecPaymentFields = true;
-  //   }
-  // }
 
   onFreightOrDirectPaidChange() {
     if ((this.entity.freightType === 0 || this.entity.freightType === 1) && this.entity.directPaid) {
@@ -774,15 +676,12 @@ export class MotorchildComponent {
     if (!this.entity.vehicleNo || this.entity.vehicleNo.length < 4) {
       return;
     }
-
     $('#exampleModal').modal('show');
-
     var param = {
       PageNumber: 1,
       PageSize: 10,
       Keys: [{ key: 'vehicleNo', value: this.entity.vehicleNo || 0 }]
     }
-
     this.http.post('Vehicle/vehiclelist', param).subscribe({
       next: (res: any) => {
         if (res.status_cd == 1) {
@@ -809,8 +708,6 @@ export class MotorchildComponent {
     var sumArray = this.entity.motormemoExpenses.map(item => {
       return item.charges;
     });
-
-
     var sumValue = sumArray.length > 0 ? sumArray.reduce(function (pValue, cValue) {
       return Number(pValue) + Number(cValue);
     }, 0) : 0;
@@ -828,23 +725,16 @@ export class MotorchildComponent {
   additinOfFreight() {
     var sumArray = this.entity.motormemoCommodities
       .map(item => item.freight || 0);
-
-
     var sumValue = sumArray.reduce(function (pValue, cValue) {
       return Number(pValue) + Number(cValue)
-
     });
     this.entity.TotalFreight = sumValue;
     this.totalDebit()
   }
 
-
   updateTotalCharges(): void {
-
     if (this.exp.s_Id && this.exp.accCode && this.exp.charges) {
-
       const chargeValue = Number(this.exp.charges) || 0;
-
       if (this.exp.action == 1) {
         this.entity.totalcharges += chargeValue;
       } else if (this.exp.action == 0) {
@@ -852,15 +742,11 @@ export class MotorchildComponent {
       } else if (this.exp.action == 2) {
         this.entity.billAmt = (this.entity.billAmt || 0) + chargeValue;
       }
-
       if (this.rowIndex == null) {
         this.entity.motormemoExpenses.push({ ...this.exp });
-
       } else {
         this.entity.motormemoExpenses[this.rowIndex] = { ...this.exp };
-
       }
-
       this.exp = { action: 0 };
       this.rowIndex = null;
       this.totalcreditamount()
@@ -878,7 +764,9 @@ export class MotorchildComponent {
     this.freightAmountsum()
     this.calculateUncheckedTotalCharges()
   }
+
   uncheckedTotalCharges: number = 0
+
   calculateUncheckedTotalCharges() {
     this.entity.advAmount = this.entity.motormemoExpenses
       .filter(exp => !exp.isChecked)
@@ -896,6 +784,7 @@ export class MotorchildComponent {
       0
     );
   }
+
   Senderfuncion() {
 
     $('#SenderModal').modal('show');
@@ -942,8 +831,6 @@ export class MotorchildComponent {
 
   onserchinput: string
   filteredSenders = [];
-
-
 
   onserchvender() {
     var param = {
@@ -1007,8 +894,6 @@ export class MotorchildComponent {
     this.SenderisClicked = false
     $('#SenderModal').modal('hide');
   };
-
-
 
   sendergstinfun() {
 
@@ -1132,8 +1017,6 @@ export class MotorchildComponent {
     });
   }
 
-
-
   ReceiverSavefun() {
 
     this.dialog.swal({
@@ -1196,7 +1079,6 @@ export class MotorchildComponent {
     }
   }
 
-
   deleteOtherTablerow(index) {
     var params = {
 
@@ -1224,11 +1106,9 @@ export class MotorchildComponent {
       return item.otherchag;
     });
 
-
     if (sumArray.length > 0) {
       var sumValue = sumArray.reduce(function (pValue, cValue) {
         return Number(pValue) + Number(cValue)
-
       });
     } else {
       sumValue = 0;
@@ -1273,9 +1153,7 @@ export class MotorchildComponent {
   calculateAmounts() {
     let total = this.entity.totaldebitadd || 0;
 
-
     if (this.entity.freightType == 0 || this.entity.freightType == 2) {
-
       this.entity.motormemoDetails.senderAmount = total;
       this.entity.motormemoDetails.receiverAmount = 0;
     } else if (this.entity.freightType == 1) {
@@ -1305,6 +1183,7 @@ export class MotorchildComponent {
 
     }
   }
+
   OnchangeDebitAm() {
     this.entity.motormemoDetails.receiverAmount = (this.entity.totaldebitadd || 0) - this.entity.motormemoDetails.senderAmount
     if (this.entity.motormemoDetails.receiverAmount > 0 && this.entity.motormemoDetails.senderAmount == 0) {
@@ -1325,13 +1204,12 @@ export class MotorchildComponent {
       this.entity.leftAmount = 0;
       this.entity.leftAmount = (this.entity.totalFreight - this.entity.advAmount).round(2);
     }, 100);
-
   }
+
   debittoamt() {
     if (this.entity.motormemoDetails.receiverAmount == 0) {
       this.entity.motormemoDetails.senderAmount = this.entity.totaldebitadd;
     }
-
   }
 
   Vehiclenotab() {
@@ -1360,7 +1238,6 @@ export class MotorchildComponent {
       setTimeout(() => nextElement?.focus(), 10);
     }
   }
-
 
   isDirectChecked: boolean = false;
 
