@@ -403,7 +403,7 @@
                                         <input type="text" style="width: 8rem;" class="form-control text-end"
                                             name="totaldebitadd" [(ngModel)]="entity.totaldebitadd" autocomplete="off"
                                             #totaldebitadd="ngModel" digitOnly CurrencyMask fraction="2"
-                                             disabled="true">
+                                            disabled="true">
                                     </div>
                                     <table class="table">
                                         <thead>
@@ -555,7 +555,7 @@
                         </div>
 
                         <hr>
-                        <div class="container  mt-3">
+                        <!-- <div class="container  mt-3">
                             <div class="d-flex">
                                
                                 <div class="card w-50 m-1">
@@ -738,7 +738,189 @@
 
                                 </div>
                             </div>
+                        </div> -->
+                        <div class="container mt-3">
+
+                            <!-- Nav Tabs -->
+                            <ul class="nav nav-tabs">
+                                <li class="nav-item">
+                                    <button class="nav-link" [class.active]="activeTab === 'sender'"
+                                        (click)="setTab('sender')">
+                                        Receipt [ Sender ]
+                                    </button>
+                                </li>
+                                <li class="nav-item">
+                                    <button class="nav-link" [class.active]="activeTab === 'receiver'"
+                                        (click)="setTab('receiver')">
+                                        Receipt [ Receiver ]
+                                    </button>
+                                </li>
+                            </ul>
+                            <!-- Tab Content -->
+                            <div class="tab-content mt-3">
+
+                                <!-- Sender Tab -->
+                                 <div *ngIf="activeTab === 'sender'">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h5 class="m-0 p-2">Receipt [ Sender ]</h5>
+                                        </div>
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-center" style="width: 40%;"><b>Account</b></th>
+                                                    <th class="text-center" style="width: 25%;"><b>Amount</b></th>
+                                                    <th class="text-center" style="width: 25%;"><b>Narration</b></th>
+                                                    <th class="text-center" style="width: 10%;"><b>Action</b></th>
+                                                </tr>
+                                                <tr>
+                                                    <th style="width:40%;">
+                                                        <app-ngselect apiUrl="Account/getAcclistbyMgCode"
+                                                            bindLabel="accName" bindValue="accCode"
+                                                            name="contraItemsaccount" [(ngModel)]="payment.accCode"
+                                                            (change)="getAccountDetl($event)"
+                                                            [apiParams]="{mgCode:'3, 4, 25'}"
+                                                            [defaultProperty]="payment.accCodeNavigation"
+                                                            [disabled]="navactions.fieldset || disablePaymentFields"
+                                                            [applyMargins]="false">
+                                                        </app-ngselect>
+                                                    </th>
+                                                    <th style="width: 25%;">
+                                                        <input class="form-control" type="text" name="charges"
+                                                            [disabled]="disablePaymentFields" digitOnly CurrencyMask
+                                                            fraction="2" [(ngModel)]="payment.amount"
+                                                            autocomplete="off">
+                                                    </th>
+                                                    <th style="width: 25%;">
+                                                        <input class="form-control" type="text" name="Naration"
+                                                            [(ngModel)]="payment.narration"
+                                                            [disabled]="disablePaymentFields" autocomplete="off">
+                                                    </th>
+                                                    <th class="text-center" style="width: 10%;">
+                                                        <button class="btn btn-light btn-sm text-center" type="button"
+                                                            (click)="AddAdvDetl()">
+                                                            <i class="fas fa-plus"></i>
+                                                        </button>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="actionTableHeight">
+                                                <div *ngIf="!entity?.motormemoPayments || entity.motormemoPayments.length === 0"
+                                                    class="noDataImg">
+                                                    <img src="../../../../../../assets/IMG/noData.png" width="50">
+                                                    <p>Record is empty</p>
+                                                </div>
+                                                <tr *ngFor="let v of entity.motormemoPayments; let i = index;">
+                                                    <td>{{v.accCodeNavigation?.accName}}</td>
+                                                    <td>{{v.amount | number:'1.2-2'}}</td>
+                                                    <td>{{v.narration}}</td>
+                                                    <td class="text-center">
+                                                        <button class="btn btn-primary btn-sm-custom-table me-1"
+                                                            (click)="editAdvDetailrow(v,i)">
+                                                            <i class="fas fa-edit"></i>
+                                                        </button>
+                                                        <button class="btn btn-danger btn-sm-custom-table"
+                                                            (click)="deleteAdvDetail(i)">
+                                                            <i class="fas fa-trash"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <td class="p-1 text-end">Total</td>
+                                                    <td class="text-center">{{entity.senderTotalAmt | number:'1.2-2'}}
+                                                    </td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <!-- Receiver Tab -->
+                                <div *ngIf="activeTab === 'receiver'">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h5 class="m-0 p-2">Receipt [ Receiver ]</h5>
+                                        </div>
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-center" style="width: 40%;"><b>Account</b></th>
+                                                    <th class="text-center" style="width: 25%;"><b>Amount</b></th>
+                                                    <th class="text-center" style="width: 25%;"><b>Narration</b></th>
+                                                    <th class="text-center" style="width: 10%;"><b>Action</b></th>
+                                                </tr>
+                                                <tr>
+                                                    <th style="width:40%;">
+                                                        <app-ngselect apiUrl="Account/getAcclistbyMgCode"
+                                                            bindLabel="accName" bindValue="accCode" name="Itemsaccount"
+                                                            [(ngModel)]="recPayment.accCode"
+                                                            (change)="getrecAccountDetl($event)"
+                                                            [apiParams]="{mgCode:'3, 4, 25'}"
+                                                            [defaultProperty]="recPayment.accCodeNavigation"
+                                                            [disabled]="navactions.fieldset || disableRecPaymentFields"
+                                                            [applyMargins]="false">
+                                                        </app-ngselect>
+                                                    </th>
+                                                    <th style="width: 25%;">
+                                                        <input class="form-control" type="text" name="recAmt"
+                                                            [disabled]="disableRecPaymentFields" digitOnly CurrencyMask
+                                                            fraction="2" [(ngModel)]="recPayment.amount"
+                                                            autocomplete="off">
+                                                    </th>
+                                                    <th style="width: 25%;">
+                                                        <input class="form-control" type="text" name="RecNaration"
+                                                            [(ngModel)]="recPayment.narration"
+                                                            [disabled]="disableRecPaymentFields" autocomplete="off">
+                                                    </th>
+                                                    <th class="text-center" style="width: 10%;">
+                                                        <button class="btn btn-light btn-sm text-center" type="button"
+                                                            (click)="AddRecDetl()">
+                                                            <i class="fas fa-plus"></i>
+                                                        </button>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="actionTableHeight">
+                                                <div *ngIf="!entity?.motormemoRecPayments || entity.motormemoRecPayments.length === 0"
+                                                    class="noDataImg">
+                                                    <img src="../../../../../../assets/IMG/noData.png" width="50">
+                                                    <p>Record is empty</p>
+                                                </div>
+                                                <tr *ngFor="let v of entity.motormemoRecPayments; let i = index;">
+                                                    <td>{{v.accCodeNavigation?.accName}}</td>
+                                                    <td>{{v.amount | number:'1.2-2'}}</td>
+                                                    <td>{{v.narration}}</td>
+                                                    <td class="text-center">
+                                                        <button class="btn btn-primary btn-sm-custom-table me-1"
+                                                            (click)="editRecDetailrow(v,i)">
+                                                            <i class="fas fa-edit"></i>
+                                                        </button>
+                                                        <button class="btn btn-danger btn-sm-custom-table"
+                                                            (click)="deleteRecDetail(i)">
+                                                            <i class="fas fa-trash"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <td class="p-1 text-end">Total</td>
+                                                    <td class="text-center">{{entity.recTotalAmt | number:'1.2-2'}}</td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+
+                            </div>
                         </div>
+
                         <hr>
                         <div class="container mt-3">
                             <div class="card">

@@ -21,5 +21,12 @@
   cursor: pointer;
   padding: 5px;
 }
+.nav-tabs .nav-link {
+  color: black !important;
+}
 
+/* Add spacing between tabs */
+.nav-tabs .nav-item {
+  margin-right: 10px;  /* adjust spacing as you like */
+}
  

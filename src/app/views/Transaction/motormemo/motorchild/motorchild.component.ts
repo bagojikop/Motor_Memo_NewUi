@@ -445,7 +445,7 @@ export class MotorchildComponent {
 
   //         }
 
-         
+
 
   //         this.entity.motormemoAudit = this.entity.motormemoAudit || <MotormemoAuditObj>{};
   //         this.entity.acc003s = this.entity.acc003s || <Acc003sObj>{};
@@ -460,8 +460,8 @@ export class MotorchildComponent {
   //       this.additinOfFreight();
   //       this.totalRecAmt();
   //       this.additinOftotalchages()
-        
-        
+
+
   //       this.isReceiverClicked = false;
   //       this.isSenderClicked = false;
   //       this.SenderisClicked = false
@@ -475,43 +475,43 @@ export class MotorchildComponent {
 
   isEditMode = false;
 
-callbackedit() {
-  this.spinner.show();
-  let url = "MotorMemo/edit";
-  this.http.get(url, { id: this.entity.vchId }).subscribe({
-    next: (res: any) => {
-      if (res.status_cd == 1) {
-        this.entity = res.data;
-        this.isEditMode = true;   // mark edit mode ON
+  callbackedit() {
+    this.spinner.show();
+    let url = "MotorMemo/edit";
+    this.http.get(url, { id: this.entity.vchId }).subscribe({
+      next: (res: any) => {
+        if (res.status_cd == 1) {
+          this.entity = res.data;
+          this.isEditMode = true;   // mark edit mode ON
 
-        if (this.entity.directPaid) {
-          this.disablePaymentFields = true;
+          if (this.entity.directPaid) {
+            this.disablePaymentFields = true;
+          }
+
+          this.entity.motormemoAudit = this.entity.motormemoAudit || <MotormemoAuditObj>{};
+          this.entity.acc003s = this.entity.acc003s || <Acc003sObj>{};
+          this.entity.motormemoDetails = this.entity.motormemoDetails || <MotormemoDetailsObj>{};
+
+          this.entity.motormemoAudit.createdDt = this.datepipe.transform(this.entity.motormemoAudit.createdDt, 'yyyy-MM-dd') ?? this.entity.motormemoAudit.createdDt;
+          this.entity.motormemoAudit.modifiedDt = this.datepipe.transform(this.entity.motormemoAudit.modifiedDt, 'yyyy-MM-dd') ?? this.entity.motormemoAudit.modifiedDt;
+
+          this.pastentity = Object.assign({}, this.entity);
         }
-
-        this.entity.motormemoAudit = this.entity.motormemoAudit || <MotormemoAuditObj>{};
-        this.entity.acc003s = this.entity.acc003s || <Acc003sObj>{};
-        this.entity.motormemoDetails = this.entity.motormemoDetails || <MotormemoDetailsObj>{};
-
-        this.entity.motormemoAudit.createdDt = this.datepipe.transform(this.entity.motormemoAudit.createdDt, 'yyyy-MM-dd') ?? this.entity.motormemoAudit.createdDt;
-        this.entity.motormemoAudit.modifiedDt = this.datepipe.transform(this.entity.motormemoAudit.modifiedDt, 'yyyy-MM-dd') ?? this.entity.motormemoAudit.modifiedDt;
-
-        this.pastentity = Object.assign({}, this.entity);
+        this.spinner.hide();
+        this.additinOfFreight();
+        this.totalRecAmt();
+        this.additinOftotalchages();
+        this.isReceiverClicked = false;
+        this.isSenderClicked = false;
+        this.SenderisClicked = false;
+        this.ReceiverisClicked = false;
+      },
+      error: (err: any) => {
+        this.spinner.hide();
+        this.dialog.swal({ dialog: 'error', title: 'Error', message: err });
       }
-      this.spinner.hide();
-      this.additinOfFreight();
-      this.totalRecAmt();
-      this.additinOftotalchages();
-      this.isReceiverClicked = false;
-      this.isSenderClicked = false;
-      this.SenderisClicked = false;
-      this.ReceiverisClicked = false;
-    },
-    error: (err: any) => {
-      this.spinner.hide();
-      this.dialog.swal({ dialog: 'error', title: 'Error', message: err });
-    }
-  })
-}
+    })
+  }
   data: any = {}
   save() {
     this.totalAmtCalc()
@@ -1237,6 +1237,22 @@ callbackedit() {
     this.totalDebit()
   }
 
+  activeTab: string = 'sender'; // default tab
+
+  setTab(tab: string) {
+    this.activeTab = tab;
+
+    if (this.entity.motormemoDetails.receiverAmount > 0 && this.entity.motormemoDetails.senderAmount > 0) {
+      if (this.entity.directPaid == false) {
+        this.disableRecPaymentFields = false;
+        this.disablePaymentFields = false;
+      }else{
+        this.disableRecPaymentFields = true;
+        this.disablePaymentFields = true;
+      }
+    }
+  }
+
   // totalDebit() {
   //   this.entity.totaldebitadd = Number(this.entity.totalothercharges || 0) + Number(this.entity.TotalFreight);
   //   this.entity.motormemoDetails.senderAmount = this.entity.totaldebitadd;
@@ -1244,15 +1260,15 @@ callbackedit() {
   // }
 
   totalDebit() {
-  this.entity.totaldebitadd = Number(this.entity.totalothercharges || 0) + Number(this.entity.TotalFreight);
+    this.entity.totaldebitadd = Number(this.entity.totalothercharges || 0) + Number(this.entity.TotalFreight);
 
-  if (!this.isEditMode) {  
-    // only assign senderAmount in create/new mode
-    this.entity.motormemoDetails.senderAmount = this.entity.totaldebitadd;
+    if (!this.isEditMode) {
+      // only assign senderAmount in create/new mode
+      this.entity.motormemoDetails.senderAmount = this.entity.totaldebitadd;
+    }
+
+    this.calculateAmounts();
   }
-
-  this.calculateAmounts();
-}
 
   calculateAmounts() {
     let total = this.entity.totaldebitadd || 0;
@@ -1267,20 +1283,26 @@ callbackedit() {
       this.entity.motormemoDetails.receiverAmount = total;
       this.entity.motormemoDetails.senderAmount = 0;
     }
-    if (this.entity.motormemoDetails.receiverAmount > 0 && this.entity.motormemoDetails.senderAmount == 0) {
+    if (this.entity.motormemoDetails.receiverAmount > 0 && this.entity.motormemoDetails.senderAmount == 0 && this.entity.directPaid == false) {
       this.disablePaymentFields = true;
       this.disableRecPaymentFields = false;
-    } else if (this.entity.motormemoDetails.senderAmount > 0 && this.entity.motormemoDetails.receiverAmount == 0) {
+    } else if (this.entity.motormemoDetails.senderAmount > 0 && this.entity.motormemoDetails.receiverAmount == 0 && this.entity.directPaid == false) {
       this.disableRecPaymentFields = true;
       this.disablePaymentFields = false;
     }
-    else if (this.entity.freightType == 2 && this.entity.motormemoDetails.receiverAmount == 0) {
+    else if ((this.entity.freightType == 2 && this.entity.motormemoDetails.receiverAmount == 0 && this.entity.directPaid == true) || this.entity.directPaid == true) {
       this.disableRecPaymentFields = true;
       this.disablePaymentFields = true;
     }
     else if (this.entity.motormemoDetails.receiverAmount > 0 && this.entity.motormemoDetails.senderAmount > 0) {
-      this.disableRecPaymentFields = false;
-      this.disablePaymentFields = false;
+      if (this.entity.directPaid == false) {
+        this.disableRecPaymentFields = false;
+        this.disablePaymentFields = false;
+      }else{
+        this.disableRecPaymentFields = true;
+        this.disablePaymentFields = true;
+      }
+
     }
   }
   OnchangeDebitAm() {
@@ -1306,10 +1328,10 @@ callbackedit() {
 
   }
   debittoamt() {
-    if(this.entity.motormemoDetails.receiverAmount == 0){
+    if (this.entity.motormemoDetails.receiverAmount == 0) {
       this.entity.motormemoDetails.senderAmount = this.entity.totaldebitadd;
     }
-    
+
   }
 
   Vehiclenotab() {
