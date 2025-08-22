@@ -1184,6 +1184,14 @@ export class MotorchildComponent {
     }
   }
 
+  onselectcomm(s)
+  {
+    // this.cmod.iUnit=s.iUnit;
+    // this.cmod.unitName=s.unitName;
+    this.cmod.unitCode=s.iUnit
+    this.cmod.iUnitNavigation=s.iUnitNavigation;
+  }
+
   OnchangeDebitAm() {
     this.entity.motormemoDetails.receiverAmount = (this.entity.totaldebitadd || 0) - this.entity.motormemoDetails.senderAmount
     if (this.entity.motormemoDetails.receiverAmount > 0 && this.entity.motormemoDetails.senderAmount == 0) {

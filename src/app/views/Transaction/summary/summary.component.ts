@@ -147,7 +147,8 @@ export class SummaryComponent {
 
   iConfirmFn(row) {
     var params = {
-      id: row.sId
+      id: row.s_Id
+
     }
     this.http.delete('Sundry/delete', params).subscribe((res: any) => {
       if (res.status_cd == 1) {
@@ -186,13 +187,13 @@ export class SummaryComponent {
 
   save() {
     this.spinner.show();
-    if (!this.entity.sId) {
+    if (!this.entity.s_Id) {
 
       this.http.post('Sundry/Create', this.entity).subscribe({
         next: (res: any) => {
           if (res.status_cd == 1) {
 
-            this.entity.sId = res.data.sId;
+            this.entity.s_Id = res.data.s_Id;
             this.gridApi.applyTransaction({ add: [this.entity] });
             this.dialog.swal({ dialog: "success", title: "Success", message: "Record is saved sucessfully" })
               .then((res: any) => {
@@ -210,13 +211,14 @@ export class SummaryComponent {
       })
     }
     else {
-      this.http.put('Sundry/Edit', this.entity, { id: this.entity.sId }).subscribe({
+      this.http.put('Sundry/Edit', this.entity, { id: this.entity.s_Id }).subscribe({
         next: (res: any) => {
           if (res.status_cd == 1) {
-            this.entity.sId = res.data.sId;
+            this.entity.s_Id = res.data.s_Id;
             this.gridApi.applyTransaction({ update: [this.entity] });
             this.pastEntity = Object.assign({}, this.entity);
             this.dialog.swal({ dialog: "success", title: "Success", message: "Record is Update sucessfully" });
+            
           }
           $("#district").modal('hide');
 

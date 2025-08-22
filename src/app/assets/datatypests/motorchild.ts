@@ -110,7 +110,7 @@ export interface MotormemoExpensesObj {
 }
 export interface MotormemoCommoditiesObj {
   commodity: any
-  uom: string
+  unitCode: string
   qty: number
   chrgWeight:number
   actWeight:number

@@ -418,7 +418,14 @@ export class BiltychildComponent {
     this.gstdefault();
   }
 
-
+  onselectcomm(s)
+  {
+    // this.cmod.iUnit=s.iUnit;
+    // this.cmod.unitName=s.unitName;
+    this.cmod.unitCode=s.iUnit
+    this.cmod.iUnitNavigation=s.iUnitNavigation;
+  }
+  
   callbackedit() {
     this.spinner.show();
     var url = "Bilty/edit"

@@ -303,14 +303,14 @@
                                                 <div class="input-group ">
                                                     <app-ngselect style="width: 100%;" apiUrl="productinfo/getList"
                                                         bindLabel="iName" bindValue="iName" name="commodity1"
-                                                        [(ngModel)]="cmod.commodity" #unit="ngModel"
+                                                        [(ngModel)]="cmod.commodity" #unit="ngModel" (change)="onselectcomm($event)"
                                                         [addNewText]="true"></app-ngselect>
                                                 </div>
                                             </th>
                                             <th>
                                                 <app-ngselect style="width: 100%;" apiUrl="Unit/getUnit" name="uom1"
-                                                    bindLabel="unitName" bindValue="unitName" [(ngModel)]="cmod.uom"
-                                                    [addNewText]="true"></app-ngselect>
+                                                    bindLabel="unitName" bindValue="unitCode" [(ngModel)]="cmod.unitCode"
+                                                    [addNewText]="true" [defaultProperty]="cmod.iUnitNavigation"></app-ngselect>
 
                                             </th>
                                             <th>
@@ -358,7 +358,7 @@
 
                                         <tr *ngFor="let v of entity.motormemoCommodities;let i=index;">
                                             <td style="width: 20%; text-align: left;">{{v.commodity}}</td>
-                                            <td>{{v.uom}}</td>
+                                            <td>{{v.unitCode}}</td>
                                             <td>{{v.qty}}</td>
                                             <td>{{v.chrgWeight}}</td>
                                             <td>{{v.actWeight}}</td>
