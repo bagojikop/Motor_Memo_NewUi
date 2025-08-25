@@ -811,10 +811,10 @@
                                                     <p>Record is empty</p>
                                                 </div>
                                                 <tr *ngFor="let v of entity.motormemoPayments; let i = index;">
-                                                    <td>{{v.accCodeNavigation?.accName}}</td>
-                                                    <td>{{v.amount | number:'1.2-2'}}</td>
-                                                    <td>{{v.narration}}</td>
-                                                    <td class="text-center">
+                                                    <td style="width:40%">{{v.accCodeNavigation?.accName}}</td>
+                                                    <td style="width:25%">{{v.amount | number:'1.2-2'}}</td>
+                                                    <td style="width:25%">{{v.narration}}</td>
+                                                    <td class="text-center" style="width:10%">
                                                         <button class="btn btn-primary btn-sm-custom-table me-1"
                                                             (click)="editAdvDetailrow(v,i)">
                                                             <i class="fas fa-edit"></i>
@@ -828,11 +828,11 @@
                                             </tbody>
                                             <tfoot>
                                                 <tr>
-                                                    <td class="p-1 text-end">Total</td>
-                                                    <td class="text-center">{{entity.senderTotalAmt | number:'1.2-2'}}
+                                                    <td class="p-1 text-end" style="width:40%">Total</td>
+                                                    <td class="text-center" style="width:25%">{{entity.senderTotalAmt | number:'1.2-2'}}
                                                     </td>
-                                                    <td></td>
-                                                    <td></td>
+                                                    <td style="width:25%"></td>
+                                                    <td style="width:10%"></td>
                                                 </tr>
                                             </tfoot>
                                         </table>

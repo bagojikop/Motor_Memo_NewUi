@@ -839,7 +839,7 @@ export class BiltychildComponent {
   }
 
   addgstTablerow() {
-    if (this.cmod.commodity && this.cmod.uom && this.cmod.qty && this.cmod.chrgWeight && this.cmod.actWeight && this.cmod.rate && this.cmod.freight) {
+    if (this.cmod.commodity && this.cmod.unitCode && this.cmod.qty && this.cmod.chrgWeight && this.cmod.actWeight && this.cmod.rate && this.cmod.freight) {
       if (this.rowIndex == null) {
         this.entity.biltyCommodities.push(this.cmod);
       }

@@ -411,8 +411,8 @@
                                                     <div class="d-flex-width">
                                                         <label>Rate %</label>
                                                         <input style="text-align: right;" name="sgst" [disabled]="gstType === 'INTER'"
-                                                            [(ngModel)]="entity.biltyGstDetails.sgst" numberOnly
-                                                            class="form-control" digitOnly autocomplete="off"
+                                                            [(ngModel)]="entity.biltyGstDetails.sgst"
+                                                            class="form-control" autocomplete="off"
                                                             (ngModelChange)="gstamt()" />
                                                     </div>
                                                     <div class="gapInputFields">
@@ -440,8 +440,8 @@
                                                     <div class="d-flex-width">
                                                         <label>Rate %</label>
                                                         <input style="text-align: right;" name="cgst" [disabled]="gstType === 'INTER'"
-                                                            [(ngModel)]="entity.biltyGstDetails.cgst" numberOnly
-                                                            class="form-control" digitOnly autocomplete="off"
+                                                            [(ngModel)]="entity.biltyGstDetails.cgst" 
+                                                            class="form-control" autocomplete="off"
                                                             (ngModelChange)="gstamt()" />
                                                     </div>
                                                     <div class="gapInputFields">
@@ -468,8 +468,8 @@
                                                     <div class="d-flex-width">
                                                         <label>Rate %</label>
                                                         <input style="text-align: right;" name="igst" [disabled]="gstType === 'INTRA'"
-                                                            [(ngModel)]="entity.biltyGstDetails.igst" numberOnly
-                                                            class="form-control" digitOnly autocomplete="off"
+                                                            [(ngModel)]="entity.biltyGstDetails.igst"
+                                                            class="form-control" autocomplete="off"
                                                             (ngModelChange)="gstamt()" />
                                                     </div>
                                                     <div class="gapInputFields">
@@ -496,8 +496,8 @@
                                                     <div class="d-flex-width">
                                                         <label>Rate %</label>
                                                         <input style="text-align: right;" name="cess"
-                                                            [(ngModel)]="entity.biltyGstDetails.cess" numberOnly
-                                                            class="form-control" digitOnly autocomplete="off"
+                                                            [(ngModel)]="entity.biltyGstDetails.cess"
+                                                            class="form-control" autocomplete="off"
                                                             (ngModelChange)="gstamt()" />
                                                     </div>
                                                     <div class="gapInputFields">

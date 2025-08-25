@@ -26,7 +26,7 @@
                                 <label>Account</label>
                                 <app-ngselect apiUrl="Account/getAcclistbyMgCode" class="form-control-sm p-0"
                                     bindLabel="accName" bindValue="accCode" name="recpayeeaccount"
-                                    [(ngModel)]="entity.accCode" [defaultProperty]="entity.accCodeNavigation"
+                                    [(ngModel)]="entity.accCode" [defaultProperty]="entity.accCodeNavigation" 
                                     [apiParams]="{mgCode:'3, 4, 25'}" [disabled]="navactions.fieldset"></app-ngselect>
                                 <div>
                                     <label>Transaction Type</label>
@@ -46,7 +46,7 @@
                                 </div>
                                 <div>
                                     <label class="mb-0 mt-2">Amount</label>
-                                    <input class="form-control text-end" name="amount" [disabled]="true"
+                                    <input class="form-control text-end" name="amount" disabled="true"
                                         [(ngModel)]="entity.amount" CurrencyMask currency="INR" symbol fraction="2"
                                         autocomplete="off">
                                 </div>
