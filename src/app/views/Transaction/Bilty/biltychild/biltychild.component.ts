@@ -418,7 +418,14 @@ export class BiltychildComponent {
     this.gstdefault();
   }
 
-
+  onselectcomm(s)
+  {
+    // this.cmod.iUnit=s.iUnit;
+    // this.cmod.unitName=s.unitName;
+    this.cmod.unitCode=s.iUnit
+    this.cmod.iUnitNavigation=s.iUnitNavigation;
+  }
+  
   callbackedit() {
     this.spinner.show();
     var url = "Bilty/edit"
@@ -832,7 +839,7 @@ export class BiltychildComponent {
   }
 
   addgstTablerow() {
-    if (this.cmod.commodity && this.cmod.uom && this.cmod.qty && this.cmod.chrgWeight && this.cmod.actWeight && this.cmod.rate && this.cmod.freight) {
+    if (this.cmod.commodity && this.cmod.unitCode && this.cmod.qty && this.cmod.chrgWeight && this.cmod.actWeight && this.cmod.rate && this.cmod.freight) {
       if (this.rowIndex == null) {
         this.entity.biltyCommodities.push(this.cmod);
       }

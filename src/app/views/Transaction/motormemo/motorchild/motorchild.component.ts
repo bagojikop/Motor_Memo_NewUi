@@ -327,7 +327,7 @@ export class MotorchildComponent {
   }
 
   totalAmtCalc() {
-    if ((this.entity.senderTotalAmt = this.entity.motormemoDetails.senderAmount) && (this.entity.recTotalAmt = this.entity.motormemoDetails.receiverAmount))
+    if ((this.entity.senderTotalAmt) && (this.entity.recTotalAmt))
       this.entity.totalAmt = Number(this.entity.senderTotalAmt) + Number(this.entity.recTotalAmt);
   }
 
@@ -362,7 +362,7 @@ export class MotorchildComponent {
   }
 
   addgstTablerow() {
-    if (this.cmod.commodity && this.cmod.uom && this.cmod.qty && this.cmod.chrgWeight && this.cmod.actWeight && this.cmod.rate && this.cmod.freight) {
+    if (this.cmod.commodity && this.cmod.unitCode && this.cmod.qty && this.cmod.chrgWeight && this.cmod.actWeight && this.cmod.rate && this.cmod.freight) {
 
       if (this.rowIndex == null) {
         this.entity.motormemoCommodities.push(this.cmod);
@@ -472,7 +472,7 @@ export class MotorchildComponent {
     this.additinOfpaymnet()
 
     if (this.entity.motormemoPayments?.length > 0
-      && this.entity.totalAmt !== this.entity.totalFreight) {
+      && (this.entity.senderTotalAmt || this.entity.recTotalAmt || this.entity.totalAmt) !== this.entity.totaldebitadd) {
       this.dialog.swal({ dialog: "confirm", title: "Warning", message: "Please Check Total Payment Amount" });
     } else {
       Object.keys(this.motorchild.form.controls).forEach(key => {
@@ -1182,6 +1182,14 @@ export class MotorchildComponent {
       }
 
     }
+  }
+
+  onselectcomm(s)
+  {
+    // this.cmod.iUnit=s.iUnit;
+    // this.cmod.unitName=s.unitName;
+    this.cmod.unitCode=s.iUnit
+    this.cmod.iUnitNavigation=s.iUnitNavigation;
   }
 
   OnchangeDebitAm() {

@@ -1,6 +1,6 @@
 <div [hidden]="rptMode">
     <div>
-        <app-navactions [title]="'Lorry Receipt Chargeble'" (myfn)="navbar($event)"></app-navactions>
+        <app-navactions [title]="'Lorry Receipt'" (myfn)="navbar($event)"></app-navactions>
 
         <div class="from-body">
             <div class="card-body mt-2">
@@ -303,14 +303,14 @@
                                                 <div class="input-group ">
                                                     <app-ngselect style="width: 100%;" apiUrl="productinfo/getList"
                                                         bindLabel="iName" bindValue="iName" name="commodity1"
-                                                        [(ngModel)]="cmod.commodity" #unit="ngModel"
+                                                        [(ngModel)]="cmod.commodity" #unit="ngModel" (change)="onselectcomm($event)"
                                                         [addNewText]="true"></app-ngselect>
                                                 </div>
                                             </th>
                                             <th>
                                                 <app-ngselect style="width: 100%;" apiUrl="Unit/getUnit" name="uom1"
-                                                    bindLabel="unitName" bindValue="unitName" [(ngModel)]="cmod.uom"
-                                                    [addNewText]="true"></app-ngselect>
+                                                    bindLabel="unitName" bindValue="unitCode" [(ngModel)]="cmod.unitCode"
+                                                    [addNewText]="true" [defaultProperty]="cmod.iUnitNavigation"></app-ngselect>
 
                                             </th>
                                             <th>
@@ -358,7 +358,7 @@
 
                                         <tr *ngFor="let v of entity.motormemoCommodities;let i=index;">
                                             <td style="width: 20%; text-align: left;">{{v.commodity}}</td>
-                                            <td>{{v.uom}}</td>
+                                            <td>{{v.unitCode}}</td>
                                             <td>{{v.qty}}</td>
                                             <td>{{v.chrgWeight}}</td>
                                             <td>{{v.actWeight}}</td>
@@ -811,10 +811,10 @@
                                                     <p>Record is empty</p>
                                                 </div>
                                                 <tr *ngFor="let v of entity.motormemoPayments; let i = index;">
-                                                    <td>{{v.accCodeNavigation?.accName}}</td>
-                                                    <td>{{v.amount | number:'1.2-2'}}</td>
-                                                    <td>{{v.narration}}</td>
-                                                    <td class="text-center">
+                                                    <td style="width:40%">{{v.accCodeNavigation?.accName}}</td>
+                                                    <td style="width:25%">{{v.amount | number:'1.2-2'}}</td>
+                                                    <td style="width:25%">{{v.narration}}</td>
+                                                    <td class="text-center" style="width:10%">
                                                         <button class="btn btn-primary btn-sm-custom-table me-1"
                                                             (click)="editAdvDetailrow(v,i)">
                                                             <i class="fas fa-edit"></i>
@@ -828,11 +828,11 @@
                                             </tbody>
                                             <tfoot>
                                                 <tr>
-                                                    <td class="p-1 text-end">Total</td>
-                                                    <td class="text-center">{{entity.senderTotalAmt | number:'1.2-2'}}
+                                                    <td class="p-1 text-end" style="width:40%">Total</td>
+                                                    <td class="text-center" style="width:25%">{{entity.senderTotalAmt | number:'1.2-2'}}
                                                     </td>
-                                                    <td></td>
-                                                    <td></td>
+                                                    <td style="width:25%"></td>
+                                                    <td style="width:10%"></td>
                                                 </tr>
                                             </tfoot>
                                         </table>

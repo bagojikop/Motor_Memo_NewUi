@@ -37,18 +37,18 @@
                                         </div>
 
                                         <dss-input label="Email" type="email" name="email" [(ngModel)]="entity.emailId"
-                                            [applyMargins]="false" [maxlength]="50">
+                                            [applyMargins]="false" [maxlength]="50" autocomplete="off">
                                         </dss-input>
                                         <div>
                                             <label for="">Mobile No</label>
                                             <input class="form-control" [(ngModel)]="entity.mobileNo" numberOnly
-                                                autocomplete="off" name="mobno" [maxlength]="10">
+                                                autocomplete="off" name="mobno" [maxlength]="10" autocomplete="off">
                                         </div>
                                     </div>
                                     <div class="gapInputFields">
                                         <dss-input id="w3review" label="Address" name="accAddress1" [maxlength]="100"
                                             [(ngModel)]="entity.address" inputType="textarea" [rows]="4" [cols]="50"
-                                            (ngModelChange)="entity.address=$event">
+                                            (ngModelChange)="entity.address=$event" autocomplete="off">
                                         </dss-input>
 
                                         <div class="d-flex">
@@ -57,13 +57,13 @@
                                                     bindLabel="cityName" bindValue="cityId" name="pl"
                                                     [(ngModel)]="entity.placeId"
                                                     [defaultProperty]="entity.placeIdNavigation"
-                                                    [disabled]="navactions.fieldset"
+                                                    [disabled]="navactions.fieldset" autocomplete="off"
                                                     (ngModelChange)="getstatefromplace()"></app-ngselect>
                                             </div>
                                             <div class="gapInputFields">
                                                 <label for="">Pin Code</label>
                                                 <input class="form-control" type="text" numberOnly autocomplete="off"
-                                                    [(ngModel)]="entity.pincode" name="pincode" [maxlength]="6">
+                                                    [(ngModel)]="entity.pincode" name="pincode" [maxlength]="6" autocomplete="off">
                                             </div>
                                         </div>
 
