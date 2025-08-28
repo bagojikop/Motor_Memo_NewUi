@@ -49,7 +49,7 @@
                                     <div class="d-flex-width">
                                         <label>Kilo Miters</label>
                                         <input class="form-control" type="text" numberOnly autocomplete="off"
-                                            [(ngModel)]="entity.kiloMiter" name="km" [maxlength]="10" [minlength]="10">
+                                            [(ngModel)]="entity.kms" name="km" [maxlength]="10" [minlength]="10">
                                     </div>
                                     <div class="gapInputFields">
                                         <app-ngselect apiUrl="Place/getPlace" label="from" bindLabel="cityName"
@@ -140,7 +140,7 @@
                                             <td style="width: 15%;"></td>
                                             <td style="width: 15%;"></td>
                                             <td style="width: 10%;text-align: center;">Total</td>
-                                            <td style="text-align: center;width: 10%;"> {{entity.totalWet }}</td>
+                                            <td style="text-align: center;width: 10%;"> {{entity.totalWeight }}</td>
                                             <td style="width: 10%;"></td>
                                             <td style="width: 10%;"></td>
                                             <td style="width: 10%;"></td>
@@ -155,21 +155,21 @@
                                         <div style="width: 20rem;" class="ms-3">
                                             <label for="">Total Weight</label>
                                             <input type="number" style="width: 20rem;" class="form-control text-end"
-                                                name="totalwet" [(ngModel)]="entity.totalWet" CurrencyMask fraction="2"
+                                                name="totalwet" [(ngModel)]="entity.totalWeight" CurrencyMask fraction="2"
                                                 (change)="calculateAmounts()" autocomplete="off">
                                         </div>
 
                                         <div style="width: 20rem;" class="ms-3">
                                             <label for="">Freight / Weight</label>
                                             <input type="number" style="width: 20rem;" class="form-control text-end"
-                                                name="freightperwet" [(ngModel)]="entity.freightperWet" CurrencyMask
+                                                name="freightperwet" [(ngModel)]="entity.frtPerWeight" CurrencyMask
                                                 fraction="2" (change)="calculateAmounts()" autocomplete="off">
                                         </div>
 
                                         <div style="width: 20rem;" class="ms-3">
                                             <label for="">Total Freight</label>
                                             <input type="number" style="width: 20rem;" class="form-control text-end"
-                                                name="freightTotal" [(ngModel)]="entity.freightTotal" CurrencyMask
+                                                name="freightTotal" [(ngModel)]="entity.totalFreightAmt" CurrencyMask
                                                 fraction="2" autocomplete="off">
                                         </div>
                                     </div>
@@ -254,7 +254,7 @@
                                     <tfoot>
                                         <tr>
                                             <td class="p-1 text-end" style="width: 40%;">Total</td>
-                                            <td style="text-align: center;width: 25%;">{{entity.totalAdv |
+                                            <td style="text-align: center;width: 25%;">{{entity.totalAdvAmt |
                                                 number:'1.2-2'}}</td>
                                             <td style="width: 25%;"></td>
                                             <td style="width: 10%;"></td>
@@ -285,14 +285,14 @@
                                         <div style="width: 20rem;" class="ms-3">
                                             <label for="">Total Advance</label>
                                             <input type="number" style="width: 20rem;" class="form-control text-end"
-                                                name="totaladv" [(ngModel)]="entity.totalAdv" CurrencyMask fraction="2"
+                                                name="totaladv" [(ngModel)]="entity.totalAdvAmt" CurrencyMask fraction="2"
                                                 (ngModelChange)="calculateRemAmt()" autocomplete="off">
                                         </div>
 
                                         <div style="width: 20rem;" class="ms-3">
                                             <label for="">Remaning Amount</label>
                                             <input type="number" style="width: 20rem;" class="form-control text-end"
-                                                name="remaning" [(ngModel)]="entity.remAmt" CurrencyMask fraction="2"
+                                                name="remaning" [(ngModel)]="entity.leftAmt" CurrencyMask fraction="2"
                                                 autocomplete="off">
                                         </div>
                                     </div>

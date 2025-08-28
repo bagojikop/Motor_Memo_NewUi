@@ -7,7 +7,7 @@ import { DialogsComponent } from '../../../../assets/pg/dialogs/dialogs.componen
 import { ReportDictionory } from '../../../../../../assets/service/interfaces';
 import { v4 as uuidv4 } from 'uuid'
 import { FormsModule, NgForm } from '@angular/forms';
-import { SubconsigneeObj, MotormemoAuditObj, MotormemoDetailsObj, Acc003sObj } from '../../../../assets/datatypests/motorchild';
+import { MotorMemoObj, MotormemoAuditObj, MotormemoDetailsObj, Acc003sObj } from '../../../../assets/datatypests/motorchild';
 declare var $: any;
 import "../../../../../app/assets/services/datePrototype";
 import { NgSelectModule } from '@ng-select/ng-select';
@@ -33,7 +33,7 @@ import Swal from 'sweetalert2';
 })
 export class MotorchildComponent {
   @ViewChild("motorchild") motorchild: NgForm;
-  entity: SubconsigneeObj;
+  entity: MotorMemoObj;
   page: number = 1;
   pageSize: number = 15;
   totalItems: number = 0;
@@ -71,7 +71,7 @@ export class MotorchildComponent {
     public navactions: NavbarActions,
     public master: Master
   ) {
-    this.entity = <SubconsigneeObj>{};
+    this.entity = <MotorMemoObj>{};
     this.stateParams = this.location.getState();
     this.mode = this.stateParams.action;
     this.entity.vchId = this.stateParams.id;
@@ -83,24 +83,24 @@ export class MotorchildComponent {
   recPayment: any = {}
 
   freightTypeList: any = [];
-  
+
   ngOnInit(): void {
 
     setInterval(() => {
       this.windowrespo();
     }, 1000)
 
-    this.entity = <SubconsigneeObj>{};
+    this.entity = <MotorMemoObj>{};
     this.entity.motormemoAudit = <MotormemoAuditObj>{};
     this.entity.motormemoDetails = <MotormemoDetailsObj>{};
     this.entity.acc003s = <Acc003sObj>{};
     this.entity.motormemoCommodities = []
     this.entity.totalcharges = 0;
-    this.entity.motormemoExpenses = [];
+    this.entity.motormemoVehExpenses = [];
     this.entity.motormemoOtherCharges = [];
     this.entity.motormemoPayments = [];
     this.entity.motormemoRecPayments = [];
-    this.exp = { action: 0 };
+    this.exp = { action: 0, isInclFreight: false };
 
     this.freightTypeList = [
       {
@@ -217,7 +217,7 @@ export class MotorchildComponent {
     this.recPayment.accCodeNavigation = obj;
   }
 
-  AddAdvDetl() {
+  AddSenderReceipt() {
     if (this.payment.accCode && this.payment.amount) {
       if (this.rowIndex == null) {
         this.entity.motormemoPayments.push(this.payment);
@@ -234,7 +234,7 @@ export class MotorchildComponent {
     }
   }
 
-  AddRecDetl() {
+  AddReceiverReceipt() {
     if (this.recPayment.accCode && this.recPayment.amount) {
       if (this.rowIndex == null) {
         this.entity.motormemoRecPayments.push(this.recPayment);
@@ -251,20 +251,20 @@ export class MotorchildComponent {
     }
   }
 
-  editAdvDetailrow(v, i) {
+  editSenderDetailrow(v, i) {
     this.rowIndex = i;
     //this.calculateRemAmt()
     this.payment = Object.assign({}, v);
   }
 
-  editRecDetailrow(v, i) {
+  editReciverDetailrow(v, i) {
     this.rowIndex = i;
     //this.calculateRemAmt()
     this.recPayment = Object.assign({}, v);
   }
 
 
-  deleteAdvDetail(i) {
+  deleteSenderDetail(i) {
     var params = {
 
       dialog: 'confirm',
@@ -281,7 +281,7 @@ export class MotorchildComponent {
     })
   }
 
-  deleteRecDetail(i) {
+  deleteReceiverDetail(i) {
     var params = {
 
       dialog: 'confirm',
@@ -303,7 +303,8 @@ export class MotorchildComponent {
     const sumValue = sumArray.reduce((p, c) => Number(p) + Number(c), 0);
     this.entity.senderTotalAmt = sumValue;
 
-    if (this.entity.senderTotalAmt > this.entity.totaldebitadd) {
+    const total = Number(this.entity.totalothercharges || 0) + Number(this.entity.totalFreight || 0)
+    if (this.entity.senderTotalAmt > total) {
       Swal.fire({
         icon: 'warning',
         title: 'Warning',
@@ -316,8 +317,8 @@ export class MotorchildComponent {
     const sumArray = this.entity.motormemoRecPayments.map(item => item.amount || 0);
     const sumValue = sumArray.reduce((p, c) => Number(p) + Number(c), 0);
     this.entity.recTotalAmt = sumValue;
-
-    if (this.entity.recTotalAmt > this.entity.totaldebitadd) {
+    const total = Number(this.entity.totalothercharges || 0) + Number(this.entity.totalFreight || 0)
+    if (this.entity.recTotalAmt > total) {
       Swal.fire({
         icon: 'warning',
         title: 'Warning',
@@ -354,14 +355,14 @@ export class MotorchildComponent {
     }
     this.dialog.swal(params).then(data => {
       if (data == true) {
-        this.entity.motormemoExpenses.splice(index, 1);
-        this.calculateTotalCharges()
-        this.totalRecAmt();
+        this.entity.motormemoVehExpenses.splice(index, 1);
+        this.calcVehCharges()
+        this.setLeftAmt();
       }
     })
   }
 
-  addgstTablerow() {
+  addcommodityTablerow() {
     if (this.cmod.commodity && this.cmod.unitCode && this.cmod.qty && this.cmod.chrgWeight && this.cmod.actWeight && this.cmod.rate && this.cmod.freight) {
 
       if (this.rowIndex == null) {
@@ -373,8 +374,8 @@ export class MotorchildComponent {
 
       this.cmod = {};
       this.rowIndex = null;
-      this.additinOfFreight()
-      this.totalDebit()
+      this.calcFreight()
+
       if (this.entity.motormemoDetails.receiverAmount > 0 && this.entity.motormemoDetails.senderAmount == 0) {
         this.disablePaymentFields = true;
         this.disableRecPaymentFields = false;
@@ -390,30 +391,31 @@ export class MotorchildComponent {
 
   addExpTablerow() {
     if (this.rowIndex == null) {
-      this.entity.motormemoExpenses.push(this.exp);
+      this.entity.motormemoVehExpenses.push(this.exp);
     }
     else {
-      this.entity.motormemoExpenses[this.rowIndex] = this.exp;
+      this.entity.motormemoVehExpenses[this.rowIndex] = this.exp;
     }
     this.exp = {};
     this.rowIndex = null;
-    this.totalRecAmt();
+
     this.exp = { action: 0 };
+    this.calcVehCharges();
   }
 
-  onSelectExp(ev) {
+  onSelectVehExp(ev) {
     this.exp.sundries = {};
 
     this.exp.sundries.sundryName = ev.sundryName;
     this.exp.accCodeNavigation = ev.accCodeNavigation;
   }
 
-  onSelectAcc(ev) {
+  onSelectVehAcc(ev) {
     this.exp.accName = ev.accName;
     this.cd.detectChanges();
   }
 
-  onSelectotherExpacc(ev) {
+  onSelectSenderSundery(ev) {
     this.other.sundries = {}
 
     this.other.sundries.sundryName = ev.sundryName;
@@ -450,8 +452,8 @@ export class MotorchildComponent {
           this.pastentity = Object.assign({}, this.entity);
         }
         this.spinner.hide();
-        this.additinOfFreight();
-        this.totalRecAmt();
+        this.calcFreight();
+        this.setLeftAmt();
         this.additinOftotalchages();
         this.isReceiverClicked = false;
         this.isSenderClicked = false;
@@ -471,8 +473,11 @@ export class MotorchildComponent {
     this.additinOfRecpaymnet()
     this.additinOfpaymnet()
 
+    const total = Number(this.entity.totalothercharges || 0) + Number(this.entity.totalFreight || 0)
+
+
     if (this.entity.motormemoPayments?.length > 0
-      && (this.entity.senderTotalAmt || this.entity.recTotalAmt || this.entity.totalAmt) !== this.entity.totaldebitadd) {
+      && (this.entity.senderTotalAmt || this.entity.recTotalAmt || this.entity.totalAmt) !== total) {
       this.dialog.swal({ dialog: "confirm", title: "Warning", message: "Please Check Total Payment Amount" });
     } else {
       Object.keys(this.motorchild.form.controls).forEach(key => {
@@ -564,11 +569,11 @@ export class MotorchildComponent {
   newRecord() {
     this.pastentity = JSON.parse(JSON.stringify(this.entity))
 
-    this.entity = <SubconsigneeObj>{};
+    this.entity = <MotorMemoObj>{};
     this.entity.motormemoAudit = <MotormemoAuditObj>{};
     this.entity.motormemoDetails = <MotormemoDetailsObj>{};
     this.entity.motormemoCommodities = [];
-    this.entity.motormemoExpenses = [];
+    this.entity.motormemoVehExpenses = [];
     this.entity.motormemoOtherCharges = [];
     this.entity.motormemoPayments = [];
     this.entity.motormemoRecPayments = [];
@@ -704,17 +709,7 @@ export class MotorchildComponent {
     $('#exampleModal').modal('hide');
   }
 
-  totalRecAmt() {
-    var sumArray = this.entity.motormemoExpenses.map(item => {
-      return item.charges;
-    });
-    var sumValue = sumArray.length > 0 ? sumArray.reduce(function (pValue, cValue) {
-      return Number(pValue) + Number(cValue);
-    }, 0) : 0;
 
-    this.entity.totalcharges = sumValue || 0;
-    this.totalcreditamount()
-  }
 
   calculateFreight() {
     const weight = this.cmod.chrgWeight || 0;
@@ -722,68 +717,57 @@ export class MotorchildComponent {
     this.cmod.freight = weight * rate;
   }
 
-  additinOfFreight() {
+  calcFreight() {
     var sumArray = this.entity.motormemoCommodities
       .map(item => item.freight || 0);
-    var sumValue = sumArray.reduce(function (pValue, cValue) {
-      return Number(pValue) + Number(cValue)
-    });
-    this.entity.TotalFreight = sumValue;
-    this.totalDebit()
+    if (sumArray.length > 0) {
+      var sumValue = sumArray.reduce(function (pValue, cValue) {
+        return Number(pValue) + Number(cValue)
+      });
+      this.entity.totalFreight = sumValue;
+
+      this.setDebitToSenderOrReceiver();
+      this.calcVehCharges();
+    }
   }
 
-  updateTotalCharges(): void {
+  updateTotalVehCharges(): void {
     if (this.exp.s_Id && this.exp.accCode && this.exp.charges) {
-      const chargeValue = Number(this.exp.charges) || 0;
-      if (this.exp.action == 1) {
-        this.entity.totalcharges += chargeValue;
-      } else if (this.exp.action == 0) {
-        this.entity.totalcharges -= chargeValue;
-      } else if (this.exp.action == 2) {
-        this.entity.billAmt = (this.entity.billAmt || 0) + chargeValue;
-      }
+
+
       if (this.rowIndex == null) {
-        this.entity.motormemoExpenses.push({ ...this.exp });
+        this.entity.motormemoVehExpenses.push({ ...this.exp });
       } else {
-        this.entity.motormemoExpenses[this.rowIndex] = { ...this.exp };
+        this.entity.motormemoVehExpenses[this.rowIndex] = { ...this.exp };
       }
       this.exp = { action: 0 };
       this.rowIndex = null;
-      this.totalcreditamount()
-      this.totalAmt();
-      this.calculateTotalCharges()
+      this.calcVehCharges()
+
+
 
     }
   }
 
-  totalCharges: number = 0;
-  calculateTotalCharges() {
-    this.totalCharges = this.entity.motormemoExpenses
-      .filter(exp => exp.isChecked)
+
+  calcVehCharges() {
+    const totalCharges = this.entity.motormemoVehExpenses
+      .filter(exp => exp.isInclFreight && exp.action != 2)
       .reduce((sum, exp) => sum + Number(exp.charges), 0);
-    this.freightAmountsum()
-    this.calculateUncheckedTotalCharges()
-  }
-
-  uncheckedTotalCharges: number = 0
-
-  calculateUncheckedTotalCharges() {
-    this.entity.advAmount = this.entity.motormemoExpenses
-      .filter(exp => !exp.isChecked)
+    
+    this.entity.vehAdvAmount = this.entity.motormemoVehExpenses
+      .filter(exp => !exp.isInclFreight && exp.action != 2)
+      .reduce((sum, exp) => sum + Number(exp.charges || 0)*(exp.action==0 ?1 :-1) , 0);
+    this.entity.vehBilledAmt = this.entity.motormemoVehExpenses
+      .filter(exp => exp.action == 2)
       .reduce((sum, exp) => sum + Number(exp.charges), 0);
+this.entity.vehTotalFreight = this.entity.totalFreight - (totalCharges || 0)-(this.entity.vehBilledAmt || 0)
+    this.entity.totalcharges = totalCharges + this.entity.vehAdvAmount + this.entity.vehBilledAmt;
 
+    this.setLeftAmt();
   }
 
-  freightAmountsum() {
-    this.entity.totalFreight = this.entity.TotalFreight - this.totalCharges
-  }
 
-  totalAmt(): void {
-    this.entity.totalcharges = this.entity.motormemoExpenses.reduce(
-      (sum, item) => sum + (item.action == 1 ? Number(item.charges) : -Number(item.charges)),
-      0
-    );
-  }
 
   Senderfuncion() {
 
@@ -1064,7 +1048,7 @@ export class MotorchildComponent {
     });
   }
 
-  otherdataAdd() {
+  SenderChargesAdd() {
     if (this.other.otherchag && this.other.s_Id) {
       if (this.rowIndex == null) {
         this.entity.motormemoOtherCharges.push(this.other);
@@ -1114,7 +1098,7 @@ export class MotorchildComponent {
       sumValue = 0;
     }
     this.entity.totalothercharges = sumValue;
-    this.totalDebit()
+    this.setDebitToSenderOrReceiver();
   }
 
   activeTab: string = 'sender'; // default tab
@@ -1126,41 +1110,37 @@ export class MotorchildComponent {
       if (this.entity.directPaid == false) {
         this.disableRecPaymentFields = false;
         this.disablePaymentFields = false;
-      }else{
+      } else {
         this.disableRecPaymentFields = true;
         this.disablePaymentFields = true;
       }
     }
   }
 
-  // totalDebit() {
-  //   this.entity.totaldebitadd = Number(this.entity.totalothercharges || 0) + Number(this.entity.TotalFreight);
-  //   this.entity.motormemoDetails.senderAmount = this.entity.totaldebitadd;
-  //   this.calculateAmounts()
-  // }
 
-  totalDebit() {
-    this.entity.totaldebitadd = Number(this.entity.totalothercharges || 0) + Number(this.entity.TotalFreight);
 
-    if (!this.isEditMode) {
-      // only assign senderAmount in create/new mode
-      this.entity.motormemoDetails.senderAmount = this.entity.totaldebitadd;
+
+  setDebitToSenderOrReceiver() {
+
+    if (this.entity.directPaid) {
+      this.entity.motormemoDetails.senderAmount = 0
+      this.entity.motormemoDetails.receiverAmount = 0
     }
+    else {
+      let total = Number(this.entity.totalothercharges || 0) + Number(this.entity.totalFreight || 0)
 
-    this.calculateAmounts();
+      if (this.entity.freightType == 0 || this.entity.freightType == 2) {
+        this.entity.motormemoDetails.senderAmount = total - this.entity.motormemoDetails.receiverAmount;
+
+      } else if (this.entity.freightType == 1) {
+
+        this.entity.motormemoDetails.receiverAmount = total - this.entity.motormemoDetails.senderAmount;
+      }
+    }
+    this.setPayDisabled();
   }
 
-  calculateAmounts() {
-    let total = this.entity.totaldebitadd || 0;
-
-    if (this.entity.freightType == 0 || this.entity.freightType == 2) {
-      this.entity.motormemoDetails.senderAmount = total;
-      this.entity.motormemoDetails.receiverAmount = 0;
-    } else if (this.entity.freightType == 1) {
-
-      this.entity.motormemoDetails.receiverAmount = total;
-      this.entity.motormemoDetails.senderAmount = 0;
-    }
+  setPayDisabled() {
     if (this.entity.motormemoDetails.receiverAmount > 0 && this.entity.motormemoDetails.senderAmount == 0 && this.entity.directPaid == false) {
       this.disablePaymentFields = true;
       this.disableRecPaymentFields = false;
@@ -1176,7 +1156,7 @@ export class MotorchildComponent {
       if (this.entity.directPaid == false) {
         this.disableRecPaymentFields = false;
         this.disablePaymentFields = false;
-      }else{
+      } else {
         this.disableRecPaymentFields = true;
         this.disablePaymentFields = true;
       }
@@ -1184,41 +1164,35 @@ export class MotorchildComponent {
     }
   }
 
-  onselectcomm(s)
-  {
+  onselectcomm(s) {
     // this.cmod.iUnit=s.iUnit;
     // this.cmod.unitName=s.unitName;
-    this.cmod.unitCode=s.iUnit
-    this.cmod.iUnitNavigation=s.iUnitNavigation;
+    this.cmod.unitCode = s.iUnit
+    this.cmod.iUnitNavigation = s.iUnitNavigation;
   }
 
-  OnchangeDebitAm() {
-    this.entity.motormemoDetails.receiverAmount = (this.entity.totaldebitadd || 0) - this.entity.motormemoDetails.senderAmount
-    if (this.entity.motormemoDetails.receiverAmount > 0 && this.entity.motormemoDetails.senderAmount == 0) {
-      this.disablePaymentFields = true;
-      this.disableRecPaymentFields = false;
-    } else if (this.entity.motormemoDetails.senderAmount > 0 && this.entity.motormemoDetails.receiverAmount == 0) {
-      this.disableRecPaymentFields = true;
-      this.disablePaymentFields = false;
-    }
-    else if (this.entity.motormemoDetails.receiverAmount > 0 && this.entity.motormemoDetails.senderAmount > 0) {
-      this.disableRecPaymentFields = false;
-      this.disablePaymentFields = false;
-    }
+  onChangeSednerAmt() {
+    let total = Number(this.entity.totalothercharges || 0) + Number(this.entity.totalFreight || 0)
+
+    this.entity.motormemoDetails.receiverAmount = total - this.entity.motormemoDetails.senderAmount
+    this.setPayDisabled();
   }
 
-  totalcreditamount() {
+  onChangeReceiverAmt() {
+    let total = Number(this.entity.totalothercharges || 0) + Number(this.entity.totalFreight || 0)
+
+    this.entity.motormemoDetails.receiverAmount = total - this.entity.motormemoDetails.senderAmount
+    this.setPayDisabled();
+  }
+
+  setLeftAmt() {
     setTimeout(() => {
-      this.entity.leftAmount = 0;
-      this.entity.leftAmount = (this.entity.totalFreight - this.entity.advAmount).round(2);
+
+      this.entity.vehLeftAmount = (this.entity.vehTotalFreight - this.entity.vehAdvAmount ).round(2);
     }, 100);
   }
 
-  debittoamt() {
-    if (this.entity.motormemoDetails.receiverAmount == 0) {
-      this.entity.motormemoDetails.senderAmount = this.entity.totaldebitadd;
-    }
-  }
+
 
   Vehiclenotab() {
     this.http.get('Vehicle/vehiclebyInfo', {
@@ -1247,21 +1221,21 @@ export class MotorchildComponent {
     }
   }
 
-  isDirectChecked: boolean = false;
 
-  onCheckboxChange(event: any) {
+  isDirectChecked = false;
+  onDirectPaidChange(event: any) {
     this.isDirectChecked = event.target.checked;
 
     if (this.isDirectChecked == true) {
       this.disablePaymentFields = true;
       this.exp = { action: 2 };
-      this.entity.motormemoExpenses = this.entity.motormemoExpenses.filter(exp => Number(exp.action) !== 1 && Number(exp.action) !== 0);
+      this.entity.motormemoVehExpenses = [];
     } else if (this.isDirectChecked == false) {
       this.disablePaymentFields = false;
       this.exp = { action: 0 };
     }
-    this.calculateTotalCharges()
-    this.totalRecAmt();
+    this.calcVehCharges()
+
 
 
 

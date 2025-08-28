@@ -47,7 +47,7 @@
                                         <div class="d-flex-width">
                                             <label>Kilo Miters</label>
                                             <input class="form-control" type="text" numberOnly autocomplete="off"
-                                                [(ngModel)]="entity.kiloMiter" name="km" [maxlength]="10"
+                                                [(ngModel)]="entity.kms" name="km" [maxlength]="10"
                                                 [minlength]="10">
                                         </div>
                                         <div class="gapInputFields">
@@ -340,7 +340,7 @@
                                                     tabindex="-1" [readonly]="true" autocomplete="off" />
                                             </th>
                                             <th>
-                                                <button class="btn btn-light btn-sm" (click)="addgstTablerow()"
+                                                <button class="btn btn-light btn-sm" (click)="addcommodityTablerow()"
                                                     type="button" tabindex="0" #addButton>
                                                     <i class="fas fa-plus"></i>
                                                 </button>
@@ -384,7 +384,7 @@
                                             <td></td>
                                             <td></td>
                                             <td class="p-1 text-end">Total</td>
-                                            <td style="text-align: right;"> ₹ {{entity.TotalFreight |
+                                            <td style="text-align: right;"> ₹ {{entity.totalFreight |
                                                 number:'1.2-2'}}</td>
                                             <td></td>
                                         </tr>
@@ -398,13 +398,13 @@
                         <div class="container mt-3">
                             <form #otherchages="ngForm" class="needs-validation">
                                 <div class="card">
-                                    <div class="card-header d-flex justify-content-between">
+                                    <!-- <div class="card-header d-flex justify-content-between">
                                         <h5 class="m-0 p-2">Other Charges[Sender/Receiver] </h5>
                                         <input type="text" style="width: 8rem;" class="form-control text-end"
                                             name="totaldebitadd" [(ngModel)]="entity.totaldebitadd" autocomplete="off"
                                             #totaldebitadd="ngModel" digitOnly CurrencyMask fraction="2"
                                             disabled="true">
-                                    </div>
+                                    </div> -->
                                     <table class="table">
                                         <thead>
                                             <tr>
@@ -429,7 +429,7 @@
                                                             class="p-0 text-start" bindLabel="sundryName"
                                                             bindValue="s_Id" name="otherExpensName"
                                                             [(ngModel)]="other.s_Id"
-                                                            (change)="onSelectotherExpacc($event)"
+                                                            (change)="onSelectSenderSundery($event)"
                                                             [disabled]="navactions.fieldset" autocomplete="off"
                                                             #f="ngModel" [applyMargins]="false"></app-ngselect>
                                                     </div>
@@ -453,7 +453,7 @@
 
                                                 <th class="text-center" style="width: 12%;">
                                                     <button class="btn btn-light btn-sm text-center" type="button"
-                                                        (click)="otherdataAdd()">
+                                                        (click)="SenderChargesAdd()">
                                                         <i class="fas fa-plus"></i>
                                                     </button>
                                                 </th>
@@ -503,7 +503,7 @@
                                     <div style="width: 10rem;">
                                         <label for="">Freight Type</label>
                                         <select class="form-select select-wrapper" name="selectfreightType"
-                                            [(ngModel)]="entity.freightType" (change)="calculateAmounts();">
+                                            [(ngModel)]="entity.freightType" (change)="setDebitToSenderOrReceiver();">
                                             <option [value]=0>FOR</option>
                                             <option [value]=1>EX</option>
                                             <option [value]=2>To be Billed</option>
@@ -523,7 +523,7 @@
                                         <label for="">Sender Amount</label>
                                         <input type="text" style="width: 10rem;" class="form-control text-end"
                                             name="senderAmount" [(ngModel)]="entity.motormemoDetails.senderAmount"
-                                            CurrencyMask fraction="2" (ngModelChange)="OnchangeDebitAm()"
+                                            CurrencyMask fraction="2" (ngModelChange)="onChangeSednerAmt()"
                                             [disabled]="!entity.motormemoDetails.senderAccount" autocomplete="off">
 
                                     </div>
@@ -542,11 +542,11 @@
                                             name="receiverAmount" [(ngModel)]="entity.motormemoDetails.receiverAmount"
                                             CurrencyMask fraction="2"
                                             [disabled]="!entity.motormemoDetails.receiverAccount || true"
-                                            (change)="calculateAmounts()" autocomplete="off">
+                                            (change)="onChangeReceiverAmt()" autocomplete="off">
                                     </div>
                                     <div class="ms-4 d-flex align-items-center justify-content-center w-auto">
                                         <input type="checkbox" name="Directcheckbox" [(ngModel)]="entity.directPaid"
-                                            checked="false" (change)="onCheckboxChange($event);">
+                                            checked="false" (change)="onDirectPaidChange($event);">
                                         <!-- (change)="onCheckboxChange($event);" -->
                                         <p class="mb-0 ms-2">Direct Paid to Vehicle Owner</p>
                                     </div>
@@ -555,191 +555,7 @@
                         </div>
 
                         <hr>
-                        <!-- <div class="container  mt-3">
-                            <div class="d-flex">
-                               
-                                <div class="card w-50 m-1">
-                                    <div class="card-header">
-                                        <h5 class="m-0 p-2">Receipt [ Sender ]</h5>
-                                    </div>
-                                    <table class="table">
-                                        <thead>
-                                            <tr>
-                                                <th class="text-center" scope="col" style="width: 40%;">
-                                                    <b>Account</b>
-                                                </th>
-                                                <th class="text-center" scope="col" style="width: 25%;">
-                                                    <b>Amount</b>
-                                                </th>
-                                                <th class="text-center" scope="col" style="width: 25%;">
-                                                    <b>Naration</b>
-                                                </th>
-                                                <th class="text-center" scope="col" style="width: 10%;">
-                                                    <b>Action</b>
-                                                </th>
-                                            </tr>
-                                            <tr>
-                                                <th style="width:40%;">
-                                                    <app-ngselect apiUrl="Account/getAcclistbyMgCode"
-                                                        bindLabel="accName" bindValue="accCode"
-                                                        name="contraItemsaccount" [(ngModel)]="payment.accCode"
-                                                        (change)="getAccountDetl($event)"
-                                                        [apiParams]="{mgCode:'3, 4, 25'}"
-                                                        [defaultProperty]="payment.accCodeNavigation"
-                                                        [disabled]="navactions.fieldset || disablePaymentFields"
-                                                        [applyMargins]="false"></app-ngselect>
-                                                </th>
-                                                <th style="width: 25%;">
-                                                    <div>
-                                                        <input class="form-control" type="text" name="charges"
-                                                            [disabled]="disablePaymentFields" digitOnly CurrencyMask
-                                                            fraction="2" [(ngModel)]="payment.amount"
-                                                            autocomplete="off">
-                                                    </div>
-                                                </th>
-                                                <th style="width: 25%;">
-                                                    <div>
-                                                        <input class="form-control" type="text" name="Naration"
-                                                            [(ngModel)]="payment.narration" autocomplete="off"
-                                                            [disabled]="disablePaymentFields">
-                                                    </div>
-                                                </th>
-                                                <th class="text-center" style="width: 10%;">
-                                                    <button class="btn btn-light btn-sm text-center" type="button"
-                                                        (click)="AddAdvDetl()">
-                                                        <i class="fas fa-plus"></i>
-                                                    </button>
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody class="actionTableHeight">
-                                            <div *ngIf="!entity?.motormemoPayments || entity.motormemoPayments.length === 0"
-                                                class="noDataImg">
-                                                <img src="../../../../../../assets/IMG/noData.png" width="50">
-                                                <p>Record is empty</p>
-                                            </div>
-
-                                            <tr *ngFor="let v of entity.motormemoPayments;let i=index;">
-                                                <td style="width: 40%;">{{v.accCodeNavigation?.accName}}</td>
-                                                <td style="width: 25%;">{{v.amount| number:'1.2-2'}}</td>
-                                                <td style="width: 25%;">{{v.narration}}
-                                                </td>
-                                                <td class="text-center" style="width: 10%;">
-                                                    <button class="btn btn-primary btn-sm-custom-table me-1"
-                                                        type="button" tabindex="-1" (click)="editAdvDetailrow(v,i)">
-                                                        <i class="fas fa-edit"></i></button>
-                                                    <button class="btn btn-danger btn-sm-custom-table" type="button"
-                                                        tabindex="-1" (click)="deleteAdvDetail(i)">
-                                                        <i class="fas fa-trash"></i></button>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                        <tfoot>
-                                            <tr>
-                                                <td class="p-1 text-end" style="width: 40%;">Total</td>
-                                                <td style="text-align: center;width: 25%;">{{entity.senderTotalAmt |
-                                                    number:'1.2-2'}}</td>
-                                                <td style="width: 25%;"></td>
-                                                <td style="width: 10%;"></td>
-                                            </tr>
-                                        </tfoot>
-                                    </table>
-
-
-                                </div>
-
-                                 <div class="card w-50 m-1">
-                                    <div class="card-header">
-                                        <h5 class="m-0 p-2">Receipt [ Receiver ]</h5>
-                                    </div>
-                                    <table class="table">
-                                        <thead>
-                                            <tr>
-                                                <th class="text-center" scope="col" style="width: 40%;">
-                                                    <b>Account</b>
-                                                </th>
-                                                <th class="text-center" scope="col" style="width: 25%;">
-                                                    <b>Amount</b>
-                                                </th>
-                                                <th class="text-center" scope="col" style="width: 25%;">
-                                                    <b>Naration</b>
-                                                </th>
-                                                <th class="text-center" scope="col" style="width: 10%;">
-                                                    <b>Action</b>
-                                                </th>
-                                            </tr>
-                                            <tr>
-                                                <th style="width:40%;">
-                                                    <app-ngselect apiUrl="Account/getAcclistbyMgCode"
-                                                        bindLabel="accName" bindValue="accCode"
-                                                        name="Itemsaccount" [(ngModel)]="recPayment.accCode"
-                                                        (change)="getrecAccountDetl($event)"
-                                                        [apiParams]="{mgCode:'3, 4, 25'}"
-                                                        [defaultProperty]="recPayment.accCodeNavigation"
-                                                        [disabled]="navactions.fieldset || disableRecPaymentFields"
-                                                        [applyMargins]="false"></app-ngselect>
-                                                </th>
-                                                <th style="width: 25%;">
-                                                    <div>
-                                                        <input class="form-control" type="text" name="recAmt"
-                                                            [disabled]="disableRecPaymentFields" digitOnly CurrencyMask
-                                                            fraction="2" [(ngModel)]="recPayment.amount"
-                                                            autocomplete="off">
-                                                    </div>
-                                                </th>
-                                                <th style="width: 25%;">
-                                                    <div>
-                                                        <input class="form-control" type="text" name="RecNaration"
-                                                            [(ngModel)]="recPayment.narration" autocomplete="off"
-                                                            [disabled]="disableRecPaymentFields">
-                                                    </div>
-                                                </th>
-                                                <th class="text-center" style="width: 10%;">
-                                                    <button class="btn btn-light btn-sm text-center" type="button"
-                                                        (click)="AddRecDetl()">
-                                                        <i class="fas fa-plus"></i>
-                                                    </button>
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody class="actionTableHeight">
-                                            <div *ngIf="!entity?.motormemoRecPayments || entity.motormemoRecPayments.length === 0"
-                                                class="noDataImg">
-                                                <img src="../../../../../../assets/IMG/noData.png" width="50">
-                                                <p>Record is empty</p>
-                                            </div>
-
-                                            <tr *ngFor="let v of entity.motormemoRecPayments;let i=index;">
-                                                <td style="width: 40%;">{{v.accCodeNavigation?.accName}}</td>
-                                                <td style="width: 25%;">{{v.amount| number:'1.2-2'}}</td>
-                                                <td style="width: 25%;">{{v.narration}}
-                                                </td>
-                                                <td class="text-center" style="width: 10%;">
-                                                    <button class="btn btn-primary btn-sm-custom-table me-1"
-                                                        type="button" tabindex="-1" (click)="editRecDetailrow(v,i)">
-                                                        <i class="fas fa-edit"></i></button>
-                                                    <button class="btn btn-danger btn-sm-custom-table" type="button"
-                                                        tabindex="-1" (click)="deleteRecDetail(i)">
-                                                        <i class="fas fa-trash"></i></button>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                        <tfoot>
-                                            <tr>
-                                                <td class="p-1 text-end" style="width: 40%;">Total</td>
-                                                <td style="text-align: center;width: 25%;">{{entity.recTotalAmt |
-                                                    number:'1.2-2'}}</td>
-                                                <td style="width: 25%;"></td>
-                                                <td style="width: 10%;"></td>
-                                            </tr>
-                                        </tfoot>
-                                    </table>
-
-
-                                </div>
-                            </div>
-                        </div> -->
-                        <div class="container mt-3">
+                             <div class="container mt-3">
 
                             <!-- Nav Tabs -->
                             <ul class="nav nav-tabs">
@@ -798,7 +614,7 @@
                                                     </th>
                                                     <th class="text-center" style="width: 10%;">
                                                         <button class="btn btn-light btn-sm text-center" type="button"
-                                                            (click)="AddAdvDetl()">
+                                                            (click)="AddSenderReceipt()">
                                                             <i class="fas fa-plus"></i>
                                                         </button>
                                                     </th>
@@ -816,11 +632,11 @@
                                                     <td style="width:25%">{{v.narration}}</td>
                                                     <td class="text-center" style="width:10%">
                                                         <button class="btn btn-primary btn-sm-custom-table me-1"
-                                                            (click)="editAdvDetailrow(v,i)">
+                                                            (click)="editSenderDetailrow(v,i)">
                                                             <i class="fas fa-edit"></i>
                                                         </button>
                                                         <button class="btn btn-danger btn-sm-custom-table"
-                                                            (click)="deleteAdvDetail(i)">
+                                                            (click)="deleteSenderDetail(i)">
                                                             <i class="fas fa-trash"></i>
                                                         </button>
                                                     </td>
@@ -878,7 +694,7 @@
                                                     </th>
                                                     <th class="text-center" style="width: 10%;">
                                                         <button class="btn btn-light btn-sm text-center" type="button"
-                                                            (click)="AddRecDetl()">
+                                                            (click)="AddReceiverReceipt()">
                                                             <i class="fas fa-plus"></i>
                                                         </button>
                                                     </th>
@@ -896,11 +712,11 @@
                                                     <td>{{v.narration}}</td>
                                                     <td class="text-center">
                                                         <button class="btn btn-primary btn-sm-custom-table me-1"
-                                                            (click)="editRecDetailrow(v,i)">
+                                                            (click)="editReciverDetailrow(v,i)">
                                                             <i class="fas fa-edit"></i>
                                                         </button>
                                                         <button class="btn btn-danger btn-sm-custom-table"
-                                                            (click)="deleteRecDetail(i)">
+                                                            (click)="deleteReceiverDetail(i)">
                                                             <i class="fas fa-trash"></i>
                                                         </button>
                                                     </td>
@@ -954,7 +770,7 @@
 
                                                 <app-ngselect apiUrl="Sundry/getExpAcclist" class="p-0 text-start"
                                                     bindLabel="sundryName" bindValue="s_Id" name="ExpensName"
-                                                    [(ngModel)]="exp.s_Id" (change)="onSelectExp($event)"
+                                                    [(ngModel)]="exp.s_Id" (change)="onSelectVehExp($event)"
                                                     [disabled]="navactions.fieldset" autocomplete="off" #f="ngModel"
                                                     [applyMargins]="false"></app-ngselect>
 
@@ -962,7 +778,7 @@
                                             <th style="width: 26%;">
                                                 <app-ngselect apiUrl="Account/getsupplier" class="p-0 text-start"
                                                     bindLabel="accName" bindValue="accCode" name="accountname"
-                                                    (change)="exp.accCodeNavigation=$event;onSelectAcc($event)"
+                                                    (change)="exp.accCodeNavigation=$event;onSelectVehAcc($event)"
                                                     [(ngModel)]="exp.accCode" [disabled]="navactions.fieldset"
                                                     autocomplete="off" #f="ngModel" [applyMargins]="false"
                                                     [defaultProperty]="exp.accCodeNavigation"></app-ngselect>
@@ -986,12 +802,12 @@
 
                                             </th>
                                             <th style="width: 8%;">
-                                                <input type="checkbox" name="expensesisChecked"
-                                                    [(ngModel)]="exp.isChecked" />
+                                                <input type="checkbox" name=" vehExeisChecked"
+                                                    [(ngModel)]="exp.isInclFreight" />
                                             </th>
                                             <th class="text-center" style="width: 12%;">
                                                 <button class="btn btn-light btn-sm text-center"
-                                                    (click)="updateTotalCharges()" type="button" tabindex="0"
+                                                    (click)="updateTotalVehCharges()" type="button" tabindex="0"
                                                     #addButton>
                                                     <i class="fas fa-plus"></i>
                                                 </button>
@@ -1000,21 +816,21 @@
                                         </tr>
                                     </thead>
                                     <tbody class="actionTableHeight">
-                                        <div *ngIf="!entity?.motormemoExpenses || entity.motormemoExpenses.length === 0"
+                                        <div *ngIf="!entity?.motormemoVehExpenses || entity.motormemoVehExpenses.length === 0"
                                             class="noDataImg">
                                             <img src="../../../../../../assets/IMG/noData.png" width="50">
                                             <p>Record is empty</p>
                                         </div>
 
-                                        <tr *ngFor="let v of entity.motormemoExpenses;let i=index;">
+                                        <tr *ngFor="let v of entity.motormemoVehExpenses;let i=index;">
                                             <td style="width: 24%;">{{v.sundries?.sundryName}}</td>
                                             <td style="width: 26%;">{{v.accCodeNavigation?.accName }}</td>
                                             <td style="width: 16%; text-align: right; ">{{v.charges | number:'1.2-2'}}
                                             </td>
                                             <td style="width: 12%;">{{ getSelectOptionLabel(v.action) }}</td>
                                             <td style="width: 8%;">
-                                                <input type="checkbox" [checked]="v.isChecked" tabindex="-1"
-                                                    [(ngModel)]="v.isChecked" name="expensesisChecked" disabled>
+                                                <input type="checkbox" [checked]="v.isInclFreight" tabindex="-1"
+                                                    [(ngModel)]="v.isInclFreight" [name]="'expensesisChecked'+i" disabled>
                                             </td>
 
                                             <td class="text-center" style="width: 12%;">
@@ -1059,27 +875,27 @@
                                 <div style="width: 10rem;" class="ms-4">
                                     <label for="">Freight Amount</label>
                                     <input type="text" class="form-control" name="FreightAmount" digitOnly CurrencyMask
-                                        fraction="2" [(ngModel)]="entity.totalFreight" [disabled]="true"
-                                        autocomplete="off" (change)="freightAmountsum()">
+                                        fraction="2" [(ngModel)]="entity.vehTotalFreight" [disabled]="true"
+                                        autocomplete="off" (change)="calcVehCharges()">
                                 </div>
                                 <div style="width: 10rem;" class="ms-4">
                                     <label for="">Advance Amount</label>
                                     <input type="text" class="form-control" name="advAmount" digitOnly CurrencyMask
-                                        fraction="2" [(ngModel)]="entity.advAmount" [disabled]="true"
+                                        fraction="2" [(ngModel)]="entity.vehAdvAmount" [disabled]="true"
                                         autocomplete="off">
                                 </div>
 
                                 <div style="width: 10rem;" class="ms-4">
                                     <label for="">Left Amount</label>
                                     <input type="text" class="form-control" name="leftAmout" digitOnly CurrencyMask
-                                        fraction="2" [(ngModel)]="entity.leftAmount" [disabled]="true"
-                                        autocomplete="off" (Change)="totalcreditamount()">
+                                        fraction="2" [(ngModel)]="entity.vehLeftAmount" [disabled]="true"
+                                        autocomplete="off" >
                                 </div>
 
                                 <div style="width: 10rem;" class="ms-4">
                                     <label for="">Billed Amount</label>
                                     <input type="text" class="form-control" name="billamt" digitOnly CurrencyMask
-                                        fraction="2" [(ngModel)]="entity.billAmt" [disabled]="true" autocomplete="off">
+                                        fraction="2" [(ngModel)]="entity.vehBilledAmt" [disabled]="true" autocomplete="off">
                                 </div>
                             </div>
                         </div>

@@ -257,11 +257,11 @@ export class LorryReceChildComponent {
   }
 
   calculateAmounts() {
-    this.entity.freightTotal = this.entity.totalWet * this.entity.freightperWet;
+    this.entity.totalFreightAmt = this.entity.totalWeight * this.entity.frtPerWeight;
   }
 
   calculateRemAmt() {
-    this.entity.remAmt = this.entity.freightTotal - this.entity.totalAdv;
+    this.entity.leftAmt = this.entity.totalFreightAmt - this.entity.totalAdvAmt;
   }
   getAccountDetl(obj) {
     this.motormemo2AdvDetl.accCodeNavigation = obj;
@@ -352,7 +352,7 @@ export class LorryReceChildComponent {
 
 
   save() {
-    if (this.entity.totalAdv > this.entity.freightTotal) {
+    if (this.entity.totalAdvAmt > this.entity.totalFreightAmt) {
       Swal.fire({
         icon: 'warning',
         title: 'Warning',
@@ -421,16 +421,16 @@ export class LorryReceChildComponent {
   const sumValue = sumArray.reduce((pValue, cValue) => 
     Number(pValue) + Number(cValue), 0); // initial value = 0
 
-  this.entity.totalWet = sumValue;
+  this.entity.totalWeight = sumValue;
 }
 
 
   additinOfAdv() {
     const sumArray = this.entity.motormemo2AdvDetails.map(item => item.amount || 0);
     const sumValue = sumArray.reduce((p, c) => Number(p) + Number(c), 0);
-    this.entity.totalAdv = sumValue;
+    this.entity.totalAdvAmt = sumValue;
 
-    if (this.entity.totalAdv > this.entity.freightTotal) {
+    if (this.entity.totalAdvAmt > this.entity.totalFreightAmt) {
       Swal.fire({
         icon: 'warning',
         title: 'Warning',
