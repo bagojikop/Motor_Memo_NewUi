@@ -4,9 +4,9 @@
 
 export const environment = {
   production: true,
-  tokenapi:"https://localhost:7191/",
-  api:"https://localhost:7191/",
-  server:"https://localhost:7191/"
+  tokenapi:"http://localhost:5000/",
+  api:"http://localhost:5000/",
+  server:"http://localhost:5000/"
 };
 
 /*

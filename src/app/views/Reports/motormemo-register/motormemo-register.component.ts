@@ -151,7 +151,7 @@ export class MotormemoRegisterComponent {
     },
     
       {
-      field: 'leftAmount',
+      field: 'vehLeftAmount',
       headerName: 'Left Amount',
       aggFunc: "sum",
       filter: "agTextColumnFilter",

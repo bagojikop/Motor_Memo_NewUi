@@ -1,18 +1,18 @@
-export interface SubconsigneeObj {
+export interface MotorMemoObj {
   sgCodeNavigation: string
   directPaid:boolean
   receiverName:string 
-  totaldebitadd: number
-  billAmt:number
+
   senderaccount:any
   receiveraccout:any
   oweraccount:any
   divId:string
   firmId:number
   totalFreight: number
-  advAmount:number
-  Name: string
-  sendernm:string
+  vehTotalFreight:number
+  vehBilledAmt:number
+  vehAdvAmount:number
+  vehLeftAmount: number
   totalcharges: number
   receiverStateId:any
   vehicleNo: string 
@@ -21,11 +21,11 @@ export interface SubconsigneeObj {
   dt: string
   MobileNoReciver: number
   memoNo: number
-  TotalFreight:number
+ 
   totalothercharges:number
   from_Dstn: string
   to_Dstn: string
-  kiloMiter:number
+  kms:number
   vehAccCode:number
   stateInfo: string
   AccountName: string
@@ -39,7 +39,7 @@ export interface SubconsigneeObj {
   recTotalAmt:number
   senderTotalAmt:number
   totalAmt:number
-  leftAmount: number
+
   cityId: number
 
   s_Id: number
@@ -57,7 +57,7 @@ export interface SubconsigneeObj {
   acc003s: Acc003sObj 
   motormemoDetails: MotormemoDetailsObj  
   motormemoCommodities: MotormemoCommoditiesObj[];
-  motormemoExpenses: MotormemoExpensesObj[];
+  motormemoVehExpenses: MotormemoVehExpensesObj[];
   motormemoOtherCharges: otherchargesObj[];
   motormemoPayments:motormemoPayment[];
   motormemoRecPayments:motormemoRecPayment[];
@@ -99,11 +99,11 @@ export interface motormemoRecPayment{
   accCodeNavigation:any
 }
 
-export interface MotormemoExpensesObj { 
+export interface MotormemoVehExpensesObj { 
   expenseName: string
   accName:string
   accCodeNavigation:any
-  isChecked: boolean
+  isInclFreight: boolean
   sundries:any
   charges: number
   action: number 

@@ -49,7 +49,7 @@ export class Aknowledgmemnt1Component {
   rowIndex: any;
   exp: any = {};
   pastentity;
-  motormemoExpenses: any = []
+  motormemoVehExpenses: any = []
   motormemo2AdvDetl: any = {}
   private gridApi: GridApi;
 
@@ -66,7 +66,7 @@ export class Aknowledgmemnt1Component {
   ngOnInit(): void {
     this.entity = {};
     this.exp = {}
-    this.entity.motormemoExpenses = []
+    this.entity.motormemoVehExpenses = []
     this.entity.motormemo2AdvDetails = []
     this.motormemo2AdvDetl = {}
     this.referance = {}
@@ -163,7 +163,7 @@ export class Aknowledgmemnt1Component {
         },
       },
       {
-        field: 'leftAmount',
+        field: 'vehLeftAmount',
         headerName: 'Left Amount',
         filter: "agTextColumnFilter",
         type: "rightAligned",
@@ -299,15 +299,15 @@ export class Aknowledgmemnt1Component {
 
   updateTotalCharges(): void {
     if (this.referance.aknowlType === "0") {
-      if (!this.entity.motormemoExpenses) {
-        this.entity.motormemoExpenses = [];
+      if (!this.entity.motormemoVehExpenses) {
+        this.entity.motormemoVehExpenses = [];
       }
       this.exp.action = 1;
       if (this.rowIndex == null) {
-        this.entity.motormemoExpenses.push(this.exp);
+        this.entity.motormemoVehExpenses.push(this.exp);
       }
       else {
-        this.entity.motormemoExpenses[this.rowIndex] = this.exp;
+        this.entity.motormemoVehExpenses[this.rowIndex] = this.exp;
       }
       this.exp = {};
       this.rowIndex = null;
@@ -335,7 +335,7 @@ export class Aknowledgmemnt1Component {
 
   leftAmt() {
     if (this.referance.aknowlType === "0") {
-      this.entity.leftAmount = this.entity.leftAmount - this.entity.totalcharges;
+      this.entity.vehLeftAmount = this.entity.leftAmount - this.entity.totalcharges;
     } else {
       this.entity.remAmt = this.entity.remAmt - this.totalAdvAmt
     }
@@ -351,7 +351,7 @@ export class Aknowledgmemnt1Component {
 
   additintotlcharges() {
     if (this.referance.aknowlType === "0") {
-      const sumArray = this.entity.motormemoExpenses.map(item => item.charges || 0);
+      const sumArray = this.entity.motormemoVehExpenses.map(item => item.charges || 0);
       const sumValue = sumArray.reduce((p, c) => Number(p) + Number(c), 0);
       this.entity.totalcharges = sumValue;
     }
@@ -364,7 +364,7 @@ export class Aknowledgmemnt1Component {
 
   totalCharges: number = 0;
   calculateTotalCharges() {
-    this.totalCharges = this.entity.motormemoExpenses
+    this.totalCharges = this.entity.motormemoVehExpenses
       .filter(exp => exp.isChecked)
       .reduce((sum, exp) => sum + Number(exp.charges), 0);
 
@@ -373,7 +373,7 @@ export class Aknowledgmemnt1Component {
 
   uncheckedTotalCharges: number = 0
   calculateUncheckedTotalCharges() {
-    this.entity.advAmount = this.entity.motormemoExpenses
+    this.entity.advAmount = this.entity.motormemoVehExpenses
       .filter(exp => !exp.isChecked)
       .reduce((sum, exp) => sum + Number(exp.charges), 0);
 
@@ -385,7 +385,7 @@ export class Aknowledgmemnt1Component {
         return true;
       }
       const totalCharges = +this.entity.totalcharges || 0;
-      const leftAmount = +this.entity.leftAmount || 0;
+      const leftAmount = +this.entity.VehLeftAmount || 0;
       return totalCharges !== leftAmount;
     } else {
       if (!this.entity) {
@@ -417,7 +417,7 @@ export class Aknowledgmemnt1Component {
       }
       this.dialog.swal(params).then(data => {
         if (data == true) {
-          this.entity.motormemoExpenses.splice(index, 1);
+          this.entity.motormemoVehExpenses.splice(index, 1);
         }
       })
     } else {
@@ -466,7 +466,7 @@ export class Aknowledgmemnt1Component {
         next: (res: any) => {
           if (res.status_cd == 1) {
             this.entity = res.data;
-            this.exp.charges = this.entity.leftAmount;
+            this.exp.charges = this.entity.vehLeftAmount;
             this.entity.dt = this.datepipe.transform(this.entity.dt, 'yyyy-MM-dd')
             if (!this.entity.confDate) {
               this.entity.confDate = this.datepipe.transform(new Date(), 'yyyy-MM-dd');
@@ -601,7 +601,7 @@ export class Aknowledgmemnt1Component {
     if (this.referance.aknowlType === "0") {
       this.spinner.show();
       const charges = Number(this.entity.totalcharges);
-      if (charges == this.entity.leftAmount) {
+      if (charges == this.entity.vehLeftAmount) {
         this.leftAmt();
         this.AdvAmount();
         if (this.entity.vchId) {

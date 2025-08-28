@@ -79,7 +79,7 @@
                         <div class="gapInputFields">
                             <div class="mb-3">
                                 <label for="freight" class="form-label">Total Freight</label>
-                                <input type="text" class="form-control" id="freight" [(ngModel)]="entity.totalFreight"
+                                <input type="text" class="form-control" id="freight" [(ngModel)]="entity.VehTotalFreight"
                                     digitOnly CurrencyMask fraction="2" name="freight" disabled="true">
                             </div>
                         </div>
@@ -95,14 +95,14 @@
                         <div class="d-flex-width">
                             <div class="mb-3">
                                 <label for="advance" class="form-label">Advance Amount</label>
-                                <input type="text" class="form-control" id="advance" [(ngModel)]="entity.advAmount"
+                                <input type="text" class="form-control" id="advance" [(ngModel)]="entity.VehAdvAmount"
                                     digitOnly CurrencyMask fraction="2" name="advance" disabled="true">
                             </div>
                         </div>
                         <div class="gapInputFields">
                             <div class="mb-3">
                                 <label for="left" class="form-label">Left Amount</label>
-                                <input type="text" class="form-control" id="left" [(ngModel)]="entity.leftAmount"
+                                <input type="text" class="form-control" id="left" [(ngModel)]="entity.vehLeftAmount"
                                     digitOnly CurrencyMask fraction="2" name="left" disabled="true">
                             </div>
                         </div>
@@ -173,13 +173,13 @@
                                     </tr>
                                 </thead>
                                 <tbody class="actionTableHeight">
-                                    <div *ngIf="!entity?.motormemoExpenses || entity.motormemoExpenses.length === 0"
+                                    <div *ngIf="!entity?.motormemoVehExpenses || entity.motormemoVehExpenses.length === 0"
                                         class="noDataImg">
                                         <img src="../../../../../../assets/IMG/noData.png" width="50">
                                         <p>Record is empty</p>
                                     </div>
 
-                                    <tr *ngFor="let v of entity.motormemoExpenses;let i=index;">
+                                    <tr *ngFor="let v of entity.motormemoVehExpenses;let i=index;">
                                         <td style="width: 30%;">{{v.sundries?.sundryName}}</td>
                                         <td style="width: 30%;">{{v.accCodeNavigation?.accName }}</td>
                                         <td style="width: 30%; text-align: right; ">{{v.charges | number:'1.2-2'}}
