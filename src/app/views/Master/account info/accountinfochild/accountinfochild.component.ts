@@ -79,12 +79,12 @@ export class AccountinfochildComponent implements OnInit {
     this.entity.mst01104 = <mst01104Obj>{};
     this.entity.mst01110s = <mst01110sObj[]>[];
     this.entity.grpCodeNavigation = <grpCodeNavigationObj>{};
-   this.entity.mst01100 = {
-        firmId: this.provider.companyinfo?.company?.firmCode ?? null,
-        divId: this.provider.companyinfo?.company?.divId ?? null,
-        crbal:this.entity.mst01100.crbal,
-        drbal:this.entity.mst01100.drbal
-      } as mst01100Obj;
+    this.entity.mst01100 = {
+      firmId: this.provider.companyinfo?.company?.firmCode ?? null,
+      divId: this.provider.companyinfo?.company?.divId ?? null,
+      crbal: this.entity.mst01100.crbal,
+      drbal: this.entity.mst01100.drbal
+    } as mst01100Obj;
     let paramss: any = this.location.getState();
     this.navactions.navaction(paramss.action);
     this.entity.accCode = paramss.id;
@@ -106,6 +106,7 @@ export class AccountinfochildComponent implements OnInit {
       this.status = false;
     }
   }
+  
   Init() {
     this.http.jsonget('assets/json/currancy.json').subscribe({
       next: (res: any) => {
@@ -180,7 +181,6 @@ export class AccountinfochildComponent implements OnInit {
 
   }
 
-
   idx = null;
   addFirm() {
 
@@ -202,7 +202,6 @@ export class AccountinfochildComponent implements OnInit {
     }
   }
 
-
   toggleSelect(ev): void {
     this.entity.isDisabled = 1;
     this.entity.mst01110s = [];
@@ -213,10 +212,12 @@ export class AccountinfochildComponent implements OnInit {
   isInvalidWebsite: boolean = false;
   isInvalidEmail: boolean = false;
   exampleEmail: string = 'user@example.com';
+
   validatePan(pan: string): void {
     const panPattern = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
     this.isInvalidPan = pan ? !panPattern.test(pan) : false;
   }
+
   validateWebsite(website: string): void {
     const websitePattern = /^(https?:\/\/)?(www\.)?([a-zA-Z0-9-]+)\.([a-zA-Z]{2,})([\/\w\.-]*)*\/?$/;
     this.isInvalidWebsite = website ? !websitePattern.test(website) : false;
@@ -226,8 +227,6 @@ export class AccountinfochildComponent implements OnInit {
     const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     this.isInvalidEmail = email ? !emailPattern.test(email) : false;
   }
-
-
 
   updateModel(index) {
     this.entity.placeId = index.value;
@@ -268,94 +267,6 @@ export class AccountinfochildComponent implements OnInit {
     })
   }
 
-  save() {
-
-    Object.keys(this.account.form.controls).forEach(key => {
-      const control = this.account.form.controls[key];
-      if (control.invalid) {
-        console.log(`Invalid Field: ${key}`, control.errors);
-      }
-    });
-
-    if (this.account.valid) {
-      this.spinner.show();
-      this.entity.mst01100 = {
-        firmId: this.provider.companyinfo?.company?.firmCode ?? null,
-        divId: this.provider.companyinfo?.company?.divId ?? null,
-        crbal: this.entity.mst01100?.crbal ?? 0,
-        drbal: this.entity.mst01100?.drbal ?? 0,
-      } as mst01100Obj;
-      if (!this.entity.accCode) {
-        if (!this.entity.createdUser)
-          this.entity.createdUser = this.provider.companyinfo.userinfo.username;
-
-        this.http.post('Account/insert', this.master.cleanObject(this.entity, 2)).subscribe({
-          next: (res: any) => {
-            if (res.status_cd == 1) {
-
-              this.entity.accCode = res.data.accCode;
-              this.pastentity = JSON.parse(JSON.stringify(this.entity))
-
-              if (!this.entity.mst01100) {
-                this.entity.mst01100 = <mst01100Obj>{};
-              }
-
-              if (!this.entity.mst01104) {
-                this.entity.mst01104 = <mst01104Obj>{};
-              }
-              if (!this.entity.mst01101) {
-                this.entity.mst01101 = <mst01101Obj>{};
-              }
-              if (!this.entity.mst01109) {
-                this.entity.mst01109 = <mst01109Obj>{};
-              }
-
-              this.dialog.swal({ dialog: "success", title: "Success", message: "Record is saved sucessfully" });
-              this.navactions.navaction("OK");
-            }
-            else {
-              this.dialog.swal({ dialog: 'error', title: 'Error', message: res.errors.exception.InnerException.message })
-            }
-            this.spinner.hide();
-          }, error: (err: any) => {
-            this.spinner.hide()
-            this.dialog.swal({ dialog: 'error', title: 'Error', message: err.message })
-          }
-        })
-      }
-      else {
-        this.entity.modifiedUser = this.provider.companyinfo.userinfo.username;
-        this.http.put('Account/update', this.master.cleanObject(this.entity, 2), { id: this.entity.accCode }).subscribe({
-          next: (res: any) => {
-
-            if (res.status_cd == 1) {
-              this.entity.accCode = res.data.accCode;
-              if (!this.entity.mst01104) {
-                this.entity.mst01104 = <mst01104Obj>{};
-              }
-              if (!this.entity.mst01101) {
-                this.entity.mst01101 = <mst01101Obj>{};
-              }
-              if (!this.entity.mst01109) {
-                this.entity.mst01109 = <mst01109Obj>{};
-              }
-
-              this.dialog.swal({ dialog: "success", title: "Success", message: "Record is Update sucessfully" });
-              this.navactions.navaction("OK");
-            }
-
-            this.spinner.hide()
-          }, error: (err: any) => {
-            this.dialog.swal({ dialog: 'error', title: 'Error', message: err })
-          }
-        })
-      }
-    }
-    else {
-      this.dialog.swal({ dialog: 'error', title: 'Error', message: "Please Fill All Required fields. Fill GSTIN No." })
-
-    }
-  }
   creditEnabled = false;
   onSelectGroup(event) {
     this.entity.sgCodeNavigation = event;
@@ -363,115 +274,211 @@ export class AccountinfochildComponent implements OnInit {
     this.creditEnabled = [3, 4, 5, 14, 25].includes(mgCode);
   }
 
-  close() {
-    this.location.back();
-  }
-
-  newRecord() {
-    this.pastentity = JSON.parse(JSON.stringify(this.entity))
-    this.entity = <AccountObj>{};
-
-    this.entity.mst01100 = <mst01100Obj>{};
-    this.entity.mst01101 = <mst01101Obj>{};
-    this.entity.mst01104 = <mst01104Obj>{};
-    this.entity.mst01109 = <mst01109Obj>{};
-    this.entity.mst01110s = <mst01110sObj[]>[];
-    this.entity.accBusinessLocations = <accBusinessLocationObj[]>[];
-  }
-
-  edit() {
-    this.navactions.navaction("view");
-    this.callbackedit();
-  }
-
-  getdata(index) {
-    console.log(index);
-  }
-  undo() {
-    this.entity = this.pastentity;
-    this.callbackedit();
-    this.entity = <AccountObj>{};
-    this.entity.mst01100 = <mst01100Obj>{};
-    this.entity.mst01101 = <mst01101Obj>{};
-    this.entity.mst01104 = <mst01104Obj>{};
-    this.entity.mst01109 = <mst01109Obj>{};
-    this.entity.mst01110s = <mst01110sObj[]>[];
-    this.entity.accBusinessLocations = <accBusinessLocationObj[]>[];
-  }
-  Add() {
-    if (this.rowIndex == null) {
-      this.entity.accBusinessLocations.push(this.acc.accBusinessLocations);
-    } else {
-
-      this.entity.accBusinessLocations[this.rowIndex] = this.acc.accBusinessLocations;
+  save() {
+    Object.keys(this.account.form.controls).forEach(key => {
+      const control = this.account.form.controls[key];
+      if (control.invalid) {
+        console.log(`Invalid Field: ${key}`, control.errors);
+      }
+    });
+    if (this.entity?.mst01109?.gstur != 3 && this.creditEnabled) {
+      if (!this.entity.mst01109?.accGstn || this.entity.mst01109.accGstn.trim() === '') {
+        this.dialog.swal({
+          dialog: 'error',
+          title: 'Validation Error',
+          message: 'GSTIN is required'
+        });
+        return; // stop further execution
+      }
     }
-    this.acc.accBusinessLocations = <accBusinessLocationObj>{};
-    this.acc.accBusinessLocations.city = <cityObj>{};
-    this.rowIndex = null;
-  }
-  accBusinessLocations(index) {
-    this.reference.accBusinessLocations.cityName = index
-  }
-  editrow(s) {
+    this.spinner.show();
+    this.entity.mst01100 = {
+      firmId: this.provider.companyinfo?.company?.firmCode ?? null,
+      divId: this.provider.companyinfo?.company?.divId ?? null,
+      crbal: this.entity.mst01100?.crbal ?? 0,
+      drbal: this.entity.mst01100?.drbal ?? 0,
+    } as mst01100Obj;
+    if (!this.entity.accCode) {
+      if (!this.entity.createdUser)
+        this.entity.createdUser = this.provider.companyinfo.userinfo.username;
 
-    this.rowIndex = this.entity.accBusinessLocations.indexOf(s);
-    this.acc.accBusinessLocations = Object.assign({}, s);
+      this.http.post('Account/insert', this.master.cleanObject(this.entity, 2)).subscribe({
+        next: (res: any) => {
+          if (res.status_cd == 1) {
+
+            this.entity.accCode = res.data.accCode;
+            this.pastentity = JSON.parse(JSON.stringify(this.entity))
+
+            if (!this.entity.mst01100) {
+              this.entity.mst01100 = <mst01100Obj>{};
+            }
+
+            if (!this.entity.mst01104) {
+              this.entity.mst01104 = <mst01104Obj>{};
+            }
+            if (!this.entity.mst01101) {
+              this.entity.mst01101 = <mst01101Obj>{};
+            }
+            if (!this.entity.mst01109) {
+              this.entity.mst01109 = <mst01109Obj>{};
+            }
+
+            this.dialog.swal({ dialog: "success", title: "Success", message: "Record is saved sucessfully" });
+            this.navactions.navaction("OK");
+          }
+          else {
+            this.dialog.swal({ dialog: 'error', title: 'Error', message: res.errors.exception.InnerException.message })
+          }
+          this.spinner.hide();
+        }, error: (err: any) => {
+          this.spinner.hide()
+          this.dialog.swal({ dialog: 'error', title: 'Error', message: err.message })
+        }
+      })
+    }
+    else {
+      this.entity.modifiedUser = this.provider.companyinfo.userinfo.username;
+      this.http.put('Account/update', this.master.cleanObject(this.entity, 2), { id: this.entity.accCode }).subscribe({
+        next: (res: any) => {
+
+          if (res.status_cd == 1) {
+            this.entity.accCode = res.data.accCode;
+            if (!this.entity.mst01104) {
+              this.entity.mst01104 = <mst01104Obj>{};
+            }
+            if (!this.entity.mst01101) {
+              this.entity.mst01101 = <mst01101Obj>{};
+            }
+            if (!this.entity.mst01109) {
+              this.entity.mst01109 = <mst01109Obj>{};
+            }
+
+            this.dialog.swal({ dialog: "success", title: "Success", message: "Record is Update sucessfully" });
+            this.navactions.navaction("OK");
+          }
+
+          this.spinner.hide()
+        }, error: (err: any) => {
+          this.dialog.swal({ dialog: 'error', title: 'Error', message: err })
+        }
+      })
+    }
+}
+
+close() {
+  this.location.back();
+}
+
+newRecord() {
+  this.pastentity = JSON.parse(JSON.stringify(this.entity))
+  this.entity = <AccountObj>{};
+
+  this.entity.mst01100 = <mst01100Obj>{};
+  this.entity.mst01101 = <mst01101Obj>{};
+  this.entity.mst01104 = <mst01104Obj>{};
+  this.entity.mst01109 = <mst01109Obj>{};
+  this.entity.mst01110s = <mst01110sObj[]>[];
+  this.entity.accBusinessLocations = <accBusinessLocationObj[]>[];
+}
+
+edit() {
+  this.navactions.navaction("view");
+  this.callbackedit();
+}
+
+getdata(index) {
+  console.log(index);
+}
+
+undo() {
+  this.entity = this.pastentity;
+  this.callbackedit();
+  this.entity = <AccountObj>{};
+  this.entity.mst01100 = <mst01100Obj>{};
+  this.entity.mst01101 = <mst01101Obj>{};
+  this.entity.mst01104 = <mst01104Obj>{};
+  this.entity.mst01109 = <mst01109Obj>{};
+  this.entity.mst01110s = <mst01110sObj[]>[];
+  this.entity.accBusinessLocations = <accBusinessLocationObj[]>[];
+}
+
+Add() {
+  if (this.rowIndex == null) {
+    this.entity.accBusinessLocations.push(this.acc.accBusinessLocations);
+  } else {
+
+    this.entity.accBusinessLocations[this.rowIndex] = this.acc.accBusinessLocations;
   }
-  deleterow(s) {
+  this.acc.accBusinessLocations = <accBusinessLocationObj>{};
+  this.acc.accBusinessLocations.city = <cityObj>{};
+  this.rowIndex = null;
+}
+
+accBusinessLocations(index) {
+  this.reference.accBusinessLocations.cityName = index
+}
+
+editrow(s) {
+  this.rowIndex = this.entity.accBusinessLocations.indexOf(s);
+  this.acc.accBusinessLocations = Object.assign({}, s);
+}
+
+deleterow(s) {
+  var params = {
+    dialog: 'confirm',
+    title: "warning",
+    message: "Do You Want Delete Row",
+  }
+  this.dialog.swal(params).then(data => {
+    if (data == true) {
+
+      this.param = this.entity.accBusinessLocations.indexOf(s);
+      this.iConfirmFn2();
+    }
+  })
+}
+
+iConfirmFn2() {
+  if (this.param != undefined) {
+
+    this.entity.accBusinessLocations.splice(this.param, 1);
     var params = {
-      dialog: 'confirm',
-      title: "warning",
-      message: "Do You Want Delete Row",
     }
-    this.dialog.swal(params).then(data => {
-      if (data == true) {
-
-        this.param = this.entity.accBusinessLocations.indexOf(s);
-        this.iConfirmFn2();
-      }
-    })
+    this.dialog.swal(params);
   }
-  iConfirmFn2() {
-    if (this.param != undefined) {
+}
 
-      this.entity.accBusinessLocations.splice(this.param, 1);
-      var params = {
-      }
-      this.dialog.swal(params);
+licensedelete(s) {
+  var params = {
+    dialog: 'confirm',
+    title: "warning",
+    message: "Do You Want Delete Row",
+  }
+  this.dialog.swal(params).then(data => {
+    if (data == true) {
+
+      this.param = this.entity.mst01110s.indexOf(s);
+      this.iConfirmFn3();
     }
-  }
+  })
+}
 
-  licensedelete(s) {
+iConfirmFn3() {
+  if (this.param != undefined) {
+
+    this.entity.mst01110s.splice(this.param, 1);
     var params = {
-      dialog: 'confirm',
-      title: "warning",
-      message: "Do You Want Delete Row",
     }
-    this.dialog.swal(params).then(data => {
-      if (data == true) {
-
-        this.param = this.entity.mst01110s.indexOf(s);
-        this.iConfirmFn3();
-      }
-    })
+    this.dialog.swal(params);
   }
-  iConfirmFn3() {
-    if (this.param != undefined) {
+}
 
-      this.entity.mst01110s.splice(this.param, 1);
-      var params = {
-      }
-      this.dialog.swal(params);
-    }
-  }
+closerdlc(s) {
+  this.ngview = false;
+}
 
-  closerdlc(s) {
-    this.ngview = false;
-  }
-
-  firm(index) {
-    this.reference.firmName = index.firmName;
-    this.reference.firmCode = index.firmCode;
-  }
-
+firm(index) {
+  this.reference.firmName = index.firmName;
+  this.reference.firmCode = index.firmCode;
+}
 }

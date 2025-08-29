@@ -22,8 +22,8 @@
                                         <app-ngselect apiUrl="SubGroup/getGroup" label="Group" bindLabel="sgName"
                                             bindValue="sgCode" name="sgCode" [(ngModel)]="entity.sgCode"
                                             [disabled]="navactions.fieldset" (change)="onSelectGroup($event)"
-                                            [bindSubObj]="[{key:'Group',value:'grpName'}, 
-                                                         {key:'Primary Group',value:'grpCodeNavigation?.mgCodeNavigation?.mgName'}]"
+                                            [bindSubObj]="[{key:'Group',value:'grpCodeNavigation.grpName'}, 
+                                                         {key:'Primary Group',value:'mgCodeNavigation.mgName'}]"
                                             [defaultProperty]="entity.sgCodeNavigation">
                                         </app-ngselect>
                                     </div>
@@ -40,21 +40,22 @@
 
                                 <div class="d-flex flex-column gapInputFields">
                                     <div class="" style="width: 15rem;">
-                                       <label class="mb-0">Credit</label>
-                                    <input type="text" class="form-control form-control text-end" autocomplete="off"
-                                        name="crBal" #crBal="ngModel" [(ngModel)]="entity.mst01100.crbal" CurrencyMask
-                                        style="width:clamp(130px, 100%, 0px)" currency="INR" fraction="2" 
-                                        [readonly]="entity.mst01100.drbal > 0" [disabled]="!creditEnabled"  #crbal>
+                                        <label class="mb-0">Credit</label>
+                                        <input type="text" class="form-control form-control text-end" autocomplete="off"
+                                            name="crBal" #crBal="ngModel" [(ngModel)]="entity.mst01100.crbal"
+                                            CurrencyMask style="width:clamp(130px, 100%, 0px)" currency="INR"
+                                            fraction="2" [readonly]="entity.mst01100.drbal > 0"
+                                            [disabled]="!creditEnabled" #crbal>
                                     </div>
                                     <div class="" style="width: 15rem;">
-                                       <label class="mb-0">Debit</label>
-                                    <input type="text" class="form-control form-control text-end" autocomplete="off"
-                                        name="drBal" #drbal #drBal="ngModel" [(ngModel)]="entity.mst01100.drbal" CurrencyMask
-                                        style="width:clamp(130px, 100%, 0px)" currency="INR" fraction="2"
-                                        [readonly]="entity.mst01100.crbal > 0">
+                                        <label class="mb-0">Debit</label>
+                                        <input type="text" class="form-control form-control text-end" autocomplete="off"
+                                            name="drBal" #drbal #drBal="ngModel" [(ngModel)]="entity.mst01100.drbal"
+                                            CurrencyMask style="width:clamp(130px, 100%, 0px)" currency="INR"
+                                            fraction="2" [readonly]="entity.mst01100.crbal > 0">
 
                                     </div>
-                                    
+
                                 </div>
 
                             </div>
@@ -73,7 +74,7 @@
                                     <div class="d-flex">
                                         <div class="d-flex-width " style="width: 10rem;">
                                             <dss-input label="Effective Date" name="effDate" type="date"
-                                                [(ngModel)]="entity.mst01109.gstrDate"></dss-input>
+                                                [(ngModel)]="entity.mst01109.gstrDate" [disabled]="!creditEnabled"></dss-input>
                                         </div>
                                         <div class="gapInputFields" style="width: 15rem;">
                                             <label for="">Registration Type</label>
@@ -87,7 +88,7 @@
                                             <label>GSTIN</label>
                                             <input name="gstno" class="form-control" [maxlength]="15" [minlength]="15"
                                                 autocomplete="off" [(ngModel)]="entity.mst01109.accGstn"
-                                                #gstin="ngModel" required />
+                                                #gstin="ngModel"  [disabled]="!creditEnabled" />
 
                                             <div *ngIf="gstin.invalid && (gstin.dirty || gstin.touched)"
                                                 class="error-message" style="color: red;">

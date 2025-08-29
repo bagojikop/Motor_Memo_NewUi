@@ -221,7 +221,7 @@ export class Aknowledgmemnt1Component {
         headerClass: "text-left",
       },
       {
-        field: 'totalWet',
+        field: 'totalWeight',
         headerName: 'Weight',
         filter: "agTextColumnFilter",
         type: "rightAligned",
@@ -234,7 +234,7 @@ export class Aknowledgmemnt1Component {
         },
       },
       {
-        field: 'freightperWet',
+        field: 'frtPerWeight',
         headerName: 'Freight/Weight',
         filter: "agTextColumnFilter",
         type: "rightAligned",
@@ -247,7 +247,7 @@ export class Aknowledgmemnt1Component {
         },
       },
       {
-        field: 'freightTotal',
+        field: 'totalFreightAmt',
         headerName: 'Freight Amount',
         filter: "agTextColumnFilter",
         type: "rightAligned",
@@ -260,7 +260,7 @@ export class Aknowledgmemnt1Component {
         },
       },
       {
-        field: 'totalAdv',
+        field: 'totalAdvAmt',
         headerName: 'Adv Amount',
         filter: "agTextColumnFilter",
         type: "rightAligned",
@@ -273,7 +273,7 @@ export class Aknowledgmemnt1Component {
         },
       },
       {
-        field: 'remAmt',
+        field: 'leftAmt',
         headerName: 'Left Amount',
         filter: "agTextColumnFilter",
         type: "rightAligned",
@@ -461,7 +461,7 @@ export class Aknowledgmemnt1Component {
     if (this.referance.aknowlType === "0") {
       const param = { action: 'view', id: s.vchId };
       $('#exampleModal').modal('show');
-      var url = "MotorMemo/PendingAmountedit"
+      var url = "MotorMemo/PendingConfirmationget"
       this.http.get(url, { id: s.vchId }).subscribe({
         next: (res: any) => {
           if (res.status_cd == 1) {
@@ -482,7 +482,7 @@ export class Aknowledgmemnt1Component {
     } else {
       const param = { action: 'view', id: s.vchId };
       $('#exampleModal2').modal('show');
-      var url = "Motormemo2/PendingAmountedit"
+      var url = "Motormemo2/PendingConfirmationget"
       this.http.get(url, { id: s.vchId }).subscribe({
         next: (res: any) => {
           if (res.status_cd == 1) {
@@ -509,7 +509,7 @@ export class Aknowledgmemnt1Component {
         div_id: this.provider.companyinfo.company.divId,
         veh_no: this.entity.vehicleNo,
       }
-      this.http.get('MotorMemo/PendingLorryRec', param).subscribe({
+      this.http.get('MotorMemo/ackno', param).subscribe({
         next: (res: any) => {
           if (res.status_cd == 1) {
             if (res.data.length == 0) {
@@ -535,7 +535,7 @@ export class Aknowledgmemnt1Component {
         div_id: this.provider.companyinfo.company.divId,
         veh_no: this.entity.vehicleNo,
       }
-      this.http.get('Motormemo2/PendingLorryRec', param).subscribe({
+      this.http.get('Motormemo2/ackno', param).subscribe({
         next: (res: any) => {
           if (res.status_cd == 1) {
             if (res.data.length == 0) {
@@ -601,15 +601,13 @@ export class Aknowledgmemnt1Component {
     if (this.referance.aknowlType === "0") {
       this.spinner.show();
       const charges = Number(this.entity.totalcharges);
-      if (charges == this.entity.vehLeftAmount) {
-        this.leftAmt();
-        this.AdvAmount();
+     
         if (this.entity.vchId) {
           this.entity.firmId = this.provider.companyinfo.company?.firm.firmCode,
             this.entity.divId = this.provider.companyinfo.company.divId;
           this.entity.motormemoAudit.modifiedUser = this.provider.companyinfo.userinfo.username;
 
-          this.http.put('MotorMemo/updatepayment', this.master.cleanObject(this.entity, 2), { id: this.entity.vchId }).subscribe({
+          this.http.put('MotorMemo/updateConfirm', this.master.cleanObject(this.entity, 2), { id: this.entity.vchId }).subscribe({
             next: (res: any) => {
               this.spinner.hide()
               if (res.status_cd == 1) {
@@ -630,20 +628,15 @@ export class Aknowledgmemnt1Component {
         else {
           this.dialog.swal({ dialog: 'error', title: 'Error', message: "Please Fill All The Required Fields.." })
         }
-      } else {
-        this.dialog.swal({ dialog: 'error', title: 'Error', message: 'Please check Charges Amount' });
-        return;
-      }
+      
     } else {
       this.spinner.show();
-      this.leftAmt();
-      this.AdvAmount();
       if (this.entity.vchId) {
 
         this.entity.firmId = this.provider.companyinfo.company?.firm.firmCode,
           this.entity.divId = this.provider.companyinfo.company.divId;
 
-        this.http.put('Motormemo2/updatepayment', this.master.cleanObject(this.entity, 2), { id: this.entity.vchId }).subscribe({
+        this.http.put('Motormemo2/updateConfirm', this.master.cleanObject(this.entity, 2), { id: this.entity.vchId }).subscribe({
           next: (res: any) => {
             this.spinner.hide()
             if (res.status_cd == 1) {
