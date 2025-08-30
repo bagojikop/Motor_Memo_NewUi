@@ -3,8 +3,6 @@
         <span style="font-size:20px;">Lorry Receipt</span>
 
     </div>
-
-
 </div>
 
 <hr class="pt-0 mt-0" />
@@ -124,7 +122,7 @@
                             <div class="d-flex-width">
                                 <label>Confirmation Account</label>
                                 <app-ngselect apiUrl="Account/getAcclistbyMgCode" bindLabel="accName"
-                                    bindValue="accCode" name="recpayeeaccount" [(ngModel)]="entity.confirmAcc"
+                                    bindValue="accCode" name="recpayeeaccount" [(ngModel)]="entity.confAcc"
                                     [defaultProperty]="entity.confirmAccNavigation"
                                     [apiParams]="{mgCode:'3, 4, 25'}"></app-ngselect>
 
@@ -135,105 +133,14 @@
                             <div class="d-flex-width">
                                 <label for="cnfDt" class="form-label"
                                     [ngClass]="{'text-danger': !entity.confDate }">Confirmation Narration</label>
-                                <input type="text" class="form-control" id="cnfnar" [(ngModel)]="entity.confirmNarr"
+                                <input type="text" class="form-control" id="cnfnar" [(ngModel)]="entity.confNar"
                                      name="cnfnar">
                             </div>
                         </div>
 
 
                     </div>
-                    <!-- <div class="container mt-3">
-                        <div class="card">
-                            <div class="card-header">
-                                <h5 class="m-0 p-2">Payment Details</h5>
-                            </div>
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th class="text-center" scope="col" style="width: 30%;">
-                                            <b>Expense</b>
-                                        </th>
-                                        <th class="text-center" scope="col" style="width: 30%;">
-                                            <b>Account</b>
-                                        </th>
-                                        <th class="text-center" scope="col" style="width: 30%;">
-                                            <b>Amount</b>
-                                        </th>
-
-                                        <th class="text-center" scope="col" style="width: 10%;">
-                                            <b>Action</b>
-                                        </th>
-                                    </tr>
-
-                                    <tr>
-
-                                        <th style="width: 30%;">
-
-                                            <app-ngselect apiUrl="Sundry/getExpAcclist" class="p-0 text-start"
-                                                bindLabel="sundryName" bindValue="s_Id" name="ExpensName"
-                                                [(ngModel)]="exp.s_Id" (change)="onSelectExp($event)" autocomplete="off"
-                                                #f="ngModel" [applyMargins]="false"></app-ngselect>
-
-                                        </th>
-                                        <th style="width: 30%;">
-                                            <app-ngselect apiUrl="Account/getsupplier" class="p-0 text-start"
-                                                bindLabel="accName" bindValue="accCode" name="accountname"
-                                                (change)="exp.accCodeNavigation=$event;onSelectAcc($event)"
-                                                [(ngModel)]="exp.accCode" autocomplete="off" #f="ngModel"
-                                                [applyMargins]="false"
-                                                [defaultProperty]="exp.accCodeNavigation"></app-ngselect>
-                                        </th>
-                                        <th style="width: 30%;">
-
-                                            <input class="form-control" type="number" name="charges" digitOnly
-                                                CurrencyMask fraction="2" #f="ngModel" [(ngModel)]="exp.charges">
-
-                                        </th>
-                                        <th class="text-center" style="width: 10%;">
-                                            <button class="btn btn-light btn-sm text-center"
-                                                (click)="updateTotalCharges()" type="button" tabindex="0" #addButton>
-                                                <i class="fas fa-plus"></i>
-                                            </button>
-                                        </th>
-
-                                    </tr>
-                                </thead>
-                                <tbody class="actionTableHeight">
-                                    <div *ngIf="!entity?.motormemoVehExpenses || entity.motormemoVehExpenses.length === 0"
-                                        class="noDataImg">
-                                        <img src="../../../../../../assets/IMG/noData.png" width="50">
-                                        <p>Record is empty</p>
-                                    </div>
-
-                                    <tr *ngFor="let v of entity.motormemoVehExpenses;let i=index;">
-                                        <td style="width: 30%;">{{v.sundries?.sundryName}}</td>
-                                        <td style="width: 30%;">{{v.accCodeNavigation?.accName }}</td>
-                                        <td style="width: 30%; text-align: right; ">{{v.charges | number:'1.2-2'}}
-                                        </td>
-                                        <td class="text-center" style="width: 10%;">
-                                            <button class="btn btn-primary btn-sm-custom-table me-1" type="button"
-                                                tabindex="-1" (click)="editExpTablerow(v,i)">
-                                                <i class="fas fa-edit"></i></button>
-                                            <button class="btn btn-danger btn-sm-custom-table" type="button"
-                                                tabindex="-1" (click)="deleteExpTablerow(i)">
-                                                <i class="fas fa-trash"></i></button>
-                                        </td>
-                                    </tr>
-
-                                </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <td style="width: 30%;"></td>
-                                        <td class="p-1 text-end" style="width: 30%;">Total</td>
-                                        <td class="p-1 text-end" style="width: 30%;"> ₹ {{entity.totalcharges |
-                                            number:'1.2-2'}}</td>
-                                        <th style="width: 10%;"></th>
-
-                                    </tr>
-                                </tfoot>
-                            </table>
-                        </div>
-                    </div> -->
+                   
                 </form>
             </div>
             <div class="modal-footer">
@@ -247,7 +154,7 @@
 
 
 <!-- Lorry Receipt Direct -->
-<div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -347,96 +254,7 @@
 
 
                     </div>
-                    <!-- <div class="container mt-3">
-                        <div class="card">
-                            <div class="card-header">
-                                <h5 class="m-0 p-2">Payment Details</h5>
-                            </div>
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th class="text-center" scope="col" style="width: 30%;">
-                                            <b>Account</b>
-                                        </th>
-                                        <th class="text-center" scope="col" style="width: 30%;">
-                                            <b>Amount</b>
-                                        </th>
-
-                                        <th class="text-center" scope="col" style="width: 30%;">
-                                            <b>Narration</b>
-                                        </th>
-                                        <th class="text-center" scope="col" style="width: 10%;">
-                                            <b>Action</b>
-                                        </th>
-                                    </tr>
-
-                                    <tr>
-                                        <th style="width: 30%;">
-                                            <app-ngselect apiUrl="Account/getAcclistbyMgCode" bindLabel="accName"
-                                                bindValue="accCode" name="contraItemsaccount"
-                                                [(ngModel)]="motormemo2AdvDetl.accCode"
-                                                (change)="getAccountDetl($event)" [apiParams]="{mgCode:'3, 4, 25'}"
-                                                [defaultProperty]="motormemo2AdvDetl.accCodeNavigation"
-                                                [applyMargins]="false"></app-ngselect>
-                                        </th>
-                                        <th style="width: 30%;">
-
-                                            <input class="form-control" type="text" name="charges" digitOnly
-                                                CurrencyMask fraction="2" #f="ngModel"
-                                                [(ngModel)]="motormemo2AdvDetl.amount" autocomplete="off">
-
-                                        </th>
-                                        <th style="width: 30%;">
-                                            <div>
-                                                <input class="form-control" type="text" name="Naration"
-                                                    [(ngModel)]="motormemo2AdvDetl.narration" autocomplete="off">
-                                            </div>
-                                        </th>
-                                        <th class="text-center" style="width: 10%;">
-                                            <button class="btn btn-light btn-sm text-center"
-                                                (click)="updateTotalCharges()">
-                                                <i class="fas fa-plus"></i>
-                                            </button>
-                                        </th>
-
-                                    </tr>
-                                </thead>
-                                <tbody class="actionTableHeight">
-                                    <div *ngIf="!entity?.motormemo2AdvDetails || entity.motormemo2AdvDetails.length === 0"
-                                        class="noDataImg">
-                                        <img src="../../../../../../assets/IMG/noData.png" width="50">
-                                        <p>Record is empty</p>
-                                    </div>
-
-                                    <tr *ngFor="let v of entity.motormemo2AdvDetails;let i=index;">
-                                        <td style="width: 30%;">{{v.accCodeNavigation?.accName}}</td>
-                                        <td style="width: 30%;text-align: right; ">{{v.amount| number:'1.2-2'}}</td>
-                                        <td style="width: 30%;">{{v.narration}}
-                                        </td>
-                                        <td class="text-center" style="width: 10%;">
-                                            <button class="btn btn-primary btn-sm-custom-table me-1" type="button"
-                                                tabindex="-1" (click)="editExpTablerow(v,i)">
-                                                <i class="fas fa-edit"></i></button>
-                                            <button class="btn btn-danger btn-sm-custom-table" type="button"
-                                                tabindex="-1" (click)="deleteExpTablerow(i)">
-                                                <i class="fas fa-trash"></i></button>
-                                        </td>
-                                    </tr>
-
-                                </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <td class="p-1 text-end" style="width: 30%;">Total</td>
-                                        <td class="p-1 text-end" style="width: 30%;"> ₹ {{totalAdvAmt |
-                                            number:'1.2-2'}}</td>
-                                        <td class="p-1 text-end" style="width: 30%;"></td>
-                                        <th style="width: 10%;"></th>
-
-                                    </tr>
-                                </tfoot>
-                            </table>
-                        </div>
-                    </div> -->
+                   
                 </form>
             </div>
             <div class="modal-footer">
@@ -446,7 +264,7 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->
 
 <div class="modal fade" id="vehiclemodal" tabindex="-1" data-bs-backdrop="static" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
