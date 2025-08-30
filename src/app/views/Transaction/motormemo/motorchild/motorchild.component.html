@@ -1078,7 +1078,8 @@
 </div>
 
 <div *ngIf="rptMode">
-    <dss-report-viewer [(isShow)]="rptMode" [dictionory]="myReportDictionory" [serviceUrl]="myServiceUrl"
-        docName="Motormemo" [mail]="" [wapp]="" ReportTitle="Motormemo Entry">
+    <dss-report-viewer [(isShow)]="rptMode"  [reports]="reports"
+     [dictionory]="myReportDictionory" [serviceUrl]="myServiceUrl"
+         [mail]="" [wapp]="" ReportTitle="Motormemo Entry">
     </dss-report-viewer>
 </div>

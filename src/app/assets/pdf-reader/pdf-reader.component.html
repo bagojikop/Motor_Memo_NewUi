@@ -5,8 +5,15 @@
     <div class="card-header mt-1">
         <div class="row w-100 resposiveHeader">
             <div class="col-sm-3 d-flex">
-                <div class="heading">
+                <div class="heading" *ngIf="!reports">
                   {{ReportTitle}}
+                </div>
+                <div class="heading" *ngIf="reports">
+                <select class="form-select" [(ngModel)]="myRepoObj" name="reportname" (change)="onReportChange()">
+                    <option *ngFor="let x of reports" [ngValue]="x">
+                        {{x.name}}
+                    </option>
+                </select>
                 </div>
             </div>
             <div class="col-sm-6 d-flex justify-content-center">

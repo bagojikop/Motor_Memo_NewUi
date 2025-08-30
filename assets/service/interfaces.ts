@@ -18,6 +18,7 @@ export interface ReportDictionory {
   exportType?: string
   mail?: MailNav
   wapp?: WappNav
-  reportCacheId:string
+  reportCacheId?:string
+  docName? :string
 
 }

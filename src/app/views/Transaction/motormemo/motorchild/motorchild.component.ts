@@ -81,7 +81,7 @@ export class MotorchildComponent {
   other: any = {};
   payment: any = {};
   recPayment: any = {}
-
+  reports: any[] = [{ name: "Memo", id: uuidv4() }, { name: "Pay Slip", id: uuidv4() }, { name: "Receipt", id: uuidv4() }];
   freightTypeList: any = [];
 
   ngOnInit(): void {
@@ -116,6 +116,7 @@ export class MotorchildComponent {
         "name": "To Way Build"
       }
     ]
+
 
     let paramss: any = this.location.getState();
     this.navactions.navaction(paramss.action);
@@ -186,7 +187,7 @@ export class MotorchildComponent {
     this.myServiceUrl = "MetormemoReport";
 
     this.myReportDictionory = {
-      reportCacheId: uuidv4(),
+
       reportParams: [
         {
           key: "vch_id", value: this.entity.vchId,
@@ -754,14 +755,14 @@ export class MotorchildComponent {
     const totalCharges = this.entity.motormemoVehExpenses
       .filter(exp => exp.isInclFreight && exp.action != 2)
       .reduce((sum, exp) => sum + Number(exp.charges), 0);
-    
+
     this.entity.vehAdvAmount = this.entity.motormemoVehExpenses
       .filter(exp => !exp.isInclFreight && exp.action != 2)
-      .reduce((sum, exp) => sum + Number(exp.charges || 0)*(exp.action==0 ?1 :-1) , 0);
+      .reduce((sum, exp) => sum + Number(exp.charges || 0) * (exp.action == 0 ? 1 : -1), 0);
     this.entity.vehBilledAmt = this.entity.motormemoVehExpenses
       .filter(exp => exp.action == 2)
       .reduce((sum, exp) => sum + Number(exp.charges), 0);
-this.entity.vehTotalFreight = this.entity.totalFreight - (totalCharges || 0)-(this.entity.vehBilledAmt || 0)
+    this.entity.vehTotalFreight = this.entity.totalFreight - (totalCharges || 0) - (this.entity.vehBilledAmt || 0)
     this.entity.totalcharges = totalCharges + this.entity.vehAdvAmount + this.entity.vehBilledAmt;
 
     this.setLeftAmt();
@@ -1188,7 +1189,7 @@ this.entity.vehTotalFreight = this.entity.totalFreight - (totalCharges || 0)-(th
   setLeftAmt() {
     setTimeout(() => {
 
-      this.entity.vehLeftAmount = (this.entity.vehTotalFreight - this.entity.vehAdvAmount ).round(2);
+      this.entity.vehLeftAmount = (this.entity.vehTotalFreight - this.entity.vehAdvAmount).round(2);
     }, 100);
   }
 
