@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild, EventEmitter, Input, OnChanges, Output, SimpleChanges, NO_ERRORS_SCHEMA } from '@angular/core';
-import { PDFDocumentProxy,PdfViewerModule, PdfViewerComponent } from 'ng2-pdf-viewer';
+import { PDFDocumentProxy, PdfViewerModule, PdfViewerComponent } from 'ng2-pdf-viewer';
 
 import { saveAs } from 'file-saver';
 import { ReportDictionory, MailNav, WappNav } from '../../../../assets/service/interfaces';
@@ -8,21 +8,25 @@ import Swal from 'sweetalert2';
 import { NgxSpinner, NgxSpinnerService } from 'ngx-spinner';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { QuillModule } from 'ngx-quill'; 
+import { QuillModule } from 'ngx-quill';
+
 
 declare var $: any;
 @Component({
   selector: 'dss-report-viewer',
-  imports:[FormsModule,CommonModule,PdfViewerModule,QuillModule],
+  imports: [FormsModule, CommonModule, PdfViewerModule, QuillModule],
   templateUrl: './pdf-reader.component.html',
   styleUrls: ['./pdf-reader.component.scss'],
-  schemas:[NO_ERRORS_SCHEMA]
+  schemas: [NO_ERRORS_SCHEMA]
 })
+
+
 export class PdfReaderComponent implements OnInit {
   @ViewChild(PdfViewerComponent) private pdfComponent: any = PdfViewerComponent;
   private pdf: PDFDocumentProxy;
   pdfFindController: any;
   currentPage: number = 1;
+  myRepoObj: any = {};
 
   @Input() dictionory: ReportDictionory;
   @Input() isShow: boolean = false;
@@ -33,7 +37,7 @@ export class PdfReaderComponent implements OnInit {
   @Input() wapp: WappNav;
   @Input() AuthoriseToken: string;
   @Input() ReportTitle: string
-
+  @Input() reports: any[] | null = null;
   constructor(private el: ElementRef, private loading: NgxSpinnerService, private http: http) {
 
   }
@@ -44,6 +48,7 @@ export class PdfReaderComponent implements OnInit {
 
   ref: any = {};
 
+
   ngOnInit(): void {
     this.ref.currentPage = 1;
     this.ref.totalnumber = 0;
@@ -53,10 +58,17 @@ export class PdfReaderComponent implements OnInit {
     this.wapp = <WappNav>{};
     this.mail.fileType = "PDF";
 
+
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+
     if (Object.keys(changes['dictionory'].currentValue).length > 0) {
+      if (this.reports) {
+        this.myRepoObj = this.reports?.[0];
+        this.dictionory.docName =  this.myRepoObj.name;
+        this.dictionory.reportCacheId =  this.myRepoObj.id
+      }
       this.getReport();
     }
   }
@@ -255,29 +267,9 @@ export class PdfReaderComponent implements OnInit {
       this.loading.show();
       this.http.post(this.serviceUrl, this.dictionory).subscribe((res: any) => {
         this.loading.hide();
-       
-          if (!this.dictionory.wapp && !this.dictionory.mail) {
-            const data = this.base64ToArrayBuffer(res.data.arrayBuffer.fileContents)
 
-            if (res.data.fileType.toUpperCase() == "PDF") {
-              const byteArray = new Uint8Array(data);
+        this.showReport(res.data)
 
-              // Convert the byte array to a Blob
-              const blob = new Blob([byteArray], { type: 'application/pdf' });
-
-              // Create a URL for the Blob
-              this.pdfSrc = URL.createObjectURL(blob);
-             
-            }
-            // this.pdfSrc = this.arrayBuffer.castInbase64(res.data.arrayBuffer);
-            else {
-            
-              const blob = new Blob([data], { type: 'application/octet-stream' });
-              saveAs(blob, this.getReportName(this.docName, res.data.fileType));
-            }
-          }
-        
-        
         resolve(res);
       }, error => {
         this.loading.hide();
@@ -295,7 +287,38 @@ export class PdfReaderComponent implements OnInit {
       })
     })
 
+
   }
+
+  onReportChange() {
+    this.dictionory.docName = this.myRepoObj.name;
+    this.dictionory.reportCacheId = this.myRepoObj.id;
+    this.getReport();
+  }
+  private showReport(currArrayBuffer) {
+    if (!this.dictionory.wapp && !this.dictionory.mail) {
+      const data: any = this.base64ToArrayBuffer(currArrayBuffer.arrayBuffer.fileContents)
+
+      if (currArrayBuffer.fileType.toUpperCase() == "PDF") {
+        const byteArray = new Uint8Array(data);
+
+        // Convert the byte array to a Blob
+        const blob = new Blob([byteArray], { type: 'application/pdf' });
+
+        // Create a URL for the Blob
+        this.pdfSrc = URL.createObjectURL(blob);
+
+      }
+      // this.pdfSrc = this.arrayBuffer.castInbase64(res.data.arrayBuffer);
+      else {
+
+        const blob = new Blob([data], { type: 'application/octet-stream' });
+        saveAs(blob, this.getReportName(this.docName, currArrayBuffer.fileType));
+      }
+    }
+
+  }
+
   private base64ToArrayBuffer(base64: string): Uint8Array {
     const binaryString = window.atob(base64);
     const len = binaryString.length;
