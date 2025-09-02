@@ -15,7 +15,7 @@
             Vehicle No
         </label>
         <div class="search-box">
-            <input type="text" style="width: 100%;" id="search" class="form-control"
+            <input type="text" id="search" class="form-control"
                 placeholder=" Enter Last 4  Digits " name="Vehiclenumb" [(ngModel)]="entity.vehicleNo" required
                 autocomplete="off" (input)="entity.vehicleNo = entity.vehicleNo.toUpperCase()">
 
@@ -24,21 +24,22 @@
             </button>
         </div>
     </div>
-    <div class="gapInputFields" style="width: 30%;">
+    <div class="gapInputFields">
+        <button class="btn btn-outline-primary" style="margin-top: 21px;" type="button" (click)="Listshow()"><i
+                class="fa fa-eye me-1"></i> show</button>
+    </div>
+    <!-- <div class="gapInputFields" style="width: 30%;">
 
         <label for="">Aknowledgment Type</label>
-        <select class="form-select select-wrapper" name="akntp" [(ngModel)]="referance.aknowlType"
+        <select class="form-select select-wrapper" name="akntp" [(ngModel)]="referance.isBilty"
             (change)="showgrid()">
             <option [value]="0">Lorry Receipt</option>
             <option [value]="1">Lorry Receipt With Bilty</option>
 
         </select>
-    </div>
+    </div> -->
 
-    <div class="gapInputFields">
-        <button class="btn btn-outline-primary" style="margin-top: 21px;" type="button" (click)="Listshow()"><i
-                class="fa fa-eye me-1"></i> show</button>
-    </div>
+    
 </div>
 <hr>
 <div class="card-body">

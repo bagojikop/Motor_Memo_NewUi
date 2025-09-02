@@ -2,7 +2,7 @@ export interface MotorMemoObj {
   sgCodeNavigation: string
   directPaid:boolean
   receiverName:string 
-
+  isBilty:boolean
   senderaccount:any
   receiveraccout:any
   oweraccount:any

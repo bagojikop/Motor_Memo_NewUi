@@ -84,27 +84,26 @@ export class LorryReceChildComponent {
   ) {
     this.entity = {};
     this.entity.motormemoBilties = []
-    this.entity.motormemo2Audit = {}
+    this.entity.motormemoAudit = {}
     this.entity.motormemo2AdvDetails = []
     this.motormemo2AdvDetl = {}
     this.stateParams = this.location.getState();
     this.mode = this.stateParams.action;
     this.entity.vchId = this.stateParams.id;
     this.exp = {}
+    this.entity.isBilty = this.stateParams.isBilty == 1 ? true : false;
   }
 
   ngOnInit(): void {
     this.entity = {};
     this.entity.motormemoBilties = []
-    this.entity.motormemo2Audit = {}
+    this.entity.motormemoAudit = {}
     this.pendingbilties = []
-    this.entity.motormemo2AdvDetails = []
-    this.motormemo2AdvDetl = {}
-    this.motormemo2 = {}
     let paramss: any = this.location.getState();
     this.navactions.navaction(paramss.action);
     this.entity.vchId = paramss.id;
     this.exp = {}
+    this.entity.isBilty = this.stateParams.isBilty == 1 ? true : false;
     this.entity.motormemoVehExpenses = []
     if (this.entity.vchId) {
       this.navactions.fieldset = true;
@@ -238,14 +237,12 @@ export class LorryReceChildComponent {
     this.entity = {};
     this.entity.motormemoBilties = []
     this.motormemo2 = {}
-    this.entity.motormemo2AdvDetails = []
-    this.motormemo2AdvDetl = {}
-    this.entity.motormemo2Audit = {}
+    this.entity.motormemoAudit = {}
     this.entity.motormemoVehExpenses = []
     const today = new Date();
     const finYearEnd = new Date(this.provider.companyinfo.finyear.tdt);
     this.exp = { action: 0, isInclFreight: false }
-
+    this.entity.isBilty = this.stateParams.isBilty == 1 ? true : false;
     if (today >= finYearEnd) {
       this.entity.vchDate = finYearEnd.toISOString().split('T')[0];
     } else {
@@ -281,22 +278,6 @@ export class LorryReceChildComponent {
     this.motormemo2AdvDetl.accCodeNavigation = obj;
   }
 
-  AddAdvDetl() {
-    if (this.motormemo2AdvDetl.accCode && this.motormemo2AdvDetl.amount) {
-      if (this.rowIndex == null) {
-        this.entity.motormemo2AdvDetails.push(this.motormemo2AdvDetl);
-        this.additinOfAdv()
-        this.calculateRemAmt()
-      }
-      else {
-        this.entity.motormemo2AdvDetails[this.rowIndex] = this.motormemo2AdvDetl;
-        this.additinOfAdv()
-        this.calculateRemAmt()
-      }
-      this.rowIndex = null;
-      this.motormemo2AdvDetl = {}
-    }
-  }
 
   editAdvDetailrow(v, i) {
     this.rowIndex = i;
@@ -308,7 +289,7 @@ export class LorryReceChildComponent {
 
   callbackedit() {
     this.spinner.show();
-    var url = "Motormemo2/edit"
+    var url = "Motormemo/edit"
     this.http.get(url, { id: this.entity.vchId }).subscribe({
       next: (res: any) => {
         if (res.status_cd == 1) {
@@ -318,8 +299,8 @@ export class LorryReceChildComponent {
         }
         this.spinner.hide();
         this.additinOfWeight();
-        this.additinOfAdv()
-        this.calculateRemAmt()
+       this.setLeftAmt();
+      this.calcVehCharges()
       }, error: (err: any) => {
         this.spinner.hide();
         this.dialog.swal({ dialog: 'error', title: 'Error', message: err });
@@ -327,7 +308,21 @@ export class LorryReceChildComponent {
     })
   }
 
+  addExpTablerow() {
+    if (this.rowIndex == null) {
+      this.entity.motormemoVehExpenses.push(this.exp);
+    }
+    else {
+      this.entity.motormemoVehExpenses[this.rowIndex] = this.exp;
+    }
+    this.exp = {};
+    this.rowIndex = null;
 
+    this.exp = { action: 0 };
+    this.calcVehCharges();
+  }
+
+  
   deletechildtablerow(i) {
     var params = {
 
@@ -357,7 +352,6 @@ export class LorryReceChildComponent {
       if (data == true) {
         this.entity.motormemo2AdvDetails.splice(i, 1);
 
-        this.additinOfAdv()
         this.calculateRemAmt()
       }
     })
@@ -379,7 +373,7 @@ export class LorryReceChildComponent {
 
         this.entity.firmId = this.provider.companyinfo.company?.firm.firmCode,
           this.entity.divId = this.provider.companyinfo.company.divId;
-        this.entity.motormemo2Audit.createdUser = this.provider.companyinfo.userinfo.username;
+        this.entity.motormemoAudit.createdUser = this.provider.companyinfo.userinfo.username;
 
 
         this.http.post('Motormemo/insert', this.entity).subscribe({
@@ -403,14 +397,14 @@ export class LorryReceChildComponent {
       else {
         this.entity.firmId = this.provider.companyinfo.company?.firm.firmCode,
           this.entity.divId = this.provider.companyinfo.company.divId;
-        this.entity.motormemo2Audit.modifiedUser = this.provider.companyinfo.userinfo.username;
-        this.http.put('Motormemo2/update', this.master.cleanObject(this.entity, 2), { id: this.entity.vchId }).subscribe({
+        //this.entity?.motormemoAudit?.modifiedUser = this.provider.companyinfo.userinfo.username;
+        this.http.put('Motormemo/update', this.master.cleanObject(this.entity, 2), { id: this.entity.vchId }).subscribe({
           next: (res: any) => {
             this.spinner.hide()
             if (res.status_cd == 1) {
               this.entity.vchId = res.data.vchId;
               this.additinOfWeight()
-              this.additinOfAdv()
+         
               this.dialog.swal({ dialog: "success", title: "Success", message: "Record is Update sucessfully" });
               this.navactions.navaction("OK");
             } else {
@@ -439,19 +433,19 @@ export class LorryReceChildComponent {
   }
 
 
-  additinOfAdv() {
-    const sumArray = this.entity.motormemo2AdvDetails.map(item => item.amount || 0);
-    const sumValue = sumArray.reduce((p, c) => Number(p) + Number(c), 0);
-    this.entity.totalAdvAmt = sumValue;
+  // additinOfAdv() {
+  //   const sumArray = this.entity.mot.map(item => item.amount || 0);
+  //   const sumValue = sumArray.reduce((p, c) => Number(p) + Number(c), 0);
+  //   this.entity.totalAdvAmt = sumValue;
 
-    if (this.entity.totalAdvAmt > this.entity.totalFreightAmt) {
-      Swal.fire({
-        icon: 'warning',
-        title: 'Warning',
-        text: 'Total Advance amount is greater than Freight Total. Please check the values.',
-      });
-    }
-  }
+  //   if (this.entity.totalAdvAmt > this.entity.totalFreightAmt) {
+  //     Swal.fire({
+  //       icon: 'warning',
+  //       title: 'Warning',
+  //       text: 'Total Advance amount is greater than Freight Total. Please check the values.',
+  //     });
+  //   }
+  // }
 
   undo() {
     this.entity = this.pastentity;

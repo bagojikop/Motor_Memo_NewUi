@@ -75,6 +75,7 @@ export class MotorchildComponent {
     this.stateParams = this.location.getState();
     this.mode = this.stateParams.action;
     this.entity.vchId = this.stateParams.id;
+    this.entity.isBilty = this.stateParams.isBilty;
   }
   cmod: any = {};
   exp: any = {};
@@ -101,6 +102,8 @@ export class MotorchildComponent {
     this.entity.motormemoPayments = [];
     this.entity.motormemoRecPayments = [];
     this.exp = { action: 0, isInclFreight: false };
+    this.entity.isBilty = this.stateParams.isBilty == 1 ? true : false;
+
 
     this.freightTypeList = [
       {
@@ -582,6 +585,7 @@ export class MotorchildComponent {
     this.entity.freightType = 0;
     this.entity.totalcharges = 0;
     this.entity.directPaid = false;
+    this.entity.isBilty = this.stateParams.isBilty == 1 ? true : false;
     const today = new Date();
     const finYearEnd = new Date(this.provider.companyinfo.finyear.tdt);
     if (today >= finYearEnd) {

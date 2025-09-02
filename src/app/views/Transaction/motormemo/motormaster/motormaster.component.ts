@@ -18,7 +18,7 @@ import { FormsModule } from '@angular/forms';
   selector: 'app-motormaster',
   templateUrl: './motormaster.component.html',
   styleUrls: ['./motormaster.component.scss'],
-  imports: [DssGridComponent,FormsModule,CommonModule],
+  imports: [DssGridComponent, FormsModule, CommonModule],
   providers: [http, HttpClient, DialogsComponent, ActBtnComponent],
   schemas: [NO_ERRORS_SCHEMA]
 })
@@ -55,7 +55,7 @@ export class MotormasterComponent implements OnInit {
     this.stateParams = this.location.getState();
     this.mode = this.stateParams.action;
     this.innerWidth = window.innerWidth;
-    this.entity.isBilty =0
+    this.entity.isBilty = 0
 
     fromEvent(window, 'resize')
       .pipe(debounceTime(100))
@@ -89,31 +89,23 @@ export class MotormasterComponent implements OnInit {
       },
 
     ];
-
-
     this.gridParams = {
       firm_id: this.provider.companyinfo.company?.firmCode,
       div_id: this.provider.companyinfo.company.divId,
-
     }
   }
 
- 
- 
-
-
   addNew() {
-  const params = { action: 'new' };
-
-  if (this.entity.isBilty === 0) {
-    this.router.navigate(['Motorchild'], { state: params });
-  } else {
-    this.router.navigate(['lorry-receipt2_child'], { state: params });
+    const params = { action: 'new',isBilty: this.entity.isBilty};
+    if (this.entity.isBilty === 0) {
+      this.router.navigate(['Motorchild'], { state: params });
+    } else {
+      this.router.navigate(['lorry-receipt2_child'], { state: params });
+    }
   }
-}
+
   onGridReady(params: any) {
     this.gridApi = params;
-
   }
 
   onBtnClick1(e: any) {
@@ -126,7 +118,11 @@ export class MotormasterComponent implements OnInit {
 
   edit(s: any) {
     const param = { action: 'view', id: s.vchId };
-    this.router.navigate(['Motorchild'], { state: param });
+    if (s.isBilty === 0) {
+      this.router.navigate(['Motorchild'], { state: param });
+    } else {
+      this.router.navigate(['lorry-receipt2_child'], { state: param });
+    }
   }
 
   Delete(s: any) {

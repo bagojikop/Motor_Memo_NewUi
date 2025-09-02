@@ -457,8 +457,8 @@ export class Aknowledgmemnt1Component {
   }
 
 
-  edit(s: any) {
-    if (this.referance.aknowlType === "0") {
+  edit(s: any) { 
+   
       const param = { action: 'view', id: s.vchId };
       $('#exampleModal').modal('show');
       var url = "MotorMemo/PendingConfirmationget"
@@ -479,31 +479,10 @@ export class Aknowledgmemnt1Component {
           this.dialog.swal({ dialog: 'error', title: 'Error', message: err });
         }
       })
-    } else {
-      const param = { action: 'view', id: s.vchId };
-      $('#exampleModal2').modal('show');
-      var url = "Motormemo2/PendingConfirmationget"
-      this.http.get(url, { id: s.vchId }).subscribe({
-        next: (res: any) => {
-          if (res.status_cd == 1) {
-            this.entity = res.data;
-            this.entity.vchDate = this.datepipe.transform(this.entity.vchDate, 'yyyy-MM-dd')
-            if (!this.entity.confDate) {
-              this.entity.confDate = this.datepipe.transform(new Date(), 'yyyy-MM-dd');
-            }
-            this.pastentity = Object.assign({}, this.entity);
-          }
-          this.spinner.hide();
-        }, error: (err: any) => {
-          this.spinner.hide();
-          this.dialog.swal({ dialog: 'error', title: 'Error', message: err });
-        }
-      })
-    }
+    
   }
 
-  Listshow() {
-    if (this.referance.aknowlType === "0") {
+  Listshow() { 
       var param = {
         firm_id: this.provider.companyinfo.company.firmCode,
         div_id: this.provider.companyinfo.company.divId,
@@ -529,31 +508,7 @@ export class Aknowledgmemnt1Component {
           this.dialog.swal({ dialog: 'error', title: 'Error', message: err.message });
         }
       })
-    } else {
-      var param = {
-        firm_id: this.provider.companyinfo.company.firmCode,
-        div_id: this.provider.companyinfo.company.divId,
-        veh_no: this.entity.vehicleNo,
-      }
-      this.http.get('Motormemo2/ackno', param).subscribe({
-        next: (res: any) => {
-          if (res.status_cd == 1) {
-            if (res.data.length == 0) {
-              this.dialog.swal({ dialog: 'Warning', title: "warning", message: "Record Not Found!" });
-            } else {
-              this.list = res.data || [];
-            }
-          } else {
-            this.dialog.swal({ dialog: 'error', title: 'Error', message: res.errors.message });
-          }
-          this.spinner.hide();
-        },
-        error: (err: any) => {
-          this.spinner.hide();
-          this.dialog.swal({ dialog: 'error', title: 'Error', message: err.message });
-        }
-      })
-    }
+   
   }
 
   onGridReady(params) {
@@ -598,7 +553,7 @@ export class Aknowledgmemnt1Component {
   }
 
   save() {
-    if (this.referance.aknowlType === "0") {
+   
       this.spinner.show();
       const charges = Number(this.entity.totalcharges);
      
@@ -628,35 +583,37 @@ export class Aknowledgmemnt1Component {
         else {
           this.dialog.swal({ dialog: 'error', title: 'Error', message: "Please Fill All The Required Fields.." })
         }
+      }
+   
       
-    } else {
-      this.spinner.show();
-      if (this.entity.vchId) {
+    // } else {
+    //   this.spinner.show();
+    //   if (this.entity.vchId) {
 
-        this.entity.firmId = this.provider.companyinfo.company?.firm.firmCode,
-          this.entity.divId = this.provider.companyinfo.company.divId;
+    //     this.entity.firmId = this.provider.companyinfo.company?.firm.firmCode,
+    //       this.entity.divId = this.provider.companyinfo.company.divId;
 
-        this.http.put('Motormemo2/updateConfirm', this.master.cleanObject(this.entity, 2), { id: this.entity.vchId }).subscribe({
-          next: (res: any) => {
-            this.spinner.hide()
-            if (res.status_cd == 1) {
-              this.entity.vchId = res.data.vchId;
+    //     this.http.put('Motormemo2/updateConfirm', this.master.cleanObject(this.entity, 2), { id: this.entity.vchId }).subscribe({
+    //       next: (res: any) => {
+    //         this.spinner.hide()
+    //         if (res.status_cd == 1) {
+    //           this.entity.vchId = res.data.vchId;
 
-              this.dialog.swal({ dialog: "success", title: "Success", message: "Record is Update sucessfully" });
-              $('#exampleModal').modal('hide');
-            } else {
-              this.dialog.swal({ dialog: 'error', title: 'Error', message: res.errors.exception.InnerException.message })
-            }
+    //           this.dialog.swal({ dialog: "success", title: "Success", message: "Record is Update sucessfully" });
+    //           $('#exampleModal').modal('hide');
+    //         } else {
+    //           this.dialog.swal({ dialog: 'error', title: 'Error', message: res.errors.exception.InnerException.message })
+    //         }
 
-          }, error: (err: any) => {
-            this.spinner.hide()
-            this.dialog.swal({ dialog: 'error', title: 'Error', message: err.message })
-          }
-        })
-      }
-      else {
-        this.dialog.swal({ dialog: 'error', title: 'Error', message: "Please Fill All The Required Fields.." })
-      }
-    }
-  }
+    //       }, error: (err: any) => {
+    //         this.spinner.hide()
+    //         this.dialog.swal({ dialog: 'error', title: 'Error', message: err.message })
+    //       }
+    //     })
+    //   }
+    //   else {
+    //     this.dialog.swal({ dialog: 'error', title: 'Error', message: "Please Fill All The Required Fields.." })
+    //   }
+    // }
+  //}
 }
