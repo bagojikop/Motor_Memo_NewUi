@@ -2,7 +2,7 @@ export interface MotorMemoObj {
   sgCodeNavigation: string
   directPaid:boolean
   receiverName:string 
-
+  isBilty:boolean
   senderaccount:any
   receiveraccout:any
   oweraccount:any
@@ -21,7 +21,7 @@ export interface MotorMemoObj {
   dt: string
   MobileNoReciver: number
   memoNo: number
- 
+  confDate:string
   totalothercharges:number
   from_Dstn: string
   to_Dstn: string
@@ -62,13 +62,15 @@ export interface MotorMemoObj {
   motormemoPayments:motormemoPayment[];
   motormemoRecPayments:motormemoRecPayment[];
   vehicleAccNavigation:any
-
+  confirmAccNavigation:any
 }
 
 export interface Acc003sObj{
   txnNo:number
   txnDate:Date
 }
+
+
 
 
 export interface otherchargesObj{

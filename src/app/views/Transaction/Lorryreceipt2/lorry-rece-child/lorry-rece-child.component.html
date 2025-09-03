@@ -8,51 +8,30 @@
                     <form #lrryRec2="ngForm" (keydown.enter)="$event.preventDefault()" novalidate>
                         <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                             <div class="container">
-                                <div class="d-flex w-100">
-
-                                    <div class="d-flex-width">
-                                        <label>LR Number</label>
-                                        <input class="form-control" type="text" numberOnly autocomplete="off"
-                                            [(ngModel)]="entity.vchId" name="memoNo" [maxlength]="10" disabled="true"
-                                            [minlength]="10">
-                                    </div>
-                                    <div class="gapInputFields">
-                                        <label for="">Date</label>
-                                        <input name="meDt" class="form-control" type="date" #vchDate="ngModel"
-                                            [(ngModel)]="entity.vchDate" finDate DTpicker
-                                            [min]="this.provider.companyinfo.finyear.fdt"
-                                            [max]="this.provider.companyinfo.finyear.tdt">
-
-                                    </div>
-
-                                    <div class="gapInputFields">
-                                        <div>
+                                <div class="d-flex w-100%">
+                                        <div class="d-flex-width">
+                                            <label>LR Number</label>
+                                            <input class="form-control" type="text" numberOnly autocomplete="off"
+                                                [(ngModel)]="entity.memoNo" name="memoNo" [maxlength]="10"
+                                                disabled="true" [minlength]="10">
+                                        </div>
+                                        <div class="gapInputFields">
                                             <label for="search" [ngClass]="{'text-danger': !entity.vehicleNo }">
                                                 Vehicle No
                                             </label>
                                             <div class="search-box">
                                                 <input type="text" id="search" class="form-control"
-                                                    placeholder=" Enter Last 4  Digits " name="Vehiclenumb"
+                                                    placeholder="Enter Last 4  Digits " name="Vehiclenumb"
                                                     [(ngModel)]="entity.vehicleNo" required autocomplete="off"
                                                     (input)="entity.vehicleNo = entity.vehicleNo.toUpperCase()">
-
-
                                                 <button type="button" class="btn btn-light" tabindex="-1"
                                                     (click)="getVehicles()">
                                                     <i class="bi bi-arrow-return-left"></i>
                                                 </button>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="d-flex w-100">
-                                    <div class="d-flex-width">
-                                        <label>Kilo Miters</label>
-                                        <input class="form-control" type="text" numberOnly autocomplete="off"
-                                            [(ngModel)]="entity.kms" name="km" [maxlength]="10" [minlength]="10">
-                                    </div>
-                                    <div class="gapInputFields">
-                                        <app-ngselect apiUrl="Place/getPlace" label="from" bindLabel="cityName"
+                                        <div class="gapInputFields">
+                                        <app-ngselect apiUrl="Place/getPlace" label="From" bindLabel="cityName"
                                             bindValue="cityName" name="place" [(ngModel)]="entity.from_Dstn"
                                             autocomplete="off" [required]="true" [addNewText]="true"
                                             [disabled]="navactions.fieldset"></app-ngselect>
@@ -63,7 +42,25 @@
                                             autocomplete="off" [required]="true" [addNewText]="true"
                                             [disabled]="navactions.fieldset"></app-ngselect>
                                     </div>
+                                    
+                                   
 
+                                </div>
+
+                                <div class="d-flex w-100">
+                                    <div class="d-flex-width w-25">
+
+                                        <label for="" style="width: 300px;">Date</label>
+                                        <input name="meDt" class="form-control" type="date" #vchDate="ngModel"
+                                            [(ngModel)]="entity.vchDate" finDate DTpicker
+                                            [min]="this.provider.companyinfo.finyear.fdt"
+                                            [max]="this.provider.companyinfo.finyear.tdt">
+                                    </div>
+                                     <div class="gapInputFields" style="width: 300px;">
+                                        <label>Kilo Miters</label>
+                                        <input class="form-control" type="text" numberOnly autocomplete="off"
+                                            [(ngModel)]="entity.kms" name="km" [maxlength]="10" [minlength]="10">
+                                    </div>
 
                                     <div class="gapInputFields">
                                         <div class="text-centre">
@@ -114,7 +111,7 @@
                                         </tr>
                                     </thead>
                                     <tbody class="actionTableHeight">
-                                        <tr *ngFor="let v of entity.motormemo2Childe;let i = index">
+                                        <tr *ngFor="let v of entity.motormemoBilties;let i = index">
                                             <td class="text-center" style="width: 10%;">{{ v.biltyNo }}</td>
                                             <td class="text-center" style="width: 10%;">{{ v.vchDate | date:'dd-MM-yyyy'
                                                 }}
@@ -124,7 +121,7 @@
                                             <td class="text-center" style="width: 10%;">{{ v.to_Dstn }}</td>
                                             <td class="text-center" style="width: 10%;">{{ v.weight }}</td>
                                             <td class="text-center" style="width: 10%;">{{ v.ewayNo }}</td>
-                                            <td class="text-center" style="width: 10%;">{{ v.ewayNo | date:'dd-MM-yyyy'
+                                            <td class="text-center" style="width: 10%;">{{ v.validUpTo | date:'dd-MM-yyyy'
                                                 }}</td>
                                             <td class="text-center" style="width: 10%;">
                                                 <button class="btn btn-danger btn-sm-custom-table" type="button"
@@ -155,8 +152,8 @@
                                         <div style="width: 20rem;" class="ms-3">
                                             <label for="">Total Weight</label>
                                             <input type="number" style="width: 20rem;" class="form-control text-end"
-                                                name="totalwet" [(ngModel)]="entity.totalWeight" CurrencyMask fraction="2"
-                                                (change)="calculateAmounts()" autocomplete="off">
+                                                name="totalwet" [(ngModel)]="entity.totalWeight" CurrencyMask
+                                                fraction="2" (change)="calculateAmounts()" autocomplete="off">
                                         </div>
 
                                         <div style="width: 20rem;" class="ms-3">
@@ -169,7 +166,7 @@
                                         <div style="width: 20rem;" class="ms-3">
                                             <label for="">Total Freight</label>
                                             <input type="number" style="width: 20rem;" class="form-control text-end"
-                                                name="freightTotal" [(ngModel)]="entity.totalFreightAmt" CurrencyMask
+                                                name="freightTotal" [(ngModel)]="entity.totalFreight" CurrencyMask
                                                 fraction="2" autocomplete="off">
                                         </div>
                                     </div>
@@ -177,7 +174,169 @@
                             </div>
                         </div>
                         <hr>
-                        <div class="container  mt-3">
+                        <div class="container mt-3">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="m-0 p-2">Charges [ Vehicle ]</h5>
+                                </div>
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center" scope="col" style="width: 24%;">
+                                                <b>Description</b>
+                                            </th>
+                                            <th class="text-center" scope="col" style="width: 26%;">
+                                                <b>Account</b>
+                                            </th>
+                                            <th class="text-center" scope="col" style="width: 18%;">
+                                                <b>Amount</b>
+                                            </th>
+                                            <th class="text-center" scope="col" style="width: 12%;">
+                                                <b>Operation</b>
+                                            </th>
+                                            <!-- <th style="width: 8%;"> <b>Include Freight </b></th> -->
+                                            <th class="text-center" scope="col" style="width: 12%;">
+                                                <b>Action</b>
+                                            </th>
+                                        </tr>
+
+                                        <tr>
+
+                                            <th style="width: 24%;">
+
+                                                <app-ngselect apiUrl="Sundry/getExpAcclist" class="p-0 text-start"
+                                                    bindLabel="sundryName" bindValue="s_Id" name="ExpensName"
+                                                    [(ngModel)]="exp.s_Id" (change)="onSelectVehExp($event)"
+                                                    [disabled]="navactions.fieldset" autocomplete="off" #f="ngModel"
+                                                    [applyMargins]="false"></app-ngselect>
+
+                                            </th>
+                                            <th style="width: 26%;">
+                                                <app-ngselect apiUrl="Account/getsupplier" class="p-0 text-start"
+                                                    bindLabel="accName" bindValue="accCode" name="accountname"
+                                                    (change)="exp.accCodeNavigation=$event;onSelectVehAcc($event)"
+                                                    [(ngModel)]="exp.accCode" [disabled]="navactions.fieldset"
+                                                    autocomplete="off" #f="ngModel" [applyMargins]="false"
+                                                    [defaultProperty]="exp.accCodeNavigation"></app-ngselect>
+                                            </th>
+                                            <th style="width: 18%;">
+
+                                                <input class="form-control" type="text" name="charges" digitOnly
+                                                    CurrencyMask fraction="2" #f="ngModel" [(ngModel)]="exp.charges"
+                                                    [maxlength]="12" autocomplete="off">
+
+                                            </th>
+                                            <th style="width: 12%;">
+                                                <div class="select-dropdown">
+                                                    <select class="form-select select-wrapper" name="sssaction"
+                                                        [(ngModel)]="exp.action">
+                                                        <option [value]="1">Add</option>
+                                                        <option [value]="0">Deduct</option>
+                                                    </select>
+                                                </div>
+
+                                            </th>
+                                            <!-- <th style="width: 8%;">
+                                                <input type="checkbox" name=" vehExeisChecked"
+                                                    [(ngModel)]="exp.isInclFreight" />
+                                            </th> -->
+                                            <th class="text-center" style="width: 12%;">
+                                                <button class="btn btn-light btn-sm text-center"
+                                                    (click)="updateTotalVehCharges()" type="button" tabindex="0"
+                                                    #addButton>
+                                                    <i class="fas fa-plus"></i>
+                                                </button>
+                                            </th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody class="actionTableHeight">
+                                        <div *ngIf="!entity?.motormemoVehExpenses || entity.motormemoVehExpenses.length === 0"
+                                            class="noDataImg">
+                                            <img src="../../../../../../assets/IMG/noData.png" width="50">
+                                            <p>Record is empty</p>
+                                        </div>
+
+                                        <tr *ngFor="let v of entity.motormemoVehExpenses;let i=index;">
+                                            <td style="width: 24%;">{{v.sundries?.sundryName}}</td>
+                                            <td style="width: 26%;">{{v.accCodeNavigation?.accName }}</td>
+                                            <td style="width: 16%; text-align: right; ">{{v.charges | number:'1.2-2'}}
+                                            </td>
+                                            <td style="width: 12%;">{{ getSelectOptionLabel(v.action) }}</td>
+                                            <!-- <td style="width: 8%;">
+                                                <input type="checkbox" [checked]="v.isInclFreight" tabindex="-1"
+                                                    [(ngModel)]="v.isInclFreight" [name]="'expensesisChecked'+i"
+                                                    disabled>
+                                            </td> -->
+
+                                            <td class="text-center" style="width: 12%;">
+                                                <button class="btn btn-primary btn-sm-custom-table me-1" type="button"
+                                                    tabindex="-1" (click)="editExpTablerow(v,i)">
+                                                    <i class="fas fa-edit"></i></button>
+                                                <button class="btn btn-danger btn-sm-custom-table" type="button"
+                                                    tabindex="-1" (click)="deleteExpTablerow(i)">
+                                                    <i class="fas fa-trash"></i></button>
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td style="width: 24%;"></td>
+                                            <td class="p-1 text-end" style="width: 26%;">Total</td>
+                                            <td class="p-1 text-end" style="width: 18%;"> ₹ {{entity.totalcharges |
+                                                number:'1.2-2'}}</td>
+                                            <th style="width: 12%;"></th>
+                                            <!-- <td style="width: 8%;"></td> -->
+                                            <td style="width: 12%;"></td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+
+                        </div>
+                        <div class="container mb-4 mt-3">
+                            <div class="d-flex ">
+                                <div style="width: 15rem;">
+                                    <label for="">Vehicle Account</label>
+                                    <app-ngselect apiUrl="Account/getAcclistbySgCode" class="p-0 text-start"
+                                        bindLabel="accName" bindValue="accCode" name="ownerAccount"
+                                        [(ngModel)]="entity.vehAccCode"
+                                        [apiParams]="{sgCode:this.provider.companyinfo.company?.settings[0].setValue}"
+                                        [disabled]="navactions.fieldset" autocomplete="off"
+                                        [defaultProperty]="entity.vehicleAccNavigation"
+                                        [applyMargins]="false"></app-ngselect>
+                                </div>
+
+                                <div style="width: 10rem;" class="ms-4">
+                                    <label for="">Freight Amount</label>
+                                    <input type="text" class="form-control" name="FreightAmount" digitOnly CurrencyMask
+                                        fraction="2" [(ngModel)]="entity.vehTotalFreight" [disabled]="true"
+                                        autocomplete="off" (change)="calcVehCharges()">
+                                </div>
+                                <div style="width: 10rem;" class="ms-4">
+                                    <label for="">Advance Amount</label>
+                                    <input type="text" class="form-control" name="advAmount" digitOnly CurrencyMask
+                                        fraction="2" [(ngModel)]="entity.vehAdvAmount" [disabled]="true"
+                                        autocomplete="off">
+                                </div>
+
+                                <div style="width: 10rem;" class="ms-4">
+                                    <label for="">Left Amount</label>
+                                    <input type="text" class="form-control" name="leftAmout" digitOnly CurrencyMask
+                                        fraction="2" [(ngModel)]="entity.vehLeftAmount" [disabled]="true"
+                                        autocomplete="off">
+                                </div>
+
+                                <!-- <div style="width: 10rem;" class="ms-4">
+                                    <label for="">Billed Amount</label>
+                                    <input type="text" class="form-control" name="billamt" digitOnly CurrencyMask
+                                        fraction="2" [(ngModel)]="entity.vehBilledAmt" [disabled]="true"
+                                        autocomplete="off">
+                                </div> -->
+                            </div>
+                        </div>
+                        <!-- <div class="container  mt-3">
                             <div class="card">
                                 <div class="card-header">
                                     <h5 class="m-0 p-2">Advance Details</h5>
@@ -271,7 +430,8 @@
                                             <label for="">Vehicle Account</label>
                                             <app-ngselect apiUrl="Account/getAcclistbySgCode" class="p-0 text-start"
                                                 bindLabel="accName" bindValue="accCode" name="ownerAccount"
-                                                [(ngModel)]="entity.vehAccCode" [apiParams]="{sgCode:this.provider.companyinfo.company?.settings[0].setValue}"
+                                                [(ngModel)]="entity.vehAccCode"
+                                                [apiParams]="{sgCode:this.provider.companyinfo.company?.settings[0].setValue}"
                                                 [disabled]="navactions.fieldset" autocomplete="off"
                                                 [defaultProperty]="entity.vehicleAccNavigation"
                                                 [applyMargins]="false"></app-ngselect>
@@ -285,8 +445,8 @@
                                         <div style="width: 20rem;" class="ms-3">
                                             <label for="">Total Advance</label>
                                             <input type="number" style="width: 20rem;" class="form-control text-end"
-                                                name="totaladv" [(ngModel)]="entity.totalAdvAmt" CurrencyMask fraction="2"
-                                                (ngModelChange)="calculateRemAmt()" autocomplete="off">
+                                                name="totaladv" [(ngModel)]="entity.totalAdvAmt" CurrencyMask
+                                                fraction="2" (ngModelChange)="calculateRemAmt()" autocomplete="off">
                                         </div>
 
                                         <div style="width: 20rem;" class="ms-3">
@@ -298,31 +458,57 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                         <hr>
-                        <div class="container">
+                        <div class="container ">
                             <div class="bg-light mb-2">
                                 <h5 class="m-0 p-2">Audit</h5>
                             </div>
                             <div class="mt-3 d-flex justify-content-between">
                                 <div>
                                     <label class="mb-0">Created User</label>
-                                    <p>{{entity.motormemo2Audit.createdUser}}</p>
+                                    <p>{{entity?.motormemoAudit?.createdUser}}</p>
                                 </div>
 
                                 <div>
                                     <label class="mb-0">Created Date</label>
-                                    <p>{{entity.motormemo2Audit.createdDt | date:'dd-MM-yyyy'}}</p>
+                                    <p>{{entity?.motormemoAudit?.createdDt | date:'dd-MM-yyyy'}}</p>
                                 </div>
 
                                 <div>
                                     <label class="mb-0">Modified User</label>
-                                    <p>{{entity.motormemo2Audit.modifiedUser}}</p>
+                                    <p>{{entity?.motormemoAudit?.modifiedUser}}</p>
                                 </div>
 
                                 <div>
                                     <label class="mb-0">Modified Date</label>
-                                    <p>{{entity.motormemo2Audit.modifiedDt | date:'dd-MM-yyyy'}}</p>
+                                    <p>{{entity?.motormemoAudit?.modifiedDt | date:'dd-MM-yyyy'}}</p>
+                                </div>
+                            </div>
+                        </div>
+                  
+                        <hr>
+                        <div class="container ">
+                            <div class="bg-light mb-2">
+                                <h5 class="m-0 p-2">
+                                    Confirmation :-
+                                    <span [ngStyle]="{ 
+                                                color: entity?.confDate ? 'green' : 'red', 
+                                                'font-size.px': 20 
+                                            }">
+                                        {{ entity?.confDate ? 'Confirmed' : 'Pending' }}
+                                    </span>
+                                </h5>
+                            </div>
+                            <div class="mt-3 d-flex" style="gap: 350px;">
+                                <div class="d-flex-widht">
+                                    <label class="mb-0">Date</label>
+                                    <p>{{ entity.confDate | date:'dd-MM-yyyy' }}</p>
+                                </div>
+
+                                <div class="d-flex-widht">
+                                    <label class="mb-0">Account</label>
+                                    <p>{{ entity?.confirmAccNavigation?.accName }}</p>
                                 </div>
                             </div>
                         </div>

@@ -2,7 +2,7 @@ import { Component, NO_ERRORS_SCHEMA, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DialogsComponent } from '../../../../assets/pg/dialogs/dialogs.component';
 import { MyProvider } from '../../../../assets/services/provider';
-import { Location } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { gridOptions, http } from '../../../../assets/services/services';
 import { ActBtnComponent } from '../../../../assets/pg/btn-cell-renderer/btn-cell-renderer.component';
 import { GridApi } from 'ag-grid-community';
@@ -10,6 +10,7 @@ import { debounceTime } from 'rxjs/operators';
 import { fromEvent } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { DssGridComponent } from '../../../../assets/pg/dss-grid/dss-grid.component';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -17,7 +18,7 @@ import { DssGridComponent } from '../../../../assets/pg/dss-grid/dss-grid.compon
   selector: 'app-motormaster',
   templateUrl: './motormaster.component.html',
   styleUrls: ['./motormaster.component.scss'],
-  imports: [DssGridComponent],
+  imports: [DssGridComponent, FormsModule, CommonModule],
   providers: [http, HttpClient, DialogsComponent, ActBtnComponent],
   schemas: [NO_ERRORS_SCHEMA]
 })
@@ -54,13 +55,13 @@ export class MotormasterComponent implements OnInit {
     this.stateParams = this.location.getState();
     this.mode = this.stateParams.action;
     this.innerWidth = window.innerWidth;
+    this.entity.isBilty = 0
 
-    
     fromEvent(window, 'resize')
       .pipe(debounceTime(100))
       .subscribe(() => {
         if (this.gridApi) {
-          
+
         }
       });
 
@@ -75,8 +76,8 @@ export class MotormasterComponent implements OnInit {
       { field: 'vehicleNo', headerName: 'Vehical No', filter: "agTextColumnFilter", flex: 1 },
       { field: 'from_Dstn', headerName: 'Form', filter: "agTextColumnFilter", flex: 1 },
       { field: 'to_Dstn', headerName: 'To', filter: "agTextColumnFilter", flex: 1 },
-      { field: 'motormemoDetails.senderName', headerName: 'Sender Name', filter: "agTextColumnFilter", flex: 1 },
-      { field: 'motormemoDetails.receiverName', headerName: 'Reciver Name', filter: "agTextColumnFilter", flex: 1 },
+      { field: 'senderName', headerName: 'Sender Name', filter: "agTextColumnFilter", flex: 1 },
+      { field: 'receiverName', headerName: 'Reciver Name', filter: "agTextColumnFilter", flex: 1 },
       {
         headerName: 'Action',
         cellRenderer: ActBtnComponent,
@@ -86,27 +87,25 @@ export class MotormasterComponent implements OnInit {
         },
         flex: 1
       },
-      
+
     ];
-  
-  
-    this.gridParams = { 
+    this.gridParams = {
       firm_id: this.provider.companyinfo.company?.firmCode,
-      div_id: this.provider.companyinfo.company.divId, 
-     
+      div_id: this.provider.companyinfo.company.divId,
     }
   }
 
- 
-
   addNew() {
-    const params = { action: 'new' };
-    this.router.navigate(['Motorchild'], { state: params });
+    const params = { action: 'new',isBilty: this.entity.isBilty};
+    if (this.entity.isBilty === 0) {
+      this.router.navigate(['Motorchild'], { state: params });
+    } else {
+      this.router.navigate(['lorry-receipt2_child'], { state: params });
+    }
   }
 
   onGridReady(params: any) {
     this.gridApi = params;
-   
   }
 
   onBtnClick1(e: any) {
@@ -119,7 +118,11 @@ export class MotormasterComponent implements OnInit {
 
   edit(s: any) {
     const param = { action: 'view', id: s.vchId };
-    this.router.navigate(['Motorchild'], { state: param });
+    if (s.isBilty === 0) {
+      this.router.navigate(['Motorchild'], { state: param });
+    } else {
+      this.router.navigate(['lorry-receipt2_child'], { state: param });
+    }
   }
 
   Delete(s: any) {
@@ -146,7 +149,7 @@ export class MotormasterComponent implements OnInit {
           message: "Record Deleted Successfully",
         };
         this.dialog.swal(params);
-     
+
       } else {
         const error = res.error?.message || "An Error has occurred while deleting the record!";
         const errorParams = {

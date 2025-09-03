@@ -58,7 +58,7 @@ export class LorryReceChildComponent {
   canEdit: boolean = false;
 
   isReceiverClicked: boolean = true;
-
+  exp: any = {}
   isSenderClicked: boolean = true;
   SenderisClicked: boolean = true
   ReceiverisClicked: boolean = true
@@ -83,28 +83,28 @@ export class LorryReceChildComponent {
     public master: Master,
   ) {
     this.entity = {};
-    this.entity.motormemo2Childe = []
-    this.entity.motormemo2Audit = {}
+    this.entity.motormemoBilties = []
+    this.entity.motormemoAudit = {}
     this.entity.motormemo2AdvDetails = []
     this.motormemo2AdvDetl = {}
     this.stateParams = this.location.getState();
     this.mode = this.stateParams.action;
     this.entity.vchId = this.stateParams.id;
+    this.exp = {}
+    this.entity.isBilty = this.stateParams.isBilty == 1 ? true : false;
   }
 
   ngOnInit(): void {
     this.entity = {};
-    this.entity.motormemo2Childe = []
-    this.entity.motormemo2Audit = {}
+    this.entity.motormemoBilties = []
+    this.entity.motormemoAudit = {}
     this.pendingbilties = []
-    this.entity.motormemo2AdvDetails = []
-    this.motormemo2AdvDetl = {}
-    this.motormemo2 = {}
     let paramss: any = this.location.getState();
     this.navactions.navaction(paramss.action);
     this.entity.vchId = paramss.id;
-
-
+    this.exp = {}
+    this.entity.isBilty = this.stateParams.isBilty == 1 ? true : false;
+    this.entity.motormemoVehExpenses = []
     if (this.entity.vchId) {
       this.navactions.fieldset = true;
       this.callbackedit();
@@ -116,7 +116,7 @@ export class LorryReceChildComponent {
 
   }
 
- 
+
   hoveredRow?: any;
 
   navbar(s) {
@@ -209,21 +209,21 @@ export class LorryReceChildComponent {
 
   onRowClick(v) {
     this.entity.vehicleNo = v.vehicleNo;
-  
+
     $('#exampleModal').modal('hide');
   }
 
   Submit() {
     const selectedRows = this.list.filter(item => item.selected);
 
-    if (!this.entity.motormemo2Childe) {
-      this.entity.motormemo2Childe = [];
+    if (!this.entity.motormemoBilties) {
+      this.entity.motormemoBilties = [];
     }
 
     for (const row of selectedRows) {
-      const alreadyExists = this.entity.motormemo2Childe.some(r => r.biltyNo === row.biltyNo);
+      const alreadyExists = this.entity.motormemoBilties.some(r => r.biltyNo === row.biltyNo);
       if (!alreadyExists) {
-        this.entity.motormemo2Childe.push({ ...row });
+        this.entity.motormemoBilties.push({ ...row });
       }
     }
 
@@ -235,20 +235,31 @@ export class LorryReceChildComponent {
 
   newRecord() {
     this.entity = {};
-    this.entity.motormemo2Childe = []
+    this.entity.motormemoBilties = []
     this.motormemo2 = {}
-    this.entity.motormemo2AdvDetails = []
-    this.motormemo2AdvDetl = {}
-    this.entity.motormemo2Audit = {}
+    this.entity.motormemoAudit = {}
+    this.entity.motormemoVehExpenses = []
     const today = new Date();
     const finYearEnd = new Date(this.provider.companyinfo.finyear.tdt);
-
-   
+    this.exp = { action: 0, isInclFreight: false }
+    this.entity.isBilty = this.stateParams.isBilty == 1 ? true : false;
     if (today >= finYearEnd) {
       this.entity.vchDate = finYearEnd.toISOString().split('T')[0];
     } else {
       this.entity.vchDate = today.toISOString().split('T')[0];
     }
+  }
+
+  onSelectVehExp(ev) {
+    this.exp.sundries = {};
+
+    this.exp.sundries.sundryName = ev.sundryName;
+    this.exp.accCodeNavigation = ev.accCodeNavigation;
+  }
+
+  onSelectVehAcc(ev) {
+    this.exp.accName = ev.accName;
+    this.cd.detectChanges();
   }
 
   edit() {
@@ -257,32 +268,16 @@ export class LorryReceChildComponent {
   }
 
   calculateAmounts() {
-    this.entity.totalFreightAmt = this.entity.totalWeight * this.entity.frtPerWeight;
+    this.entity.totalFreight = this.entity.totalWeight * this.entity.frtPerWeight;
   }
 
   calculateRemAmt() {
-    this.entity.leftAmt = this.entity.totalFreightAmt - this.entity.totalAdvAmt;
+    this.entity.vehLeftAmount = this.entity.totalFreight - this.entity.vehAdvAmount;
   }
   getAccountDetl(obj) {
     this.motormemo2AdvDetl.accCodeNavigation = obj;
   }
 
-  AddAdvDetl() {
-    if (this.motormemo2AdvDetl.accCode && this.motormemo2AdvDetl.amount) {
-      if (this.rowIndex == null) {
-        this.entity.motormemo2AdvDetails.push(this.motormemo2AdvDetl);
-        this.additinOfAdv()
-        this.calculateRemAmt()
-      }
-      else {
-        this.entity.motormemo2AdvDetails[this.rowIndex] = this.motormemo2AdvDetl;
-        this.additinOfAdv()
-        this.calculateRemAmt()
-      }
-      this.rowIndex = null;
-      this.motormemo2AdvDetl = {}
-    }
-  }
 
   editAdvDetailrow(v, i) {
     this.rowIndex = i;
@@ -294,7 +289,7 @@ export class LorryReceChildComponent {
 
   callbackedit() {
     this.spinner.show();
-    var url = "Motormemo2/edit"
+    var url = "Motormemo/edit"
     this.http.get(url, { id: this.entity.vchId }).subscribe({
       next: (res: any) => {
         if (res.status_cd == 1) {
@@ -304,8 +299,8 @@ export class LorryReceChildComponent {
         }
         this.spinner.hide();
         this.additinOfWeight();
-        this.additinOfAdv()
-        this.calculateRemAmt()
+       this.setLeftAmt();
+      this.calcVehCharges()
       }, error: (err: any) => {
         this.spinner.hide();
         this.dialog.swal({ dialog: 'error', title: 'Error', message: err });
@@ -313,7 +308,21 @@ export class LorryReceChildComponent {
     })
   }
 
+  addExpTablerow() {
+    if (this.rowIndex == null) {
+      this.entity.motormemoVehExpenses.push(this.exp);
+    }
+    else {
+      this.entity.motormemoVehExpenses[this.rowIndex] = this.exp;
+    }
+    this.exp = {};
+    this.rowIndex = null;
 
+    this.exp = { action: 0 };
+    this.calcVehCharges();
+  }
+
+  
   deletechildtablerow(i) {
     var params = {
 
@@ -343,7 +352,6 @@ export class LorryReceChildComponent {
       if (data == true) {
         this.entity.motormemo2AdvDetails.splice(i, 1);
 
-        this.additinOfAdv()
         this.calculateRemAmt()
       }
     })
@@ -365,10 +373,10 @@ export class LorryReceChildComponent {
 
         this.entity.firmId = this.provider.companyinfo.company?.firm.firmCode,
           this.entity.divId = this.provider.companyinfo.company.divId;
-        this.entity.motormemo2Audit.createdUser = this.provider.companyinfo.userinfo.username;
+        this.entity.motormemoAudit.createdUser = this.provider.companyinfo.userinfo.username;
 
-        
-        this.http.post('Motormemo2/insert', this.entity).subscribe({
+
+        this.http.post('Motormemo/insert', this.entity).subscribe({
           next: (res: any) => {
             if (res.status_cd == 1) {
 
@@ -389,14 +397,14 @@ export class LorryReceChildComponent {
       else {
         this.entity.firmId = this.provider.companyinfo.company?.firm.firmCode,
           this.entity.divId = this.provider.companyinfo.company.divId;
-        this.entity.motormemo2Audit.modifiedUser = this.provider.companyinfo.userinfo.username;
-        this.http.put('Motormemo2/update', this.master.cleanObject(this.entity, 2), { id: this.entity.vchId }).subscribe({
+        //this.entity?.motormemoAudit?.modifiedUser = this.provider.companyinfo.userinfo.username;
+        this.http.put('Motormemo/update', this.master.cleanObject(this.entity, 2), { id: this.entity.vchId }).subscribe({
           next: (res: any) => {
             this.spinner.hide()
             if (res.status_cd == 1) {
               this.entity.vchId = res.data.vchId;
               this.additinOfWeight()
-              this.additinOfAdv()
+         
               this.dialog.swal({ dialog: "success", title: "Success", message: "Record is Update sucessfully" });
               this.navactions.navaction("OK");
             } else {
@@ -415,29 +423,29 @@ export class LorryReceChildComponent {
 
 
   additinOfWeight() {
-  const sumArray = (this.entity.motormemo2Childe || [])
-    .map(item => item.weight || 0);
+    const sumArray = (this.entity.motormemoBilties || [])
+      .map(item => item.weight || 0);
 
-  const sumValue = sumArray.reduce((pValue, cValue) => 
-    Number(pValue) + Number(cValue), 0); // initial value = 0
+    const sumValue = sumArray.reduce((pValue, cValue) =>
+      Number(pValue) + Number(cValue), 0); // initial value = 0
 
-  this.entity.totalWeight = sumValue;
-}
-
-
-  additinOfAdv() {
-    const sumArray = this.entity.motormemo2AdvDetails.map(item => item.amount || 0);
-    const sumValue = sumArray.reduce((p, c) => Number(p) + Number(c), 0);
-    this.entity.totalAdvAmt = sumValue;
-
-    if (this.entity.totalAdvAmt > this.entity.totalFreightAmt) {
-      Swal.fire({
-        icon: 'warning',
-        title: 'Warning',
-        text: 'Total Advance amount is greater than Freight Total. Please check the values.',
-      });
-    }
+    this.entity.totalWeight = sumValue;
   }
+
+
+  // additinOfAdv() {
+  //   const sumArray = this.entity.mot.map(item => item.amount || 0);
+  //   const sumValue = sumArray.reduce((p, c) => Number(p) + Number(c), 0);
+  //   this.entity.totalAdvAmt = sumValue;
+
+  //   if (this.entity.totalAdvAmt > this.entity.totalFreightAmt) {
+  //     Swal.fire({
+  //       icon: 'warning',
+  //       title: 'Warning',
+  //       text: 'Total Advance amount is greater than Freight Total. Please check the values.',
+  //     });
+  //   }
+  // }
 
   undo() {
     this.entity = this.pastentity;
@@ -458,35 +466,104 @@ export class LorryReceChildComponent {
   list: any = []
 
 
-  getbiltylist() {
-    $('#Modal').modal('show');
-    {
-      var param = {
-        firmCode: this.provider.companyinfo.company?.firmCode,
-        div_id: this.provider.companyinfo.company.divId
+
+calcVehCharges() {
+  const totalCharges = this.entity.motormemoVehExpenses
+    .filter(exp => exp.isInclFreight && exp.action != 2)
+    .reduce((sum, exp) => sum + Number(exp.charges), 0);
+
+  this.entity.vehAdvAmount = this.entity.motormemoVehExpenses
+    .filter(exp => !exp.isInclFreight && exp.action != 2)
+    .reduce((sum, exp) => sum + Number(exp.charges || 0) * (exp.action == 0 ? 1 : -1), 0);
+  this.entity.vehBilledAmt = this.entity.motormemoVehExpenses
+    .filter(exp => exp.action == 2)
+    .reduce((sum, exp) => sum + Number(exp.charges), 0);
+  this.entity.vehTotalFreight = this.entity.totalFreight - (totalCharges || 0) - (this.entity.vehBilledAmt || 0)
+  this.entity.totalcharges = totalCharges + this.entity.vehAdvAmount + this.entity.vehBilledAmt;
+
+  this.setLeftAmt();
+}
+
+
+setLeftAmt() {
+  setTimeout(() => {
+
+    this.entity.vehLeftAmount = (this.entity.vehTotalFreight - this.entity.vehAdvAmount).round(2);
+  }, 100);
+}
+
+
+editExpTablerow(obj, index) {
+    this.rowIndex = index;
+    this.exp = Object.assign({}, obj);
+  }
+deleteExpTablerow(index) {
+    var params = {
+
+      dialog: 'confirm',
+      title: "warning",
+      message: "Do you want to delete record"
+    }
+    this.dialog.swal(params).then(data => {
+      if (data == true) {
+        this.entity.motormemoVehExpenses.splice(index, 1);
+        this.calcVehCharges()
+        this.setLeftAmt();
       }
-      this.loading = true;
-      this.http.get('Bilty/pendinglists', param).subscribe({
-        next: (res: any) => {
-          if (res.status_cd === 1) {
-
-            this.list = res.data
-            this.loading = false;
-          } else {
-            this.loading = false;
-            this.dialog.swal({ dialog: 'error', title: 'Error', message: res.errors.exception.Message });
-          }
-          this.spinner.hide();
-        },
-        error: (err: any) => {
-          this.spinner.hide();
-          this.dialog.swal({ dialog: 'error', title: 'Error', message: err.message });
-        }
-      });
-
-
+    })
+  }
+getSelectOptionLabel(value: number): string {
+    if (value == 0) {
+      return 'Deduct';
+    } else if (value == 1) {
+      return 'Add';
+    
+    } else {
+      return 'Unknown';
     }
   }
+updateTotalVehCharges(){
+  if (this.exp.s_Id && this.exp.accCode && this.exp.charges) {
+
+    if (this.rowIndex == null) {
+      this.entity.motormemoVehExpenses.push({ ...this.exp });
+    } else {
+      this.entity.motormemoVehExpenses[this.rowIndex] = { ...this.exp };
+    }
+    this.exp = { action: 0 };
+    this.rowIndex = null;
+    this.calcVehCharges()
+  }
+}
+getbiltylist() {
+  $('#Modal').modal('show');
+  {
+    var param = {
+      firmCode: this.provider.companyinfo.company?.firmCode,
+      div_id: this.provider.companyinfo.company.divId
+    }
+    this.loading = true;
+    this.http.get('Bilty/pendinglists', param).subscribe({
+      next: (res: any) => {
+        if (res.status_cd === 1) {
+
+          this.list = res.data
+          this.loading = false;
+        } else {
+          this.loading = false;
+          this.dialog.swal({ dialog: 'error', title: 'Error', message: res.errors.exception.Message });
+        }
+        this.spinner.hide();
+      },
+      error: (err: any) => {
+        this.spinner.hide();
+        this.dialog.swal({ dialog: 'error', title: 'Error', message: err.message });
+      }
+    });
+
+
+  }
+}
 
 
 }

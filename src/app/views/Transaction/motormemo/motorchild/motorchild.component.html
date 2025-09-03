@@ -45,13 +45,7 @@
                                     </div>
                                     <div class="d-flex w-50 w-md-100">
                                         <div class="d-flex-width">
-                                            <label>Kilo Miters</label>
-                                            <input class="form-control" type="text" numberOnly autocomplete="off"
-                                                [(ngModel)]="entity.kms" name="km" [maxlength]="10"
-                                                [minlength]="10">
-                                        </div>
-                                        <div class="gapInputFields">
-                                            <app-ngselect apiUrl="Place/getPlace" label="from" bindLabel="cityName"
+                                            <app-ngselect apiUrl="Place/getPlace" label="From" bindLabel="cityName"
                                                 bindValue="cityName" name="place" [(ngModel)]="entity.from_Dstn"
                                                 autocomplete="off" [required]="true" [addNewText]="true"
                                                 [disabled]="navactions.fieldset"></app-ngselect>
@@ -62,6 +56,11 @@
                                                 autocomplete="off" [required]="true" [addNewText]="true"
                                                 [disabled]="navactions.fieldset"></app-ngselect>
 
+                                        </div>
+                                        <div class="gapInputFields">
+                                            <label>Kilo Miters</label>
+                                            <input class="form-control" type="text" numberOnly autocomplete="off"
+                                                [(ngModel)]="entity.kms" name="km" [maxlength]="10" [minlength]="10">
                                         </div>
                                     </div>
                                 </div>
@@ -303,14 +302,16 @@
                                                 <div class="input-group ">
                                                     <app-ngselect style="width: 100%;" apiUrl="productinfo/getList"
                                                         bindLabel="iName" bindValue="iName" name="commodity1"
-                                                        [(ngModel)]="cmod.commodity" #unit="ngModel" (change)="onselectcomm($event)"
+                                                        [(ngModel)]="cmod.commodity" #unit="ngModel"
+                                                        (change)="onselectcomm($event)"
                                                         [addNewText]="true"></app-ngselect>
                                                 </div>
                                             </th>
                                             <th>
                                                 <app-ngselect style="width: 100%;" apiUrl="Unit/getUnit" name="uom1"
-                                                    bindLabel="unitName" bindValue="unitCode" [(ngModel)]="cmod.unitCode"
-                                                    [addNewText]="true" [defaultProperty]="cmod.iUnitNavigation"></app-ngselect>
+                                                    bindLabel="unitName" bindValue="unitCode"
+                                                    [(ngModel)]="cmod.unitCode" [addNewText]="true"
+                                                    [defaultProperty]="cmod.iUnitNavigation"></app-ngselect>
 
                                             </th>
                                             <th>
@@ -555,7 +556,7 @@
                         </div>
 
                         <hr>
-                             <div class="container mt-3">
+                        <div class="container mt-3">
 
                             <!-- Nav Tabs -->
                             <ul class="nav nav-tabs">
@@ -576,7 +577,7 @@
                             <div class="tab-content mt-3">
 
                                 <!-- Sender Tab -->
-                                 <div *ngIf="activeTab === 'sender'">
+                                <div *ngIf="activeTab === 'sender'">
                                     <div class="card">
                                         <div class="card-header">
                                             <h5 class="m-0 p-2">Receipt [ Sender ]</h5>
@@ -645,7 +646,8 @@
                                             <tfoot>
                                                 <tr>
                                                     <td class="p-1 text-end" style="width:40%">Total</td>
-                                                    <td class="text-center" style="width:25%">{{entity.senderTotalAmt | number:'1.2-2'}}
+                                                    <td class="text-center" style="width:25%">{{entity.senderTotalAmt |
+                                                        number:'1.2-2'}}
                                                     </td>
                                                     <td style="width:25%"></td>
                                                     <td style="width:10%"></td>
@@ -830,7 +832,8 @@
                                             <td style="width: 12%;">{{ getSelectOptionLabel(v.action) }}</td>
                                             <td style="width: 8%;">
                                                 <input type="checkbox" [checked]="v.isInclFreight" tabindex="-1"
-                                                    [(ngModel)]="v.isInclFreight" [name]="'expensesisChecked'+i" disabled>
+                                                    [(ngModel)]="v.isInclFreight" [name]="'expensesisChecked'+i"
+                                                    disabled>
                                             </td>
 
                                             <td class="text-center" style="width: 12%;">
@@ -889,33 +892,15 @@
                                     <label for="">Left Amount</label>
                                     <input type="text" class="form-control" name="leftAmout" digitOnly CurrencyMask
                                         fraction="2" [(ngModel)]="entity.vehLeftAmount" [disabled]="true"
-                                        autocomplete="off" >
+                                        autocomplete="off">
                                 </div>
 
                                 <div style="width: 10rem;" class="ms-4">
                                     <label for="">Billed Amount</label>
                                     <input type="text" class="form-control" name="billamt" digitOnly CurrencyMask
-                                        fraction="2" [(ngModel)]="entity.vehBilledAmt" [disabled]="true" autocomplete="off">
+                                        fraction="2" [(ngModel)]="entity.vehBilledAmt" [disabled]="true"
+                                        autocomplete="off">
                                 </div>
-                            </div>
-                        </div>
-
-
-                        <div class="container ">
-                            <div class="bg-light mb-2">
-                                <h5 class="m-0 p-2">Receipt</h5>
-                            </div>
-                            <div class="mt-3 d-flex ">
-                                <div style="width: 15rem; margin-right: 5rem;">
-                                    <label class="mb-0">No</label>
-                                    <p>{{entity.acc003s?.txnNo}}</p>
-                                </div>
-
-                                <div style="width: 15rem;">
-                                    <label class="mb-0">Date</label>
-                                    <p>{{entity.acc003s?.txnDate | date:'dd-MM-yyyy'}}</p>
-                                </div>
-
                             </div>
                         </div>
                         <hr>
@@ -945,6 +930,32 @@
                                 </div>
                             </div>
                         </div>
+                        <hr>
+                        <div class="container ">
+                            <div class="bg-light mb-2">
+                                <h5 class="m-0 p-2">
+                                    Confirmation :-
+                                    <span [ngStyle]="{ 
+                                                color: entity?.confDate ? 'green' : 'red', 
+                                                'font-size.px': 20 
+                                            }">
+                                        {{ entity?.confDate ? 'Confirmed' : 'Pending' }}
+                                    </span>
+                                </h5>
+                            </div>
+                            <div class="mt-3 d-flex" style="gap: 350px;">
+                                <div class="d-flex-widht">
+                                    <label class="mb-0">Date</label>
+                                    <p>{{ entity.confDate | date:'dd-MM-yyyy' }}</p>
+                                </div>
+
+                                <div class="d-flex-widht">
+                                    <label class="mb-0">Account</label>
+                                    <p>{{ entity?.confirmAccNavigation?.accName }}</p>
+                                </div>
+                            </div>
+                        </div>
+
                     </form>
                 </fieldset>
             </div>
