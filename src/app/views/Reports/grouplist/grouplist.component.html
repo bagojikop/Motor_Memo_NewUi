@@ -31,7 +31,7 @@
 
     <div class="d-flex d-flex-column ms-2">
         <div class="" style="width:clamp(350px, 0px, 0px)">
-            <app-ngselect apiUrl="SubGroup/getGroup" label="Group" bindLabel="sgName" bindValue="sgCode" name="sgCode"
+            <app-ngselect apiUrl="SubGroup/ListByPage" label="Group" bindLabel="sgName" bindValue="sgCode" name="sgCode"
                 [(ngModel)]="entity.sgCode" [defaultProperty]="entity.accSubGroups"
                 [nullableProperty]="entity.SubGroupNullrow" (change)="getGroupObj($event)">
             </app-ngselect>
@@ -74,7 +74,7 @@
             <dss-input label="To" name="EDate" type="date" [(ngModel)]="reference.edt" [width]="'clamp(130px, 0px, 0px)'"/>
 
 
-            <app-ngselect apiUrl="SubGroup/getGroup" label="Group" bindLabel="sgName" bindValue="sgCode" name="gCode"
+            <app-ngselect apiUrl="SubGroup/ListByPage" label="Group" bindLabel="sgName" bindValue="sgCode" name="gCode"
                 [(ngModel)]="reference.sgCode" [bindSubObj]="[
                                             {key:'Category',value:'grpName'},
                                           ]" [defaultProperty]="reference.groupCodeObj">

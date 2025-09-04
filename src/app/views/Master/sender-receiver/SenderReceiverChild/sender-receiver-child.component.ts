@@ -123,7 +123,7 @@ export class SenderReceiverChildComponent {
 
   callbackedit() {
     this.spinner.show();
-    var url = "Vendor/edit"
+    var url = "Vendor/ById"
     this.http.get(url, { id: this.entity.sCode }).subscribe({
       next: (res: any) => {
         if (res.status_cd == 1) {
@@ -231,7 +231,7 @@ export class SenderReceiverChildComponent {
   ongstFunction() {
     if (this.entity.gstinNo) {
 
-      this.http.get('Account/getvender', { no: this.entity.gstinNo }).subscribe({
+      this.http.get('Account/VendorByGstn', { no: this.entity.gstinNo }).subscribe({
         next: (res: any) => {
           if (res.status_cd == 1) {
           
@@ -268,7 +268,7 @@ export class SenderReceiverChildComponent {
   }
 
   getstatefromplace(){
-    this.http.get('state/ListFromPlace',{ placeId: this.entity.placeId }).subscribe({
+    this.http.get('state/ListByPlace',{ placeId: this.entity.placeId }).subscribe({
        next: (res: any) => {
         if (res.status_cd == 1) {
         //  this.state = res.data;
@@ -289,25 +289,5 @@ export class SenderReceiverChildComponent {
     })
   }
 
-  // getstates(){
-  //   this.loading = true;
-  //   this.http.get('state/ListFromPlace',{ placeId: this.entity.placeId }).subscribe({
-  //     next: (res: any) => {
-  //       if (res.status_cd == 1) {
-  //       //  this.state = res.data;
-  //         this.entity.stateCode = res.data.stateCode || null;
-  //       this.entity.stateName = res.data.stateName || '';
-  //         this.loading = false;
-  //       } else {
-  //         this.loading = false;
-  //         this.dialog.swal({ dialog: 'error', title: 'Error', message: res.errors.exception.Message });
-  //       }
-
-  //       this.spinner.hide();
-  //     }, error: (err: any) => {
-  //       this.spinner.hide();
-  //       this.dialog.swal({ dialog: 'error', title: 'Error', message: err.message });
-  //     }
-  //   })
-  // }
+ 
 }

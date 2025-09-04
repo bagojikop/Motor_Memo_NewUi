@@ -247,7 +247,7 @@ export class GrouplistComponent {
         sdt: this.entity.sdt,
         edt: this.entity.edt
       }
-      this.http.get('SubGroupList/getSubGroupListItems', param).subscribe({
+      this.http.get('SubGroupList', param).subscribe({
         next: (res: any) => {
           if (res.status_cd == 1) {
             this.list = res.data || [];
@@ -276,7 +276,7 @@ export class GrouplistComponent {
         edt: this.entity.edt
   
       }
-      this.http.get('Ledger/getLedgerItems', params).subscribe({
+      this.http.get('Ledger', params).subscribe({
         next: (res: any) => {
           if (res.status_cd == 1) {
             this.list = res.data || [];

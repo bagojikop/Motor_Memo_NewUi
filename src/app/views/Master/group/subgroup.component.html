@@ -20,7 +20,7 @@
 <hr/>
 
 
-<dss-grid [columns]="columns" url="SubGroup/getList" [gridOptions]="gridOption.gridOptions"
+<dss-grid [columns]="columns" url="SubGroup/ListByPage" [gridOptions]="gridOption.gridOptions"
 class="heightMasterPage" [defaultColDef]="defaultColDef" (gridApi)="onGridReady($event)"
     [pageSize]="25"></dss-grid>
 
@@ -47,7 +47,7 @@ aria-hidden="true" data-bs-keyboard="false" data-bs-backdrop="static">
                                 </div>
                                 
                                 <div class="form-group">
-                                    <app-ngselect label="Primary Group Name" apiUrl="MainGroup/getGroups" class="p-0"
+                                    <app-ngselect label="Primary Group Name" apiUrl="MainGroup/getList" class="p-0"
                                         bindLabel="grpName" bindValue="grpCode" name="maingroup" 
                                         [(ngModel)]="entity.grpCode" [defaultProperty]="entity.grpCodeNavigation"
                                         (change)="entity.grpCodeNavigation=$event"

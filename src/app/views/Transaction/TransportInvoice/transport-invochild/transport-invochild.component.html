@@ -18,7 +18,7 @@
                                         </div>
                                         <div class="gapInputFields">
                                             <label for="" [ngClass]="{'text-danger': !entity.accCode }">Account</label>
-                                            <app-ngselect apiUrl="Account/getAcclist" class="p-0 text-start"
+                                            <app-ngselect apiUrl="Account/getlist" class="p-0 text-start"
                                                 bindLabel="accName" bindValue="accCode" name="ownerAccount"
                                                 [(ngModel)]="entity.accCode" [disabled]="navactions.fieldset"
                                                 (ngModelChange)="getstatefromAcc()" autocomplete="off"
@@ -138,56 +138,7 @@
                                             </th>
                                         </tr>
 
-                                        <!-- <tr>
-                                            <th style="width: 20%;">
-                                                <div class="input-group ">
-                                                    <app-ngselect style="width: 100%;" apiUrl="productinfo/getList"
-                                                        bindLabel="iName" bindValue="iName" name="commodity1"
-                                                        [(ngModel)]="cmod.commodity" #unit="ngModel"
-                                                        [addNewText]="true"></app-ngselect>
-                                                </div>
-                                            </th>
-                                            <th>
-                                                <app-ngselect style="width: 100%;" apiUrl="Unit/getUnit" name="uom1"
-                                                    bindLabel="unitName" bindValue="unitName" [(ngModel)]="cmod.uom"
-                                                    [addNewText]="true"></app-ngselect>
-
-                                            </th>
-                                            <th>
-                                                <input name="qty1" [maxlength]="7" [(ngModel)]="cmod.qty" numberOnly
-                                                    class="form-control" digitOnly autocomplete="off" />
-                                            </th>
-                                            <th>
-                                                <input name="chrgWeight1" class="form-control" [maxlength]="7"
-                                                    numberOnly digitOnly [(ngModel)]="cmod.chrgWeight"
-                                                    autocomplete="off" (ngModelChange)="calculateFreight()" />
-                                            </th>
-                                            <th>
-                                                <input class="form-control" name="actWeight1" [maxlength]="7" numberOnly
-                                                    digitOnly [(ngModel)]="cmod.actWeight" autocomplete="off" />
-                                            </th>
-                                            <th>
-                                                <input class="form-control" name="rate1" [maxlength]="7"
-                                                    style="text-align: right;" [(ngModel)]="cmod.rate"
-                                                    (ngModelChange)="calculateFreight();" digitOnly CurrencyMask
-                                                    fraction="2" autocomplete="off" #rateInput />
-                                               
-                                            </th>
-
-                                            <th>
-                                                <input class="form-control" name="freight1" [(ngModel)]="cmod.freight"
-                                                    digitOnly CurrencyMask fraction="2" style="text-align: right;"
-                                                    tabindex="-1" [readonly]="true" autocomplete="off" />
-                                            </th>
-                                            <th>
-                                                <button class="btn btn-light btn-sm" (click)="addgstTablerow()"
-                                                    type="button" tabindex="0" #addButton>
-                                                    <i class="fas fa-plus"></i>
-                                                </button>
-
-                                            </th>
-                                        </tr> -->
-
+                                    
                                     </thead>
                                     <tbody class="actionTableHeight">
                                         <div *ngIf="!entity?.tms01101s || entity.tms01101s.length === 0"

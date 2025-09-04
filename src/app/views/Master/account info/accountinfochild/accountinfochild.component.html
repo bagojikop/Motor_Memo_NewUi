@@ -19,7 +19,7 @@
 
 
                                     <div class=" ">
-                                        <app-ngselect apiUrl="SubGroup/getGroup" label="Group" bindLabel="sgName"
+                                        <app-ngselect apiUrl="SubGroup/ListByPage" label="Group" bindLabel="sgName"
                                             bindValue="sgCode" name="sgCode" [(ngModel)]="entity.sgCode"
                                             [disabled]="navactions.fieldset" (change)="onSelectGroup($event)"
                                             [bindSubObj]="[{key:'Group',value:'grpCodeNavigation.grpName'}, 
@@ -159,7 +159,7 @@
                                             </dss-input>
                                             <div class="d-flex">
                                                 <div class="d-flex-width">
-                                                    <app-ngselect apiUrl="Place/getPlace" label="Place"
+                                                    <app-ngselect apiUrl="Place/getList" label="Place"
                                                         bindLabel="cityName" bindValue="cityId" name="placesd"
                                                         [(ngModel)]="entity.placeId" [defaultProperty]="entity.place"
                                                         [disabled]="navactions.fieldset">

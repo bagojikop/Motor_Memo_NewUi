@@ -258,7 +258,7 @@ export class VehicleInfochildComponent {
 
   callbackedit() {
     this.spinner.show();
-    var url = "Vehicle/edit"
+    var url = "Vehicle/ByNo"
     this.http.get(url, { id: this.stateParams.id }).subscribe({
       next: (res: any) => {
         if (res.status_cd == 1) {

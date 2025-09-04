@@ -192,7 +192,7 @@ export class LedgerComponent {
           sdt: this.entity.sdt,
           edt: this.entity.edt
         }
-        this.http.get('Ledger/getLedgerItems', param).subscribe({
+        this.http.get('Ledger', param).subscribe({
           next: (res: any) => {
             if (res.status_cd == 1) {
               this.list = res.data || [];

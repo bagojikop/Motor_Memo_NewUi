@@ -108,22 +108,7 @@ export class LineOfItemsComponent implements OnInit, AfterViewInit, OnChanges {
 
 
 
-
-
-  // getProductList() {
-
-  //   this.http.get("productinfo/list").subscribe({
-  //     next: (res: any) => {
-  //       this.reference.items = res.data;
-  //       this.spinner.hide();
-       
-  //     }, error: err => {
-  //       this.spinner.hide();
-
-        
-  //     }
-  //   })
-  // }
+ 
   getGWN() {
     if (!this.reference.godowns || this.reference.godowns.length == 0) {
       this.spinner.show();

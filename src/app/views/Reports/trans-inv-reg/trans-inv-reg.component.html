@@ -21,7 +21,7 @@
     <div>
         <div class="ms-3 d-flex-width">
             <label for="" [ngClass]="{'text-danger': !entity.accCode }">Account</label>
-            <app-ngselect apiUrl="Account/getAcclist" class="p-0 text-start" bindLabel="accName" bindValue="accCode"
+            <app-ngselect apiUrl="Account/getlist" class="p-0 text-start" bindLabel="accName" bindValue="accCode"
                 name="ownerAccount" [(ngModel)]="entity.accCode" [disabled]="navactions.fieldset" autocomplete="off"
                 [defaultProperty]="entity.accCodeNavigation" [applyMargins]="false" [required]="true"></app-ngselect>
         </div>

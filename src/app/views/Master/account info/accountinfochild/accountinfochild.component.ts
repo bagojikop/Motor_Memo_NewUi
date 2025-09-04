@@ -234,7 +234,7 @@ export class AccountinfochildComponent implements OnInit {
 
   callbackedit() {
     this.spinner.show();
-    var url = "Account/Accountedit"
+    var url = "Account/AccountById"
     this.http.get(url, { id: this.entity.accCode }).subscribe({
       next: (res: any) => {
         if (res.status_cd == 1) {

@@ -77,7 +77,7 @@
                                 <div class="d-flex d-flex-column">
                                     <div class="d-flex-width">
                                         <label [ngClass]="{'text-danger':!entity.firmStateCode}">State</label>
-                                        <app-ngselect apiUrl="state/getStates" label="State" bindLabel="stateName"
+                                        <app-ngselect apiUrl="state/ListByPage" label="State" bindLabel="stateName"
                                             bindValue="stateCode" name="firmStateCode"
                                             [(ngModel)]="entity.firmStateCode" [defaultProperty]="entity.mst00603"
                                             [disabled]="navactions.fieldset" #firmStateCode="ngModel"

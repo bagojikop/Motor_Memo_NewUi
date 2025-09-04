@@ -147,7 +147,7 @@ export class TransportInvochildComponent {
 
 
   getstatefromAcc() {
-    this.httpp.get('state/ListFromAcc', { accCode: this.entity.accCode }).subscribe({
+    this.httpp.get('state/ListByAcc', { accCode: this.entity.accCode }).subscribe({
       next: (res: any) => {
         if (res.status_cd == 1) {
           //  this.state = res.data;
