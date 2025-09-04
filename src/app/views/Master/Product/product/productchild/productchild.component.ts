@@ -116,7 +116,7 @@ export class ProductchildComponent {
 
   callbackedit() {
     this.spinner.show();
-    var url = "productinfo/ProductInfoedit"
+    var url = "productinfo/ById"
     this.http.get(url, { id: this.stateParams.id }).subscribe({
       next: (res: any) => {
         if (res.status_cd == 1) {

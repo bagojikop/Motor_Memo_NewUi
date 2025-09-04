@@ -87,7 +87,7 @@
 
             </div>
             <div>
-                <app-ngselect apiUrl="SubGroup/getGroup" label="Group" bindLabel="sgName" bindValue="sgCode"
+                <app-ngselect apiUrl="SubGroup/ListByPage" label="Group" bindLabel="sgName" bindValue="sgCode"
                     name="sgCode" [(ngModel)]="referance.sggroup" [bindSubObj]="[
                                             {key:'Category',value:'grpName'},
                                           ]" [defaultProperty]="referance.groupCodeObj"

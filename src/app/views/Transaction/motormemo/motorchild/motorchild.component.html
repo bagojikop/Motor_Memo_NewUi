@@ -45,13 +45,13 @@
                                     </div>
                                     <div class="d-flex w-50 w-md-100">
                                         <div class="d-flex-width">
-                                            <app-ngselect apiUrl="Place/getPlace" label="From" bindLabel="cityName"
+                                            <app-ngselect apiUrl="Place/getList" label="From" bindLabel="cityName"
                                                 bindValue="cityName" name="place" [(ngModel)]="entity.from_Dstn"
                                                 autocomplete="off" [required]="true" [addNewText]="true"
                                                 [disabled]="navactions.fieldset"></app-ngselect>
                                         </div>
                                         <div class="gapInputFields">
-                                            <app-ngselect apiUrl="Place/getPlace" label="To" bindLabel="cityName"
+                                            <app-ngselect apiUrl="Place/getList" label="To" bindLabel="cityName"
                                                 bindValue="cityName" name="memoto" [(ngModel)]="entity.to_Dstn"
                                                 autocomplete="off" [required]="true" [addNewText]="true"
                                                 [disabled]="navactions.fieldset"></app-ngselect>
@@ -135,7 +135,7 @@
                                                     [maxlength]="6" [minlength]="6">
                                             </div>
                                             <div class="gapInputFields">
-                                                <app-ngselect apiUrl="state/getStates" label="State"
+                                                <app-ngselect apiUrl="state/ListByPage" label="State"
                                                     bindLabel="stateName" bindValue="stateCode" name="senderStateId"
                                                     [(ngModel)]="entity.motormemoDetails.senderStateId"
                                                     [disabled]="navactions.fieldset" autocomplete="off"
@@ -237,7 +237,7 @@
                                                     [maxlength]="6" [minlength]="6">
                                             </div>
                                             <div class="gapInputFields">
-                                                <app-ngselect apiUrl="state/getStates" label="State"
+                                                <app-ngselect apiUrl="state/ListByPage" label="State"
                                                     bindLabel="stateName" bindValue="stateCode" name="receivStateId"
                                                     [(ngModel)]="entity.motormemoDetails.receiverStateId"
                                                     [defaultProperty]="entity.receiverStateId" autocomplete="off"

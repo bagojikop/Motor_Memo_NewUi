@@ -1,5 +1,5 @@
-import { Component,AfterViewInit,} from '@angular/core';
-import { CommonModule, DatePipe, Location,DecimalPipe } from '@angular/common';
+import { Component, AfterViewInit, } from '@angular/core';
+import { CommonModule, DatePipe, Location, DecimalPipe } from '@angular/common';
 import { http, Master } from '../../../assets/services/services';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -15,24 +15,24 @@ import { NavactionsComponent } from '../../../assets/pg/navactions/navactions.co
 import { CurrencyMaskDirective } from "../../../assets/mydirective/currencyMask/currency-mask.directive";
 import { DTFormatDirective } from '../../../assets/mydirective/mydirective.directive';
 import { ArraySortPipe } from '../../../assets/pipes/inrcrdr.pipe';
-import {PdfReaderComponent} from '../../../assets/pdf-reader/pdf-reader.component';
+import { PdfReaderComponent } from '../../../assets/pdf-reader/pdf-reader.component';
 import { PdfViewerComponent, PdfViewerModule } from 'ng2-pdf-viewer';
-import { GridApi,ColDef } from 'ag-grid-community';
-import {  AgGridModule } from 'ag-grid-angular';
+import { GridApi, ColDef } from 'ag-grid-community';
+import { AgGridModule } from 'ag-grid-angular';
 import { UiSwitchModule } from 'ngx-ui-switch';
 import { Router } from '@angular/router';
 import { SavedDataService } from './saved-data.service';
-declare var bootstrap:any;
+declare var bootstrap: any;
 
 @Component({
   selector: 'app-balance-sheet',
   templateUrl: './balance-sheet.component.html',
   styleUrl: './balance-sheet.component.scss',
-  imports: [FormsModule, CommonModule,UiSwitchModule, DTFormatDirective,AgGridModule, PdfViewerModule, CurrencyMaskDirective,PdfReaderComponent, ngselectComponent, NgSelectModule, DssInputComponent,  NavactionsComponent], 
+  imports: [FormsModule, CommonModule, UiSwitchModule, DTFormatDirective, AgGridModule, PdfViewerModule, CurrencyMaskDirective, PdfReaderComponent, ngselectComponent, NgSelectModule, DssInputComponent, NavactionsComponent],
   providers: [DatePipe, DecimalPipe, DialogsComponent, PdfReaderComponent, Master, ArraySortPipe, PdfViewerComponent, PdfViewerModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class BalanceSheetComponent implements AfterViewInit{
+export class BalanceSheetComponent implements AfterViewInit {
   entity: any = {};
   columns: ColDef[] = [];
   innerWidth: any;
@@ -63,16 +63,16 @@ export class BalanceSheetComponent implements AfterViewInit{
   ) { }
 
   ngAfterViewInit(): void {
-    var x = this.datepipe.transform(new Date(), 'yyyy-MM-dd')?? '';
+    var x = this.datepipe.transform(new Date(), 'yyyy-MM-dd') ?? '';
     const savedDate = this.savedDataService.getSavedDate();
     if (savedDate) {
       this.entity.edt = savedDate;
       this.savedDataService.clearSavedDate(); // Clear it after setting
       this.Listshow();
     } else {
-     
+
       this.entity.edt = this.provider.companyinfo.finyear.tdt >= x ? x : this.provider.companyinfo.finyear.tdt;
-     
+
     }
   }
 
@@ -84,7 +84,7 @@ export class BalanceSheetComponent implements AfterViewInit{
 
   ngOnInit(): void {
     this.entity = {};
-    this.referance={}
+    this.referance = {}
     this.defaultColDef = {
       sortable: true,
       floatingFilter: true,
@@ -93,7 +93,7 @@ export class BalanceSheetComponent implements AfterViewInit{
     this.stateParams = this.location.getState();
     this.mode = this.stateParams.action;
     this.innerWidth = window.innerWidth;
-  
+
     this.columns = [
       {
         field: 'sg_name',
@@ -130,7 +130,7 @@ export class BalanceSheetComponent implements AfterViewInit{
         },
       },
     ];
-  
+
     setTimeout(() => {
       this.generatePinnedBottomData();
     }, 100);
@@ -142,7 +142,7 @@ export class BalanceSheetComponent implements AfterViewInit{
     this.api = params.api;
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
-   
+
   }
 
   close() {
@@ -217,7 +217,7 @@ export class BalanceSheetComponent implements AfterViewInit{
       edt: this.entity.edt
 
     }
-    this.http.get('BalanceSheet/getBalanceSheet', param).subscribe({
+    this.http.get('BalanceSheet', param).subscribe({
       next: (res: any) => {
         if (res.status_cd == 1) {
           this.list = res.data || [];
@@ -246,12 +246,14 @@ export class BalanceSheetComponent implements AfterViewInit{
       branch_id: this.provider.companyinfo.company.branchCode,
       div_id: this.provider.companyinfo.company.divId,
       sg_code: index.data.sg_code,
+      sdt: this.provider.companyinfo.company.fdt,
+      edt: this.entity.edt
 
     }
 
     this.savedDataService.setSavedDate(this.entity.edt);
 
-    this.http.get('SubGroupList/SubGroupListItems', params).subscribe({
+    this.http.get('SubGroupList', params).subscribe({
       next: (res: any) => {
         if (res.status_cd == 1) {
           this.list = res.data || [];

@@ -206,7 +206,7 @@ export class ChashbankBookComponent {
       sdt:this.provider.companyinfo.finyear.fdt,
       edt: this.entity.edt
     }
-    this.http.get('CashBankBook/getcashbankbookItems', param).subscribe({
+    this.http.get('CashBankBook', param).subscribe({
       next: (res: any) => {
         if (res.status_cd==1) {
           this.list = res.data;

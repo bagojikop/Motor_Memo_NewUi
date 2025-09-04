@@ -247,7 +247,7 @@ export class MotormemoRegisterComponent {
       sdt:this.entity.sdt,
       edt: this.entity.edt
     }
-    this.http.get('MotormemoReg/getmotormemoitem', param).subscribe({
+    this.http.get('MotormemoReg', param).subscribe({
       next: (res: any) => {
         if (res.status_cd == 1) {
           this.list = res.data || [];

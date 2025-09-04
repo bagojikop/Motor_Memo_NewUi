@@ -166,7 +166,7 @@ export class ContrachildComponent {
 
   callbackedit() {
     this.spinner.show();
-    var url = "contra/contra"
+    var url = "contra/ById"
     this.http.get(url, { id: this.entity.vchId }).subscribe({
       next: (res: any) => {
         if (res.status_cd == 1) {

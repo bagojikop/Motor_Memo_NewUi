@@ -227,7 +227,7 @@ export class ProfitLossComponent implements AfterViewInit{
       edt: this.provider.companyinfo.company.edt || this.entity.edt
     }
     this.provider.companyinfo.company.edt = this.entity.edt;
-    this.http.get('ProfitLoss/getProfitLossItems', param).subscribe({
+    this.http.get('ProfitLoss', param).subscribe({
       next: (res: any) => {
         console.log('Response:', res);
 

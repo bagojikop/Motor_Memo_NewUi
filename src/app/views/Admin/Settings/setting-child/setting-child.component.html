@@ -41,7 +41,7 @@
                 <td>{{ item.setDesc }}</td>
                 <td><ng-container [ngSwitch]="item.setCode">
                         <ng-container *ngSwitchCase="101">
-                           <app-ngselect apiUrl="SubGroup/getListbyMgcode" bindLabel="sgName" bindValue="sgCode"
+                           <app-ngselect apiUrl="SubGroup/ListbyMgcode" bindLabel="sgName" bindValue="sgCode"
                                 name="group" [(ngModel)]="item.setValue"  [defaultProperty]="item.sgCodeNavigation"
                                 [apiParams]="{mgcode:'14'}" [applyMargins]="false">
                             </app-ngselect>
@@ -50,7 +50,7 @@
 
                     <ng-container [ngSwitch]="item.setCode">
                         <ng-container *ngSwitchCase="102">
-                           <app-ngselect apiUrl="SubGroup/getListbyMgcode" bindLabel="sgName" bindValue="sgCode"
+                           <app-ngselect apiUrl="SubGroup/ListbyMgcode" bindLabel="sgName" bindValue="sgCode"
                                 name="group2" [(ngModel)]="item.setValue"  [defaultProperty]="item.sgCodeNavigation"
                                 [apiParams]="{mgcode:'14'}" [applyMargins]="false">
                             </app-ngselect>

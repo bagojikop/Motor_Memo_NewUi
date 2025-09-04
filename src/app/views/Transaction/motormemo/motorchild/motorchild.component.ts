@@ -692,7 +692,7 @@ export class MotorchildComponent {
       PageSize: 10,
       Keys: [{ key: 'vehicleNo', value: this.entity.vehicleNo || 0 }]
     }
-    this.http.post('Vehicle/vehiclelist', param).subscribe({
+    this.http.post('Vehicle/getList', param).subscribe({
       next: (res: any) => {
         if (res.status_cd == 1) {
           this.reference = res.data;
@@ -1170,8 +1170,6 @@ export class MotorchildComponent {
   }
 
   onselectcomm(s) {
-    // this.cmod.iUnit=s.iUnit;
-    // this.cmod.unitName=s.unitName;
     this.cmod.unitCode = s.iUnit
     this.cmod.iUnitNavigation = s.iUnitNavigation;
   }

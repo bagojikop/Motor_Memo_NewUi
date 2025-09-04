@@ -121,7 +121,7 @@ export class DeclarationchildComponent {
 
   callbackedit() {
     this.spinner.show();
-    var url = "Declaration/edit"
+    var url = "Declaration/ById"
     this.http.get(url, { id: this.stateParams.id }).subscribe({
       next: (res: any) => {
         if (res.status_cd == 1) {

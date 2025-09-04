@@ -18,7 +18,7 @@
     </div>
     <hr />
 
-    <dss-grid [columns]="columns" url="Taluka/getList" [gridOptions]="gridOption.gridOptions" class="heightMasterPage"
+    <dss-grid [columns]="columns" url="Taluka/List" [gridOptions]="gridOption.gridOptions" class="heightMasterPage"
         [defaultColDef]="defaultColDef" (gridApi)="onGridReady($event)" [pageSize]="25"></dss-grid>
 
 
@@ -44,7 +44,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <app-ngselect label="District" apiUrl="District/getDistrict" class="p-0"
+                                        <app-ngselect label="District" apiUrl="District/getList" class="p-0"
                                             bindLabel="districtName" bindValue="districtId" name="district"
                                             [(ngModel)]="entity.districtId" [defaultProperty]="entity.district"
                                             (change)="entity.district=$event" [bindSubObj]="[

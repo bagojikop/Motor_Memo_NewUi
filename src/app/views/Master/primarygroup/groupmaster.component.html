@@ -48,7 +48,7 @@ class="heightMasterPage" [defaultColDef]="defaultColDef" (gridApi)="onGridReady(
                                 </div>
  
                                 <div class="form-group">
-                                    <app-ngselect label="Main Group" apiUrl="accMainGroup/getGroups" class="p-0"
+                                    <app-ngselect label="Main Group" apiUrl="accMainGroup/getList" class="p-0"
                                         bindLabel="mgName" bindValue="mgCode" name="primary group"
                                         [(ngModel)]="entity.mgCode" [defaultProperty]="entity.mgCodeNavigation"
                                         (change)="entity.mgCodeNavigation=$event"></app-ngselect>

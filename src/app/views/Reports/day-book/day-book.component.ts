@@ -208,7 +208,7 @@ export class DayBookComponent {
       sdt:this.provider.companyinfo.finyear.fdt,
       edt: this.entity.edt
     }
-    this.http.get('DayBook/getDayBookItems', param).subscribe({
+    this.http.get('DayBook', param).subscribe({
       next: (res: any) => {
         if (res.status_cd==1) {
           this.list = res.data;

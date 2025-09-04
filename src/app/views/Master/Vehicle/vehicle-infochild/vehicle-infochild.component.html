@@ -46,32 +46,7 @@
                             </div> -->
                         </div>
 
-                        <div class="gapInputFields">
-                            <!-- <div>
-                                <app-ngselect apiUrl="Account/getAcclist" label="Hire Account" name="AccountName"
-                                    class="p-0" bindLabel="accName" bindValue="accCode" [(ngModel)]="entity.accCode"
-                                    [defaultProperty]="entity.accCodeNavigation" [disabled]="navactions.fieldset"
-                                    #AccountName="ngModel" (change)="getpandetails($event)"></app-ngselect>
-
-                                <a href="#" data-bs-toggle="modal" data-bs-target="#staticBackdrop" tabindex="-1"
-                                    data-bs-target="#exampleModal">
-                                    Create new Account
-                                </a>
-
-                            </div> -->
-                            <div class="">
-                                <!-- <dss-input label="PAN No" name="panno" [(ngModel)]="entity.panNo" [maxlength]="10"
-                                    [styleCase]="'u'" [whiteSpace]="false" #panInput="ngModel"
-                                    (ngModelChange)="validatePan(entity.panNo)">
-                                </dss-input>
-                                <div *ngIf="isInvalidPan" class="error">
-                                    <p style="color: red; font-size: 10px;">A valid PAN must be in the format
-                                        `AAAAA9999A`.</p>
-                                </div> -->
-
-                            </div>
-                        </div>
-
+                      
                     </div>
                 </div>
             </div>
@@ -339,7 +314,7 @@
 
                             <tr>
                                 <th>
-                                    <app-ngselect apiUrl="state/getStates" class="p-0" bindLabel="stateName"
+                                    <app-ngselect apiUrl="state/ListByPage" class="p-0" bindLabel="stateName"
                                         [disabled]="navactions.fieldset" bindValue="stateCode" name="state"
                                         [(ngModel)]="info.reference.StateId"
                                         (change)="statechagename($event)"></app-ngselect>
@@ -453,12 +428,12 @@
 
                     <div class="d-flex">
                         <div class="d-flex-width">
-                            <app-ngselect apiUrl="Place/getPlace" label="Place" bindLabel="cityName" bindValue="cityId"
+                            <app-ngselect apiUrl="Place/getList" label="Place" bindLabel="cityName" bindValue="cityId"
                                 name="placesd" [(ngModel)]="reference.placeId" [disabled]="navactions.fieldset">
                             </app-ngselect>
                         </div>
                         <div class="gapInputFields">
-                            <app-ngselect apiUrl="SubGroup/getGroup" label="Group" bindLabel="sgName" bindValue="sgCode"
+                            <app-ngselect apiUrl="SubGroup/ListByPage" label="Group" bindLabel="sgName" bindValue="sgCode"
                                 name="sgCode" [(ngModel)]="reference.sgCode" [disabled]="navactions.fieldset"
                                 [bindSubObj]="[{key:'Group',value:'grpName'},
                              {key:'Primary Group',value:'grpCodeNavigation?.mgCodeNavigation?.mgName'}]"

@@ -531,7 +531,7 @@ export class Aknowledgmemnt1Component {
         Keys: [{ key: 'vehicleNo', value: this.entity.vehicleNo || 0 }]
       }
   
-      this.http.post('Vehicle/vehiclelist', param).subscribe({
+      this.http.post('Vehicle/getList', param).subscribe({
         next: (res: any) => {
           if (res.status_cd == 1) {
             this.reference = res.data;

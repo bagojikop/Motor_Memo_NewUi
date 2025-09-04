@@ -20,7 +20,7 @@
 <hr/>
 
 
-<dss-grid [columns]="columns" url="Place/getPlace" [gridOptions]="gridOption.gridOptions"
+<dss-grid [columns]="columns" url="Place/getList" [gridOptions]="gridOption.gridOptions"
 class="heightMasterPage" [defaultColDef]="defaultColDef" (gridApi)="onGridReady($event)"
     [pageSize]="25"></dss-grid>
 
@@ -46,7 +46,7 @@ class="heightMasterPage" [defaultColDef]="defaultColDef" (gridApi)="onGridReady(
                                         [(ngModel)]="entity.cityName" [required]="true" [styleCase]="'c'"/>
                                 </div>
                                 <div class="form-group">
-                                    <app-ngselect label="Taluka" apiUrl="Taluka/getTaluka" class="p-0"
+                                    <app-ngselect label="Taluka" apiUrl="Taluka/list" class="p-0"
                                         bindLabel="talukaName" bindValue="talukaId" name="taluka"
                                         [(ngModel)]="entity.talukaId" [defaultProperty]="entity.taluka"  
                                         (change)="entity.taluka=$event" [bindSubObj]="[
