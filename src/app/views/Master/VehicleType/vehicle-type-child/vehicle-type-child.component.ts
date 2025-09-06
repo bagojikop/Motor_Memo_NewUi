@@ -61,9 +61,6 @@ export class VehicleTypeChildComponent {
   ngOnInit(): void {
 
     this.entity = <mst107>{};
-
-
-
     let paramss: any = this.location.getState();
     this.navactions.navaction(paramss.action);
 

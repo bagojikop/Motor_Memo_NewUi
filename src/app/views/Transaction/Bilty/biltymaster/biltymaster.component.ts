@@ -53,8 +53,8 @@ entity: any = {};
     this.mode = this.stateParams.action;
     this.innerWidth = window.innerWidth;
    this.gridParams = { 
-      firm_id: this.provider.companyinfo.company?.firmCode,
-      div_id: this.provider.companyinfo.company.divId, 
+      // firm_id: this.provider.companyinfo.company?.firmCode,
+      // div_id: this.provider.companyinfo.company.divId, 
      
     }
     

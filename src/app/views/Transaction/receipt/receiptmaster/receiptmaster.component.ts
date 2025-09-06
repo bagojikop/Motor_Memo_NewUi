@@ -115,8 +115,6 @@ export class ReceiptmasterComponent {
     ]
    
     this.gridParams = { 
-      firmId: this.provider.companyinfo.company?.firmCode,
-      divId: this.provider.companyinfo.company.divId,
      
       isApproval: "false",
     }

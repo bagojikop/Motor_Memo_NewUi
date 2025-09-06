@@ -84,12 +84,8 @@ export class VehicleInfomasterComponent implements OnInit {
       },
     ];
 
-    this.Init();
   }
 
-  Init() {
-
-  }
 
   addNew() {
     const params = { action: 'new' };
@@ -99,8 +95,7 @@ export class VehicleInfomasterComponent implements OnInit {
   onGridReady(params: any) {
     this.gridApi = params;
     if (this.gridApi) {
-     
-      this.Init();
+   
     }
   }
 

@@ -195,10 +195,7 @@ export class MotorchildComponent {
         {
           key: "vch_id", value: this.entity.vchId,
         },
-        {
-          key: "firm_id", value: this.provider.companyinfo.company?.firmCode,
-
-        }]
+        ]
     };
     this.rptMode = true;
   }
@@ -496,7 +493,7 @@ export class MotorchildComponent {
         if (!this.entity.motormemoAudit.createdUser)
           this.entity.motormemoAudit.createdUser = this.provider.companyinfo.userinfo.username;
 
-        this.entity.firmId = this.provider.companyinfo.company?.firm.firmCode,
+        //this.entity.firmId = this.provider.companyinfo.company?.firm.firmCode,
           this.entity.divId = this.provider.companyinfo.company.divId;
 
         this.http.post('MotorMemo/insert', this.master.cleanObject(this.entity, 2)).subscribe({
@@ -528,7 +525,7 @@ export class MotorchildComponent {
         })
       }
       else {
-        this.entity.firmId = this.provider.companyinfo.company?.firm.firmCode,
+        //this.entity.firmId = this.provider.companyinfo.company?.firm.firmCode,
           this.entity.divId = this.provider.companyinfo.company.divId;
         this.entity.motormemoAudit.modifiedUser = this.provider.companyinfo.userinfo.username;
 

@@ -263,8 +263,8 @@ export class TransportInvochildComponent {
     //   const selectedTransType = this.entity.transType; // or any other correct property
     // this.onRcmChange(selectedTransType);
     var param = {
-      firm_id: this.provider.companyinfo.company.firmCode,
-      div_id: this.provider.companyinfo.company.divId,
+      // firm_id: this.provider.companyinfo.company.firmCode,
+      // div_id: this.provider.companyinfo.company.divId,
       accCode: this.entity.accCode,
       fdt: this.entity.fromDt,
       tdt: this.entity.toDt
@@ -367,8 +367,8 @@ export class TransportInvochildComponent {
 
   save() {
     if (!this.entity.vchId) {
-      this.entity.firmId = this.provider.companyinfo.company?.firmCode;
-      this.entity.divId = this.provider.companyinfo.company.divId
+      // this.entity.firmId = this.provider.companyinfo.company?.firmCode;
+      // this.entity.divId = this.provider.companyinfo.company.divId
       // if (!this.entity.contraAudit.createdUser)
       //   this.entity.contraAudit.createdUser = this.provider.companyinfo.userinfo.username;
       // else
@@ -428,9 +428,9 @@ export class TransportInvochildComponent {
         {
           key: "vch_id", value: this.entity.vchId,
         },
-        {
-          key: "firm_id", value: this.provider.companyinfo.company?.firmCode,
-        },
+        // {
+        //   key: "firm_id", value: this.provider.companyinfo.company?.firmCode,
+        // },
       ]
     };
     this.rptMode = true;

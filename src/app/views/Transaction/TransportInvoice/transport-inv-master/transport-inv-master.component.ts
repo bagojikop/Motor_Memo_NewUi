@@ -113,11 +113,11 @@ export class TransportInvMAsterComponent {
     ];
 
 
-    this.gridParams = {
-      firm_id: this.provider.companyinfo.company?.firmCode,
-      div_id: this.provider.companyinfo.company.divId,
+    // this.gridParams = {
+    //   firm_id: this.provider.companyinfo.company?.firmCode,
+    //   div_id: this.provider.companyinfo.company.divId,
 
-    }
+    // }
   }
   addNew() {
     const params = { action: 'new' };

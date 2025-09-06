@@ -484,7 +484,7 @@ export class Aknowledgmemnt1Component {
 
   Listshow() { 
       var param = {
-        firm_id: this.provider.companyinfo.company.firmCode,
+        
         div_id: this.provider.companyinfo.company.divId,
         veh_no: this.entity.vehicleNo,
       }
@@ -558,7 +558,7 @@ export class Aknowledgmemnt1Component {
       const charges = Number(this.entity.totalcharges);
      
         if (this.entity.vchId) {
-          this.entity.firmId = this.provider.companyinfo.company?.firm.firmCode,
+          
             this.entity.divId = this.provider.companyinfo.company.divId;
           this.entity.motormemoAudit.modifiedUser = this.provider.companyinfo.userinfo.username;
 
