@@ -101,13 +101,11 @@ export class JournalchildComponent {
       vch_id: this.entity.vchId,
       descr: this.doc.attachdescr,
       username: this.provider.companyinfo.userinfo.username,
-      div_id: this.provider.companyinfo.company.divId
+     
     }
-    this.Init();
+   
   }
-  Init() {
 
-  }
   windowrespo() {
     if (window.innerWidth <= 767) {
       this.status = true;
@@ -169,7 +167,7 @@ export class JournalchildComponent {
       vch_id: this.entity.vchId,
       descr: this.doc.attachdescr,
       username: this.provider.companyinfo.userinfo.username,
-      div_id: this.provider.companyinfo.company.divId
+      
     }
     this.navactions.navaction("view");
     this.callbackedit();
@@ -236,8 +234,7 @@ export class JournalchildComponent {
   save() {
     this.spinner.show();
     if (!this.entity.vchId) {
-      this.entity.firmId = this.provider.companyinfo.company?.firmCode;
-      this.entity.divId = this.provider.companyinfo.company.divId
+     
       if (!this.entity.acc00500.createdUser)
         this.entity.acc00500.createdUser = this.provider.companyinfo.userinfo.username;
       else

@@ -186,14 +186,7 @@ export class BalanceSheetComponent implements AfterViewInit {
     this.myReportDictionory = {
       reportCacheId: uuidv4(),
       reportParams: [
-        {
-          key: "firm_id", value: this.provider.companyinfo.company?.firmCode,
-
-        },
-        {
-          key: "div_id", value: this.provider.companyinfo.company?.divId,
-
-        },
+       
         {
           key: "edt", value: this.entity.edt,
 

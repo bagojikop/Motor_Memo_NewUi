@@ -127,12 +127,12 @@ export class OpningbalanceComponent {
     ]
 
 
-    this.gridParams = {
-      branch_id: this.provider.companyinfo.company?.branchCode,
-      firm_id: this.provider.companyinfo.company?.firmCode,
-      div_id: this.provider.companyinfo.company.divId,
+    // this.gridParams = {
+    //   branch_id: this.provider.companyinfo.company?.branchCode,
+    //   firm_id: this.provider.companyinfo.company?.firmCode,
+    //   div_id: this.provider.companyinfo.company.divId,
 
-    }
+    // }
   }
   onBtnClick1(e) {
     if (e.event.action == "edit") {
@@ -160,9 +160,9 @@ export class OpningbalanceComponent {
 
       if (!this.entity.vchId) {
 
-        this.entity.branchId = this.provider.companyinfo.company?.branchCode;
-        this.entity.firmId = this.provider.companyinfo.company?.firmCode;
-        this.entity.divId = this.provider.companyinfo.company.divId
+        // this.entity.branchId = this.provider.companyinfo.company?.branchCode;
+        // this.entity.firmId = this.provider.companyinfo.company?.firmCode;
+        // this.entity.divId = this.provider.companyinfo.company.divId
 
         this.http.post('AccOpbl/insert', this.entity).subscribe({
           next: (res: any) => {

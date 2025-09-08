@@ -90,7 +90,7 @@ export class MotormasterComponent implements OnInit {
 
     ];
     this.gridParams = {
-      firm_id: this.provider.companyinfo.company?.firmCode,
+      //firm_id: this.provider.companyinfo.company?.firmCode,
       div_id: this.provider.companyinfo.company.divId,
     }
   }

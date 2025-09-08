@@ -110,8 +110,6 @@ export class ContramasterComponent {
   
 
     this.gridParams = { 
-      firm_id: this.provider.companyinfo.company?.firmCode,
-      div_id: this.provider.companyinfo.company.divId,
      
       isApproval: "false",
     }

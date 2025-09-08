@@ -112,11 +112,9 @@ export class PlaceComponent {
       flex: 2
     },
     ]
-    this.Init();
+    
   }
-  Init() {
 
-  }
   addNew() {
     this.entity = {};
     $("#place").modal('show');

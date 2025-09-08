@@ -183,14 +183,7 @@ export class GrouplistComponent {
       this.myReportDictionory = {
         reportCacheId: uuidv4(),
         reportParams: [
-          {
-            key: "firm_id", value: this.provider.companyinfo.company?.firmCode,
-  
-          },
-          {
-            key: "div_id", value: this.provider.companyinfo.company?.divId,
-  
-          },
+          
           {
             key: "sg_code", value: this.reference.sgCode,
           },
@@ -241,8 +234,7 @@ export class GrouplistComponent {
     
     Listshow() {
       var param = {
-        firm_id: this.provider.companyinfo.company.firmCode,
-        div_id: this.provider.companyinfo.company.divId,
+      
         sg_code: this.entity.sgCode,
         sdt: this.entity.sdt,
         edt: this.entity.edt
@@ -269,8 +261,7 @@ export class GrouplistComponent {
     onCellClicked(index) {
 
       var params = {
-        firm_id: this.provider.companyinfo.company.firmCode,
-        div_id: this.provider.companyinfo.company.divId,
+       
         acc_code: index.data.acc_code,
         sdt: this.entity.sdt,
         edt: this.entity.edt

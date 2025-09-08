@@ -152,7 +152,7 @@ export class DeclarationchildComponent {
           this.entity.createdUser = this.provider.companyinfo.userinfo.username;
         this.entity.sCode = 2;
         this.entity.declrNo = 10;
-        this.entity.fyId = this.provider.companyinfo.company.divId
+        //this.entity.fyId = this.provider.companyinfo.company.divId
         this.http.post('Declaration/insert', this.entity).subscribe({
           next: (res: any) => {
             if (res.status_cd == 1) {

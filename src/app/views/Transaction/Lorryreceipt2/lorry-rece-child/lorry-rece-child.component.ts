@@ -169,10 +169,7 @@ export class LorryReceChildComponent {
         {
           key: "vch_id", value: this.entity.vchId,
         },
-        {
-          key: "firm_id", value: this.provider.companyinfo.company?.firmCode,
-
-        }]
+        ]
     };
     this.rptMode = true;
   }
@@ -371,7 +368,7 @@ export class LorryReceChildComponent {
       this.spinner.show();
       if (!this.entity.vchId) {
 
-        this.entity.firmId = this.provider.companyinfo.company?.firm.firmCode,
+        // this.entity.firmId = this.provider.companyinfo.company?.firm.firmCode,
           this.entity.divId = this.provider.companyinfo.company.divId;
         this.entity.motormemoAudit.createdUser = this.provider.companyinfo.userinfo.username;
 
@@ -395,7 +392,7 @@ export class LorryReceChildComponent {
         })
       }
       else {
-        this.entity.firmId = this.provider.companyinfo.company?.firm.firmCode,
+        //this.entity.firmId = this.provider.companyinfo.company?.firm.firmCode,
           this.entity.divId = this.provider.companyinfo.company.divId;
         //this.entity?.motormemoAudit?.modifiedUser = this.provider.companyinfo.userinfo.username;
         this.http.put('Motormemo/update', this.master.cleanObject(this.entity, 2), { id: this.entity.vchId }).subscribe({
@@ -539,7 +536,7 @@ getbiltylist() {
   $('#Modal').modal('show');
   {
     var param = {
-      firmCode: this.provider.companyinfo.company?.firmCode,
+      //firmCode: this.provider.companyinfo.company?.firmCode,
       div_id: this.provider.companyinfo.company.divId
     }
     this.loading = true;

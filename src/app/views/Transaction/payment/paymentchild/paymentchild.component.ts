@@ -112,7 +112,7 @@ export class PaymentchildComponent {
       vch_id: this.entity.vchId,
       descr: this.doc.attachdescr,
       username: this.provider.companyinfo.userinfo.username,
-      div_id: this.provider.companyinfo.company.divId
+      //div_id: this.provider.companyinfo.company.divId
     }
    
   }
@@ -220,7 +220,7 @@ export class PaymentchildComponent {
       vch_id: this.entity.vchId,
       descr: this.doc.attachdescr,
       username: this.provider.companyinfo.userinfo.username,
-      div_id: this.provider.companyinfo.company.divId
+      //div_id: this.provider.companyinfo.company.divId
     }
     this.navactions.navaction("view");
     this.callbackedit();
@@ -251,8 +251,8 @@ export class PaymentchildComponent {
     this.spinner.show();
 
     if (!this.entity.vchId) {
-      this.entity.firmId = this.provider.companyinfo.company?.firmCode;
-      this.entity.divId = this.provider.companyinfo.company.divId
+      // this.entity.firmId = this.provider.companyinfo.company?.firmCode;
+      // this.entity.divId = this.provider.companyinfo.company.divId
 
       if (!this.entity.acc00200.createdUser)
         this.entity.acc00200.createdUser = this.provider.companyinfo.userinfo.username;

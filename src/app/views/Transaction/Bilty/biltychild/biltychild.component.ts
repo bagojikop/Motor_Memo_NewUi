@@ -206,10 +206,7 @@ export class BiltychildComponent {
         {
           key: "vch_id", value: this.entity.vchId,
         },
-        {
-          key: "firm_id", value: this.provider.companyinfo.company?.firmCode,
-
-        }]
+        ]
     };
     this.rptMode = true;
   }
@@ -315,10 +312,8 @@ export class BiltychildComponent {
       if (!this.entity.vchId) {
         if (!this.entity.biltyAudit.createdUser)
           this.entity.biltyAudit.createdUser = this.provider.companyinfo.userinfo.username;
-
-
-        this.entity.firmId = this.provider.companyinfo.company?.firm.firmCode,
-          this.entity.divId = this.provider.companyinfo.company.divId;
+        // this.entity.firmId = this.provider.companyinfo.company?.firm.firmCode,
+        //   this.entity.divId = this.provider.companyinfo.company.divId;
         this.bilty = this.entity;
         this.http.post('Bilty/insert', this.bilty, 2).subscribe({
           next: (res: any) => {
@@ -346,8 +341,8 @@ export class BiltychildComponent {
         })
       }
       else {
-        this.entity.firmId = this.provider.companyinfo.company?.firm.firmCode,
-          this.entity.divId = this.provider.companyinfo.company.divId;
+        // this.entity.firmId = this.provider.companyinfo.company?.firm.firmCode,
+        //   this.entity.divId = this.provider.companyinfo.company.divId;
         this.entity.biltyAudit.modifiedUser = this.provider.companyinfo.userinfo.username;
         this.http.put('Bilty/update', this.master.cleanObject(this.entity, 2), { id: this.entity.vchId }).subscribe({
           next: (res: any) => {

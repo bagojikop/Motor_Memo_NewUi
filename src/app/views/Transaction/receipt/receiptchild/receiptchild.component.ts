@@ -115,7 +115,7 @@ export class ReceiptchildComponent {
       vch_id: this.entity.vchId,
       descr: this.doc.attachdescr,
       username: this.provider.companyinfo.userinfo.username,
-      div_id: this.provider.companyinfo.company.divId
+     // div_id: this.provider.companyinfo.company.divId
     }
   }
 
@@ -123,7 +123,7 @@ export class ReceiptchildComponent {
 
   getLastTwoYrearList() {
     this.spinner.show();
-    this.http.get("FinYears/geLastTworYear", { firmCode: this.provider.companyinfo.company?.firm.firmCode }).subscribe({
+    this.http.get("FinYears/geLastTworYear").subscribe({
       next: res => {
         this.yearsList = res.data;
       }, error: err => {
@@ -140,7 +140,7 @@ export class ReceiptchildComponent {
       vch_id: this.entity.vchId,
       descr: this.doc.attachdescr,
       username: this.provider.companyinfo.userinfo.username,
-      div_id: this.provider.companyinfo.company.divId
+      //div_id: this.provider.companyinfo.company.divId
     }
   }
 
@@ -262,7 +262,7 @@ export class ReceiptchildComponent {
       vch_id: this.entity.vchId,
       descr: this.doc.attachdescr,
       username: this.provider.companyinfo.userinfo.username,
-      div_id: this.provider.companyinfo.company.divId
+      //div_id: this.provider.companyinfo.company.divId
     }
     this.LRandyearisDisabled = true;
     this.navactions.navaction("view");
@@ -271,8 +271,8 @@ export class ReceiptchildComponent {
   save() {
     this.spinner.show();
     if (!this.entity.vchId) {
-      this.entity.firmId = this.provider.companyinfo.company?.firmCode;
-      this.entity.divId = this.provider.companyinfo.company.divId
+      // this.entity.firmId = this.provider.companyinfo.company?.firmCode;
+      // this.entity.divId = this.provider.companyinfo.company.divId
 
 
       if (!this.entity.acc00300.createdUser) {
@@ -299,7 +299,7 @@ export class ReceiptchildComponent {
               vch_id: this.entity.vchId,
               descr: this.doc.attachdescr,
               username: this.provider.companyinfo.userinfo.username,
-              div_id: this.provider.companyinfo.company.divId
+              //div_id: this.provider.companyinfo.company.divId
             }
           }
 
@@ -349,8 +349,9 @@ export class ReceiptchildComponent {
   LRingetaccount() {
 
     this.http.get('MotorMemo/LRgetdata', {
-      firm_id: this.provider.companyinfo.company?.firm.firmCode,
-      div_id: this.entity.divId, memoNo: this.entity.memoNo
+     // firm_id: this.provider.companyinfo.company?.firm.firmCode,
+      div_id: this.entity.divId,
+      memoNo: this.entity.memoNo
     }).subscribe({
       next: (res: any) => {
         if (res.status_cd == 1) {

@@ -52,11 +52,11 @@ entity: any = {};
     this.stateParams = this.location.getState();
     this.mode = this.stateParams.action;
     this.innerWidth = window.innerWidth;
-   this.gridParams = { 
-      firm_id: this.provider.companyinfo.company?.firmCode,
-      div_id: this.provider.companyinfo.company.divId, 
+  //  this.gridParams = { 
+  //     firm_id: this.provider.companyinfo.company?.firmCode,
+  //     div_id: this.provider.companyinfo.company.divId, 
      
-    }
+  //   }
     
     fromEvent(window, 'resize')
       .pipe(debounceTime(100))

@@ -80,8 +80,8 @@ export class AccountinfochildComponent implements OnInit {
     this.entity.mst01110s = <mst01110sObj[]>[];
     this.entity.grpCodeNavigation = <grpCodeNavigationObj>{};
     this.entity.mst01100 = {
-      firmId: this.provider.companyinfo?.company?.firmCode ?? null,
-      divId: this.provider.companyinfo?.company?.divId ?? null,
+      // firmId: this.provider.companyinfo?.company?.firmCode ?? null,
+      // divId: this.provider.companyinfo?.company?.divId ?? null,
       crbal: this.entity.mst01100.crbal,
       drbal: this.entity.mst01100.drbal
     } as mst01100Obj;
@@ -293,8 +293,8 @@ export class AccountinfochildComponent implements OnInit {
     }
     this.spinner.show();
     this.entity.mst01100 = {
-      firmId: this.provider.companyinfo?.company?.firmCode ?? null,
-      divId: this.provider.companyinfo?.company?.divId ?? null,
+      // firmId: this.provider.companyinfo?.company?.firmCode ?? null,
+      // divId: this.provider.companyinfo?.company?.divId ?? null,
       crbal: this.entity.mst01100?.crbal ?? 0,
       drbal: this.entity.mst01100?.drbal ?? 0,
     } as mst01100Obj;

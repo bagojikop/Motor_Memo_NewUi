@@ -96,12 +96,7 @@ export class TransInvRegComponent {
   
         reportCacheId: uuidv4(),
         reportParams: [
-          {
-            key: "firm_id", value: this.provider.companyinfo.company?.firmCode,
-          },
-          {
-            key: "div_id", value: this.provider.companyinfo.company?.divId,
-          },
+          
           {
             key: "accCode", value: this.entity.accCode,
           },

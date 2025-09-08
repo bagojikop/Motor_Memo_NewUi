@@ -96,12 +96,7 @@ export class ExpensesComponent {
 
       reportCacheId: uuidv4(),
       reportParams: [
-        {
-          key: "firm_id", value: this.provider.companyinfo.company?.firmCode,
-        },
-        {
-          key: "div_id", value: this.provider.companyinfo.company?.divId,
-        },
+        
         {
           key: "s_id", value: this.entity.s_Id,
         },

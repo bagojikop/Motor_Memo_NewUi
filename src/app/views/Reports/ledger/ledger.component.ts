@@ -186,8 +186,7 @@ export class LedgerComponent {
       Listshow(){
         this.runningTotal = 0;
         var param = {
-          firm_id: this.provider.companyinfo.company.firmCode,
-          div_id: this.provider.companyinfo.company.divId,
+        
           acc_code: this.entity.accCode || this.list.accCode.accCode,
           sdt: this.entity.sdt,
           edt: this.entity.edt
@@ -242,13 +241,12 @@ export class LedgerComponent {
       onGridReady(params) {
         this.gridApi = params.api;
         this.gridColumnApi = params.columnApi;
-        
-    
       }
 
       close() {
         this.location.back();
       }
+
       generatePinnedBottomData() {
     
         const columnsWithAggregation = ['cramt', 'dramt'];
@@ -351,14 +349,7 @@ export class LedgerComponent {
         this.myReportDictionory = {
           reportCacheId: uuidv4(),
           reportParams: [
-            {
-              key: "firm_id", value: this.provider.companyinfo.company?.firmCode,
-    
-            },
-            {
-              key: "div_id", value: this.provider.companyinfo.company?.divId,
-    
-            },
+            
             {
               key: "acc_code", value: this.referance.accCode,
             },
