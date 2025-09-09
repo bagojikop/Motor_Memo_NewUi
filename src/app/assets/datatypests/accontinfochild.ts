@@ -17,8 +17,8 @@ export interface AccountObj {
     accAlias: string
     createdUser: string
     modifiedUser: string
-    createdDt?: string | null;
-    modifiedDt?: string | null;
+    createdDt: string | null;
+    modifiedDt: string | null;
     placeId2: string
     placeIdNavigation: any
 
@@ -26,11 +26,11 @@ export interface AccountObj {
     placeId: number
     blocked: boolean
     headOfficCode: string
-    mst01100?: mst01100Obj | null
-    mst01101?: mst01101Obj | null
-    mst01104?: mst01104Obj | null
+    mst01100: mst01100Obj | null
+    mst01101: mst01101Obj | null
+    mst01104: mst01104Obj | null
     // accPanDetail?: accPanDetailObj | null
-    mst01109?: mst01109Obj | null
+    mst01109: mst01109Obj | null
     mst01110s: mst01110sObj[]
     accBusinessLocations: accBusinessLocationObj[]
     sgCodeNavigation: any
@@ -85,11 +85,11 @@ export interface mst01101Obj {
     website: string;
 }
 export interface mst01104Obj {
-    accCode?: number;
-    bankName?: string;
-    address?: string;
-    bankaccNo?: string;
-    ifscCode?: string;
+    accCode: number;
+    bankName: string;
+    address: string;
+    bankaccNo: string;
+    ifscCode: string;
 }
 export interface accPanDetailObj {
     accCode: number;

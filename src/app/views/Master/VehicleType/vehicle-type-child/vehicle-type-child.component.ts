@@ -136,12 +136,7 @@ export class VehicleTypeChildComponent {
       if (!this.entity.createdUser)
 
         this.entity.createdUser = this.provider.companyinfo.userinfo.username;
-
-
-      let body = this.master.cleanObject(this.entity, 2);
-
-      var a = JSON.stringify(body);
-      this.http.post('VehicleType/insert', body).subscribe({
+      this.http.post('VehicleType/insert',this.entity).subscribe({
         next: (res: any) => {
           this.spinner.hide();
           if (res.status_cd == 1) {

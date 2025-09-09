@@ -258,7 +258,7 @@ export class SenderReceiverChildComponent {
   }
 
 
-  getState(event){
+  getstates(event){
     this.entity.stateCode = event.stateCode;
   }
    Onplaceselected(x){
@@ -268,7 +268,7 @@ export class SenderReceiverChildComponent {
   }
 
   getstatefromplace(){
-    this.http.get('state/ListByPlace',{ placeId: this.entity.placeId }).subscribe({
+    this.http.get('state/ListByPlace',{ placeId: this.entity.placeId || 0}).subscribe({
        next: (res: any) => {
         if (res.status_cd == 1) {
         //  this.state = res.data;
