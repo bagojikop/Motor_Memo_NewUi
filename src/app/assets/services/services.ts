@@ -227,7 +227,7 @@ export class http {
       header = new HttpHeaders({
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${this.provider.companyinfo.user.access_token}`,
-        'database': this.provider.companyinfo.database
+          'X-FY': this.provider.companyinfo.finyear.divId ||''
       })
     }
     return this.http.get<any>(this.provider.serverapi + url, { headers: header, params: param })
@@ -245,7 +245,7 @@ export class http {
     const header = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${this.provider.companyinfo.user.access_token}`,
-      'database': this.provider.companyinfo.database
+      'X-FY': this.provider.companyinfo.finyear.divId ||''
     })
 
     return this.http.put<any>(this.provider.serverapi + url, data, { headers: header, params: param })
@@ -256,7 +256,7 @@ export class http {
     const header = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${this.provider.companyinfo.user.access_token}`,
-      'database': this.provider.companyinfo.database
+      'X-FY': this.provider.companyinfo.finyear.divId ||''
     })
 
     return this.http.post<any>(this.provider.serverapi + url, data, { headers: header, params: params })
@@ -268,7 +268,7 @@ export class http {
     const header = new HttpHeaders({
       //'Content-Type':  'application/octet-stream',
       'Authorization': `Bearer ${this.provider.companyinfo.user.access_token}`,
-      'database': this.provider.companyinfo.database
+    'X-FY': this.provider.companyinfo.finyear.divId ||''
     })
 
     return this.http.post<any>(this.provider.serverapi + url, data, { headers: header, params: params })
@@ -280,8 +280,9 @@ export class http {
     const header = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${this.provider.companyinfo.user.access_token}`,
-      'database': this.provider.companyinfo.database
+       'X-FY': this.provider.companyinfo.finyear.divId ||''
     })
+
 
     return this.http.delete<any>(this.provider.serverapi + url, { headers: header, params: param })
   }
