@@ -109,13 +109,9 @@ export class FinyearmasterComponent {
 
   Init() {
     this.spinner.show();
-    var param = {
-      firmCode: this.provider.companyinfo.company.firmCode,
-    
+     
 
-    }
-
-    this.http.get('FinYears/lists', param).subscribe({
+    this.http.get('FinYears/lists').subscribe({
       next: (res: any) => {
         if (res.status_cd == 1) {
           this.list = res.data;
