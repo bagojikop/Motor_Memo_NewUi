@@ -16,7 +16,7 @@ declare var $: any;
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
   imports: [FormsModule, CommonModule],
-  providers:[DialogsComponent],
+  providers: [DialogsComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class LoginComponent implements OnInit {
@@ -61,31 +61,63 @@ export class LoginComponent implements OnInit {
       this.http.get("login/usergrants", this.entity).subscribe({
         next: (res) => {
           if (res.status_cd == 1) {
-            
-            this.provider.companyinfo.userinfo = res.data
-             this.userAccessCtrl.setInfo(res.data);
-            this.router.navigate(['selectfirm']);
-            
-          
+
+            this.provider.companyinfo.userinfo = res.data.user;
+
+            this.userAccessCtrl.setInfo(res.data.user);
+            if (res.data.user.isAdmin)
+              this.router.navigate(['selectfirm']);
+            else {
+              this.provider.companyinfo.company = res.data.firm;
+
+
+
+              this.provider.companyinfo.finyear = {
+                fdt: new Date(res.data.finyear.fdt),
+                tdt: new Date(res.data.finyear.tdt)
+              }
+              this.http.get('Setting/list').subscribe({
+                next: (res: any) => {
+
+
+                  this.provider.companyinfo.company.settings = res.data
+                  this.loading = false;
+
+
+                  this.spinner.hide();
+                },
+                error: (err: any) => {
+                  this.spinner.hide();
+                  this.dialog.swal({ dialog: 'error', title: 'Error', message: err.message });
+                }
+              });
+
+
+
+
+              this.router.navigate(['home']);
+            }
+
+
           } else {
-          this.dialog.swal({ dialog: 'error', title: 'Error', message: "Plese Check Username and Password" });
+            this.dialog.swal({ dialog: 'error', title: 'Error', message: "Plese Check Username and Password" });
           }
         }, error: err => {
           this.dialog.swal({ dialog: 'error', title: 'Error', message: err.message });
- 
+
         }, complete: () => {
           this.spinner.hide();
         }
       })
-    }else{
+    } else {
       this.dialog.swal({ dialog: 'Warning', title: 'Error', message: "Plese Enter Username and Password" });
-      
+
     }
   }
 
   ngOnInit(): void {
     this.reference = {};
-  } 
+  }
 
   setforgotpassword() {
     this.router.navigate(['Forgotpassword']);

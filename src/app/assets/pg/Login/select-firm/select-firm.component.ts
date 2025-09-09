@@ -15,8 +15,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
   selector: 'app-select-firm',
   templateUrl: './select-firm.component.html',
   styleUrls: ['./select-firm.component.scss'],
-  imports: [FormsModule, CommonModule,  NgSelectModule],
-  providers: [DialogsComponent,Master, ArraySortPipe, DatePipe],
+  imports: [FormsModule, CommonModule, NgSelectModule],
+  providers: [DialogsComponent, Master, ArraySortPipe, DatePipe],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 
@@ -26,9 +26,9 @@ export class SelectFirmComponent {
   branchFirm: any;
   yearFirm: any;
   loading: boolean = false;
-  Firms = []; 
-  FinYears = [];
-  settings=[];
+  Firms = [];
+  FinYears: any = [];
+  settings = [];
   constructor(private http: http,
     private spinner: NgxSpinnerService,
     private provider: MyProvider,
@@ -45,10 +45,10 @@ export class SelectFirmComponent {
     this.reference = {};
     this.Firms = [];
     this.FinYears = [];
-    this.settings =[]
+    this.settings = []
     this.Init()
-     this.setting();
-    
+    this.setting();
+
   }
 
   async Init() {
@@ -74,10 +74,10 @@ export class SelectFirmComponent {
         }
       })
     })
-   
+
   }
 
- 
+
 
 
   firm(index) {
@@ -92,7 +92,7 @@ export class SelectFirmComponent {
         next: (res: any) => {
           if (res.status_cd == 1) {
             this.Firms = res.data;
-           
+
             this.loading = false;
             resolve();
           } else {
@@ -113,11 +113,9 @@ export class SelectFirmComponent {
 
   branch(index) {
     {
-      var param = {
-        firmCode: index.firmCode
-      }
+
       this.loading = true;
-      this.http.get('FinYears/lists', param).subscribe({
+      this.http.get('FinYears/lists').subscribe({
         next: (res: any) => {
           if (res.status_cd === 1) {
 
@@ -126,7 +124,7 @@ export class SelectFirmComponent {
             });
 
             if (this.FinYears.length > 0) {
-             
+
             }
             this.loading = false;
           } else {
@@ -146,18 +144,18 @@ export class SelectFirmComponent {
   }
 
 
-  setting(){
+  setting() {
     {
-      
+
       this.loading = true;
       this.http.get('Setting/list').subscribe({
         next: (res: any) => {
-         
 
-            this.settings = res.data
-            this.loading = false;
-         
-            
+
+          this.settings = res.data
+          this.loading = false;
+
+
           this.spinner.hide();
         },
         error: (err: any) => {
@@ -192,19 +190,16 @@ export class SelectFirmComponent {
 
 
   Submit() {
-    this.provider.companyinfo.company = this.entity;
+    this.provider.companyinfo.company = this.entity.firm;
+    this.provider.companyinfo.finyear = this.FinYears.filter(x => x.divId == this.entity.divId)[0];
+    this.provider.companyinfo.finyear.fdt = new Date(this.provider.companyinfo.finyear.fdt);
+    this.provider.companyinfo.finyear.tdt = new Date(this.provider.companyinfo.finyear.tdt);
 
-    var years = this.entity.divId.match(/.{1,4}/g);
+   
 
-    this.provider.companyinfo.finyear = {
-      fdt: years[0] + '-04-01',
-      tdt: years[1] + '-03-31'
-    }
-    this.provider.companyinfo.company.userinfo = {}
+    this.provider.companyinfo.company.settings = this.settings;
 
-    this.provider.companyinfo.company.settings = this.settings; 
     
-    this.provider.companyinfo.company.userinfo.username = this.entity.username;
     this.router.navigate(['home']);
   }
 
