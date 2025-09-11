@@ -39,16 +39,22 @@
                                 </div>
                                 <div>
                                     <label for="">Account</label>
-                                    <app-ngselect apiUrl="Account/getsupplier" name="Account Name" class="p-0"
+                                    <!-- <app-ngselect apiUrl="Account/getsupplier" name="Account Name" class="p-0"
                                         bindLabel="accName" bindValue="accCode" [(ngModel)]="entity.ExpaccCode"
-                                        [defaultProperty]="entity.accCodeNavigation" 
-                                        [apiParams]="apiParams()" #AccountName="ngModel"></app-ngselect>
+                                        [defaultProperty]="entity.accCodeNavigation" [apiParams]="{mgCode:'3, 4, 25'}"
+                                        [apiParams]="apiParams()" #AccountName="ngModel"></app-ngselect> -->
+
+                                    <app-ngselect apiUrl="Account/getAcclistbyMgCode" bindLabel="accName"
+                                        bindValue="accCode" name="Account Name" [(ngModel)]="entity.ExpaccCode"
+                                        [defaultProperty]="entity.accCodeNavigation"
+                                        [apiParams]="{mgCode:'14'}"></app-ngselect>
                                 </div>
                                 <div>
                                     <div class="select-dropdown mt-2">
                                         <label for="">operation</label>
-                                        <select class="form-select select-wrapper" name="operation" [(ngModel)]="entity.operation"
-                                            style="width: 30%;" aria-label="Default select example">
+                                        <select class="form-select select-wrapper" name="operation"
+                                            [(ngModel)]="entity.operation" style="width: 30%;"
+                                            aria-label="Default select example">
                                             <option value="1">Add</option>
                                             <option value="0">Deduct</option>
                                         </select>

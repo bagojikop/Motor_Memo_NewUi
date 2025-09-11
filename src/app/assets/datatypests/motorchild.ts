@@ -33,13 +33,13 @@ export interface MotorMemoObj {
   ApproximateKg: string
   iId: string
   gstrDate: string
-  vchId: string
+  vchId: number
   hsncode: number
   GstPer: number
   recTotalAmt:number
   senderTotalAmt:number
   totalAmt:number
-
+  
   cityId: number
 
   s_Id: number
@@ -144,7 +144,7 @@ export interface MotormemoDetailsObj {
   sContactName: string
   sContactNo: string
   sGstin: string
-  senderAddress1: string
+  senderAddress: string
   senderMail: any
   senderStateId: string
   senderPin: number

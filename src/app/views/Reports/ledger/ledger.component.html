@@ -30,7 +30,7 @@
 
     <div class="d-flex d-flex-column ms-2">
         <div class=""style="width:clamp(400px, 0px, 0px)">
-            <app-ngselect apiUrl="Account/getAccount" label="Account Name" name="accc" bindLabel="accName"
+            <app-ngselect apiUrl="Account/getList" label="Account Name" name="accc" bindLabel="accName"
                 bindValue="accCode" [(ngModel)]="entity.accCode" (change)="groupChange($event)" 
                 [defaultProperty]="entity.accCodeNavigation" [bindSubObj]="[
                         {key:'Group',value:'sgCodeNavigation?.sgName'},
