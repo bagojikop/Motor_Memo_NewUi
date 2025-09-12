@@ -193,13 +193,11 @@ export class ChashbankBookComponent {
 
   Listshow(){
     var param = {
-      firm_id:  this.provider.companyinfo.company?.firmCode,
-      div_id: this.provider.companyinfo.company.divId,
       acc_code: this.entity.accCode,
-      sdt:this.provider.companyinfo.finyear.fdt,
+      sdt: this.datepipe.transform(this.provider.companyinfo.finyear.fdt,'yyyy-MM-dd'),
       edt: this.entity.edt
     }
-    this.http.get('CashBankBook', param).subscribe({
+    this.http.get('CashBankBook/get', param).subscribe({
       next: (res: any) => {
         if (res.status_cd==1) {
           this.list = res.data;
