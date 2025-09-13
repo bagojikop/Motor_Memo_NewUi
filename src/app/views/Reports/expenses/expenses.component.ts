@@ -96,7 +96,9 @@ export class ExpensesComponent {
 
       reportCacheId: uuidv4(),
       reportParams: [
-        
+        {
+          key: "div_id", value:this.provider.companyinfo.finyear.divId,
+        },
         {
           key: "s_id", value: this.entity.s_Id,
         },

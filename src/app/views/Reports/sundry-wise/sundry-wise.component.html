@@ -7,7 +7,7 @@
                 </div>
             </div>
             <div class="col-sm-6 text-end">
-               
+
                 <button class="btn btn-outline-danger btn-sm" (click)="close()"><svg xmlns="http://www.w3.org/2000/svg"
                         width="16" height="16" fill="currentColor" class="bi bi-x-square-fill" viewBox="0 0 16 16">
                         <path
@@ -18,21 +18,21 @@
         </div>
     </div>
     <hr />
-    <div class="ms-3">
+    <div class="ms-3 w-50">
         <div class="d-flex-width">
             <app-ngselect label="Sundry" apiUrl="Sundry/getExpAcclist" class="p-0 text-start" bindLabel="sundryName"
                 bindValue="s_Id" name="ExpensName" [(ngModel)]="entity.s_Id" (change)="onSelectExp($event)"
                 autocomplete="off" #f="ngModel" [applyMargins]="false"></app-ngselect>
         </div>
-        <div class="d-flex d-flex-width">
-            <div class="d-flex-width">
-                <dss-input label="From" name="from" type="date" [(ngModel)]="entity.sdt" />
-            </div>
-            <div class="gapInputFields">
-                <dss-input label="To" name="to" type="date" [(ngModel)]="entity.edt" />
-            </div>
+        <div class="d-flex-width">
 
+            <dss-input label="From" name="from" type="date" [(ngModel)]="entity.sdt" />
         </div>
+        <div class="d-flex-width">
+            <dss-input label="To" name="to" type="date" [(ngModel)]="entity.edt" />
+        </div>
+
+
         <div class="d-flex-width">
             <button class="btn btn-sm btn-primary" style="margin-top: 24px;" (click)="TrialBalprint()"><i
                     class="fa fa-eye me-1" aria-hidden="true"></i>Show</button>

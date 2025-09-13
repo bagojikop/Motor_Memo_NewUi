@@ -192,7 +192,7 @@ export class TrialBalanceComponent {
       edt: this.entity.edt
       
     }
-    this.http.get('TrialBalance/getTrialBalItems', param).subscribe({
+    this.http.get('TrialBalance', param).subscribe({
       next: (res: any) => {
         if (res.status_cd == 1) {
           this.list = res.data || [];

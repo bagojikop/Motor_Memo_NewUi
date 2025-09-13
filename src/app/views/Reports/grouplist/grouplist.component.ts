@@ -239,7 +239,7 @@ export class GrouplistComponent {
         sdt: this.entity.sdt,
         edt: this.entity.edt
       }
-      this.http.get('SubGroupList', param).subscribe({
+      this.http.get('SubGroupList/ouststanding', param).subscribe({
         next: (res: any) => {
           if (res.status_cd == 1) {
             this.list = res.data || [];

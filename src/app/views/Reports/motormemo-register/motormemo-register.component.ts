@@ -213,7 +213,7 @@ export class MotormemoRegisterComponent {
       reportParams: [
        
         {
-          key: "div_id", value: this.provider.companyinfo.company?.divId,
+          key: "div_id", value: this.provider.companyinfo.finyear?.divId,
 
         },
         {

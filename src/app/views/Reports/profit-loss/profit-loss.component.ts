@@ -213,12 +213,10 @@ export class ProfitLossComponent implements AfterViewInit{
   Listshow() {
 
     var param = {
-      firm_id: this.provider.companyinfo.company.firmCode,
-      div_id: this.provider.companyinfo.company.divId,
-      edt: this.provider.companyinfo.company.edt || this.entity.edt
+      edt: this.provider.companyinfo.finyear.edt || this.entity.edt
     }
-    this.provider.companyinfo.company.edt = this.entity.edt;
-    this.http.get('ProfitLoss', param).subscribe({
+    this.provider.companyinfo.finyear.edt = this.entity.edt;
+    this.http.get('ProfitLoss/get', param).subscribe({
       next: (res: any) => {
         console.log('Response:', res);
 

@@ -266,7 +266,7 @@ export const navItems = ({
         { name: 'Profit Loss', iconComponent: { name: 'cil-list' }, url: 'profitloss' },
         { name: 'Motormemo Register', iconComponent: { name: 'cil-list' }, url: 'motor-memo-register' },
         { name: 'Sundry Wise Expenses', iconComponent: { name: 'cil-list' }, url: 'sundry-wise' },
-        { name: 'Lorry Receipt 2 Register', iconComponent: { name: 'cil-list' }, url: 'lorry-receipt2_Register' },
+       // { name: 'Lorry Receipt 2 Register', iconComponent: { name: 'cil-list' }, url: 'lorry-receipt2_Register' },
         { name: 'Expenses', iconComponent: { name: 'cil-list' }, url: 'Expenses' },
         { name: 'Transport Invoice Register', iconComponent: { name: 'cil-list' }, url: 'TransInvReg' },
       ]
