@@ -56,15 +56,17 @@ export class SundryWiseComponent {
 
   ngOnInit(): void {
     this.entity = {};
-    this.entity.sdt = this.provider.companyinfo.finyear.fdt;
+ //   this.entity.sdt = this.provider.companyinfo.finyear.fdt;
     this.defaultColDef = {};
     this.stateParams = this.location.getState();
     this.mode = this.stateParams.action;
     this.innerWidth = window.innerWidth;
 
 
-    var x = this.datepipe.transform(new Date(), 'yyyy-MM-dd') ?? '';
-    this.entity.edt = this.provider.companyinfo.finyear.tdt >= x ? x : this.provider.companyinfo.finyear.tdt;
+   this.entity.sdt = this.datepipe.transform(this.provider.companyinfo.finyear.fdt,'yyyy-MM-dd');
+    this.entity.to = this.datepipe.transform(this.provider.companyinfo.finyear.tdt,'yyyy-MM-dd')
+    var x = this.datepipe.transform(new Date(), 'yyyy-MM-dd')?? '';
+    this.entity.edt = this.entity.to >= x ? x : this.entity.to;
   }
   onSelectExp(ev) {
     this.entity.sundries = {};

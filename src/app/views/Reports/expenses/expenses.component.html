@@ -22,7 +22,7 @@
         <div class="ms-3 d-flex-width">
             <app-ngselect label="Expense" apiUrl="Sundry/getExpAcclist" class="text-start" bindLabel="sundryName"
                 bindValue="s_Id" name="ExpensName" [(ngModel)]="entity.s_Id" (change)="onSelectExp($event)"
-                [disabled]="navactions.fieldset" autocomplete="off" #f="ngModel" [applyMargins]="false"></app-ngselect>
+                autocomplete="off" #f="ngModel" [applyMargins]="false"></app-ngselect>
         </div>
         <div class="ms-3 d-flex-width">
             <dss-input label="From" name="from" type="date" [(ngModel)]="entity.sdt" />

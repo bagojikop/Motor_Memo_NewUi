@@ -152,8 +152,10 @@ export class GrouplistComponent {
         }
       }, 100);
 
-      var x = this.datepipe.transform(new Date(), 'yyyy-MM-dd') ?? '';
-      this.entity.edt = this.provider.companyinfo.finyear.tdt >= x ? x : this.provider.companyinfo.finyear.tdt;
+      this.entity.sdt= this.datepipe.transform(this.provider.companyinfo.finyear.fdt,'yyyy-MM-dd')
+        this.entity.to  = this.datepipe.transform(this.provider.companyinfo.finyear.tdt,'yyyy-MM-dd')
+        var x = this.datepipe.transform(new Date(), 'yyyy-MM-dd')?? '';
+        this.entity.edt = this.entity.to >= x ? x : this.entity.to;
     }
 
 

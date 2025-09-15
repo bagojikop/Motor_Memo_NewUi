@@ -24,12 +24,12 @@ declare var bootstrap: any;
   selector: 'app-trans-inv-reg',
   templateUrl: './trans-inv-reg.component.html',
   styleUrl: './trans-inv-reg.component.scss',
-   imports: [FormsModule, CommonModule, DTFormatDirective, AgGridModule, PdfViewerModule, CurrencyMaskDirective, PdfReaderComponent, ngselectComponent, NgSelectModule, DssInputComponent, NavactionsComponent],
+  imports: [FormsModule, CommonModule, DTFormatDirective, AgGridModule, PdfViewerModule, CurrencyMaskDirective, PdfReaderComponent, ngselectComponent, NgSelectModule, DssInputComponent, NavactionsComponent],
   providers: [DatePipe, DecimalPipe, DialogsComponent, PdfReaderComponent, Master, ArraySortPipe, PdfViewerComponent, PdfViewerModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class TransInvRegComponent {
- @ViewChild('agGrid') agGrid: AgGridAngular;
+  @ViewChild('agGrid') agGrid: AgGridAngular;
   entity: any = {};
   reference: any = {}
   columns: ColDef[] = [];
@@ -56,59 +56,62 @@ export class TransInvRegComponent {
     this.entity = {};
   }
 
-   @HostListener('window:resize', ['$event'])
-    onResize(event) {
-      this.innerWidth = window.innerWidth;
-    }
-  
-    ngOnInit(): void {
-      this.entity = {},
-        this.reference = {}
-      this.entity.sdt = this.provider.companyinfo.finyear.fdt;
-      this.defaultColDef = {};
-      this.stateParams = this.location.getState();
-      this.mode = this.stateParams.action;
-      this.innerWidth = window.innerWidth;
-  
-      var x = this.datepipe.transform(new Date(), 'yyyy-MM-dd') ?? '';
-      this.entity.edt = this.provider.companyinfo.finyear.tdt >= x ? x : this.provider.companyinfo.finyear.tdt;
-  
-    }
-  
-    onSelectExp(ev) {
-      this.entity.sundries = {};
-  
-      this.entity.sundries.sundryName = ev.sundryName;
-      this.entity.accCodeNavigation = ev.accCodeNavigation;
-    }
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    this.innerWidth = window.innerWidth;
+  }
+
+  ngOnInit(): void {
+    this.entity = {},
+      this.reference = {}
    
-  
-    close() {
-      this.location.back();
-    }
-   
-    daybookprint() {
-  
-  
-      this.myServiceUrl = "TransInvRegReport";
-  
-      this.myReportDictionory = {
-  
-        reportCacheId: uuidv4(),
-        reportParams: [
-          
-          {
-            key: "accCode", value: this.entity.accCode,
-          },
-          {
-            key: "sdt", value: this.entity.sdt,
-          },
-          {
-            key: "edt", value: this.entity.edt,
-          }
-  
-        ]
-      };
-      this.rptMode = true;
-    }
+    this.defaultColDef = {};
+    this.stateParams = this.location.getState();
+    this.mode = this.stateParams.action;
+    this.innerWidth = window.innerWidth;
+
+    this.entity.sdt = this.datepipe.transform(this.provider.companyinfo.finyear.fdt, 'yyyy-MM-dd');
+    this.entity.to = this.datepipe.transform(this.provider.companyinfo.finyear.tdt, 'yyyy-MM-dd')
+    var x = this.datepipe.transform(new Date(), 'yyyy-MM-dd') ?? '';
+    this.entity.edt = this.entity.to >= x ? x : this.entity.to;
+
+
+  }
+
+  onSelectExp(ev) {
+    this.entity.sundries = {};
+
+    this.entity.sundries.sundryName = ev.sundryName;
+    this.entity.accCodeNavigation = ev.accCodeNavigation;
+  }
+
+
+  close() {
+    this.location.back();
+  }
+
+  daybookprint() {
+
+
+    this.myServiceUrl = "TransInvRegReport";
+
+    this.myReportDictionory = {
+
+      reportCacheId: uuidv4(),
+      reportParams: [
+
+        {
+          key: "accCode", value: this.entity.accCode,
+        },
+        {
+          key: "sdt", value: this.entity.sdt,
+        },
+        {
+          key: "edt", value: this.entity.edt,
+        }
+
+      ]
+    };
+    this.rptMode = true;
+  }
 }

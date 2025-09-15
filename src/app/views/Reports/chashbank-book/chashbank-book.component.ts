@@ -152,9 +152,12 @@ export class ChashbankBookComponent {
       this.generatePinnedBottomData();
     }, 100);
   
-
+ this.entity.tdt=this.datepipe.transform(this.provider.companyinfo.finyear.tdt,'yyyy-MM-dd')
     var x = this.datepipe.transform(new Date(), 'yyyy-MM-dd')?? '';
-    this.entity.edt = this.provider.companyinfo.finyear.tdt >= x ? x : this.provider.companyinfo.finyear.tdt;
+    this.entity.edt = this.entity.tdt >= x ? x : this.entity.tdt;
+    this.entity.sdt=this.datepipe.transform(this.provider.companyinfo.finyear.fdt,'yyyy-MM-dd')
+    // var x = this.datepipe.transform(new Date(), 'yyyy-MM-dd')?? '';
+    // this.entity.edt = this.provider.companyinfo.finyear.tdt >= x ? x : this.provider.companyinfo.finyear.tdt;
   }
   getAccObj(event){
     this.reference.accCodeobj=event;
@@ -220,7 +223,7 @@ export class ChashbankBookComponent {
     bsOffcanvas.show();
     this.reference.edt=this.entity.edt;
     this.reference.accCodeobj=this.entity.accCode;
-    this.reference.sdt=this.provider.companyinfo.finyear.fdt;
+    this.reference.sdt=this.datepipe.transform(this.provider.companyinfo.finyear.fdt,'yyyy-MM-dd');
   }
   generatePinnedBottomData(){
     let result = {

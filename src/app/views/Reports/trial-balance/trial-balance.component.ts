@@ -63,7 +63,7 @@ export class TrialBalanceComponent {
 
   ngOnInit(): void {
     this.entity = {};
-    this.entity.sdt = this.provider.companyinfo.finyear.fdt;
+    this.entity.sdt = this.datepipe.transform(this.provider.companyinfo.finyear.fdt,'yyyy-MM-dd');
     this.defaultColDef = {};
     this.stateParams = this.location.getState();
     this.mode = this.stateParams.action;
@@ -117,8 +117,9 @@ export class TrialBalanceComponent {
       this.generatePinnedBottomData();
     }, 100);
 
+    this.entity.to = this.datepipe.transform(this.provider.companyinfo.finyear.tdt,'yyyy-MM-dd')
     var x = this.datepipe.transform(new Date(), 'yyyy-MM-dd')?? '';
-    this.entity.edt = this.provider.companyinfo.finyear.tdt >= x ? x : this.provider.companyinfo.finyear.tdt;
+    this.entity.edt = this.entity.to >= x ? x : this.entity.to;
   }
 
 
