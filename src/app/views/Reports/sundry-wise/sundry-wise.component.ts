@@ -1,5 +1,5 @@
-import { Component} from '@angular/core';
-import { CommonModule, DatePipe, Location,DecimalPipe } from '@angular/common';
+import { Component } from '@angular/core';
+import { CommonModule, DatePipe, Location, DecimalPipe } from '@angular/common';
 import { Master } from '../../../assets/services/services';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { MyProvider } from '../../../assets/services/provider';
@@ -14,23 +14,23 @@ import { NavactionsComponent } from '../../../assets/pg/navactions/navactions.co
 import { CurrencyMaskDirective } from "../../../assets/mydirective/currencyMask/currency-mask.directive";
 import { DTFormatDirective } from '../../../assets/mydirective/mydirective.directive';
 import { ArraySortPipe } from '../../../assets/pipes/inrcrdr.pipe';
-import {PdfReaderComponent} from '../../../assets/pdf-reader/pdf-reader.component';
+import { PdfReaderComponent } from '../../../assets/pdf-reader/pdf-reader.component';
 import { PdfViewerComponent, PdfViewerModule } from 'ng2-pdf-viewer';
 import { ColDef } from 'ag-grid-community';
 import { AgGridModule } from 'ag-grid-angular';
 import { UiSwitchModule } from 'ngx-ui-switch';
-declare var bootstrap:any;
+declare var bootstrap: any;
 
 @Component({
   selector: 'app-sundry-wise',
   templateUrl: './sundry-wise.component.html',
   styleUrl: './sundry-wise.component.scss',
-   imports: [FormsModule, CommonModule,UiSwitchModule, DTFormatDirective,AgGridModule, PdfViewerModule, CurrencyMaskDirective,PdfReaderComponent, ngselectComponent, NgSelectModule, DssInputComponent,  NavactionsComponent], 
+  imports: [FormsModule, CommonModule, UiSwitchModule, DTFormatDirective, AgGridModule, PdfViewerModule, CurrencyMaskDirective, PdfReaderComponent, ngselectComponent, NgSelectModule, DssInputComponent, NavactionsComponent],
   providers: [DatePipe, DecimalPipe, DialogsComponent, PdfReaderComponent, Master, ArraySortPipe, PdfViewerComponent, PdfViewerModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class SundryWiseComponent {
- entity: any = {};
+  entity: any = {};
   columns: ColDef[] = [];
   innerWidth: any;
   list: any = [];
@@ -49,54 +49,59 @@ export class SundryWiseComponent {
     private provider: MyProvider,
     private location: Location,
     private datepipe: DatePipe,
-  
-   
+
+
   ) { }
 
 
   ngOnInit(): void {
     this.entity = {};
-    this.entity.sdt = this.provider.companyinfo.finyear.fdt;
+ //   this.entity.sdt = this.provider.companyinfo.finyear.fdt;
     this.defaultColDef = {};
     this.stateParams = this.location.getState();
     this.mode = this.stateParams.action;
     this.innerWidth = window.innerWidth;
 
 
-     var x = this.datepipe.transform(new Date(), 'yyyy-MM-dd')?? '';
-    this.entity.edt = this.provider.companyinfo.finyear.tdt >= x ? x : this.provider.companyinfo.finyear.tdt;
+   this.entity.sdt = this.datepipe.transform(this.provider.companyinfo.finyear.fdt,'yyyy-MM-dd');
+    this.entity.to = this.datepipe.transform(this.provider.companyinfo.finyear.tdt,'yyyy-MM-dd')
+    var x = this.datepipe.transform(new Date(), 'yyyy-MM-dd')?? '';
+    this.entity.edt = this.entity.to >= x ? x : this.entity.to;
   }
-   onSelectExp(ev) {
+  onSelectExp(ev) {
     this.entity.sundries = {};
 
     this.entity.sundries.sundryName = ev.sundryName;
-  
+
   }
 
-   close() {
-      this.location.back();
-    }
-    TrialBalprint() {
-      this.myServiceUrl = "SundryWiseReport";
-  
-      this.myReportDictionory = {
-        reportCacheId: uuidv4(),
-        reportParams: [
-         
-          {
-            key: "sdt", value: this.entity.sdt,
-  
-          },
-          {
-            key: "edt", value: this.entity.edt,
-          },
-           {
-            key: "s_id", value: this.entity.s_Id,
-          },
-  
-        ]
-      };
-      this.rptMode = true;
-    }
-  
+  close() {
+    this.location.back();
+  }
+  TrialBalprint() {
+    this.myServiceUrl = "SundryWiseReport";
+
+    this.myReportDictionory = {
+      reportCacheId: uuidv4(),
+      reportParams: [
+        {
+          key: "div_id", value: this.provider.companyinfo.finyear.divId,
+
+        },
+        {
+          key: "sdt", value: this.entity.sdt,
+
+        },
+        {
+          key: "edt", value: this.entity.edt,
+        },
+        {
+          key: "s_id", value: this.entity.s_Id,
+        },
+
+      ]
+    };
+    this.rptMode = true;
+  }
+
 }

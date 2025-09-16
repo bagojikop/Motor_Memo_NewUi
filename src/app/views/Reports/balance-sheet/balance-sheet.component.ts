@@ -70,8 +70,8 @@ export class BalanceSheetComponent implements AfterViewInit {
       this.savedDataService.clearSavedDate(); // Clear it after setting
       this.Listshow();
     } else {
-
-      this.entity.edt = this.provider.companyinfo.finyear.tdt >= x ? x : this.provider.companyinfo.finyear.tdt;
+      this.entity.to = this.datepipe.transform(this.provider.companyinfo.finyear.tdt,'yyyy-MM-dd')
+      this.entity.edt = this.entity.to >= x ? x : this.entity.to;
 
     }
   }

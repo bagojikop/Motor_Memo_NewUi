@@ -156,10 +156,10 @@ export class DayBookComponent {
     setTimeout(() => {
       this.generatePinnedBottomData();
     }, 100);
-
+    this.entity.tdt=this.datepipe.transform(this.provider.companyinfo.finyear.tdt,'yyyy-MM-dd')
     var x = this.datepipe.transform(new Date(), 'yyyy-MM-dd')?? '';
-    this.entity.edt = this.provider.companyinfo.finyear.tdt >= x ? x : this.provider.companyinfo.finyear.tdt;
-
+    this.entity.edt = this.entity.tdt >= x ? x : this.entity.tdt;
+    this.entity.sdt = this.datepipe.transform(this.provider.companyinfo.finyear.fdt, 'yyyy-MM-dd')
   }
 
   generatePinnedBottomData(){
@@ -196,7 +196,7 @@ export class DayBookComponent {
     const bsOffcanvas = new bootstrap.Offcanvas('#offcanvasRight');
     bsOffcanvas.show();
     this.reference.edt=this.entity.edt;
-    this.reference.sdt=this.provider.companyinfo.finyear.fdt;
+    this.reference.sdt=this.datepipe.transform(this.provider.companyinfo.finyear.fdt,'yyyy-MM-dd');
   
   }
 
@@ -204,10 +204,10 @@ export class DayBookComponent {
       
     var param = {
     
-      sdt:this.provider.companyinfo.finyear.fdt,
+      sdt:this.entity.sdt,
       edt: this.entity.edt
     }
-    this.http.get('DayBook', param).subscribe({
+    this.http.get('DayBook/get', param).subscribe({
       next: (res: any) => {
         if (res.status_cd==1) {
           this.list = res.data;
@@ -240,11 +240,11 @@ export class DayBookComponent {
       reportParams: [
       
         {
-          key: "sdt", value: this.reference.sdt,
+          key: "sdt", value: this.entity.sdt,
 
         },
         {
-          key: "edt", value: this.reference.edt,
+          key: "edt", value: this.entity.edt,
 
         }
       

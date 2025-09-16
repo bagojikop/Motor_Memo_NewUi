@@ -193,6 +193,7 @@ export class UnitmasterComponent implements AfterViewInit {
 
     });
   }
+
   save() {
     this.spinner.show();
     if(this.entity.unitCode){
@@ -218,6 +219,8 @@ export class UnitmasterComponent implements AfterViewInit {
 
           //   this.gridApi.applyTransaction({ add: [this.entity] });
           // }
+
+          this.gridApi.refreshCells({ force: true });
           this.pastEntity = Object.assign({}, this.entity);
           this.dialog.swal({ dialog: "success", title: "Success", message: "Record is update sucessfully" })
             .then((res: any) => {

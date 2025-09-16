@@ -142,10 +142,11 @@ export class ContrachildComponent {
         {
           key: "vch_id", value: this.entity.vchId,
         },
-        {
-          key: "firm_id", value: this.provider.companyinfo.company?.firmCode,
+        // {
+        //   key: "firm_id", value: this.provider.companyinfo.company?.firmCode,
 
-        }]
+        // }
+      ]
     };
     this.rptMode = true;
   }
@@ -215,8 +216,8 @@ export class ContrachildComponent {
   save() {
     this.spinner.show();
     if (!this.entity.vchId) {
-      this.entity.firmId = this.provider.companyinfo.company?.firmCode;
-      this.entity.divId = this.provider.companyinfo.company.divId
+      // this.entity.firmId = this.provider.companyinfo.company?.firmCode;
+      // this.entity.divId = this.provider.companyinfo.company.divId
       if (!this.entity.contraAudit.createdUser)
         this.entity.contraAudit.createdUser = this.provider.companyinfo.userinfo.username;
       else

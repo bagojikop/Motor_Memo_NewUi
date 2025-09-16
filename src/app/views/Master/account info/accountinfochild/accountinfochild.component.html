@@ -23,7 +23,7 @@
                                             bindValue="sgCode" name="sgCode" [(ngModel)]="entity.sgCode"
                                             [disabled]="navactions.fieldset" (change)="onSelectGroup($event)"
                                             [bindSubObj]="[{key:'Group',value:'grpCodeNavigation.grpName'}, 
-                                                         {key:'Primary Group',value:'mgCodeNavigation.mgName'}]"
+                                                         {key:'Primary Group',value:'grpCodeNavigation.mgCodeNavigation.mgName'}]"
                                             [defaultProperty]="entity.sgCodeNavigation">
                                         </app-ngselect>
                                     </div>

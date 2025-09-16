@@ -123,9 +123,9 @@
                                         </div>
 
                                         <dss-input id="w3review" label="Sender Address" name="sendAddress1"
-                                            [maxlength]="100" [(ngModel)]="entity.motormemoDetails.senderAddress1"
+                                            [maxlength]="100" [(ngModel)]="entity.motormemoDetails.senderAddress"
                                             inputType="textarea" [rows]="2" [cols]="50" autocomplete="off"
-                                            (ngModelChange)="entity.motormemoDetails.senderAddress1=$event">
+                                            (ngModelChange)="entity.motormemoDetails.senderAddress=$event">
                                         </dss-input>
                                         <div class="d-flex">
                                             <div class="d-flex-width">
@@ -504,20 +504,20 @@
                                     <div style="width: 10rem;">
                                         <label for="">Freight Type</label>
                                         <select class="form-select select-wrapper" name="selectfreightType"
-                                            [(ngModel)]="entity.freightType" (change)="setDebitToSenderOrReceiver();">
-                                            <option [value]=0>FOR</option>
-                                            <option [value]=1>EX</option>
-                                            <option [value]=2>To be Billed</option>
+                                            [(ngModel)]="entity.freightType" (change)="onchangeFreightType()">
+                                            <option [ngValue]= "0">FOR</option>
+                                            <option [ngValue]= "1">EX</option>
+                                            <option [ngValue]= "2">To be Billed</option>
                                         </select>
 
                                     </div>
                                     <div style="width: 15rem;" class="ms-3">
                                         <label for="">Sender Account</label>
-                                        <app-ngselect apiUrl="Account/getsupplier" bindLabel="accName"
+                                        <app-ngselect apiUrl="Account/getAcclistbyMgCode" bindLabel="accName"
                                             bindValue="accCode" name="senderAccount" class="text-start"
                                             [(ngModel)]="entity.motormemoDetails.senderAccount"
                                             [disabled]="navactions.fieldset" autocomplete="off"
-                                            [defaultProperty]="entity.senderaccount"
+                                            [defaultProperty]="entity.senderaccount" [apiParams]="{mgCode:'14'}"
                                             [applyMargins]="false"></app-ngselect>
                                     </div>
                                     <div class="ms-3">
@@ -530,11 +530,11 @@
                                     </div>
                                     <div class="ms-5" style="width: 15rem; ">
                                         <label for="">Receiver Account</label>
-                                        <app-ngselect apiUrl="Account/getsupplier" class="p-0 text-start"
+                                        <app-ngselect apiUrl="Account/getAcclistbyMgCode" class="p-0 text-start"
                                             bindLabel="accName" bindValue="accCode" name="receiverAccount"
                                             [(ngModel)]="entity.motormemoDetails.receiverAccount"
                                             [disabled]="navactions.fieldset" autocomplete="off"
-                                            [defaultProperty]="entity.receiveraccout"
+                                            [defaultProperty]="entity.receiveraccout" [apiParams]="{mgCode:'14'}"
                                             [applyMargins]="false"></app-ngselect>
                                     </div>
                                     <div class="ms-3">

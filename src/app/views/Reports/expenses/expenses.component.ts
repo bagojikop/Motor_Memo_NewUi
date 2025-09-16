@@ -70,8 +70,10 @@ export class ExpensesComponent {
     this.mode = this.stateParams.action;
     this.innerWidth = window.innerWidth;
 
-    var x = this.datepipe.transform(new Date(), 'yyyy-MM-dd') ?? '';
-    this.entity.edt = this.provider.companyinfo.finyear.tdt >= x ? x : this.provider.companyinfo.finyear.tdt;
+    this.entity.sdt = this.datepipe.transform(this.provider.companyinfo.finyear.fdt,'yyyy-MM-dd');
+    this.entity.to = this.datepipe.transform(this.provider.companyinfo.finyear.tdt,'yyyy-MM-dd')
+    var x = this.datepipe.transform(new Date(), 'yyyy-MM-dd')?? '';
+    this.entity.edt = this.entity.to >= x ? x : this.entity.to;
 
   }
 
@@ -96,7 +98,9 @@ export class ExpensesComponent {
 
       reportCacheId: uuidv4(),
       reportParams: [
-        
+        {
+          key: "div_id", value:this.provider.companyinfo.finyear.divId,
+        },
         {
           key: "s_id", value: this.entity.s_Id,
         },

@@ -106,7 +106,7 @@ export class AccountinfochildComponent implements OnInit {
       this.status = false;
     }
   }
-  
+
   Init() {
     this.http.jsonget('assets/json/currancy.json').subscribe({
       next: (res: any) => {
@@ -363,122 +363,123 @@ export class AccountinfochildComponent implements OnInit {
         }
       })
     }
-}
-
-close() {
-  this.location.back();
-}
-
-newRecord() {
-  this.pastentity = JSON.parse(JSON.stringify(this.entity))
-  this.entity = <AccountObj>{};
-
-  this.entity.mst01100 = <mst01100Obj>{};
-  this.entity.mst01101 = <mst01101Obj>{};
-  this.entity.mst01104 = <mst01104Obj>{};
-  this.entity.mst01109 = <mst01109Obj>{};
-  this.entity.mst01110s = <mst01110sObj[]>[];
-  this.entity.accBusinessLocations = <accBusinessLocationObj[]>[];
-}
-
-edit() {
-  this.navactions.navaction("view");
-  this.callbackedit();
-}
-
-getdata(index) {
-  console.log(index);
-}
-
-undo() {
-  this.entity = this.pastentity;
-  this.callbackedit();
-  this.entity = <AccountObj>{};
-  this.entity.mst01100 = <mst01100Obj>{};
-  this.entity.mst01101 = <mst01101Obj>{};
-  this.entity.mst01104 = <mst01104Obj>{};
-  this.entity.mst01109 = <mst01109Obj>{};
-  this.entity.mst01110s = <mst01110sObj[]>[];
-  this.entity.accBusinessLocations = <accBusinessLocationObj[]>[];
-}
-
-Add() {
-  if (this.rowIndex == null) {
-    this.entity.accBusinessLocations.push(this.acc.accBusinessLocations);
-  } else {
-
-    this.entity.accBusinessLocations[this.rowIndex] = this.acc.accBusinessLocations;
   }
-  this.acc.accBusinessLocations = <accBusinessLocationObj>{};
-  this.acc.accBusinessLocations.city = <cityObj>{};
-  this.rowIndex = null;
-}
 
-accBusinessLocations(index) {
-  this.reference.accBusinessLocations.cityName = index
-}
-
-editrow(s) {
-  this.rowIndex = this.entity.accBusinessLocations.indexOf(s);
-  this.acc.accBusinessLocations = Object.assign({}, s);
-}
-
-deleterow(s) {
-  var params = {
-    dialog: 'confirm',
-    title: "warning",
-    message: "Do You Want Delete Row",
+  close() {
+    this.location.back();
   }
-  this.dialog.swal(params).then(data => {
-    if (data == true) {
 
-      this.param = this.entity.accBusinessLocations.indexOf(s);
-      this.iConfirmFn2();
+  newRecord() {
+    this.pastentity = JSON.parse(JSON.stringify(this.entity))
+    this.entity = <AccountObj>{};
+
+    this.entity.mst01100 = <mst01100Obj>{}
+    this.entity.mst01109 = <mst01109Obj>{};
+    this.entity.mst01101 = <mst01101Obj>{};
+    this.entity.mst01104 = <mst01104Obj>{};
+    this.entity.mst01110s = <mst01110sObj[]>[];
+    this.entity.grpCodeNavigation = <grpCodeNavigationObj>{};
+    this.entity.accBusinessLocations = <accBusinessLocationObj[]>[];
+  }
+
+  edit() {
+    this.navactions.navaction("view");
+    this.callbackedit();
+  }
+
+  getdata(index) {
+    console.log(index);
+  }
+
+  undo() {
+    this.entity = this.pastentity;
+    this.callbackedit();
+    this.entity = <AccountObj>{};
+    this.entity.mst01100 = <mst01100Obj>{};
+    this.entity.mst01101 = <mst01101Obj>{};
+    this.entity.mst01104 = <mst01104Obj>{};
+    this.entity.mst01109 = <mst01109Obj>{};
+    this.entity.mst01110s = <mst01110sObj[]>[];
+    this.entity.accBusinessLocations = <accBusinessLocationObj[]>[];
+  }
+
+  Add() {
+    if (this.rowIndex == null) {
+      this.entity.accBusinessLocations.push(this.acc.accBusinessLocations);
+    } else {
+
+      this.entity.accBusinessLocations[this.rowIndex] = this.acc.accBusinessLocations;
     }
-  })
-}
+    this.acc.accBusinessLocations = <accBusinessLocationObj>{};
+    this.acc.accBusinessLocations.city = <cityObj>{};
+    this.rowIndex = null;
+  }
 
-iConfirmFn2() {
-  if (this.param != undefined) {
+  accBusinessLocations(index) {
+    this.reference.accBusinessLocations.cityName = index
+  }
 
-    this.entity.accBusinessLocations.splice(this.param, 1);
+  editrow(s) {
+    this.rowIndex = this.entity.accBusinessLocations.indexOf(s);
+    this.acc.accBusinessLocations = Object.assign({}, s);
+  }
+
+  deleterow(s) {
     var params = {
+      dialog: 'confirm',
+      title: "warning",
+      message: "Do You Want Delete Row",
     }
-    this.dialog.swal(params);
-  }
-}
+    this.dialog.swal(params).then(data => {
+      if (data == true) {
 
-licensedelete(s) {
-  var params = {
-    dialog: 'confirm',
-    title: "warning",
-    message: "Do You Want Delete Row",
+        this.param = this.entity.accBusinessLocations.indexOf(s);
+        this.iConfirmFn2();
+      }
+    })
   }
-  this.dialog.swal(params).then(data => {
-    if (data == true) {
 
-      this.param = this.entity.mst01110s.indexOf(s);
-      this.iConfirmFn3();
+  iConfirmFn2() {
+    if (this.param != undefined) {
+
+      this.entity.accBusinessLocations.splice(this.param, 1);
+      var params = {
+      }
+      this.dialog.swal(params);
     }
-  })
-}
+  }
 
-iConfirmFn3() {
-  if (this.param != undefined) {
-
-    this.entity.mst01110s.splice(this.param, 1);
+  licensedelete(s) {
     var params = {
+      dialog: 'confirm',
+      title: "warning",
+      message: "Do You Want Delete Row",
     }
-    this.dialog.swal(params);
+    this.dialog.swal(params).then(data => {
+      if (data == true) {
+
+        this.param = this.entity.mst01110s.indexOf(s);
+        this.iConfirmFn3();
+      }
+    })
   }
-}
 
-closerdlc(s) {
-  this.ngview = false;
-}
+  iConfirmFn3() {
+    if (this.param != undefined) {
 
-firm(index) {
-  this.reference.firmName = index.firmName;
-  this.reference.firmCode = index.firmCode;
-}
+      this.entity.mst01110s.splice(this.param, 1);
+      var params = {
+      }
+      this.dialog.swal(params);
+    }
+  }
+
+  closerdlc(s) {
+    this.ngview = false;
+  }
+
+  firm(index) {
+    this.reference.firmName = index.firmName;
+    this.reference.firmCode = index.firmCode;
+  }
 }

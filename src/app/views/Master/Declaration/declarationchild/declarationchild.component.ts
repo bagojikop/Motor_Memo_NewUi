@@ -126,7 +126,7 @@ export class DeclarationchildComponent {
       next: (res: any) => {
         if (res.status_cd == 1) {
           this.entity = res.data;
-
+          this.entity.panNo = res.data.panNo;
           this.entity.createdDt = this.entity.createdDt ?? this.datepipe.transform(this.entity.createdDt, 'yyyy-MM-dd')
           this.entity.modifiedDt = this.entity.modifiedDt ?? this.datepipe.transform(this.entity.modifiedDt, 'yyyy-MM-dd')
 
@@ -144,8 +144,7 @@ export class DeclarationchildComponent {
   }
 
   save() {
-    if (this.vi.valid) {
-
+  
       this.spinner.show();
       if (!this.entity.declrId) {
         if (!this.entity.createdUser)
@@ -193,11 +192,7 @@ export class DeclarationchildComponent {
           }
         })
       }
-    }
-    else {
-      this.dialog.swal({ dialog: 'error', title: 'Error', message: "Please Fill All Required fields." })
-
-    }
+    
 
   }
 

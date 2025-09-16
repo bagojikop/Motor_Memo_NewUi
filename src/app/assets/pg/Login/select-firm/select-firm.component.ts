@@ -163,8 +163,6 @@ export class SelectFirmComponent {
           this.dialog.swal({ dialog: 'error', title: 'Error', message: err.message });
         }
       });
-
-
     }
   }
 
@@ -194,12 +192,9 @@ export class SelectFirmComponent {
     this.provider.companyinfo.finyear = this.FinYears.filter(x => x.divId == this.entity.divId)[0];
     this.provider.companyinfo.finyear.fdt = new Date(this.provider.companyinfo.finyear.fdt);
     this.provider.companyinfo.finyear.tdt = new Date(this.provider.companyinfo.finyear.tdt);
-
    
-
     this.provider.companyinfo.company.settings = this.settings;
 
-    
     this.router.navigate(['home']);
   }
 

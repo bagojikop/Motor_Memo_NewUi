@@ -1,6 +1,6 @@
 export interface ReportParam {
   key: string
-  value: string
+  value: number
 };
 export interface MailNav {
   mailAddress: string

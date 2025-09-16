@@ -80,7 +80,7 @@ export class ContramasterComponent {
       flex: 3
     },
     {
-      field: 'accName',
+      field: 'accCodeNavigation.accName',
       headerName: 'Account',
       filter: "agTextColumnFilter",
       flex: 5

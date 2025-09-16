@@ -485,7 +485,7 @@ export class Aknowledgmemnt1Component {
   Listshow() { 
       var param = {
         
-        div_id: this.provider.companyinfo.company.divId,
+        div_id: this.provider.companyinfo.finyear.divId,
         veh_no: this.entity.vehicleNo,
       }
       this.http.get('MotorMemo/ackno', param).subscribe({
@@ -559,7 +559,7 @@ export class Aknowledgmemnt1Component {
      
         if (this.entity.vchId) {
           
-            this.entity.divId = this.provider.companyinfo.company.divId;
+            this.entity.divId = this.provider.companyinfo.finyear.divId;
           this.entity.motormemoAudit.modifiedUser = this.provider.companyinfo.userinfo.username;
 
           this.http.put('MotorMemo/updateConfirm', this.master.cleanObject(this.entity, 2), { id: this.entity.vchId }).subscribe({

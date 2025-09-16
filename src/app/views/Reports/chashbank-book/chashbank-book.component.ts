@@ -152,9 +152,12 @@ export class ChashbankBookComponent {
       this.generatePinnedBottomData();
     }, 100);
   
-
+ this.entity.tdt=this.datepipe.transform(this.provider.companyinfo.finyear.tdt,'yyyy-MM-dd')
     var x = this.datepipe.transform(new Date(), 'yyyy-MM-dd')?? '';
-    this.entity.edt = this.provider.companyinfo.finyear.tdt >= x ? x : this.provider.companyinfo.finyear.tdt;
+    this.entity.edt = this.entity.tdt >= x ? x : this.entity.tdt;
+    this.entity.sdt=this.datepipe.transform(this.provider.companyinfo.finyear.fdt,'yyyy-MM-dd')
+    // var x = this.datepipe.transform(new Date(), 'yyyy-MM-dd')?? '';
+    // this.entity.edt = this.provider.companyinfo.finyear.tdt >= x ? x : this.provider.companyinfo.finyear.tdt;
   }
   getAccObj(event){
     this.reference.accCodeobj=event;
@@ -193,10 +196,8 @@ export class ChashbankBookComponent {
 
   Listshow(){
     var param = {
-      firm_id:  this.provider.companyinfo.company?.firmCode,
-      div_id: this.provider.companyinfo.company.divId,
       acc_code: this.entity.accCode,
-      sdt:this.provider.companyinfo.finyear.fdt,
+      sdt: this.datepipe.transform(this.provider.companyinfo.finyear.fdt,'yyyy-MM-dd'),
       edt: this.entity.edt
     }
     this.http.get('CashBankBook', param).subscribe({
@@ -222,7 +223,7 @@ export class ChashbankBookComponent {
     bsOffcanvas.show();
     this.reference.edt=this.entity.edt;
     this.reference.accCodeobj=this.entity.accCode;
-    this.reference.sdt=this.provider.companyinfo.finyear.fdt;
+    this.reference.sdt=this.datepipe.transform(this.provider.companyinfo.finyear.fdt,'yyyy-MM-dd');
   }
   generatePinnedBottomData(){
     let result = {

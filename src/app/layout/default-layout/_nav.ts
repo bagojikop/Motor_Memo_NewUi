@@ -216,7 +216,7 @@ export const navItems = ({
       iconComponent: { name: 'cil-puzzle' },
       children: [
         { name: 'Lorry Receipt', iconComponent: { name: 'cil-file' }, url: 'Motormaster' },
-       // { name: 'Lorry Receipt With Bilty', iconComponent: { name: 'cil-credit-card' }, url: 'lorry-receipt2' },
+        // { name: 'Lorry Receipt With Bilty', iconComponent: { name: 'cil-credit-card' }, url: 'lorry-receipt2' },
         { name: 'Sundry', iconComponent: { name: 'cil-list' }, url: 'Summary' },
         { name: 'Contra Entry', iconComponent: { name: 'cil-credit-card' }, url: 'Contramaster' },
         { name: 'Journal Entry', iconComponent: { name: 'cil-notes' }, url: 'Journalmaster' },
@@ -266,48 +266,49 @@ export const navItems = ({
         { name: 'Profit Loss', iconComponent: { name: 'cil-list' }, url: 'profitloss' },
         { name: 'Motormemo Register', iconComponent: { name: 'cil-list' }, url: 'motor-memo-register' },
         { name: 'Sundry Wise Expenses', iconComponent: { name: 'cil-list' }, url: 'sundry-wise' },
-        { name: 'Lorry Receipt 2 Register', iconComponent: { name: 'cil-list' }, url: 'lorry-receipt2_Register' },
+       // { name: 'Lorry Receipt 2 Register', iconComponent: { name: 'cil-list' }, url: 'lorry-receipt2_Register' },
         { name: 'Expenses', iconComponent: { name: 'cil-list' }, url: 'Expenses' },
         { name: 'Transport Invoice Register', iconComponent: { name: 'cil-list' }, url: 'TransInvReg' },
       ]
     }
   ];
+  return items;
+  //   return items.filter(item => { 
+  //     if (item.name === 'Admin' && isAdminDisabled) return false;
 
-  return items.filter(item => { 
-    if (item.name === 'Admin' && isAdminDisabled) return false;
- 
-    if(item.name === 'Master' && !isMotorMemoDisabled && !isMasterDisabled) return true;
+  //     if(item.name === 'Master' && !isMotorMemoDisabled && !isMasterDisabled) return true;
 
-    if (item.children) {
-      if (item.name === 'Master') { 
-        if (!isMotorMemoDisabled) {
-          item.children = item.children.filter(child => 
-            child.name === 'Sender/Receiver' || 
-            child.name === 'Vehicle Info' ||
-            child.name === 'Product' 
-          );
-        }
+  //     if (item.children) {
+  //       if (item.name === 'Master') { 
+  //         if (!isMotorMemoDisabled) {
+  //           item.children = item.children.filter(child => 
+  //             child.name === 'Sender/Receiver' || 
+  //             child.name === 'Vehicle Info' ||
+  //             child.name === 'Product' 
+  //           );
+  //         }
 
-        
- 
-        if (!isMotorMemoDisabled) return true;
-         
-        if (isMasterDisabled) return false; 
-      } 
-      else if (item.name === 'Transaction') {
-        item.children = item.children.filter(child => {
-          if (child.name === 'Motor Memo' && isMotorMemoDisabled) return false;
-          if (child.name === 'Contra Entry' && isFinanceDisabled) return false;
-          if (child.name === 'Journal Entry' && isFinanceDisabled) return false;
-          if (child.name === 'Receipt' && isFinanceDisabled) return false;
-          if (child.name === 'Payment' && isFinanceDisabled) return false;
-          return true;
-        });
-      }
-    }
 
-    return true;
-});
+
+  //         if (!isMotorMemoDisabled) return true;
+
+  //         if (isMasterDisabled) return false; 
+  //       } 
+  //       else if (item.name === 'Transaction') {
+  //         item.children = item.children.filter(child => {
+  //           if (child.name === 'Motor Memo' && isMotorMemoDisabled) return false;
+  //           if (child.name === 'Contra Entry' && isFinanceDisabled) return false;
+  //           if (child.name === 'Journal Entry' && isFinanceDisabled) return false;
+  //           if (child.name === 'Receipt' && isFinanceDisabled) return false;
+  //           if (child.name === 'Payment' && isFinanceDisabled) return false;
+  //           return true;
+  //         });
+  //       }
+  //     }
+
+  //     return true;
+  // }
+  // );
 };
 
 
