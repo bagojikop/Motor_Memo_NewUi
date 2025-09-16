@@ -272,42 +272,42 @@ export const navItems = ({
       ]
     }
   ];
-
-  return items.filter(item => { 
-    if (item.name === 'Admin' && isAdminDisabled) return false;
+return items;
+//   return items.filter(item => { 
+//     if (item.name === 'Admin' && isAdminDisabled) return false;
  
-    if(item.name === 'Master' && !isMotorMemoDisabled && !isMasterDisabled) return true;
+//    // if(item.name === 'Master' && !isMotorMemoDisabled && !isMasterDisabled) return true;
 
-    if (item.children) {
-      if (item.name === 'Master') { 
-        if (!isMotorMemoDisabled) {
-          item.children = item.children.filter(child => 
-            child.name === 'Sender/Receiver' || 
-            child.name === 'Vehicle Info' ||
-            child.name === 'Product' 
-          );
-        }
+//     if (item.children) {
+//       if (item.name === 'Master') { 
+//         if (!isMotorMemoDisabled) {
+//           item.children = item.children.filter(child => 
+//             child.name === 'Sender/Receiver' || 
+//             child.name === 'Vehicle Info' ||
+//             child.name === 'Product' 
+//           );
+//         }
 
         
  
-        if (!isMotorMemoDisabled) return true;
+//         if (!isMotorMemoDisabled) return true;
          
-        if (isMasterDisabled) return false; 
-      } 
-      else if (item.name === 'Transaction') {
-        item.children = item.children.filter(child => {
-          if (child.name === 'Motor Memo' && isMotorMemoDisabled) return false;
-          if (child.name === 'Contra Entry' && isFinanceDisabled) return false;
-          if (child.name === 'Journal Entry' && isFinanceDisabled) return false;
-          if (child.name === 'Receipt' && isFinanceDisabled) return false;
-          if (child.name === 'Payment' && isFinanceDisabled) return false;
-          return true;
-        });
-      }
-    }
+//         if (isMasterDisabled) return false; 
+//       } 
+//       else if (item.name === 'Transaction') {
+//         item.children = item.children.filter(child => {
+//           if (child.name === 'Motor Memo' && isMotorMemoDisabled) return false;
+//           if (child.name === 'Contra Entry' && isFinanceDisabled) return false;
+//           if (child.name === 'Journal Entry' && isFinanceDisabled) return false;
+//           if (child.name === 'Receipt' && isFinanceDisabled) return false;
+//           if (child.name === 'Payment' && isFinanceDisabled) return false;
+//           return true;
+//         });
+//       }
+//     }
 
-    return true;
-});
+//     return true;
+// });
 };
 
 
