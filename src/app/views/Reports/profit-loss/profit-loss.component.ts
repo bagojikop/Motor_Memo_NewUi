@@ -63,9 +63,9 @@ export class ProfitLossComponent implements AfterViewInit{
   ) { }
 
   ngAfterViewInit(): void {
-
+    this.entity.to=this.datepipe.transform(this.provider.companyinfo.finyear.tdt,'yyyy-MM-dd')
     const x = this.datepipe.transform(new Date(), 'yyyy-MM-dd')?? '';
-    this.entity.edt = this.provider.companyinfo.finyear.tdt >= x ? x : this.provider.companyinfo.finyear.tdt;
+    this.entity.edt = this.entity.to >= x ? x : this.entity.to;
 
   }
 
@@ -88,7 +88,7 @@ export class ProfitLossComponent implements AfterViewInit{
     else {
       this.entity = {};
       this.reference.groups = [];
-      this.entity.sdt = this.provider.companyinfo.finyear.fdt;
+      this.entity.sdt = this.datepipe.transform(this.provider.companyinfo.finyear.fdt,'yyyy-MM-dd');
       this.stateParams = this.location.getState();
       this.mode = this.stateParams.action;
       this.innerWidth = window.innerWidth;
@@ -148,7 +148,7 @@ export class ProfitLossComponent implements AfterViewInit{
   }
 
   close() {
-    this.provider.companyinfo.company.edt = null;
+    this.provider.companyinfo.finyear.edt = null;
     this.location.back();
   }
 
@@ -213,12 +213,10 @@ export class ProfitLossComponent implements AfterViewInit{
   Listshow() {
 
     var param = {
-      firm_id: this.provider.companyinfo.company.firmCode,
-      div_id: this.provider.companyinfo.company.divId,
-      edt: this.provider.companyinfo.company.edt || this.entity.edt
+      edt: this.provider.companyinfo.finyear.edt || this.entity.edt
     }
-    this.provider.companyinfo.company.edt = this.entity.edt;
-    this.http.get('ProfitLoss', param).subscribe({
+    this.provider.companyinfo.finyear.edt = this.entity.edt;
+    this.http.get('ProfitLoss/get', param).subscribe({
       next: (res: any) => {
         console.log('Response:', res);
 

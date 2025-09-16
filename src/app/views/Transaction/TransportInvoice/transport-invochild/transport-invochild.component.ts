@@ -171,7 +171,7 @@ export class TransportInvochildComponent {
   }
   gstType: 'INTRA' | 'INTER' = 'INTRA';
   statecoderelation() {
-    if (this.provider?.companyinfo?.company?.firm?.firmStateCode === this.entity?.stateCode) {
+    if (this.provider?.companyinfo?.company?.firmStateCode === this.entity?.stateCode) {
       this.gstType = 'INTRA'; // Same state → SGST & CGST
     } else {
       this.gstType = 'INTER'; // Different state → IGST
@@ -249,7 +249,7 @@ export class TransportInvochildComponent {
 
   additinOfFreight() {
     var sumArray = this.entity.tms01101s
-      .map(item => item.billAmt || 0);
+      .map(item => item.vehBilledAmt || 0);
 
     var sumValue = sumArray.reduce(function (pValue, cValue) {
       return Number(pValue) + Number(cValue)
@@ -264,7 +264,7 @@ export class TransportInvochildComponent {
     // this.onRcmChange(selectedTransType);
     var param = {
       // firm_id: this.provider.companyinfo.company.firmCode,
-      // div_id: this.provider.companyinfo.company.divId,
+      div_id: this.provider.companyinfo.finyear.divId,
       accCode: this.entity.accCode,
       fdt: this.entity.fromDt,
       tdt: this.entity.toDt

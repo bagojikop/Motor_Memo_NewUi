@@ -152,7 +152,7 @@ export class BiltychildComponent {
   }
 
   statecoderelation() {
-    if (this.provider?.companyinfo?.company?.firm?.firmStateCode === this.entity?.biltyDetails?.senderStateId) {
+    if (this.provider?.companyinfo?.company?.firmStateCode === this.entity?.biltyDetails?.senderStateId) {
       this.gstType = 'INTRA'; // Same state → SGST & CGST
     } else {
       this.gstType = 'INTER'; // Different state → IGST
@@ -313,7 +313,7 @@ export class BiltychildComponent {
         if (!this.entity.biltyAudit.createdUser)
           this.entity.biltyAudit.createdUser = this.provider.companyinfo.userinfo.username;
         // this.entity.firmId = this.provider.companyinfo.company?.firm.firmCode,
-        //   this.entity.divId = this.provider.companyinfo.company.divId;
+        this.entity.divId = this.provider.companyinfo.finyear.divId;
         this.bilty = this.entity;
         this.http.post('Bilty/insert', this.bilty, 2).subscribe({
           next: (res: any) => {
@@ -342,7 +342,7 @@ export class BiltychildComponent {
       }
       else {
         // this.entity.firmId = this.provider.companyinfo.company?.firm.firmCode,
-        //   this.entity.divId = this.provider.companyinfo.company.divId;
+          this.entity.divId = this.provider.companyinfo.finyear.divId;
         this.entity.biltyAudit.modifiedUser = this.provider.companyinfo.userinfo.username;
         this.http.put('Bilty/update', this.master.cleanObject(this.entity, 2), { id: this.entity.vchId }).subscribe({
           next: (res: any) => {

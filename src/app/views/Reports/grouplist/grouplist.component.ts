@@ -152,8 +152,10 @@ export class GrouplistComponent {
         }
       }, 100);
 
-      var x = this.datepipe.transform(new Date(), 'yyyy-MM-dd') ?? '';
-      this.entity.edt = this.provider.companyinfo.finyear.tdt >= x ? x : this.provider.companyinfo.finyear.tdt;
+      this.entity.sdt= this.datepipe.transform(this.provider.companyinfo.finyear.fdt,'yyyy-MM-dd')
+        this.entity.to  = this.datepipe.transform(this.provider.companyinfo.finyear.tdt,'yyyy-MM-dd')
+        var x = this.datepipe.transform(new Date(), 'yyyy-MM-dd')?? '';
+        this.entity.edt = this.entity.to >= x ? x : this.entity.to;
     }
 
 
@@ -239,7 +241,7 @@ export class GrouplistComponent {
         sdt: this.entity.sdt,
         edt: this.entity.edt
       }
-      this.http.get('SubGroupList', param).subscribe({
+      this.http.get('SubGroupList/ouststanding', param).subscribe({
         next: (res: any) => {
           if (res.status_cd == 1) {
             this.list = res.data || [];

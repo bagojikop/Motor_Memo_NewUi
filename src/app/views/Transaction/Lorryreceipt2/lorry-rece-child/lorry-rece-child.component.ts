@@ -369,7 +369,7 @@ export class LorryReceChildComponent {
       if (!this.entity.vchId) {
 
         // this.entity.firmId = this.provider.companyinfo.company?.firm.firmCode,
-          this.entity.divId = this.provider.companyinfo.company.divId;
+          this.entity.divId = this.provider.companyinfo.finyear.divId;
         this.entity.motormemoAudit.createdUser = this.provider.companyinfo.userinfo.username;
 
 
@@ -393,7 +393,7 @@ export class LorryReceChildComponent {
       }
       else {
         //this.entity.firmId = this.provider.companyinfo.company?.firm.firmCode,
-          this.entity.divId = this.provider.companyinfo.company.divId;
+          this.entity.divId = this.provider.companyinfo.finyear.divId;
         //this.entity?.motormemoAudit?.modifiedUser = this.provider.companyinfo.userinfo.username;
         this.http.put('Motormemo/update', this.master.cleanObject(this.entity, 2), { id: this.entity.vchId }).subscribe({
           next: (res: any) => {
@@ -537,7 +537,7 @@ getbiltylist() {
   {
     var param = {
       //firmCode: this.provider.companyinfo.company?.firmCode,
-      div_id: this.provider.companyinfo.company.divId
+      div_id: this.provider.companyinfo.finyear.divId
     }
     this.loading = true;
     this.http.get('Bilty/pendinglists', param).subscribe({

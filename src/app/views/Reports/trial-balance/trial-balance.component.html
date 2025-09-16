@@ -28,13 +28,15 @@
     </div>
     <hr />
 
-    <div class="ms-2 d-flex">
-        <div class="d-flex-width">
-            <dss-input label="As on" name="to" type="date" [(ngModel)]="entity.edt" />
-        </div>
-        <div class="gapInputFields">
-            <button class="btn btn-outline-primary ms-2" style="margin-bottom: 10px; margin-top: 22px;" type="button"
-                (click)="Listshow()"><i class="fas fa-eye me-1"></i> show</button>
+    <div class="ms-2 d-flex ">
+        <div class="d-flex d-flex-width">
+            <div class="d-flex-width">
+                <dss-input label="As on" name="to" type="date" [(ngModel)]="entity.edt" />
+            </div>
+            <div class="gapInputFields">
+                <button class="btn btn-outline-primary ms-2 " style="margin-bottom: 10px; margin-top: 22px;"
+                    type="button" (click)="Listshow()"><i class="fas fa-eye me-1"></i> show</button>
+            </div>
         </div>
     </div>
 

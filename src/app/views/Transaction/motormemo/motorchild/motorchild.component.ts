@@ -195,7 +195,7 @@ export class MotorchildComponent {
         {
           key: "vch_id", value: this.entity.vchId,
         },
-        ]
+      ]
     };
     this.rptMode = true;
   }
@@ -343,6 +343,7 @@ export class MotorchildComponent {
     this.dialog.swal(params).then(data => {
       if (data == true) {
         this.entity.motormemoCommodities.splice(index, 1);
+        this.calcFreight()
       }
     })
   }
@@ -357,6 +358,7 @@ export class MotorchildComponent {
     this.dialog.swal(params).then(data => {
       if (data == true) {
         this.entity.motormemoVehExpenses.splice(index, 1);
+
         this.calcVehCharges()
         this.setLeftAmt();
       }
@@ -494,7 +496,7 @@ export class MotorchildComponent {
           this.entity.motormemoAudit.createdUser = this.provider.companyinfo.userinfo.username;
 
         //this.entity.firmId = this.provider.companyinfo.company?.firm.firmCode,
-          this.entity.divId = this.provider.companyinfo.company.divId;
+        this.entity.divId = this.provider.companyinfo.finyear.divId;
 
         this.http.post('MotorMemo/insert', this.master.cleanObject(this.entity, 2)).subscribe({
           next: (res: any) => {
@@ -526,7 +528,7 @@ export class MotorchildComponent {
       }
       else {
         //this.entity.firmId = this.provider.companyinfo.company?.firm.firmCode,
-          this.entity.divId = this.provider.companyinfo.company.divId;
+        this.entity.divId = this.provider.companyinfo.finyear.divId;
         this.entity.motormemoAudit.modifiedUser = this.provider.companyinfo.userinfo.username;
 
         this.http.put('MotorMemo/update', this.master.cleanObject(this.entity, 2), { id: this.entity.vchId }).subscribe({
@@ -721,16 +723,26 @@ export class MotorchildComponent {
 
   calcFreight() {
     var sumArray = this.entity.motormemoCommodities
-      .map(item => item.freight || 0);
+      .map(item => { return item.freight });
     if (sumArray.length > 0) {
       var sumValue = sumArray.reduce(function (pValue, cValue) {
         return Number(pValue) + Number(cValue)
       });
-      this.entity.totalFreight = sumValue;
+     
 
-      this.setDebitToSenderOrReceiver();
-      this.calcVehCharges();
+    }else{
+      sumValue = 0;
     }
+    
+     this.entity.totalFreight = sumValue;
+
+
+    const total = Number(this.entity.totalFreight || 0) + Number(this.entity.totalothercharges || 0);
+
+    this.setDebitToSenderOrReceiver(total);
+    this.calcVehCharges();
+
+
   }
 
   updateTotalVehCharges(): void {
@@ -869,7 +881,7 @@ export class MotorchildComponent {
     this.entity.motormemoDetails.senderName = v.name
     this.entity.motormemoDetails.senderGstin = v.gstinNo
     this.entity.motormemoDetails.senderMobileNo = v.mobileNo
-    this.entity.motormemoDetails.senderAddress1 = v.address
+    this.entity.motormemoDetails.senderAddress = v.address
     this.entity.motormemoDetails.senderMail = v.emailId
     this.entity.senderStateId = v.state
     this.entity.motormemoDetails.senderPin = v.pincode
@@ -896,7 +908,7 @@ export class MotorchildComponent {
             this.entity.motormemoDetails.senderGstin = res.data.gstinNo ||= {};
             this.entity.motormemoDetails.senderMobileNo = res.data.mobileNo
             this.entity.motormemoDetails.senderName = res.data.name
-            this.entity.motormemoDetails.senderAddress1 = res.data.address
+            this.entity.motormemoDetails.senderAddress = res.data.address
             this.entity.motormemoDetails.senderPin = res.data.pincode
             this.entity.senderStateId = res.data.state ||= {};
             this.entity.motormemoDetails.senderMail = res.data.emailId;
@@ -978,7 +990,7 @@ export class MotorchildComponent {
           name: this.entity.motormemoDetails.senderName,
           gstinNo: this.entity.motormemoDetails.senderGstin,
           mobileNo: this.entity.motormemoDetails.senderMobileNo,
-          address: this.entity.motormemoDetails.senderAddress1,
+          address: this.entity.motormemoDetails.senderAddress,
           pincode: this.entity.motormemoDetails.senderPin,
           StateCode: this.entity.motormemoDetails.senderStateId,
           emailId: this.entity.motormemoDetails.senderMail,
@@ -1055,11 +1067,13 @@ export class MotorchildComponent {
       if (this.rowIndex == null) {
         this.entity.motormemoOtherCharges.push(this.other);
         this.additinOftotalchages()
+
       }
       else {
         this.entity.motormemoOtherCharges[this.rowIndex] = this.other;
         this.additinOftotalchages()
       }
+
       this.rowIndex = null;
       this.other = {}
     }
@@ -1100,7 +1114,10 @@ export class MotorchildComponent {
       sumValue = 0;
     }
     this.entity.totalothercharges = sumValue;
-    this.setDebitToSenderOrReceiver();
+    const total = Number(this.entity.totalFreight || 0) + Number(this.entity.totalothercharges || 0);
+
+
+    this.setDebitToSenderOrReceiver(total);
   }
 
   activeTab: string = 'sender'; // default tab
@@ -1119,28 +1136,34 @@ export class MotorchildComponent {
     }
   }
 
+  onchangeFreightType() {
+    const total = Number(this.entity.totalFreight || 0) + Number(this.entity.totalothercharges || 0);
+    this.setDebitToSenderOrReceiver(total);
+  }
 
 
-
-  setDebitToSenderOrReceiver() {
+  setDebitToSenderOrReceiver(total: number) {
 
     if (this.entity.directPaid) {
       this.entity.motormemoDetails.senderAmount = 0
       this.entity.motormemoDetails.receiverAmount = 0
     }
     else {
-      let total = Number(this.entity.totalothercharges || 0) + Number(this.entity.totalFreight || 0)
 
-      if (this.entity.freightType == 0 || this.entity.freightType == 2) {
-        this.entity.motormemoDetails.senderAmount = total - this.entity.motormemoDetails.receiverAmount;
 
-      } else if (this.entity.freightType == 1) {
+      if (this.entity.freightType === 0 || this.entity.freightType === 2) {
+        this.entity.motormemoDetails.senderAmount = total - Number(this.entity.motormemoDetails.receiverAmount || 0);
 
-        this.entity.motormemoDetails.receiverAmount = total - this.entity.motormemoDetails.senderAmount;
+      } else if (this.entity.freightType === 1) {
+
+        this.entity.motormemoDetails.receiverAmount = total - Number(this.entity.motormemoDetails.senderAmount || 0);
       }
+      //this.entity.motormemoDetails.senderAmount = Number(this.entity.totalothercharges) + Number(this.entity.totalFreight)
     }
     this.setPayDisabled();
   }
+
+
 
   setPayDisabled() {
     if (this.entity.motormemoDetails.receiverAmount > 0 && this.entity.motormemoDetails.senderAmount == 0 && this.entity.directPaid == false) {
@@ -1177,6 +1200,8 @@ export class MotorchildComponent {
     this.entity.motormemoDetails.receiverAmount = total - this.entity.motormemoDetails.senderAmount
     this.setPayDisabled();
   }
+
+
 
   onChangeReceiverAmt() {
     let total = Number(this.entity.totalothercharges || 0) + Number(this.entity.totalFreight || 0)

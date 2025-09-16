@@ -118,7 +118,7 @@ export class MotormasterComponent implements OnInit {
 
   edit(s: any) {
     const param = { action: 'view', id: s.vchId };
-    if (s.isBilty === 0) {
+    if (s.isBilty === false) {
       this.router.navigate(['Motorchild'], { state: param });
     } else {
       this.router.navigate(['lorry-receipt2_child'], { state: param });

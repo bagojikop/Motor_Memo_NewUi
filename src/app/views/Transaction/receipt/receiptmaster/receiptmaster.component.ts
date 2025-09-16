@@ -80,7 +80,7 @@ export class ReceiptmasterComponent {
       flex: 2
     },
     {
-      field: 'accName',
+      field: 'accCodeNavigation.accName',
       headerName: 'Credit Account',
       filter: "agTextColumnFilter",
       flex: 3
