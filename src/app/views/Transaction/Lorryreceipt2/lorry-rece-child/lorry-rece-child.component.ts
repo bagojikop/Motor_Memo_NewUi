@@ -161,7 +161,7 @@ export class LorryReceChildComponent {
 
 
   motormemo2print() {
-    this.myServiceUrl = "MetormemoReport";
+    this.myServiceUrl = "Motormemo2Report";
 
     this.myReportDictionory = {
       reportCacheId: uuidv4(),
