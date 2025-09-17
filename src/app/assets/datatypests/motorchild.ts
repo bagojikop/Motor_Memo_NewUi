@@ -147,8 +147,10 @@ export interface MotormemoDetailsObj {
   senderAddress: string
   senderMail: any
   senderStateId: string
+  senderPlace:number
   senderPin: number
   senderMobileNo: number
+  receiverPlace:number
   receiverPin: number
   receiverMobileNo: number
   receiverStateId: string
