@@ -48,12 +48,14 @@
                                             <app-ngselect apiUrl="Place/getList" label="From" bindLabel="cityName"
                                                 bindValue="cityName" name="place" [(ngModel)]="entity.from_Dstn"
                                                 autocomplete="off" [required]="true" [addNewText]="true"
+                                                (change)="onselectfrom($event)"
                                                 [disabled]="navactions.fieldset"></app-ngselect>
                                         </div>
                                         <div class="gapInputFields">
                                             <app-ngselect apiUrl="Place/getList" label="To" bindLabel="cityName"
                                                 bindValue="cityName" name="memoto" [(ngModel)]="entity.to_Dstn"
                                                 autocomplete="off" [required]="true" [addNewText]="true"
+                                                (change)="onselectto($event)"
                                                 [disabled]="navactions.fieldset"></app-ngselect>
 
                                         </div>
@@ -129,12 +131,6 @@
                                         </dss-input>
                                         <div class="d-flex">
                                             <div class="d-flex-width">
-                                                <label>Pin Code</label>
-                                                <input class="form-control" type="text" numberOnly autocomplete="off"
-                                                    [(ngModel)]="entity.motormemoDetails.senderPin" name="sendpin"
-                                                    [maxlength]="6" [minlength]="6">
-                                            </div>
-                                            <div class="gapInputFields">
                                                 <app-ngselect apiUrl="state/ListByPage" label="State"
                                                     bindLabel="stateName" bindValue="stateCode" name="senderStateId"
                                                     [(ngModel)]="entity.motormemoDetails.senderStateId"
@@ -142,11 +138,28 @@
                                                     [defaultProperty]="entity.senderStateId" #senderStateId="ngModel"
                                                     [required]="true"></app-ngselect>
                                             </div>
+                                            <div class="gapInputFields">
+                                                <dss-input label="Place" type="text" name="place1" autocomplete="off"
+                                                    [(ngModel)]="entity.motormemoDetails.senderPlace">
+                                                </dss-input>
+                                            </div>
                                         </div>
-                                        <dss-input label="Email" type="email" name="senderemail" autocomplete="off"
-                                            [(ngModel)]="entity.motormemoDetails.senderMail" [maxlength]="50"
-                                            (input)="entity.motormemoDetails.senderMail = entity.motormemoDetails.senderMail.toLowerCase()">
-                                        </dss-input>
+                                        <div class="d-flex">
+                                            <div class="d-flex-width">
+
+                                                <label>Pin Code</label>
+                                                <input class="form-control" type="text" numberOnly autocomplete="off"
+                                                    [(ngModel)]="entity.motormemoDetails.senderPin" name="sendpin"
+                                                    [maxlength]="6" [minlength]="6">
+                                            </div>
+                                            <div class="gapInputFields">
+                                                <dss-input label="Email" type="email" name="senderemail"
+                                                    autocomplete="off" [(ngModel)]="entity.motormemoDetails.senderMail"
+                                                    [maxlength]="50"
+                                                    (input)="entity.motormemoDetails.senderMail = entity.motormemoDetails.senderMail.toLowerCase()">
+                                                </dss-input>
+                                            </div>
+                                        </div>
                                         <div class="d-flex">
                                             <div class="d-flex-width">
                                                 <label for=""
@@ -231,12 +244,6 @@
                                         </dss-input>
                                         <div class="d-flex">
                                             <div class="d-flex-width">
-                                                <label>Pin Code</label>
-                                                <input class="form-control" type="text" numberOnly autocomplete="off"
-                                                    [(ngModel)]="entity.motormemoDetails.receiverPin" name="receiverPin"
-                                                    [maxlength]="6" [minlength]="6">
-                                            </div>
-                                            <div class="gapInputFields">
                                                 <app-ngselect apiUrl="state/ListByPage" label="State"
                                                     bindLabel="stateName" bindValue="stateCode" name="receivStateId"
                                                     [(ngModel)]="entity.motormemoDetails.receiverStateId"
@@ -244,11 +251,27 @@
                                                     [disabled]="navactions.fieldset" #receivStateId="ngModel"
                                                     [required]="true"></app-ngselect>
                                             </div>
+                                            <div class="gapInputFields">
+                                                <dss-input label="Place" type="text" name="place2" autocomplete="off"
+                                                    [(ngModel)]="entity.motormemoDetails.receiverPlace">
+                                                </dss-input>
+                                            </div>
                                         </div>
-                                        <dss-input label="Email" type="email" name="email" autocomplete="off"
-                                            [(ngModel)]="entity.motormemoDetails.receiverMail" [maxlength]="50"
-                                            (input)="entity.motormemoDetails.receiverMail = entity.motormemoDetails.receiverMail.toLowerCase()">
-                                        </dss-input>
+                                        <div class="d-flex">
+                                            <div class="d-flex-width">
+                                                <label>Pin Code</label>
+                                                <input class="form-control" type="text" numberOnly autocomplete="off"
+                                                    [(ngModel)]="entity.motormemoDetails.receiverPin" name="receiverPin"
+                                                    [maxlength]="6" [minlength]="6">
+                                            </div>
+                                            <div class="gapInputFields">
+                                                <dss-input label="Email" type="email" name="email" autocomplete="off"
+                                                    [(ngModel)]="entity.motormemoDetails.receiverMail" [maxlength]="50"
+                                                    (input)="entity.motormemoDetails.receiverMail = entity.motormemoDetails.receiverMail.toLowerCase()">
+                                                </dss-input>
+                                            </div>
+                                        </div>
+
                                         <div class="d-flex">
                                             <div class="d-flex-width">
                                                 <dss-input label="E-Way No" type="text" autocomplete="off"
@@ -505,9 +528,9 @@
                                         <label for="">Freight Type</label>
                                         <select class="form-select select-wrapper" name="selectfreightType"
                                             [(ngModel)]="entity.freightType" (change)="onchangeFreightType()">
-                                            <option [ngValue]= "0">FOR</option>
-                                            <option [ngValue]= "1">EX</option>
-                                            <option [ngValue]= "2">To be Billed</option>
+                                            <option [ngValue]="0">FOR</option>
+                                            <option [ngValue]="1">EX</option>
+                                            <option [ngValue]="2">To be Billed</option>
                                         </select>
 
                                     </div>
@@ -1089,8 +1112,7 @@
 </div>
 
 <div *ngIf="rptMode">
-    <dss-report-viewer [(isShow)]="rptMode"  [reports]="reports"
-     [dictionory]="myReportDictionory" [serviceUrl]="myServiceUrl"
-         [mail]="" [wapp]="" ReportTitle="Motormemo Entry">
+    <dss-report-viewer [(isShow)]="rptMode" [reports]="reports" [dictionory]="myReportDictionory"
+        [serviceUrl]="myServiceUrl" [mail]="" [wapp]="" ReportTitle="Motormemo Entry">
     </dss-report-viewer>
 </div>

@@ -78,6 +78,7 @@ export class LorryReceChildComponent {
     public http: http,
     private dialog: DialogsComponent,
     private spinner: NgxSpinnerService,
+     private datepipe: DatePipe,
     public provider: MyProvider,
     public navactions: NavbarActions,
     public master: Master,
@@ -236,14 +237,15 @@ export class LorryReceChildComponent {
     this.motormemo2 = {}
     this.entity.motormemoAudit = {}
     this.entity.motormemoVehExpenses = []
-    const today = new Date();
-    const finYearEnd = new Date(this.provider.companyinfo.finyear.tdt);
+  
     this.exp = { action: 0, isInclFreight: false }
     this.entity.isBilty = this.stateParams.isBilty == 1 ? true : false;
+    const today = new Date();
+    const finYearEnd = new Date(this.provider.companyinfo.finyear.tdt);
     if (today >= finYearEnd) {
-      this.entity.vchDate = finYearEnd.toISOString().split('T')[0];
+      this.entity.dt = finYearEnd.toISOString().split('T')[0];
     } else {
-      this.entity.vchDate = today.toISOString().split('T')[0];
+      this.entity.dt = today.toISOString().split('T')[0];
     }
   }
 

@@ -200,6 +200,15 @@ export class MotorchildComponent {
     this.rptMode = true;
   }
 
+  onselectfrom(s) {
+  this.entity.motormemoDetails.senderPlace = s.cityName;
+  // if you still need cityName, you must fetch it from your list
+}
+
+onselectto(s){
+  this.entity.motormemoDetails.receiverPlace=s.cityName;
+}
+
   editgstTablerow(obj, index) {
     this.rowIndex = index;
     this.cmod = Object.assign({}, obj);
