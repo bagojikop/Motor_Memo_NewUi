@@ -10,7 +10,8 @@
       "@docs-components/*": [
         "./src/components/*"
       ]
-    }
+    },
+     "strictPropertyInitialization": false
   },
   "files": [
     "src/main.ts"
